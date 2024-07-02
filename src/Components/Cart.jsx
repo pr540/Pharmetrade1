@@ -38,6 +38,7 @@ function Cart({ topMargin, cartItems, setCartItems }) {
       className="w-full h-full flex flex-col justify-center  font-sans bg-gray-200 p-8"
       style={{ marginTop: `${topMargin}px` }}
     >
+    <div className="hidden"></div>
       <p className=" lg:text-2xl lg:mb-2 text-black flex ">
         PharmaTrade {`>`} Cart
       </p>
