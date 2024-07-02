@@ -58,6 +58,15 @@ function Nav({ topDivRef, cartItems }) {
   function handleclick() {
     navigate("/wishlist");
   }
+  function handleBuy() {
+    navigate("/products");
+  }
+  function handleAdmin() {
+    navigate("/admin");
+  }
+  function handleuser() {
+    navigate("/user");
+  }
   return (
     <div
       ref={topDivRef}
@@ -83,7 +92,7 @@ function Nav({ topDivRef, cartItems }) {
               <li className=" w-fit cursor-pointer" onClick={handleclicked}>
                 Home
               </li>
-              <li className=" w-fit ">Products </li>
+              <li className=" w-fit cursor-pointer" onClick={handleBuy}>Products </li>
               <li className="">Why ParamETrade</li>
               <li className="">About Us</li>
               <li className="">Contact Us </li>
@@ -126,7 +135,8 @@ function Nav({ topDivRef, cartItems }) {
                           </button>
                         </div>
                         <p className="mb-4">New customer? Start here</p>
-                        <h2 className="text-xl font-semibold mb-2">
+                        <h2 className="text-xl font-semibold mb-2 cursor-pointer"
+                        onClick={handleuser}>
                           Your Account
                         </h2>
                         <ul>
@@ -272,15 +282,15 @@ function Nav({ topDivRef, cartItems }) {
                 className=" xl:gap-10 grid grid-rows-2 grid-cols-2 md:flex md:flex-row md:gap-4 lg:gap-2  xl:justify-between text-gray-500    items-center py-2 px-2 lg:px-0 "
                 // style={{ fontFamily: "helveticaNeue" }}
               >
-                <div className="flex flex-row gap-1 lg:gap-2 items-center">
+                <div className="flex flex-row gap-1 lg:gap-2 items-center" onClick={handleBuy}>
                   <img src={Buy} className="w-fit h-10" />
                   <li>Buy</li>
                 </div>
-                <div className="flex flex-row gap-1 lg:gap-2 items-center">
+                <div className="flex flex-row gap-1 lg:gap-2 items-center" onClick={handleClick}>
                   <img src={hand} className="w-fit  h-10" />
                   <li>Join</li>
                 </div>
-                <div className="flex flex-row gap-1 lg:gap-2 items-center">
+                <div className="flex flex-row gap-1 lg:gap-2 items-center" onClick={handleAdmin}>
                   <img src={sale} className="w-fit  h-10" />
                   <li>Sell</li>
                 </div>

@@ -20,6 +20,10 @@ import product from '../assets/Icons/Product_icon.png';
 import phone from '../assets/Icons/phone_icon.png';
 import report from '../assets/Icons/report_icon.png';
 import ScrollToTop from "./ScrollToTop";
+import compare from "../assets/compare_icon.png"
+import aproduct from "../assets/aboutproduct_icon.png"
+import wishlist from "../assets/Wishllist_icon.png"
+
 
 // const cartItems = [
 //   { id: 1, name: "Item 1", quantity: 2 },
@@ -239,20 +243,23 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
 
             <div className="flex my-8">
               <div className="flex text-[17px] ">
-                <p className="text-blue-400 mt-2 mr-2">
-                  <FaRegHeart />
+                <p className="text-blue-400 mr-2">
+                  {/* <FaRegHeart /> */}
+                  <img src={wishlist} className='w-6 h-6'/>
                 </p>
                 <p className="underline">Add to wishlist 68</p>
               </div>
               <div className="flex text-[17px] ml-2">
-                <p className="text-blue-400 mt-2 mr-2">
-                  <FaRegHeart />
+                <p className="text-blue-400  mr-2">
+                  {/* <FaRegHeart /> */}
+                  <img src={compare} className='w-6 h-6'/>
                 </p>
                 <p className="underline">Add to compare</p>
               </div>
               <div className="flex text-[17px] ml-2">
-                <p className="text-blue-400 mt-2 mr-2">
-                  <MdOutlineMail />
+                <p className="text-blue-400  mr-2">
+                  {/* <MdOutlineMail /> */}
+                  <img src={aproduct} className='w-6 h-6'/>
                 </p>
                 <p className="underline">Ask about product </p>
               </div>

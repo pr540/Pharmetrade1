@@ -24,6 +24,19 @@ import AddProducts from "./Components/DashboardAdmin/AddProducts";
 import Sidebar from "./Components/DashboardAdmin/SideBar";
 import Dashboard from "./Components/DashboardAdmin/Dashboard";
 import Orders from "./Components/DashboardAdmin/Orders";
+import Customers from "./Components/DashboardAdmin/Customers";
+import Earnings from "./Components/DashboardAdmin/Earnings";
+import Review from "./Components/DashboardAdmin/Review";
+import Return from "./Components/DashboardAdmin/Return";
+import AssignProduct from "./Components/DashboardAdmin/AssignProduct";
+import AssignProductList from "./Components/DashboardAdmin/AssignProductList";
+import Settings from "./Components/DashboardAdmin/Settings";
+import SellerInfo from "./Components/DashboardAdmin/SellerInfo";
+import RequestQuote from "./Components/DashboardAdmin/RequestQuote";
+import Payouts from "./Components/DashboardAdmin/Payouts";
+import AccountPanel from "./Components/UserAccount/AccountPanel";
+import MyAccount from "./Components/UserAccount/MyAccount";
+import MyOrders from "./Components/UserAccount/MyOrders";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -54,9 +67,19 @@ function App() {
         location.pathname !== "/signup" &&
         location.pathname !== "/password" &&
         location.pathname !== "/changepassword" &&
-        location.pathname !== "/admin" && 
+        location.pathname !== "/admin" &&
         location.pathname !== "/admin/orders" &&
-        location.pathname !== "/admin/addproducts" &&(
+        location.pathname !== "/admin/addproducts" &&
+        location.pathname !== "/admin/customers" &&
+        location.pathname !== "/admin/payouts" &&
+        location.pathname !== "/admin/earnings" &&
+        location.pathname !== "/admin/review" &&
+        location.pathname !== "/admin/returns" &&
+        location.pathname !== "/admin/assign-products" &&
+        location.pathname !== "/admin/assign-product-list" &&
+        location.pathname !== "/admin/request-quote" &&
+        location.pathname !== "/admin/settings" &&
+        location.pathname !== "/admin/seller-info" && (
           <Nav topDivRef={topDivRef} cartItems={cartItems} />
         )}
       <Routes>
@@ -69,7 +92,7 @@ function App() {
           path="/cart"
           element={
             <Cart
-              topMargin={topMargin}
+            topMargin={topMargin}
               cartItems={cartItems}
               setCartItems={setCartItems}
             />
@@ -95,29 +118,36 @@ function App() {
             />
           }
         />
-        <Route element = {<AdminPanel/>}>
 
+        <Route element={<AdminPanel />}>
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/addproducts" element={<AddProducts />} />
+          <Route path="/admin/customers" element={<Customers />} />
+          <Route path="/admin/payouts" element={<Payouts />} />
+          <Route path="/admin/earnings" element={<Earnings />} />
+          <Route path="/admin/review" element={<Review />} />
+          <Route path="/admin/returns" element={<Return />} />
+          <Route path="/admin/assign-products" element={<AssignProduct />} />
+          <Route
+            path="/admin/assign-product-list"
+            element={<AssignProductList />}
+          />
+          <Route path="/admin/request-quote" element={<RequestQuote />} />
+          <Route path="/admin/settings" element={<Settings />} />
+          <Route path="/admin/seller-info" element={<SellerInfo />} />
         </Route>
 
-        {/* <Route
-          path="/admin/*"
-          element={
-            <div className="flex h-screen bg-gray-200">
-              <Sidebar />
-              <div className="flex-1 flex flex-col">
-                <AdminNav />
-                <Routes>
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="addproducts" element={<AddProducts />} />
-                </Routes>
-              </div>
-            </div>
-          }
-        /> */}
+        <Route element={<AccountPanel topMargin={topMargin} />}>
+          <Route path="/user" element={<MyAccount />} />
+          <Route path="/user/orders" element={<MyOrders />} />
+
+          
+        </Route>
       </Routes>
+
+
+
       {/* <ScrollToTop/> */}
       {/* <Landing2 />
         <Sliders />

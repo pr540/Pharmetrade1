@@ -5,7 +5,7 @@ import slider3 from "../assets/3.png";
 import slider4 from "../assets/4.png";
 
 import bg2 from "../assets/doc.png";
-import product from "../assets/product.png";
+import allproduct from "../assets/AllProduct.png";
 import { Link, useNavigate } from "react-router-dom";
 import Products from "./Products";
 import right2 from "../assets/right.png";
@@ -90,10 +90,16 @@ function Landing2() {
       </div>
       <div className="flex  justify-center ">
         <Link to="/products">
-          <img
+          {/* <img
             src={product}
             alt="Descriptive Alt Text"
             className="cursor-pointer w-96" // Make the image clickable
+            onClick={() => setIsVisible(true)} // Change state on click
+          /> */}
+           <img
+            src={allproduct}
+            alt="Descriptive Alt Text"
+            className="cursor-pointer w-80" // Make the image clickable
             onClick={() => setIsVisible(true)} // Change state on click
           />
         </Link>

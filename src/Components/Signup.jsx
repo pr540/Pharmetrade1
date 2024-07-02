@@ -1,11 +1,15 @@
+
+
+
 import React, { useState } from "react";
 import logoImage from "../assets/logo2.png";
 import background_image from "../assets/homepharma.png";
 // import 'react-datepicker/dist/react-datepicker.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiCaretUp } from "react-icons/bi";
 // import DatePicker from 'react-datepicker';
 import OTP2 from "./OTP2";
+
 
 function getSteps() {
   return ["Personal-Info", "Business-Info", "Address-Info", "Done"];
@@ -22,6 +26,7 @@ const Signup = () => {
     newsletter: false,
     confirmPassword: "",
     upnMember: "",
+
     shopName: "",
     legalBusinessName: "",
     dbaName: "",
@@ -50,6 +55,7 @@ const Signup = () => {
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
+
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -107,14 +113,25 @@ const Signup = () => {
 
   const isStepSkipped = (step) => skippedSteps.includes(step);
 
+ 
+  const navigate = useNavigate();
+
   const handleNext = () => {
     if (validateStep(activeStep)) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      setSkippedSteps((prevSkippedSteps) =>
-        prevSkippedSteps.filter((skipItem) => skipItem !== activeStep)
-      );
+      if (activeStep === 0 && usertype === "buyer") {
+        setActiveStep(3);
+      } else if (activeStep === steps.length - 1) {
+        navigate('/app');
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkippedSteps((prevSkippedSteps) =>
+          prevSkippedSteps.filter((skipItem) => skipItem !== activeStep)
+        );
+      }
     }
   };
+
+
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -131,11 +148,17 @@ const Signup = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
+
   const [usertype, setusertype] = useState("");
 
   const handleusertypechange = (value) => {
     // alert("handl usertypkjsdcnc");
     setusertype(value);
+    // if (value === "buyer") {
+    //   if(validateStep(0)==1)
+    //     ;
+    //   setActiveStep(3);
+    // }
   };
 
   const getStepContent = (step) => {
@@ -143,17 +166,16 @@ const Signup = () => {
       case 0:
         return (
           <div>
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
-
                 <input
                   id="FullName"
                   placeholder="FullName"
                   name="FullName"
                   value={formData.FullName}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.FullName && { border: "1px solid red" }),
                   }}
                 />
@@ -166,19 +188,15 @@ const Signup = () => {
                   name="User_Id"
                   value={formData.User_Id}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.User_Id && { border: "1px solid red" }),
                   }}
                   required
                 />
               </div>
             </div>
-            <div
-              className="personal_info"
-              style={{ display: "flex", flexDirection: "row" }}
-            >
+            <div className="personal_info  flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="Email_id"
@@ -186,8 +204,8 @@ const Signup = () => {
                   name="Email_id"
                   value={formData.Email_id}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.Email_id && { border: "1px solid red" }),
                   }}
                   required
@@ -200,16 +218,15 @@ const Signup = () => {
                   name="Phone_number"
                   value={formData.Phone_number}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.Phone_number && { border: "1px solid red" }),
                   }}
                   required
                 />
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="password"
@@ -218,8 +235,8 @@ const Signup = () => {
                   type="password"
                   value={formData.password}
                   onChange={handleInputChange}
+                  className=" p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.password && { border: "1px solid red" }),
                   }}
                   required
@@ -234,131 +251,93 @@ const Signup = () => {
                   type="password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.confirmPassword && { border: "1px solid red" }),
                   }}
                   required
                 />
               </div>
             </div>
-            <div style={checkboxContainerStyle}>
-              <label style={{ fontFamily: "sans" }}>
-                <input
-                  type="checkbox"
-                  name="upnMember"
-                  style={{
-                    marginTop: "-32px",
-                    marginLeft: "60px",
-                    marginRight: "10px",
-                  }}
-                  required
-                />
-                Are you a UPN Member
-              </label>
-              {errors.upnMember && (
-                <div style={errorStyle}>{errors.upnMember}</div>
-              )}
+            <div className=" flex flex-row justify-evenly">
+              <div className="">
+                <input type="checkbox" name="upnMember" required />{" "}
+                <label>Are you a UPN Member</label>
+                {errors.upnMember && (
+                  <div className="text-red-600 flex">{errors.upnMember}</div>
+                )}
+              </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginLeft: "56px",
-                }}
-              >
-                <div style={{ fontFamily: "sans" }}>
+              <div className="flex items-center justify-between ">
+                <div className="flex items-center ">
                   <input
                     type="radio"
-                    name="usertyperadio"
-                    value="buyer"
-                    checked={usertype === "buyer"}
-                    onChange={() => {
-                      handleusertypechange("buyer");
-                    }}
-                  />
-                  buyer
-                </div>
-                <div style={{ fontSize: "sans" }}>
-                  <input
-                    type="radio"
-                    name="usertyperadio"
+                    id="seller"
+                    name="usertype"
                     value="seller"
                     checked={usertype === "seller"}
-                    onChange={() => {
-                      handleusertypechange("seller");
-                    }}
+                    onChange={(e) => handleusertypechange(e.target.value)}
                   />
-                  seller
+                  <label htmlFor="seller" className="">
+                    Seller
+                  </label>
                 </div>
-                <div style={{ fontFamily: "sans" }}>
+                <div className="flex items-center ml-2">
                   <input
                     type="radio"
-                    name="usertyperadio"
-                    value="buyer/seller"
-                    checked={usertype === "buyer/seller"}
-                    onChange={() => {
-                      handleusertypechange("buyer/seller");
-                    }}
+                    id="buyer"
+                    name="usertype"
+                    value="buyer"
+                    checked={usertype === "buyer"}
+                    onChange={(e) => handleusertypechange(e.target.value)}
                   />
-                  buyer/seller
+                  <label htmlFor="buyer" className="">
+                    Buyer
+                  </label>
+                </div>
+                <div className="flex items-center ml-2">
+                  <input
+                    type="radio"
+                    id="buyer-seller"
+                    name="usertype"
+                    value="buyer-seller"
+                    checked={usertype === "buyer-seller"}
+                    onChange={(e) => handleusertypechange(e.target.value)}
+                  />
+                  <label htmlFor="buyer-seller" className="">
+                    Buyer/Seller
+                  </label>
                 </div>
               </div>
             </div>
-
-            <div style={checkboxContainerStyle}>
-              <label
-                style={{
-                  fontFamily: "sans ",
-                  fontSize: "17px",
-                  marginLeft: "82px",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  name="upnmember"
-                  onChange={handleInputChange}
-                  style={{
-                    paddingTop: "-50px",
-                    marginBottom: "-100px",
-                    marginLeft: "-22px",
-                    marginRight: "12px",
-                    position: "absolute",
-                    flexDirection: "row",
-                    display: "flex",
-                    marginTop:'5px'
-                  }}
-                />
+            <div className=" mx-14 my-4">
+              <input
+                type="checkbox"
+                id="checkbox"
+                name="upnmember"
+                // value={formData.checkbox}
+                // onChange={handleInputChange}
+              />{" "}
+              <span>
                 Please accept PharmEtrade{" "}
                 <Link to="/" style={{ textDecoration: "none" }}>
                   Terms & Conditions
                 </Link>
-                <OTP2 />
-              </label>
+              </span>
             </div>
+
+            <OTP2 />
           </div>
         );
       case 1:
         return (
           <div>
-            <div className="" style={{ display: "flex", flexDirection: "row" }}>
-              <select
-                style={{
-                  selectStyle,
-                  padding: "6px",
-                  marginTop: "6px",
-                  margin: "6px",
-                  height: "35px",
-                  marginLeft: "50px",
-                  borderRadius: "4px",
-                  width: "220px",
-                  marginBottom: "-60px",
-                }}
-              >
+            <div className="flex flex-row  my-4 justify-evenly">
+              <select className="p-2 border w-52 border-gray-500 rounded-lg">
                 <option value="option1">Prescription Drug Seller</option>
                 <option value="option2">General Merchandise Seller</option>
               </select>
+
               <div>
                 <input
                   id="shop-name"
@@ -366,16 +345,15 @@ const Signup = () => {
                   name="shopName"
                   value={formData.shopName}
                   onChange={handleInputChange}
+                  className="p-2 border  border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "6px",
                     ...(errors.shopName && { border: "1px solid red" }),
                   }}
                 />
               </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="legal-business-name"
@@ -383,8 +361,8 @@ const Signup = () => {
                   name="legalBusinessName"
                   value={formData.legalBusinessName}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.legalBusinessName && {
                       border: "1px solid red",
                     }),
@@ -398,9 +376,8 @@ const Signup = () => {
                   name="dbaName"
                   value={formData.dbaName}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.dbaName && { border: "1px solid red" }),
                   }}
                 />
@@ -409,7 +386,7 @@ const Signup = () => {
 
             {/* Bussinessphone */}
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="business-phone"
@@ -417,8 +394,8 @@ const Signup = () => {
                   name="Businessphone"
                   value={formData.BusinessPhone}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.BusinessPhone && { border: "1px solid red" }),
                   }}
                 />
@@ -430,9 +407,8 @@ const Signup = () => {
                   name="Bussiness_Fax"
                   value={formData.Bussiness_Fax}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.Bussiness_Fax && { border: "1px solid red" }),
                   }}
                 />
@@ -441,7 +417,7 @@ const Signup = () => {
             {/* bussiness phone end */}
 
             {/* address1 ---start */}
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id=" Bussiness_Email"
@@ -449,8 +425,8 @@ const Signup = () => {
                   name=" Bussiness_Email"
                   value={formData.Bussiness_Email}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.Bussiness_Email && { border: "1px solid red" }),
                   }}
                 />
@@ -466,9 +442,8 @@ const Signup = () => {
                   name="Address"
                   value={formData.Address}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.Address && { border: "1px solid red" }),
                   }}
                 />
@@ -478,7 +453,7 @@ const Signup = () => {
             {/* address2--end */}
 
             {/* city---start */}
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="city"
@@ -486,8 +461,8 @@ const Signup = () => {
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
                     ...(errors.city && { border: "1px solid red" }),
                   }}
                 />
@@ -504,9 +479,8 @@ const Signup = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginLeft: "20px",
                     ...(errors.state && { border: "1px solid red" }),
                   }}
                 />
@@ -515,7 +489,7 @@ const Signup = () => {
             {/* state--end */}
 
             {/* ZIP- start */}
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="zip"
@@ -523,9 +497,8 @@ const Signup = () => {
                   name="zip"
                   value={formData.zip}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    ...inputStyle,
-                    marginTop: "10px",
                     ...(errors.zip && { border: "1px solid red" }),
                   }}
                 />
@@ -540,16 +513,8 @@ const Signup = () => {
                   name="DEA"
                   value={formData.DEA}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    margin: "10px 0",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    width: "200px",
-                    height: "10px",
-                    marginBottom: "5px",
-                    marginTop: "10px",
-                    marginLeft: "22px",
                     ...(errors.DEA && { border: "1px solid red" }),
                   }}
                 />
@@ -563,33 +528,15 @@ const Signup = () => {
           <div>
             {/* Address */}
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <label
-                style={{
-                  fontFamily: "sans",
-                  position: "absolute",
-                  marginLeft: "62px",
-                  paddingBottom: "10px",
-                  fontSize: "15px",
-                }}
-              >
-                DEA-Expiration-Date
-              </label>
-              <input
-                type="date"
-                // value={startDate ? startDate.toLocaleDateString() : ''}
-                // onFocus={() => setShowCalendar(true)}
-                placeholder="Expiration_Date"
-                style={{
-                  marginLeft: "62px",
-                  height: "29px",
-                  width: "216px",
-                  marginTop: "20px",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                }}
-              />
+            <div className="flex flex-row my-4 justify-evenly">
+              <div className="flex flex-col">
+                <span> DEA-Expiration-Date</span>
 
+                <input
+                  type="date"
+                  className="p-2 border w-52 border-gray-500 rounded-lg"
+                />
+              </div>
               {/* pharmacy_license---start */}
               <div>
                 <input
@@ -598,16 +545,8 @@ const Signup = () => {
                   name="Bussiness_License"
                   value={formData.Bussiness_License}
                   onChange={handleInputChange}
+                  className="p-2 border mt-6 border-gray-500 rounded-lg"
                   style={{
-                    margin: "10px 0",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    width: "200px",
-                    height: "10px",
-                    marginTop: "20px",
-                    marginBottom: "5px",
-                    marginLeft: "22px",
                     ...(errors.Bussiness_License && {
                       border: "1px solid red",
                     }),
@@ -618,32 +557,13 @@ const Signup = () => {
               {/* Pharmacy-license---end */}
             </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div>
-                <label
-                  style={{
-                    fontFamily: "sans",
-                    position: "absolute",
-                    marginLeft: "62px",
-                    paddingBottom: "10px",
-                    fontSize: "15px",
-                  }}
-                >
-                  {" "}
-                  Bussiness-licence-Expiration-Date
-                </label>
+            <div className="flex flex-row my-4  justify-evenly">
+              <div className="flex flex-col">
+                <span> Bussiness-Expiration-Date</span>
 
                 <input
                   type="date"
-                  placeholder="Expiration_Date"
-                  style={{
-                    marginLeft: "62px",
-                    height: "29px",
-                    width: "216px",
-                    marginTop: "20px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
+                  className="p-2 border w-52 border-gray-500 rounded-lg"
                 />
               </div>
 
@@ -653,133 +573,44 @@ const Signup = () => {
                 name="NPI"
                 value={formData.NPI}
                 onChange={handleInputChange}
+                className="p-2 border mt-5 border-gray-500 rounded-lg"
                 style={{
-                  margin: "10px 0",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                  width: "200px",
-                  height: "10px",
-                  marginBottom: "5px",
-                  marginTop: "20px",
-                  marginLeft: "22px",
                   ...(errors.NPI && { border: "1px solid red" }),
                 }}
               />
             </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {/* <h6 style={{ marginLeft: '68px' }}>DEA License Copy ( jpg, jpeg, png )</h6> */}
-              <label
-                style={{
-                  fontFamily: "sans",
-                  position: "absolute",
-                  marginLeft: "62px",
-                  paddingBottom: "10px",
-                  fontSize: "15px",
-                  marginTop: "10px",
-                }}
-              >
-                DEA License Copy ( jpg, jpeg, png )
-              </label>
+            <div className="flex flex-row my-4  justify-evenly">
+              <div className="flex flex-col">
+                <span className="ml-5">DEA-Licence Copy(jpg,png,png)</span>
 
-              <input
-                id="file"
-                placeholder="file"
-                name="file"
-                type="file"
-                style={{
-                  margin: "10px 0",
-                  padding: "10px",
-                  // border: '1px solid #ccc',
-                  // borderRadius: '4px',
-                  width: "250px",
-                  height: "45px",
-                  marginBottom: "3px",
-                  marginLeft: "52px",
-                  textAlign: "center",
-                  marginTop: "20px",
-                }}
-              />
+                <input type="file" className="p-2 w-52 ml-3" />
+                <div className="flex ml-3">
+                  <BiCaretUp />
+                  <span> File types:jpg,jpeg,png</span>
+                </div>
+                <div className="flex ml-3">
+                  <BiCaretUp />
+                  <span> File Size:jpg,jpeg,png</span>
+                </div>
+              </div>
 
-              <label
-                style={{
-                  fontFamily: "sans",
-                  position: "absolute",
-                  marginLeft: "62px",
-                  marginTop: "60px",
-                  fontSize: "15px",
-                }}
-              >
-                <BiCaretUp /> Allowed File Types: jpg,jpeg,png
-              </label>
-              <label
-                style={{
-                  fontFamily: "sans",
-                  position: "absolute",
-                  marginLeft: "62px",
-                  marginTop: "90px",
-                  fontSize: "15px",
-                }}
-              >
-                {" "}
-                <BiCaretUp /> Maximum File Size Allowed:7MB
-              </label>
+              <div className="flex flex-col">
+                <span>State Licence Copy(jpg,png,png)</span>
 
-              <label
-                style={{
-                  fontFamily: "sans",
-                  position: "absolute",
-                  marginLeft: "302px",
-                  paddingBottom: "10px",
-                  fontSize: "15px",
-                  marginTop: "10px",
-                }}
-              >
-                State License Copy ( jpg, jpeg, png )
-              </label>
-
-              <input
-                id="file"
-                placeholder="file"
-                name="file"
-                type="file"
-                style={{
-                  margin: "10px 0",
-                  padding: "10px",
-                  width: "200px",
-                  height: "45px",
-                  marginBottom: "5px",
-                  marginLeft: "-8px",
-                  marginTop: "20px",
-                }}
-              />
+                <input type="file" className="p-2  w-52 " />
+                <div className="flex ml-3">
+                  <BiCaretUp />
+                  <span> File types:jpg,jpeg,png</span>
+                </div>
+                <div className="flex ml-3">
+                  <BiCaretUp />
+                  <span> File Size:jpg,jpeg,png</span>
+                </div>
+              </div>
             </div>
-            <label
-              style={{
-                fontFamily: "sans",
-                position: "absolute",
-                marginLeft: "6px",
-                paddingBottom: "30px",
-                fontSize: "15px",
-              }}
-            >
-              <BiCaretUp /> Allowed File Types: jpg,jpeg,png
-            </label>
-            <label
-              style={{
-                fontFamily: "sans",
-                position: "absolute",
-                marginLeft: "6px",
-                paddingTop: "20px",
-                fontSize: "15px",
-              }}
-            >
-              {" "}
-              <BiCaretUp /> Maximum File Size Allowed:7MB
-            </label>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <input
                   id="NCPDP"
@@ -787,19 +618,8 @@ const Signup = () => {
                   name="NCPDP"
                   value={formData.NCPDP}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    margin: "10px 0",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    width: "200px",
-                    height: "10px",
-                    marginBottom: "5px",
-                    marginLeft: "60px",
-                    fontSize: "16px",
-                    marginTop: "80px",
-                    // marginBottom:'10px',
-                    textAlign: "center",
                     ...(errors.NCPDP && { border: "1px solid red" }),
                   }}
                 />
@@ -813,16 +633,8 @@ const Signup = () => {
                   name="Federal"
                   value={formData.Federal}
                   onChange={handleInputChange}
+                  className="p-2 border border-gray-500 rounded-lg"
                   style={{
-                    margin: "10px 0",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    width: "220px",
-                    height: "10px",
-                    marginBottom: "5px",
-                    marginTop: "80px",
-                    marginLeft: "22px",
                     ...(errors.Federal && { border: "1px solid red" }),
                   }}
                 />
@@ -832,277 +644,96 @@ const Signup = () => {
         );
       case 3:
         return (
-          <div>
-            <h2 style={{ fontFamily: "sans" }}>Thank you for registering!</h2>
-            <p style={{ fontFamily: "sans" }}>
+          <div className="my-6">
+            <div className="flex justify-center items-center">
+              Thank you for registering!
+            </div>
+            <div className="flex justify-center ">
               Your registration is completed.
-            </p>
+            </div>
           </div>
         );
-      default:
-        return "Welcome to Our Website";
     }
   };
 
-  const inputStyle = {
-    margin: "10px 0",
-    padding: "10px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    width: "200px",
-    height: "10px",
-    marginBottom: "5px",
-    marginLeft: "60px",
-  };
-
-  const errorStyle = {
-    color: "red",
-    fontSize: "14px",
-    marginTop: "5px",
-    // border:'2px solid red',
-    marginLeft: "60px",
-    display: "flex",
-  };
-
-  const checkboxContainerStyle = {
-    display: "flex",
-    alignItems: "center",
-    margin: "10px 0",
-  };
-
-  const checkboxLabelStyle = {
-    marginLeft: "10px",
-  };
-
-  const selectStyle = {
-    width: "200px",
-    height: "10px",
-    marginLeft: "2px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-
-    margin: "10px 0",
-    padding: "10px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-
-    height: "10px",
-    marginBottom: "-10px",
-    // marginLeft: '60px'
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={logoContainerStyle}>
-        {/* <Link to='/'>
-        <img src={logoImage} alt="Logo" style={logoStyle} />
-        </Link> */}
-        {/* <Link to='/'>
-        <img src={logoImage} style={logoStyle} />
-        </Link> */}
-
-      </div>
-      <div style={backgroundContainerStyle}>
+    <div className="">
+      <div className=" h-screen w-screen">
         <img
           src={background_image}
           alt="Background"
-          style={backgroundImageStyle}
+          className="w-[100%] h-[100%] absolute top-0 left-0 z-[-1]"
         />
 
-<div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-      }}>
-        <Link to='/'>
-          <img src={logoImage} alt="Logo" style={{ width: '180px', }} />
-        </Link>
-      </div>
-        <div style={formContainerStyle}>
-          <h1 style={titleStyle}>SignUp</h1>
-          <div style={stepperContainerStyle}>
-            {steps.map((label, index) => (
-              <div key={label} style={stepStyle}>
-                <div
-                  style={{
-                    ...circleStyle,
-                    ...(activeStep === index ? activeCircleStyle : {}),
-                    // ...(isStepSkipped(index) ? skippedCircleStyle : {}),
-                    // ...(isStepCompleted(index)? completedCircleStyle : {})
-                  }}
-                >
-                  {index + 1}
-                </div>
-                <div style={labelStyle}>{label}</div>
+        <div className="w-full h-full ">
+          <Link to="/">
+            <img src={logoImage} alt="Logo" style={{ width: "220px" }} />
+          </Link>
+          <div className="h-full flex justify-center items-center">
+            <div className="bg-white w-[40%] p-8 rounded-lg shadow-lg">
+              <span className="text-blue-900 text-[25px]  text-center font-bold  my-5   flex justify-center items-center  ">
+                SignUp
+              </span>
+              <div className="flex my-6">
+                {steps.map((label, index) => (
+                  <div
+                    key={label}
+                    className="flex  items-center flex-1 flex-col"
+                    //  style={stepStyle}
+                  >
+                    <div
+                      className=" w-11 h-11 border rounded-full bg-blue-900 text-white flex justify-center items-center"
+                      style={{
+                        // ...circleStyle,
+
+                        ...(activeStep === index ? activeCircleStyle : {}),
+                        // ...(isStepSkipped(index) ? skippedCircleStyle : {}),
+                        // ...(isStepCompleted(index)? completedCircleStyle : {})
+                      }}
+                    >
+                      {index + 1}
+                    </div>
+                    <div className="text-base">{label}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          {getStepContent(activeStep)}
-          <div style={buttonContainerStyle}>
-            <button
-              onClick={handleBack}
-              disabled={activeStep === 0}
-              style={buttonStyle}
-            >
-              Back
-            </button>
-            {isStepOptional(activeStep) && (
-              <button
-                onClick={handleSkip}
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: "#36218B",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  marginTop: "20px",
-                  // marginLeft: '150px',
-                  marginRight: "14px",
-                  marginBottom: "30px",
-                }}
-              >
-                Skip
-              </button>
-            )}
+              {getStepContent(activeStep)}
+              <div className="flex justify-evenly">
+                <button
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  // style={buttonStyle}
+                  className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
+                >
+                  Back
+                </button>
+                {isStepOptional(activeStep) && (
+                  <button
+                    onClick={handleSkip}
+                    className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
+                  >
+                    Skip
+                  </button>
+                )}
 
-            <button
-              onClick={handleNext}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#36218B",
-                color: "#fff",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "20px",
-                // marginLeft: '150px',
-                marginRight: "362px",
-                marginBottom: "30px",
-              }}
-            >
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </button>
+                <button
+                  onClick={handleNext}
+                  className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
+                >
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-const containerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100vh",
-  fontFamily: "Arial, sans-serif",
-};
-
-const logoContainerStyle = {
-  position: "absolute",
-  top: "20px",
-  left: "20px",
-};
-
-// const logoStyle = {
-//   width: "180px",
-// };
-
-const backgroundContainerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "100%",
-  position: "relative",
-};
-
-const backgroundImageStyle = {
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  position: "absolute",
-  top: 0,
-  left: 0,
-  zIndex: -1,
-};
-
-const formContainerStyle = {
-  backgroundColor: "rgba(255, 255, 255, 0.9)",
-  padding: "20px",
-  borderRadius: "10px",
-  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-  width: "80%",
-  maxWidth: "600px",
-  textAlign: "center",
-  marginTop: "90px",
-  marginBottom: "30px",
-};
-
-const titleStyle = {
-  fontSize: "24px",
-  marginBottom: "10px",
-  marginTop: "-10px",
-  color: "#202878",
-};
-
-const stepperContainerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  marginBottom: "20px",
-};
-
-const stepStyle = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  flex: 1,
-};
-
-const circleStyle = {
-  width: "30px",
-  height: "30px",
-  borderRadius: "50%",
-  backgroundColor: "#36218B",
-  color: "#fff",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: "10px",
-};
-
 const activeCircleStyle = {
   backgroundColor: "#037d50",
 };
 
-const skippedCircleStyle = {
-  backgroundColor: "#f0ad4e",
-};
-// const completedCircleStyle ={
-//   backgroundColor: '#388E3C'
-// }
-
-const labelStyle = {
-  fontSize: "12px",
-};
-
-const buttonContainerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-};
-
-const buttonStyle = {
-  padding: "10px 20px",
-  backgroundColor: "#36218B",
-  color: "#fff",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-  marginTop: "20px",
-  marginLeft: "200px",
-  marginRight: "10px",
-  marginBottom: "30px",
-};
-
 export default Signup;
+

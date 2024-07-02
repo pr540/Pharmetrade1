@@ -31,15 +31,14 @@ const ProductDetails = () => {
         <div>
           <h4 className="text-2xl font-semibold my-5">Description</h4>
           <div className="h-full w-[85%]  font-medium space-y-2">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              fugit? Lorem ipsum dolor sit amet.
+            <p className="font-normal text-[20px] font-sans">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet.
             </p>
-            <p>
+            <p className="font-normal text-[20px] font-sans">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
               voluptate in fugit!
             </p>
-            <p>
+            <p className="font-normal text-[20px] font-sans">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa
               aliquam in quisquam. Cumque cupiditate laudantium deleniti culpa
               illum adipisci eos quis fuga neque dolor repellendus, ullam autem,
@@ -47,7 +46,7 @@ const ProductDetails = () => {
               quia distinctio rerum saepe officiis quasi ex explicabo qui optio
               libero? In autem praesentium necessitatibus corrupti?
             </p>
-            <p>
+            <p className="font-normal text-[20px] font-sans">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
               molestiae fugiat optio recusandae praesentium consectetur earum !
             </p>
