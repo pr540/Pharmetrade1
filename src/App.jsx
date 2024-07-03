@@ -39,6 +39,10 @@ import MyAccount from "./Components/UserAccount/MyAccount";
 import MyOrders from "./Components/UserAccount/MyOrders";
 import QuotedProducts from "./Components/DashboardAdmin/QuotedProducts";
 import OrderHistory from "./Components/OrderHistory";
+import UpsShipping from "./Components/DashboardAdmin/UpsShipping";
+import FedexShipping from "./Components/DashboardAdmin/FedexShipping";
+import ShippingSetting from "./Components/DashboardAdmin/ShippingSetting";
+import ManageShipping from "./Components/DashboardAdmin/ManageShipping";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -82,6 +86,10 @@ function App() {
         location.pathname !== "/admin/request-quote" &&
         location.pathname !== "/admin/quoted-product" &&
         location.pathname !== "/admin/settings" &&
+        location.pathname !== "/admin/ups-shipping" &&
+        location.pathname !== "/admin/fedex-shipping" &&
+        location.pathname !== "/admin/shipping-settings" &&
+        location.pathname !== "/admin/manage-shipping" &&
         location.pathname !== "/user" && 
         location.pathname !== "/user/orders" && (
           <Nav topDivRef={topDivRef} cartItems={cartItems} />
@@ -141,6 +149,10 @@ function App() {
           <Route path="/admin/request-quote" element={<RequestQuote />} />
           <Route path="/admin/quoted-product" element={<QuotedProducts />} />
           <Route path="/admin/settings" element={<Settings />} />
+          <Route path="/admin/ups-shipping" element={<UpsShipping />} />
+          <Route path="/admin/fedex-shipping" element={<FedexShipping />} />
+          <Route path="/admin/shipping-settings" element={<ShippingSetting />} />
+          <Route path="/admin/manage-shipping" element={<ManageShipping />} />
         </Route>
 
         <Route element={<AccountPanel topMargin={topMargin} />}>
