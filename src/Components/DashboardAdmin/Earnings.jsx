@@ -44,7 +44,7 @@ const Earnings = () => {
     <div className="pl-2  bg-gray-100 w-[calc(100%-288px)] h-full  justify-center items-center">
       <div className=" w-[95%] h-full">
         <div className=" flex justify-between">
-          <p className="text-2xl text-gray-800 font-medium">Earnings</p>
+          <p className="text-2xl text-blue-900 font-medium">Earnings</p>
         </div>
         <div className=" flex my-4 -ml-8 justify-around items-center p-4">
           {stats.map((stat, index) => (

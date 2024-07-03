@@ -32,9 +32,10 @@ const MyAccount = () => {
   };
 
   return (
-    <div className='w-full'>
-      <h2 className='text-3xl font-bold'>My Account</h2>
-      <div className='flex space-x-4 mt-4 border-b-2  text-2xl font-bold'>
+    <div className=" bg-gray-100 w-[calc(100%-288px)]  flex justify-center font-ubuntu">
+      <div className="w-[95%]  mt-8">
+      <h2 className='text-2xl font-semibold'>My Account</h2>
+      <div className='flex space-x-4 mt-4 border-b-2  text-xl font-semibold'>
         <div
           className={`py-2 px-4  ${selectedSection === 'details' ? 'border-t-2 border-l-2 border-r-2 border-gray-500' : 'border-white'}`}
           onClick={() => setSelectedSection('details')}
@@ -62,6 +63,7 @@ const MyAccount = () => {
       </div>
       <div className='mt-4'>
         {renderSection()}
+      </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
-import Logo from "../assets/Icons/Etrade.png";
+// import Logo from "../assets/Icons/Etrade.png";
+import Logo from "../assets/Icons/logo.png";
 import Search from "../assets/search.png";
 import Buy from "../assets/Buy.png";
 import Cart from "../assets/Cart.png";
@@ -67,6 +68,9 @@ function Nav({ topDivRef, cartItems }) {
   function handleuser() {
     navigate("/user");
   }
+  function handleorder() {
+    navigate("/orderhistory");
+  }
   return (
     <div
       ref={topDivRef}
@@ -84,7 +88,7 @@ function Nav({ topDivRef, cartItems }) {
               <li>
                 <img
                   src={Logo}
-                  className="w-16 md:w-24 lg:w-48  xl:w-64 h-20 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
+                  className="w-16 md:w-24 lg:w-48 xl:w-64 h-16 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
                 />
               </li>
             </div>
@@ -141,7 +145,7 @@ function Nav({ topDivRef, cartItems }) {
                         </h2>
                         <ul>
                           <li className="mb-2">
-                            <a href="#" className="text-blue-900">
+                            <a href="#" className="text-blue-900" onClick={handleorder}>
                               Order List
                             </a>
                           </li>

@@ -37,6 +37,7 @@ function PRight({ topMargin, addCart, wishList }) {
     addCart(prolist);
   }
   function handleClick(index) {
+    alert('Add 1 item into whishlist')
     const prolist = {
       id: index,
       src: images[index],

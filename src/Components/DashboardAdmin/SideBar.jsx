@@ -17,6 +17,8 @@ const Sidebar = () => {
   let location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isQDropdownOpen, setIsQDropdownOpen] = useState(false);
+
 
   const handleClick = (path) => {
     setActiveLink(path);
@@ -24,6 +26,9 @@ const Sidebar = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+  const toggleQDropdown = () => {
+    setIsQDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -131,15 +136,40 @@ const Sidebar = () => {
           <img src={assign} className='w-6 h-6'/>
           <span className="ml-3">Assign Product List</span>
         </Link>
-        <Link
-          to="/admin/request-quote"
-          onClick={() => handleClick("/admin/request-quote")}
-          className={`flex items-center p-2 ${activeLink === "/admin/request-quote" ? "text-blue-900 bg-gray-400" : "text-gray-600"} hover:text-blue-900`}
-        >
-          {/* <FiSettings className="w-6 h-6" /> */}
+
+        <div className="flex items-center justify-between p-2 text-gray-700 hover:text-blue-900 cursor-pointer" onClick={toggleQDropdown}>
+          <div className='flex items-center'>
+          {/* <FiHome className="w-6 h-6" /> */}
           <img src={quote} className='w-6 h-6'/>
-          <span className="ml-3">Request for Quote</span>
-        </Link>
+            <span className="ml-3">Request for Quote</span>
+          </div>
+          {isDropdownOpen ? <FaChevronUp className='mr-2' /> : <FaChevronDown className='mr-2' />}
+        </div>
+
+
+
+        {isQDropdownOpen && (
+          <ul className="ml-6">
+            <li>
+              <Link
+                to="/admin/request-quote"
+                onClick={() => handleClick("/admin/request-quote")}
+                className={`flex items-center p-2 ${activeLink === "/admin/request-quote" ? "text-blue-900 bg-gray-400" : "text-gray-600"} hover:text-blue-900`}
+              >
+                <span className="ml-3">All Requested Quote</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/quoted-product"
+                onClick={() => handleClick("/admin/quoted-product")}
+                className={`flex items-center p-2 ${activeLink === "/admin/quoted-product" ? "text-blue-900 bg-gray-400" : "text-gray-600"} hover:text-blue-900`}
+              >
+                <span className="ml-3">All Quoted Products</span>
+              </Link>
+            </li>
+          </ul>
+        )}
         <Link
           to="/admin/settings"
           onClick={() => handleClick("/admin/settings")}
@@ -150,9 +180,9 @@ const Sidebar = () => {
           <span className="ml-3">Settings</span>
         </Link>
         <Link
-          to="/admin/seller-info"
-          onClick={() => handleClick("/admin/seller-info")}
-          className={`flex items-center p-2 ${activeLink === "/admin/seller-info" ? "text-blue-900 bg-gray-400" : "text-gray-900"} hover:text-blue-900`}
+          to="/user"
+          onClick={() => handleClick("/user")}
+          className={`flex items-center p-2 ${activeLink === "/user" ? "text-blue-900 bg-gray-400" : "text-gray-900"} hover:text-blue-900`}
         >
           {/* <FiSettings className="w-6 h-6" /> */}
           <img src={sellerinfo} className='w-6 h-6'/>

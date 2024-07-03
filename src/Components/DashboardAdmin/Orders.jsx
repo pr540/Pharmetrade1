@@ -51,7 +51,7 @@ function Orders() {
     <div className="bg-gray-100 w-[calc(100%-288px)] h-full flex items-center justify-center">
       <div className="w-[95%] h-full mt-8">
         <div className="flex  justify-between ">
-          <h1 className="text-2xl text-gray-800 font-medium">List of Orders</h1>
+          <h1 className="text-2xl text-blue-900 font-medium">List of Orders</h1>
 
           <button className="bg-blue-900 flex  items-center text-white p-2 text-xl rounded-md">
             {" "}

@@ -31,12 +31,14 @@ import Return from "./Components/DashboardAdmin/Return";
 import AssignProduct from "./Components/DashboardAdmin/AssignProduct";
 import AssignProductList from "./Components/DashboardAdmin/AssignProductList";
 import Settings from "./Components/DashboardAdmin/Settings";
-import SellerInfo from "./Components/DashboardAdmin/SellerInfo";
+// import SellerInfo from "./Components/DashboardAdmin/SellerInfo";
 import RequestQuote from "./Components/DashboardAdmin/RequestQuote";
 import Payouts from "./Components/DashboardAdmin/Payouts";
 import AccountPanel from "./Components/UserAccount/AccountPanel";
 import MyAccount from "./Components/UserAccount/MyAccount";
 import MyOrders from "./Components/UserAccount/MyOrders";
+import QuotedProducts from "./Components/DashboardAdmin/QuotedProducts";
+import OrderHistory from "./Components/OrderHistory";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -78,8 +80,10 @@ function App() {
         location.pathname !== "/admin/assign-products" &&
         location.pathname !== "/admin/assign-product-list" &&
         location.pathname !== "/admin/request-quote" &&
+        location.pathname !== "/admin/quoted-product" &&
         location.pathname !== "/admin/settings" &&
-        location.pathname !== "/admin/seller-info" && (
+        location.pathname !== "/user" && 
+        location.pathname !== "/user/orders" && (
           <Nav topDivRef={topDivRef} cartItems={cartItems} />
         )}
       <Routes>
@@ -108,6 +112,7 @@ function App() {
         <Route path="/app" element={<Landing topMargin={topMargin} />} />
         <Route path="/" element={<Landing topMargin={topMargin} />} />
         <Route path="/detailspage/:id" element={<Items addCart={addCart} />} />
+        <Route path="/orderhistory" element={<OrderHistory topMargin={topMargin} />} />
         <Route
           path="/wishlist"
           element={
@@ -134,8 +139,8 @@ function App() {
             element={<AssignProductList />}
           />
           <Route path="/admin/request-quote" element={<RequestQuote />} />
+          <Route path="/admin/quoted-product" element={<QuotedProducts />} />
           <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/admin/seller-info" element={<SellerInfo />} />
         </Route>
 
         <Route element={<AccountPanel topMargin={topMargin} />}>
