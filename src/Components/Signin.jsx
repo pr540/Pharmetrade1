@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import background_image from "../assets/homepharma.png";
-import logo from "../assets/logo2.png";
+// import logo from "../assets/logo2.png";
+import logo from "../assets/Icons/logo2.png"
 import Changepassword from "./Changepassword";
 // import OTP2 from './OTP2';
 import { Link } from "react-router-dom";
@@ -105,7 +106,7 @@ const Signin = () => {
         }}
       />
 
-      <div className="w-full h-full ">
+      <div className="w-full h-full mt-2 ml-2 ">
         <Link to="/">
           <img src={logo} style={{ width: "220px" }} />
         </Link>
