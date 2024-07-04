@@ -277,7 +277,7 @@ const Sidebar = () => {
                     : "text-gray-600"
                 } hover:text-blue-900`}
               >
-                <span className="ml-3">UPS Setting</span>
+                <span className="ml-3">UPS Shipping</span>
               </Link>
             </li>
             <li>
