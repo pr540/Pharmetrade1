@@ -92,7 +92,7 @@ function Landing2() {
            <img
             src={allproduct}
             alt="Descriptive Alt Text"
-            className="cursor-pointer w-72" // Make the image clickable
+            className="cursor-pointer w-64" // Make the image clickable
             onClick={() => setIsVisible(true)} // Change state on click
           />
         </Link>
