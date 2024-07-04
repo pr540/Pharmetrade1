@@ -3,7 +3,7 @@ import email from "../assets/email.png";
 
 function Footers() {
   return (
-    <div className="text-white bg-foot relative z-40">
+    <div className="text-blue-900 bg-foot relative z-40">
       <div
         className=" flex  justify-center gap-32 w-full p-10"
         style={{ alignItems: "center" }}
@@ -25,11 +25,11 @@ function Footers() {
           </p>
           <p className="mt-4 text-md w-fit font-thin">
             Ready to learn more? Schedule a{" "}
-            <a href="#" className="text-white font-medium underline">
+            <a href="#" className="text-blue-900 font-medium underline">
               demo
             </a>{" "}
             or{" "}
-            <a href="#" className="text-white font-medium underline">
+            <a href="#" className="text-blue-900 font-medium underline">
               join
             </a>{" "}
             today!!

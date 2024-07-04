@@ -125,7 +125,7 @@ const OTPInput = ({ length, onChangeOTP }) => {
           }
           ref={(el) => (inputRefs.current[index] = el)}
           // style={inputStyle}
-          className="w-8 flex items-center justify-center border  rounded-xl mx-1 -mt-5"
+          className="w-6 flex items-center justify-center border border-gray-400  rounded-md mx-1 -mt-5"
         />
       ))}
     </div>
@@ -143,7 +143,7 @@ const Otp = () => {
     // style={{ textAlign: "center", marginTop: "26px" }}
     >
       <h5
-      className=" flex justify-start items-start mx-16"
+      className=" flex justify-start items-start mx-6"
       //  style={{ marginTop: "-15px", marginLeft: "-50px" }}
        >Enter OTP</h5>
       <OTPInput length={6} onChangeOTP={handleOTPChange} />
