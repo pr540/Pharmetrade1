@@ -81,26 +81,26 @@ function Nav({ topDivRef, cartItems }) {
         <ul className=" text-3xl ">
           {/* Top div logo home  */}
           <div
-            className="flex flex-row gap-8 md:gap-12 lg:gap-20 xl:justify-between items-center font-normal text-xl bg-white text-gray-500 "
+            className="flex flex-row gap-8 md:gap-12 lg:gap-20 xl:justify-between items-center  text-xl fontbg-white text-gray-500 "
             // style={{ fontFamily: "helveticaNeue" }}
           >
             <div>
               <li>
                 <img
                   src={Logo}
-                  className="w-16 md:w-24 lg:w-48 xl:w-64 h-16 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
+                  className="w-12 md:w-20 lg:w-36 xl:w-64 h-16 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
                 />
               </li>
             </div>
-            <div className="hidden  md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6  items-center">
-              <li className=" w-fit cursor-pointer" onClick={handleclicked}>
+            <div className=" hidden  md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6  items-center">
+              <li className="text-blue-900 w-fit cursor-pointer  font-medium hover:text-gray-400 text-base" onClick={handleclicked}>
                 Home
               </li>
-              <li className=" w-fit cursor-pointer" onClick={handleBuy}>Products </li>
-              <li className="">Why ParamETrade</li>
-              <li className="">About Us</li>
-              <li className="">Contact Us </li>
-              <li className="">Offers</li>
+              <li className="text-blue-900 w-fit cursor-pointer font-medium hover:text-gray-400 text-base " onClick={handleBuy}>Products </li>
+              <li className=" text-blue-900 font-medium hover:text-gray-400 text-base">Why ParamETrade</li>
+              <li className="text-blue-900 font-medium hover:text-gray-400 text-base">About Us</li>
+              <li className="text-blue-900 font-medium hover:text-gray-400 text-base">Contact Us </li>
+              <li className="text-blue-900 font-medium hover:text-gray-400 text-base">Offers</li>
 
               <div
                 className="hidden md:flex flex-row md:gap-2 lg:gap-2 xl:gap-4 text-md items-center font-thin"
@@ -118,11 +118,11 @@ function Nav({ topDivRef, cartItems }) {
                       alt="clickable"
                       onClick={handleredirect}
                     />
-                    <div>
-                      <div className="text-[17px] font-medium">
+                    <div className="text-blue-900 text-base">
+                      <div className="text-base font-medium ">
                         Hello, Sign in
                       </div>
-                      <div className="text-[20px] font-semibold">
+                      <div className="text-lg font-semibold">
                         Account & Lists
                       </div>
                     </div>
@@ -198,7 +198,7 @@ function Nav({ topDivRef, cartItems }) {
                       onClick={handleCart}
                     /> */}
                     <FiShoppingCart
-                      className="w-6  md:w-8 lg:w-10 xl:w-12 pt-2 h-8 md:h-8 lg:h-8 xl:h-10 text-blue-900"
+                      className="w-6  md:w-8 lg:w-10 xl:w-12 pt-2 h-8 md:h-8 lg:h-8 xl:h-10 text-blue-900 hover:text-gray-400 hover:scale-110 transi duration-500"
                       onClick={handleCart}
                     />
                   </button>
@@ -215,7 +215,7 @@ function Nav({ topDivRef, cartItems }) {
                     <img
                       src={like}
                       onClick={handleclick}
-                      className="w-6 md:w-8 lg:w-10 xl:w-12 pt-2 h-10 md:h-12 lg:h-14 xl:h-16"
+                      className="w-6 md:w-8 lg:w-10 xl:w-12 pt-2 h-10 md:h-12 lg:h-14 xl:h-16 hover:scale-110 transition duration-300"
                     />{" "}
                   </button>
                 </li>
@@ -236,7 +236,7 @@ function Nav({ topDivRef, cartItems }) {
               className="relative flex items-center xl:w-full "
               // style={{ width: "100vh" }}
             >
-              <select className="h-fit py-2 md:w-12 text-[17px] lg:w-20 p-3 text-gray-500 bg-white border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select className="h-fit py-2 md:w-12 text-[12px] lg:w-20 px-5 text-gray-500 bg-white border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option>All categories</option>
                 <option>Allegies</option>
                 <option>Bath & Body</option>
@@ -260,11 +260,11 @@ function Nav({ topDivRef, cartItems }) {
               <input
                 type="text"
                 placeholder="Search for products..."
-                className="w-full md:w-72 lg:w-80 xl:w-full py-2 px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full md:w-72 lg:w-80 xl:w-full py-1 px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="absolute right-0 flex items-center justify-center h-full px-4 py-2 bg-blue-500 text-white rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button className="absolute right-0 flex items-center justify-center h-full px-2  bg-blue-500 text-white rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <svg
-                  className="w-4 h-4"
+                  className="w-3 h-3"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -286,41 +286,41 @@ function Nav({ topDivRef, cartItems }) {
                 className=" xl:gap-10 grid grid-rows-2 grid-cols-2 md:flex md:flex-row md:gap-4 lg:gap-2  xl:justify-between text-gray-500    items-center py-2 px-2 lg:px-0 "
                 // style={{ fontFamily: "helveticaNeue" }}
               >
-                <div className="flex flex-row gap-1 lg:gap-2 items-center" onClick={handleBuy}>
-                  <img src={Buy} className="w-fit h-10" />
-                  <li>Buy</li>
+                <div className="flex flex-row gap-1 lg:gap-2 items-center cursor-pointer" onClick={handleBuy}>
+                  <img src={Buy} className="w-fit h-8" />
+                  <li className="text-base">Buy</li>
                 </div>
-                <div className="flex flex-row gap-1 lg:gap-2 items-center" onClick={handleClick}>
-                  <img src={hand} className="w-fit  h-10" />
-                  <li>Join</li>
+                <div className="flex flex-row gap-1 lg:gap-2 items-center cursor-pointer" onClick={handleClick}>
+                  <img src={hand} className="w-fit  h-8" />
+                  <li className="text-base">Join</li>
                 </div>
-                <div className="flex flex-row gap-1 lg:gap-2 items-center" onClick={handleAdmin}>
-                  <img src={sale} className="w-fit  h-10" />
-                  <li>Sell</li>
+                <div className="flex flex-row gap-1 lg:gap-2 items-center cursor-pointer" onClick={handleAdmin}>
+                  <img src={sale} className="w-fit  h-8" />
+                  <li className="text-base">Sell</li>
                 </div>
-                <div className="flex flex-row gap-1 lg:gap-2 items-center">
-                  <img src={bid} className="w-fit  h-10" />
-                  <li>Bid</li>
+                <div className="flex flex-row gap-1 lg:gap-2 items-center cursor-pointer">
+                  <img src={bid} className="w-fit  h-8" />
+                  <li className="text-base">Bid</li>
                 </div>
                 <div className="flex flex-row gap-1 lg:gap-2 ml-3 items-center">
-                  <img src={linkedin} className="w-fit  h-10" />
+                  <img src={linkedin} className="w-fit  h-8" />
                   {/* <FaLinkedin className="w-fit  h-7 text-blue-900" /> */}
-                  <li>LinkedIn</li>
+                  <li className="text-base">LinkedIn</li>
                 </div>
                 <div className="flex flex-row gap-1 lg:gap-2 items-center">
-                  <img src={facebook} className="w-fit  h-8" />
+                  <img src={facebook} className="w-fit  h-6" />
                   {/* <FaFacebook className="w-fit  h-7 text-blue-900" /> */}
-                  <li>Facebook</li>
+                  <li className="text-base">Facebook</li>
                 </div>
                 <div className="flex flex-row gap-1 lg:gap-2 items-center">
-                  <img src={insta} className="w-fit  h-8" />
+                  <img src={insta} className="w-fit  h-6" />
                   {/* <FaInstagramSquare  className="w-fit  h-7 text-blue-900" /> */}
-                  <li>Insta</li>
+                  <li className="text-base">Insta</li>
                 </div>
                 <div className="flex flex-row gap-1 lg:gap-2 items-center">
-                  <img src={twitter} className="w-fit  h-8" />
+                  <img src={twitter} className="w-fit  h-6" />
                   {/* <FaInstagramSquare  className="w-fit  h-7 text-blue-900" /> */}
-                  <li>Twitter</li>
+                  <li className="text-base">Twitter</li>
                 </div>
 
                 {/* <div className="flex flex-row gap-2 items-center">

@@ -310,7 +310,7 @@ const Signup = () => {
                 </div>
               </div>
             </div>
-            <div className=" mx-14 my-4">
+            <div className=" mx-4 my-4">
               <input
                 type="checkbox"
                 id="checkbox"

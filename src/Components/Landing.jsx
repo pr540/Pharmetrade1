@@ -24,21 +24,21 @@ function Landing({ topMargin }) {
             marginTop: `${topMargin}px`,
           }}
         >
-          <p className="text-left md:pt-10 lg:pt-20 md:ml-20 lg:ml-36 lg:text-4xl text-white w-fit">
-            <div className="mb-10 bounce-in-top overflow-hidden">
-              <span className="text-6xl mb-20 text-white  font-extralight">
+          <p className="text-left md:pt-6 lg:pt-14 md:ml-20 lg:ml-36 lg:text-4xl text-white w-fit">
+            <div className="mb-4 bounce-in-top overflow-hidden">
+              <span className="text-5xl mb-14 text-white  font-extralight">
                 Your{" "}
               </span>
               <br></br>
             </div>
-            <div className="mb-10 bounce-in-top">
-              <span className="font-semibold text-white mb-3 text-5xl">
+            <div className="mb-4 bounce-in-top">
+              <span className="font-semibold text-white mb-3 text-4xl">
                 Trusted Online
               </span>
               <br></br>
             </div>
-            <div className="mb-10 bounce-in-top">
-              <span className="font-semibold text-white mt-5 text-5xl">
+            <div className="mb-4 bounce-in-top">
+              <span className="font-semibold text-white mt-5 text-4xl">
                 {" "}
                 Market Place
               </span>
