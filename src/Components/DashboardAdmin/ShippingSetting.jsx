@@ -2,20 +2,20 @@ import React from "react";
 
 const ShippingSetting = () => {
   return (
-    <div className=" w-[calc(100%-288px)] h-full justify-center flex items-center">
+    <div className=" w-[calc(100%-256px)] h-full justify-center flex items-center">
       <div className="w-[95%]  h-full">
-        <div className="  flex flex-col my-8">
-          <h1 className="text-2xl text-blue-900 font-semibold ">
+        <div className="  flex flex-col my-4">
+          <h1 className="text-[22px] text-blue-900 font-semibold ">
             Origin Address
           </h1>
         </div>
         <div className="w-full flex justify-between">
-          <h2 className=" text-2xl text-gray-600 font-semibold">
+          <h2 className=" text-[22px] text-gray-600 font-semibold">
             {" "}
             Shipping Origin Address
           </h2>
           <button
-            className="border rounded-full w-24 bg-blue-900 text-white h-9"
+            className="border rounded-lg px-4 text-[15px] bg-blue-900 text-white "
             // onClick={handleSubmit}
           >
             SAVE
@@ -32,7 +32,7 @@ const ShippingSetting = () => {
             <input
               type="text"
               id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
+              className=" w-56 h-8 border-slate-300 border"
             />
           </div>
           <div className="flex flex-col">
@@ -42,7 +42,7 @@ const ShippingSetting = () => {
             <input
               type="text"
               id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
+              className=" w-56 h-8 border-slate-300 border"
             />
           </div>
           <div className="flex flex-col">
@@ -52,7 +52,7 @@ const ShippingSetting = () => {
             <input
               type="text"
               id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
+              className=" w-56 h-8 border-slate-300 border"
             />
           </div>
           <div className="flex flex-col">
@@ -62,7 +62,7 @@ const ShippingSetting = () => {
             <input
               type="text"
               id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
+              className=" w-56 h-8 border-slate-300 border"
             />
           </div>
         </div>
@@ -71,40 +71,44 @@ const ShippingSetting = () => {
 
         {/* section2 start */}
         <div className="flex justify-between items-center text-gray-600 my-6">
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <label className="text-base">
-              City<span className="text-red-600 text-2xl">*</span>
+              City<span className="text-red-600 text-xl">*</span>
             </label>
             <input
               type="text"
               id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-base">State/province</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
+              className=" w-56 h-8 border-slate-300 border"
             />
           </div>
           <div className="flex flex-col">
             <label className="text-base">
-              Zip/Postal Code<span className="text-red-600 text-2xl">*</span>
+              State/provincee<span className="text-red-600 text-xl">*</span>
+              </label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-56 h-8 border-slate-300 border"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-base">
+              Zip/Postal Code<span className="text-red-600 text-xl">*</span>
             </label>
             <input
               type="text"
               id="product_name"
-              className=" w-72 h-10 border-slate-300 border"
+              className=" w-56 h-8 border-slate-300 border"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">Country</label>
+            <label className="text-base">
+              Country<span className="text-red-600 text-xl">*</span>
+            </label>
             <input
               type="text"
               id="Upn_Mem"
-              className="w-72 h-10 border-slate-300 border "
+              className="w-56 h-8 border-slate-300 border "
             />
           </div>
         </div>

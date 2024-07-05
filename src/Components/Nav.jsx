@@ -1,6 +1,7 @@
 import React from "react";
 // import Logo from "../assets/Icons/Etrade.png";
-import Logo from "../assets/Icons/logo.png";
+// import Logo from "../assets/Icons/logo.png";
+import Logo from "../assets/logo_04.png";
 import Search from "../assets/search.png";
 import Buy from "../assets/Buy.png";
 import Cart from "../assets/Cart.png";
@@ -26,6 +27,8 @@ import { FaLinkedin } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io";
 import { FiShoppingCart } from "react-icons/fi";
 // import { useNavbarContext } from "./NavbarContext";
+import myaccount from "../assets/My Account.png";
+
 
 function Nav({ topDivRef, cartItems }) {
   let navigate = useNavigate();
@@ -88,19 +91,20 @@ function Nav({ topDivRef, cartItems }) {
               <li>
                 <img
                   src={Logo}
-                  className="w-12 md:w-20 lg:w-36 xl:w-64 h-16 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
+                  onClick={handleclicked}
+                  className="w-12 md:w-20 lg:w-36 xl:w-64 h-14 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
                 />
               </li>
             </div>
             <div className=" hidden  md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6  items-center">
-              <li className="text-blue-900 w-fit cursor-pointer  font-medium hover:text-gray-400 text-base" onClick={handleclicked}>
+              <li className="text-blue-900 w-fit cursor-pointer  font-medium hover:text-green-400 text-lg" onClick={handleclicked}>
                 Home
               </li>
-              <li className="text-blue-900 w-fit cursor-pointer font-medium hover:text-gray-400 text-base " onClick={handleBuy}>Products </li>
-              <li className=" text-blue-900 font-medium hover:text-gray-400 text-base">Why ParamETrade</li>
-              <li className="text-blue-900 font-medium hover:text-gray-400 text-base">About Us</li>
-              <li className="text-blue-900 font-medium hover:text-gray-400 text-base">Contact Us </li>
-              <li className="text-blue-900 font-medium hover:text-gray-400 text-base">Offers</li>
+              <li className="text-blue-900 w-fit cursor-pointer font-medium hover:text-green-400 text-lg " onClick={handleBuy}>Products </li>
+              <li className=" text-blue-900 font-medium hover:text-green-400 text-lg">Why ParamETrade</li>
+              <li className="text-blue-900 font-medium hover:text-green-400 text-lg">About Us</li>
+              <li className="text-blue-900 font-medium hover:text-green-400 text-lg">Contact Us </li>
+              <li className="text-blue-900 font-medium hover:text-green-400 text-lg">Offers</li>
 
               <div
                 className="hidden md:flex flex-row md:gap-2 lg:gap-2 xl:gap-4 text-md items-center font-thin"
@@ -128,24 +132,24 @@ function Nav({ topDivRef, cartItems }) {
                     </div>
                   </div>
                   {isPopupVisible && (
-                    <div className="fixed  flex z-10">
-                      <div className="bg-white p-8 rounded shadow-lg w-80">
+                    <div className="fixed flex z-10">
+                      <div className="bg-white p-4 rounded shadow-lg w-64">
                         <div className="w-full justify-center items-center">
                           <button
-                            className="bg-blue-900 text-white py-2 px-4 rounded mb-4"
+                            className="bg-blue-900 text-white py-1 px-2 rounded mb-2"
                             onClick={handleredirect}
                           >
                             Sign In
                           </button>
                         </div>
-                        <p className="mb-4">New customer? Start here</p>
-                        <h2 className="text-xl font-semibold mb-2 cursor-pointer"
+                        <p className="mb-1 text-lg">New customer? Start here</p>
+                        <h2 className="text-lg font-semibold cursor-pointer"
                         onClick={handleuser}>
                           Your Account
                         </h2>
                         <ul>
                           <li className="mb-2">
-                            <a href="#" className="text-blue-900" onClick={handleorder}>
+                            <a href="#" className="text-lg text-blue-900" onClick={handleorder}>
                               Order List
                             </a>
                           </li>
@@ -159,12 +163,12 @@ function Nav({ topDivRef, cartItems }) {
                             </a>
                           </li>
                           <li className="mb-2">
-                            <Link to="/admin" className="text-blue-900">
+                            <Link to="/admin" className="text-lg text-blue-900">
                               Seller Dashboard
                             </Link>
                           </li>
                           <li>
-                            <a href="#" className="text-blue-900">
+                            <a href="#" className="text-lg text-blue-900">
                               Account Settings
                             </a>
                           </li>
@@ -260,7 +264,7 @@ function Nav({ topDivRef, cartItems }) {
               <input
                 type="text"
                 placeholder="Search for products..."
-                className="w-full md:w-72 lg:w-80 xl:w-full py-1 px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full md:w-72 lg:w-80 xl:w-full py-1 px-4 border border-gray-300 focus:outline-none rounded-r-md focus:ring-2 focus:ring-blue-500"
               />
               <button className="absolute right-0 flex items-center justify-center h-full px-2  bg-blue-500 text-white rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <svg

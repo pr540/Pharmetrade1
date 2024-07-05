@@ -51,10 +51,10 @@ const QuotedProducts = () => {
   ];
 
   return (
-    <div className="relative bg-gray-100 w-[calc(100%-288px)] h-full flex justify-center items-center ">
+    <div className="relative bg-gray-100 w-[calc(100%-256px)] h-full flex justify-center items-center ">
       <div className=" w-[95%] h-full mt-8">
         <div className=" flex justify-between">
-          <p className="text-2xl text-blue-900 font-medium">
+          <p className="text-[22px] text-blue-900 font-medium">
             {" "}
             All Quoted Products{" "}
           </p>
@@ -64,11 +64,11 @@ const QuotedProducts = () => {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="p-4 h-32 w-72  border rounded-lg shadow-lg flex justify-between items-center bg-white"
+              className="p-4 h-28 w-56 border rounded-lg shadow-lg flex justify-between items-center bg-white"
             >
               <div className="w-full">
                 <div className="flex justify-between items-center">
-                  <div className="text-[17px] text-gray-700 font-normal">
+                  <div className="text-[15px] text-gray-700 font-normal">
                     {stat.label}
                   </div>
                   <div className="menu-icon">
@@ -76,11 +76,11 @@ const QuotedProducts = () => {
                   </div>
                 </div>
                 <div className="flex justify-between mt-2 items-center">
-                  <div className="text-3xl font-semibold">{stat.value}</div>
+                  <div className="text-2xl font-semibold">{stat.value}</div>
                   <div
                     className={`text-sm ${
                       stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
-                    } p-2 rounded-lg`}
+                    } p-1 rounded-lg`}
                   >
                     ↑ {stat.percentage} %
                   </div>
@@ -91,13 +91,13 @@ const QuotedProducts = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-2">Filter</button>
+            <button className="bg-green-300 p-1">Filter</button>
             <select className="ml-2">
               <option>Columns</option>
             </select>
           </div>
 
-          <div className="overflow-x-scroll w-full mt-4 font-sans">
+          <div className="overflow-x-scroll text-[15px] w-full mt-4 font-sans">
             <table className="rounded-lg bg-white w-full">
               <thead className="bg-blue-900 text-white">
                 <tr>
@@ -124,7 +124,7 @@ const QuotedProducts = () => {
                 ) : (
                   quotes.map((quoted, index) => (
                     <tr key={index}>
-                      <td className="border-b-2 py-4 min-w-36 pl-4 text-left">
+                      <td className="border-b-2 py-2 min-w-36 pl-4 text-left">
                         {quoted.id}
                       </td>
                       <td className="border-b-2 min-w-36 text-left">

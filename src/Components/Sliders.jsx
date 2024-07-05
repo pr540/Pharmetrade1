@@ -184,7 +184,7 @@ function Sliders() {
                     <h2 className="text-foot">Nature Mask</h2>
                     <h3 className="font-semibold text-box-blue">$99.00</h3>
                   </div>
-                  <div className="flex flex-row gap-5 items-center mt-3 ml-8 mb-2">
+                  <div className="flex flex-row border justify-center bg-gray-100 border-gray-300 shadow-md rounded-xl p-2 gap-5 items-center mt-3  mb-2">
                     <div>
                       <img
                         src={addcart}
@@ -332,7 +332,7 @@ function Sliders() {
         </div>
       </div>
       <div
-        className="bg-blue-900 mt-8 cursor-pointer text-white font-semibold p-3 flex justify-center items-center text-[17px]"
+        className="bg-yellow-100 mt-8 cursor-pointer text-blue-900 font-semibold p-3 flex justify-center items-center text-[17px]"
         onClick={scrollToTop}
       >
         {" "}

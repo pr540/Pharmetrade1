@@ -16,7 +16,7 @@ const AdminNav = () => {
       <div className="font-bold text-xl cursor-pointer" onClick={handleclicked}>
         <img
           src={Logo}
-          className="w-16 md:w-24 lg:w-48 xl:w-64 h-16 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
+          className="w-12 md:w-20 lg:w-36 xl:w-60 h-12 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
         />
       </div>
       <div className="flex items-center space-x-4">
