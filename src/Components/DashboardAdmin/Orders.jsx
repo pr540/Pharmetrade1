@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// const Orders = () => {
-//   return (
-//     <div className='text-[25px]'>
-//       Orders
-//     </div>
-//   )
-// }
-
-// export default Orders
-
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
@@ -17,7 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { IoIosArrowRoundDown } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
+import { CiSearch, CiMenuKebab } from "react-icons/ci";
 
 function Orders() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,15 +20,23 @@ function Orders() {
       type: "View Order",
     },
     {
-      id: "000",
+      id: "001",
       thumbnail: "D061D23",
-      name: "Generic Medicine",
-      attributeSet: "350",
+      name: "Another Medicine",
+      attributeSet: "250",
       productStatus: "",
       status: "",
       type: "View Order",
     },
   ];
+
+  const stats = [
+    { label: "Total Orders", value: "2,420", percentage: 20 },
+    { label: "Total Products", value: "3,843", percentage: 25 },
+    { label: "Base Amount", value: "1,700", percentage: -11 },
+    { label: "Purchase Amount", value: "2,530", percentage: 17 },
+  ];
+
   const filteredProducts = products.filter(
     (product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -48,75 +44,43 @@ function Orders() {
   );
 
   return (
-    <div className="bg-gray-100 w-[calc(100%-288px)] h-full flex items-center justify-center">
-      <div className="w-[95%] h-full mt-8">
-        <div className="flex  justify-between ">
-          <h1 className="text-2xl text-blue-900 font-medium">List of Orders</h1>
-
-          <button className="bg-blue-900 flex  items-center text-white p-2 text-xl rounded-md">
-            {" "}
-            <FaPlus />
-            Add New Product
+    <div className="bg-gray-100 w-[calc(100%-256px)] h-full flex items-center justify-center">
+      <div className="w-[95%] h-full mt-4">
+        <div className="flex justify-between">
+          <h1 className="text-[22px] text-blue-900 font-medium">List of Orders</h1>
+          <button className="bg-blue-900 flex items-center text-white p-2 text-[15px] rounded-md">
+            <FaPlus /> Add New Product
           </button>
         </div>
 
-        <div className="flex justify-evenly mt-6 -ml-8">
-          <div className="bg-white w-72 rounded-xl h-32 p-4">
-            <div className="flex  items-center justify-between">
-              <h1 className="text-[17px] text-gray-700 font-normal">Total Orders</h1>
-              <BsThreeDotsVertical />
+        <div className="flex my-4 -ml-8 justify-around items-center p-4">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="p-4 h-28 w-56 border rounded-lg shadow-lg flex justify-between items-center bg-white"
+            >
+              <div className="w-full">
+                <div className="flex justify-between items-center">
+                  <div className="text-[15px] text-gray-700 font-normal">
+                    {stat.label}
+                  </div>
+                  <div className="menu-icon">
+                    <CiMenuKebab />
+                  </div>
+                </div>
+                <div className="flex justify-between mt-2 items-center">
+                  <div className="text-2xl font-semibold">{stat.value}</div>
+                  <div
+                    className={`text-sm ${
+                      stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
+                    } p-1 rounded-lg`}
+                  >
+                    ↑ {stat.percentage} %
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-between items-center mt-4">
-              <h1 className="text-3xl font-semibold">2,420</h1>
-              <span className="bg-green-100 h-7  flex w-16 text-green-500">
-                {" "}
-                <IoIosArrowRoundUp />
-                20%
-              </span>
-            </div>
-          </div>
-          <div className="bg-white w-72 rounded-xl h-32 p-4">
-            <div className="flex justify-between items-center">
-              <h1 className="text-[17px] text-gray-700 font-normal">Total Products</h1>
-              <BsThreeDotsVertical />
-            </div>
-            <div className="flex justify-between items-center mt-4">
-              <h1 className="text-3xl font-semibold">3,843</h1>
-              <span className="bg-green-100 h-7  flex w-16 text-green-500 ">
-                {" "}
-                <IoIosArrowRoundUp />
-                25%
-              </span>
-            </div>
-          </div>
-          <div className="bg-white w-72 rounded-xl h-32 p-4">
-            <div className="flex justify-between items-center">
-              <h1 className="text-[17px] text-gray-700 font-normal">Base Amount</h1>
-              <BsThreeDotsVertical />
-            </div>
-            <div className="flex justify-between items-center mt-4">
-              <h1 className="text-3xl font-semibold">1,700</h1>
-              <span className="bg-red-100 h-7  text-red-500 flex w-16">
-                {" "}
-                <IoIosArrowRoundDown />
-                -11%
-              </span>
-            </div>
-          </div>
-          <div className="bg-white w-72 rounded-xl h-32 p-4">
-            <div className="flex justify-between items-center">
-              <h1 className="text-[17px] text-gray-700 font-normal">Purchase Amount</h1>
-              <BsThreeDotsVertical />
-            </div>
-            <div className="flex justify-between items-center mt-4">
-              <h1 className="text-3xl font-semibold">2,530</h1>
-              <span className="bg-green-100 h-7  flex w-16 text-green-500">
-                {" "}
-                <IoIosArrowRoundUp />
-                17%
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className="flex items-center justify-between mt-6">
@@ -127,23 +91,18 @@ function Orders() {
               placeholder="Search Product"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border rounded-xl  h-12 w-64 text-left p-2"
+              className="border rounded-xl h-12 w-64 text-left px-2"
             />
-            <CiSearch
-              className="
-                absolute right-0 top-4 text-gray-400 mr-2
-                "
-            />
+            <CiSearch className="absolute right-0 top-4 text-gray-400 mr-2" />
           </div>
           {/* search end */}
           <div className="flex">
-            <div className="flex  p-1 ">
+            <div className="flex p-1">
               <FaFilter className="m-2" />
               {/* <button className='text-2xl'>Filter</button> */}
             </div>
-            <div className="flex bg-white mx-4 h-11 w-48 justify-evenly border rounded-md">
-              {/* <IoMdSettings className='m-2 text-3xl' /> */}
-              {/* <label className='text-2xl mt-2'>Columns</label> */}
+            <div className="flex bg-white h-11 w-48 justify-evenly border rounded-md">
+     
               <select className="m-2">
                 <option>-Select Group-</option>
               </select>
@@ -151,31 +110,37 @@ function Orders() {
           </div>
         </div>
 
-        <div className="border rounded-md bg-white mt-4">
+        <div className="border rounded-md text-[15px] bg-white mt-4">
           <table className="w-full">
             <thead className="bg-blue-900 text-white">
-              <tr className=" border-b-2">
-                <th className="px-4 py-2 text-left ">Order ID</th>
-                <th className="px-4 py-2 text-left ">Purchased On</th>
-                <th className="px-4 py-2 text-left ">Products</th>
-                <th className="px-4 py-2 text-left ">Total</th>
-                <th className="px-4 py-2 text-left ">Customer</th>
-                <th className="px-4 py-2 text-left ">Status</th>
-                <th className="px-4 py-2 text-left ">View</th>
+              <tr className="border-b-2">
+                <th className="px-4 py-2 text-left">Order ID</th>
+                <th className="px-4 py-2 text-left">Purchased On</th>
+                <th className="px-4 py-2 text-left">Products</th>
+                <th className="px-4 py-2 text-left">Total</th>
+                <th className="px-4 py-2 text-left">Customer</th>
+                <th className="px-4 py-2 text-left">Status</th>
+                <th className="px-4 py-2 text-left">View</th>
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => (
-                <tr key={index} className="border-b">
-                  <td className="px-4 py-2 ">{product.id}</td>
-                  <td className="px-4 py-2">{product.thumbnail}</td>
-                  <td className="px-4 py-2">{product.name}</td>
-                  <td className="px-4 py-2">{product.attributeSet}</td>
-                  <td className="px-4 py-2">{product.productStatus}</td>
-                  <td className="px-4 py-2">{product.status}</td>
-                  <td className="px-4 py-2">{product.type}</td>
-                </tr>
-              ))}
+              {(() => {
+                const rows = [];
+                for (let i = 0; i < filteredProducts.length; i++) {
+                  rows.push(
+                    <tr key={i} className="border-b">
+                      <td className="px-4 py-2">{filteredProducts[i].id}</td>
+                      <td className="px-4 py-2">{filteredProducts[i].thumbnail}</td>
+                      <td className="px-4 py-2">{filteredProducts[i].name}</td>
+                      <td className="px-4 py-2">{filteredProducts[i].attributeSet}</td>
+                      <td className="px-4 py-2">{filteredProducts[i].productStatus}</td>
+                      <td className="px-4 py-2">{filteredProducts[i].status}</td>
+                      <td className="px-4 py-2">{filteredProducts[i].type}</td>
+                    </tr>
+                  );
+                }
+                return rows;
+              })()}
             </tbody>
           </table>
         </div>
@@ -185,3 +150,4 @@ function Orders() {
 }
 
 export default Orders;
+

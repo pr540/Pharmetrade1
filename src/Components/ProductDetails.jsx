@@ -86,11 +86,11 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold mt-10 text-blue-900">
+        {/* <h2 className="text-2xl font-bold mt-10 text-blue-900">
           RATINGS & REVIEWS
         </h2>
 
-        <h2 className="text-2xl font-bold mt-10 text-blue-900">ALTERNATIVES</h2>
+        <h2 className="text-2xl font-bold mt-10 text-blue-900">ALTERNATIVES</h2> */}
 
         {/* <div>
           <div className="w-full">
@@ -135,12 +135,12 @@ const ProductDetails = () => {
           </div>
         </div> */}
 
-        <h2 className="text-2xl font-bold mt-10 text-blue-900">
+        {/* <h2 className="text-2xl font-bold mt-10 text-blue-900">
           CUSTOMERS ALSO BOUGHT
-        </h2>
-        <h2 className="text-2xl font-bold mt-10 text-blue-900">
+        </h2> */}
+        {/* <h2 className="text-2xl font-bold mt-10 text-blue-900">
           SIMILAR PRODUCTS
-        </h2>
+        </h2> */}
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ function Landing2() {
           {slides.map((item, key) => (
             <div
               key={key}
-              className="hover:scale-110 md:w-56 lg:w-72 xl:w-95% h-fit rounded-xl transition duration-300  ease-in-out max-w-sm flex justify-center items-center p-2"
+              className="hover:scale-110 md:w-56 lg:w-72  xl:w-fit h-fit rounded-xl transition duration-300  ease-in-out max-w-sm flex justify-center items-center p-3 last:mr-4"
             >
               <img
                 src={item}
@@ -65,12 +65,12 @@ function Landing2() {
       </div>
       <div className="ml-24 md:flex md:gap-2 lg:items-center flex-row xl:justify-between ">
         <div
-          className=" bg-inp md:w-12 lg:w-36  "
+          className=" bg-yellow-50 md:w-12 lg:w-36  rounded-2xl transition duration-300 "
           style={{ width: "150vh", height: "fit-content" }}>
           <ul className="  space-y-2 xl:w-100% md:pb-6 md:text-lg xl:text-xl xl:mt-6 font-light pl-4 ">
             {texts.map((items, key) => (
               <li className="flex flex-row  text-ink items-center gap-2">
-                <img src={right2} className="w-6 bg-arr rounded-full" />
+                <img src={right2} className="w-6 bg-green-500 rounded-full" />
                 {items}
               </li>
             ))}

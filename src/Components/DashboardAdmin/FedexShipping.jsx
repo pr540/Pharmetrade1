@@ -33,14 +33,14 @@ function  FedexShipping() {
   return (
     <div className=' w-[calc(100%-288px)] px-4'>
       {message && (
-        <div className={`my-4 p-2 text-lg ${isError ? 'text-red-500' : 'text-green-500'} bg-green-50`}>
+        <div className={`my-4 p-1 text-lg ${isError ? 'text-red-800 bg-red-200' : 'text-green-800 bg-green-200'} `}>
           {message}
         </div>
       )}
       <div className='flex justify-between border-b border-black my-5 p-4'>
         <h1 className='text-xl text-blue-900 font-semibold'>Manage Fedex Configuration</h1>
         <button 
-          className='border rounded-full w-24 bg-blue-900 text-white h-9'
+          className='border rounded-full text-[15px] px-4 bg-blue-900 text-white '
           onClick={handleSubmit}
         >
           SAVE
@@ -49,54 +49,54 @@ function  FedexShipping() {
 
       <div className='w-full flex flex-col justify-center'>
 
-      <div className="w-[80%] flex justify-between text-gray-600 my-6">
+      <div className="w-[80%] flex justify-between text-gray-600 my-4">
         <div className="flex flex-col">
-          <label className="text-xl">
-            Account ID:<span className="text-red-600 text-2xl">*</span>
+          <label className="text-lg">
+            Account ID:<span className="text-red-600 text-xl">*</span>
           </label>
           <input
             type="text"
             name="accountid"
-            className='border rounded-md h-10 w-96'
+            className='border rounded-md h-8 w-80'
             value={formData.accountid}
             onChange={handleChange}
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-xl">
-            Meter Number<span className="text-red-600 text-2xl">*</span>
+          <label className="text-lg">
+            Meter Number<span className="text-red-600 text-xl">*</span>
           </label>
           <input
             type="text"
             name="meterNumber"
-            className='border rounded-md h-10 w-96'
+            className='border rounded-md h-8 w-80'
             value={formData.meterNumber}
             onChange={handleChange}
           />
         </div>
       </div>
 
-      <div className="w-[80%] flex justify-between text-gray-600 my-6">
+      <div className="w-[80%] flex justify-between text-gray-600 my-4">
         <div className="flex flex-col">
-          <label className="text-xl">
-            Key<span className="text-red-600 text-2xl">*</span>
+          <label className="text-lg">
+            Key<span className="text-red-600 text-xl">*</span>
           </label>
           <input
             type="text"
             name="key"
-            className='border rounded-md h-10 w-96'
+            className='border rounded-md h-8 w-80'
             value={formData.key}
             onChange={handleChange}
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-xl">
-            Password:<span className="text-red-600 text-2xl">*</span>
+          <label className="text-lg">
+            Password:<span className="text-red-600 text-xl">*</span>
           </label>
           <input
             type="text"
             name="password"
-            className='border rounded-md h-10 w-96'
+            className='border rounded-md h-8 w-80'
             value={formData.password}
             onChange={handleChange}
           />

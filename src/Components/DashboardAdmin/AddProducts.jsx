@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
+import { FaPlus } from "react-icons/fa6";
 import ProductFields from "./ProductFields";
 import EditFields from "./EditFields";
 
@@ -79,20 +79,24 @@ const AddProducts = () => {
   };
 
   return (
-    <div className="relative bg-gray-100 w-[calc(100%-288px)] h-full flex justify-center items-center ">
-      <div className=" w-[95%] h-full mt-8">
+    <div className="relative bg-gray-100 w-[calc(100%-256px)] h-full flex justify-center items-center ">
+      <div className=" w-[95%] h-full mt-4">
         <div className=" flex justify-between">
-          <p className="text-2xl text-blue-900 font-medium">
+          <h2 className="text-[22px] text-blue-900 font-medium">
             {" "}
             Marketplace Product List{" "}
-          </p>
-          <div
-            className="flex items-center bg-blue-900 p-2 rounded-lg text-white text-[20px] cursor-pointer"
-            onClick={handleAddNewProductClick}
-          >
+          </h2>
+          <button className="bg-blue-900 flex items-center text-white p-2 text-[15px] rounded-md" 
+          onClick={handleAddNewProductClick}>
+            <FaPlus /> Add New Product
+          </button>
+
+          {/* <div
+            className="flex items-center bg-blue-900 p-2 rounded-lg text-white text-[15px] cursor-pointer"
+            onClick={handleAddNewProductClick}>
             <FiPlus />
             <button className="ml-1"> Add New Product</button>
-          </div>
+          </div> */}
 
           {showDetailPopup && (
             <div className="absolute inset-0 flex items-center justify-center overflow-scroll bg-gray-100 ">
@@ -105,11 +109,11 @@ const AddProducts = () => {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="p-4 h-32 w-72  border rounded-lg shadow-lg flex justify-between items-center bg-white"
+              className="p-4 h-28 w-56  border rounded-lg shadow-lg flex justify-between items-center bg-white"
             >
               <div className="w-full">
                 <div className="flex justify-between items-center">
-                  <div className="text-[17px] text-gray-700 font-normal">
+                  <div className="text-[15px] text-gray-700 font-normal">
                     {stat.label}
                   </div>
                   <div className="menu-icon">
@@ -117,12 +121,12 @@ const AddProducts = () => {
                   </div>
                 </div>
                 <div className="flex justify-between mt-2 items-center">
-                  <div className="text-3xl font-semibold">{stat.value}</div>
+                  <div className="text-2xl font-semibold">{stat.value}</div>
                    <div
                     className={`text-sm 
                      ${
                        stat.percentage > 0 ? " bg-green-400" : " bg-red-400"
-                     } p-2 rounded-lg`}>
+                     } p-1 rounded-lg`}>
                     ↑ {stat.percentage} %
                   </div>
                 </div>
@@ -132,13 +136,13 @@ const AddProducts = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end ">
-            <button className="bg-green-300 p-2">Filter</button>
+            <button className="bg-green-300 p-1">Filter</button>
             <select className="ml-2">
               <option>Columns</option>
             </select>
           </div>
 
-          <div className="overflow-x-scroll w-full mt-4 font-sans">
+          <div className="overflow-x-scroll text-[15px] w-full mt-4 font-sans">
             <table className=" rounded-lg  bg-white">
               <thead className="bg-blue-900 text-white">
                 <tr>
@@ -156,8 +160,8 @@ const AddProducts = () => {
                   <th className="border-b-2 min-w-28 text-left">Status</th>
                   <th className="border-b-2 min-w-28 text-left">Type</th>
                   <th className="border-b-2 min-w-28 text-left">SKU</th>
-                  <th className="border-b-2 min-w-28 text-left">Qty</th>
-                  <th className="border-b-2 min-w-28 text-left">Qty Sold</th>
+                  {/* <th className="border-b-2 min-w-28 text-left">Qty</th>
+                  <th className="border-b-2 min-w-28 text-left">Qty Sold</th> */}
                   <th className="border-b-2 min-w-28 text-left cursor-pointer">Action</th>
                 </tr>
               </thead>
@@ -188,13 +192,13 @@ const AddProducts = () => {
                     <td className="border-b border-gray-300 py-4">
                       {product.sku}
                     </td>
-                    <td className="border-b border-gray-300 py-4">
+                    {/* <td className="border-b border-gray-300 py-4">
                       {product.qty}
                     </td>
                     <td className="border-b border-gray-300 py-4">
                       {product.qtySold}
                     </td>
-                    {/* <td className="border-b border-gray-300 py-4">
+                     <td className="border-b border-gray-300 py-4">
                       {product.qtyconfirm}
                     </td>
                     <td className="border-b border-gray-300 py-4">

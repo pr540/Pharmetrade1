@@ -36,8 +36,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-72 p-8 bg-white font-normal shadow-lg font-ubuntu ">
-      <nav className="space-y-4">
+    <div className="w-64 p-2 bg-white font-normal shadow-lg font-ubuntu ">
+      <nav className="space-y-2 text-[14px]">
         <div
           className="flex items-center justify-between p-2 text-gray-700 hover:text-blue-900 cursor-pointer"
           onClick={toggleDropdown}

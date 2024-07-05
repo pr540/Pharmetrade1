@@ -3,7 +3,7 @@ import email from "../assets/email.png";
 
 function Footers() {
   return (
-    <div className="text-blue-900 bg-foot relative z-40">
+    <div className="text-white bg-blue-900 relative z-40">
       <div
         className=" flex  justify-center gap-32 w-full p-10"
         style={{ alignItems: "center" }}
