@@ -14,7 +14,7 @@ function Landing({ topMargin }) {
       <PLefts />
       <div className="h-fit  xl:w-full">
         <div
-          className=" xl:w-screen md:w-full md:h-fit background-animation"
+          className=" xl:w-screen md:w-full md:h-fit  background-animation"
           style={{
             // backgroundImage: `url(${BackgroundImage})`,
             // backgroundPosition: "center top",

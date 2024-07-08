@@ -5,11 +5,11 @@ function Footers() {
   return (
     <div className="text-white bg-blue-900 relative z-40">
       <div
-        className=" flex  justify-center gap-32 w-full p-10"
+        className=" flex  justify-center xl:gap-80 gap-32 w-full p-10"
         style={{ alignItems: "center" }}
       >
         {/* About Us Section */}
-        <div className="flex flex-col w-fit mr-18">
+        <div className="flex flex-col xl:text-xl w-fit mr-18">
           <p className="text-sm font-semibold mb-4">About Us</p>
           <p className="text-md font-thin w-fit ">
             PharmEtrade is a secure online marketplace for independent

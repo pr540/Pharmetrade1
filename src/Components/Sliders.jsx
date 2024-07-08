@@ -31,9 +31,9 @@ function Sliders() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("bounce-in-top");
+            entry.target.classList.add("");
           } else {
-            entry.target.classList.remove("bounce-in-top");
+            entry.target.classList.remove("");
           }
         });
       },
@@ -66,7 +66,7 @@ function Sliders() {
   const mobiles = [mobile, mobile, mobile, mobile, mobile];
   const screens = [mask, covid, covid, mask];
   const { pop } = useNavbarContext();
-  const [showAll, setShowAll] = useState(screens.slice(0, 4));
+  const [showAll, setShowAll] = useState(screens.slice(0, 2));
   const [curIndex, setCurIndex] = useState(0);
   const [visibleImages, setVisibleImages] = useState(images.slice(0, 5));
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -136,7 +136,7 @@ function Sliders() {
             </div>
           </div>
 
-          <div className=" md:grid md:grid-cols-3  md:w-screen xl:flex xl:items-center ml-10 xl:flex-row xl:gap-4 xl:w-full ">
+          <div className=" md:grid md:grid-cols-3  md:w-screen xl:flex xl:justify-center ml-10 xl:flex-row xl:gap-4 xl:w-full ">
             {showAll.map((items) => (
               <div style={{ width: "45vh" }}>
                 <img src={items} className="md:w-72 md:h-44 rounded-lg" />
@@ -146,34 +146,31 @@ function Sliders() {
         </div>
 
         <div className="flex flex-col justify-center gap-10 mt-4 ">
-            <div className="flex items-center justify-between mr-20 mt-4 gap-2">
-              <h1 className="ml-10  text-3xl font-semibold text-fonts">
-                {" "}
-                New Product
-              </h1>
-              <div className="flex items-center ">
-                <button className=" bg-foots rounded-full px-2 py-2">
-                  <img
-                    src={left}
-                    onClick={handleClickPrevious}
-                    className="w-4 h-4"
-                  />
-                </button>
-                <button className="bg-foots rounded-full px-2 py-2">
-                  <img
-                    src={right}
-                    onClick={handleClickNext}
-                    className="w-4 h-4"
-                  />
-                </button>
-              </div>
+          <div className="flex items-center justify-between mr-20 mt-4 gap-2">
+            <h1 className="ml-10  text-3xl font-semibold text-fonts">
+              {" "}
+              New Product
+            </h1>
+            <div className="flex items-center ">
+              <button className=" bg-foots rounded-full px-2 py-2">
+                <img
+                  src={left}
+                  onClick={handleClickPrevious}
+                  className="w-4 h-4"
+                />
+              </button>
+              <button className="bg-foots rounded-full px-2 py-2">
+                <img
+                  src={right}
+                  onClick={handleClickNext}
+                  className="w-4 h-4"
+                />
+              </button>
             </div>
-          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-12 xl:flex overflow-x-scroll snap-x snap-mandatory xl:gap-6 ">
+          </div>
+          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-12 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-24 ">
             {visibleImages.map((img, index) => (
-              <div
-                key={index}
-                className="snap-center shrink-0 "
-              >
+              <div key={index} className="snap-center shrink-0 ">
                 <div className="">
                   <img
                     src={img}
@@ -184,7 +181,7 @@ function Sliders() {
                     <h2 className="text-foot">Nature Mask</h2>
                     <h3 className="font-semibold text-box-blue">$99.00</h3>
                   </div>
-                  <div className="flex flex-row border justify-center bg-gray-100 border-gray-300 shadow-md rounded-xl p-2 gap-5 items-center mt-3  mb-2">
+                  <div className="flex flex-row border justify-center bg-gray-100 border-gray-300 shadow-md rounded-xl p-2 lg:w-48 gap-5 items-center mt-3  mb-2">
                     <div>
                       <img
                         src={addcart}
@@ -228,11 +225,11 @@ function Sliders() {
                 className="relative flex items-center w-full max-w-md"
               >
                 <div className="md:w-screen xl:w-fit xl:pl-8 ">
-                  <ul className="md:text-xl xl:text-3xl text-white font-light bounce-in-top w-fit">
-                    <li className="w-fit bounce-in-top">Manage Inventory</li>
-                    <li className="bounce-in-top">Increase cash flow </li>
-                    <li className="bounce-in-top">Grow you business</li>
-                    <li className="bounce-in-top">
+                  <ul className="md:text-xl xl:text-3xl text-white font-light  w-fit">
+                    <li className="w-fit ">Manage Inventory</li>
+                    <li className="">Increase cash flow </li>
+                    <li className="">Grow you business</li>
+                    <li className="">
                       Promote products and deals
                     </li>
                   </ul>
@@ -269,7 +266,7 @@ function Sliders() {
               : " getTouchs md:ml-0 md:w-80% md:h-5% xl:w-80% relative h-15% md:mt-12 xl:mt-20 xl:mx-8 rounded-md xl:p-5 xl:flex xl:flex-col xl:justify-center"
           }
         >
-          <div className="border-2 md:p-0 border-white w-auto md:h-5% md:w-auto xl:w-auto xl:h-5% lg:ml-4 lg:mr-4 lg:mt-4 lg:mb-4 xl:ml-12 rounded-md">
+          <div className="border-2 md:p-0 border-white w-auto md:h-5% md:w-auto xl:w-auto xl:h-5% lg:ml-4 xl:flex xl:justify-center lg:mr-4 lg:mt-4 lg:mb-4 xl:ml-12 rounded-md">
             <p className="absolute xl:top-4 z-5 left-1/3 h-5% bg-box-blue text-white px-4 py-2 rounded-md  text-2xl">
               Get in touch{" "}
             </p>
@@ -280,13 +277,11 @@ function Sliders() {
                   className="relative flex items-center w-full max-w-md"
                 >
                   <div className="md:w-screen xl:w-fit xl:pl-8 ">
-                    <ul className="md:text-xl xl:text-2xl text-white font-light bounce-in-top w-96">
-                      <li className="w-96 bounce-in-top">Manage Inventory</li>
-                      <li className="bounce-in-top">Increase cash flow </li>
-                      <li className="bounce-in-top">Grow you business</li>
-                      <li className="bounce-in-top">
-                        Promote products and deals
-                      </li>
+                    <ul className="md:text-xl xl:text-2xl text-white font-light  bounce-in-top  w-96">
+                      <li className="w-96 ">Manage Inventory</li>
+                      <li className="">Increase cash flow </li>
+                      <li className="">Grow you business</li>
+                      <li className="">Promote products and deals</li>
                     </ul>
                   </div>
                 </div>
@@ -323,7 +318,7 @@ function Sliders() {
                   <img
                     src={item}
                     alt={`Mobile ${key}`}
-                    className="h-[350px] w-52 hover:scale-110 transition duration-300 ease-in-out rounded-lg"
+                    className="h-[350px] w-52 xl:w-[360px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
                   />
                 </div>
               );
