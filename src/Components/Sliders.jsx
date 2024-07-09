@@ -136,7 +136,7 @@ function Sliders() {
             </div>
           </div>
 
-          <div className=" md:grid md:grid-cols-3  md:w-screen xl:flex xl:justify-center ml-10 xl:flex-row xl:gap-4 xl:w-full ">
+          <div className=" md:grid md:grid-cols-3  md:w-screen xl:flex xl:justify-center xl:flex-row xl:gap-4 xl:w-full ">
             {showAll.map((items) => (
               <div style={{ width: "45vh" }}>
                 <img src={items} className="md:w-72 md:h-44 rounded-lg" />
@@ -168,7 +168,7 @@ function Sliders() {
               </button>
             </div>
           </div>
-          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-12 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-24 ">
+          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-12 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-10 ">
             {visibleImages.map((img, index) => (
               <div key={index} className="snap-center shrink-0 ">
                 <div className="">
