@@ -4,7 +4,6 @@
 import React from "react";
 import AccountSideBar from "./AccountSideBar";
 import { Outlet } from "react-router-dom";
-import AdminNav from "../Admin/Layout/AdminNav";
 
 const AccountPanel = ({ topMargin }) => {
   return (
