@@ -21,6 +21,8 @@ import addcart from "../assets/cart1_icon.png";
 import fav from "../assets/Wishlist1_icon.png";
 import mask from "../assets/mask.png";
 import covid from "../assets/covid.png";
+import covid1 from "../assets/covid1.jpg";
+import mask1 from "../assets/mask1.jpg";
 import { useState, useRef, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import Content from "./Content";
@@ -67,7 +69,7 @@ function Sliders() {
     screen1,
   ]);
   const mobiles = [mobile, mobile, mobile, mobile, mobile];
-  const screens = [mask, covid, covid, mask];
+  const screens = [mask, covid, covid1, mask1];
   const { pop } = useNavbarContext();
   const [showAll, setShowAll] = useState(screens.slice(0, 4));
   const [curIndex, setCurIndex] = useState(0);
@@ -75,7 +77,7 @@ function Sliders() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const handleNext = () => {
     console.log("prev");
-    const nextInd = curIndex + 2;
+    const nextInd = curIndex + 4;
     if (nextInd < screens.length) {
       const nextVisibleImages = screens.slice(nextInd, nextInd + 2);
       setShowAll(nextVisibleImages);
@@ -139,7 +141,7 @@ function Sliders() {
             </div>
           </div>
 
-          <div className=" md:grid md:grid-cols-3  md:w-screen xl:flex xl:justify-center  xl:flex-row xl:gap-4 xl:w-full ">
+          <div className=" md:grid md:grid-cols-3 md:w-screen xl:flex xl:justify-center  xl:flex-row xl:gap-4 xl:w-full ">
             {showAll.map((items) => (
               <div style={{ width: "45vh" }}>
                 <img src={items} className="md:w-72 md:h-44 rounded-lg" />
@@ -270,7 +272,7 @@ function Sliders() {
                   <img
                     src={item}
                     alt={`Mobile ${key}`}
-                    className="h-[350px] w-52 xl:w-[360px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
+                    className="h-[300px] w-52 xl:w-[200px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
                   />
                 </div>
               );
