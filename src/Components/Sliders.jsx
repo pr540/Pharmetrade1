@@ -272,7 +272,7 @@ function Sliders() {
                   <img
                     src={item}
                     alt={`Mobile ${key}`}
-                    className="h-[300px] w-52 xl:w-[200px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
+                    className="h-[350px] w-52 xl:w-[250px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
                   />
                 </div>
               );
