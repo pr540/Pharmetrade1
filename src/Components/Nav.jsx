@@ -48,9 +48,6 @@ function Nav({ topDivRef, cartItems }) {
     console.log("hello");
     navigate("/login");
   }
-  function handleClick() {
-    navigate("/signup");
-  }
 
   function handleCart() {
     navigate("/cart");
@@ -60,6 +57,10 @@ function Nav({ topDivRef, cartItems }) {
   }
   function handleclick() {
     navigate("/wishlist");
+  }
+
+  function handleClick() {
+    navigate("/signup");
   }
   function handleBuy() {
     navigate("/products");

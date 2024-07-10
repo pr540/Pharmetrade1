@@ -232,10 +232,17 @@ function Customers() {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <h1 className="text-2xl font-semibold">{stat.value}</h1>
-                <span className={`text-sm flex p-1 items-center rounded-lg ${stat.percentage > 0 ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>
+                {/* <span className={`text-sm flex p-1 items-center rounded-lg ${stat.percentage > 0 ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>
                   {stat.percentage > 0 ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />}
-                  {stat.percentage}%
-                </span>
+                  
+                </span> */}
+                <div
+                    className={`text-sm p-1 rounded-lg ${
+                      stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
+                    }`}
+                  >
+                    {stat.percentage > 0 ? "↑" : "↓"} {Math.abs(stat.percentage)}%
+                  </div>
               </div>
             </div>
           ))}

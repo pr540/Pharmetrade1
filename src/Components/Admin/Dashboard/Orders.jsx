@@ -75,7 +75,7 @@ function Orders() {
                       stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
                     } p-1 rounded-lg`}
                   >
-                    ↑ {stat.percentage} %
+                    {stat.percentage > 0 ? "↑" : "↓"} {Math.abs(stat.percentage)}%
                   </div>
                 </div>
               </div>
