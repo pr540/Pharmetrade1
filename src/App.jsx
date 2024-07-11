@@ -43,6 +43,7 @@ import AssignProduct from "./Components/Admin/AssignProducts/AssignProduct";
 import AssignProductList from "./Components/Admin/AssignProductList/AssignProductList";
 import RequestQuote from "./Components/Admin/RequestQuote/RequestQuote";
 import QuotedProducts from "./Components/Admin/RequestQuote/QuotedProducts";
+import ProductFields from "./Components/Admin/Components/ProductFields";
 
 
 
@@ -69,32 +70,13 @@ function App() {
   }
   console.log(wishItems);
   const location = useLocation();
+
+  const excludePatterns = /\/(admin|user|login|signup|password|changepassword)/;
+
   return (
     <NavbarProvider>
-      {location.pathname !== "/login" &&
-        location.pathname !== "/signup" &&
-        location.pathname !== "/password" &&
-        location.pathname !== "/changepassword" &&
-        location.pathname !== "/admin" &&
-        location.pathname !== "/admin/orders" &&
-        location.pathname !== "/admin/addproducts" &&
-        location.pathname !== "/admin/customers" &&
-        location.pathname !== "/admin/payouts" &&
-        location.pathname !== "/admin/earnings" &&
-        location.pathname !== "/admin/review" &&
-        location.pathname !== "/admin/returns" &&
-        location.pathname !== "/admin/assign-products" &&
-        location.pathname !== "/admin/assign-product-list" &&
-        location.pathname !== "/admin/request-quote" &&
-        location.pathname !== "/admin/quoted-product" &&
-        location.pathname !== "/admin/settings" &&
-        location.pathname !== "/admin/ups-shipping" &&
-        location.pathname !== "/admin/fedex-shipping" &&
-        location.pathname !== "/admin/shipping-settings" &&
-        location.pathname !== "/admin/manage-shipping" &&
-        location.pathname !== "/user" && 
-        location.pathname !== "/user/orders" && (
-          <Nav topDivRef={topDivRef} cartItems={cartItems} />
+        {!excludePatterns.test(location.pathname) && (
+            <Nav topDivRef={topDivRef} cartItems={cartItems} />
         )}
       <Routes>
         <Route path="/signup" element={<Signup />} />
@@ -134,27 +116,29 @@ function App() {
           }
         />
 
-        <Route element={<AdminPanel />}>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/orders" element={<Orders />} />
-          <Route path="/admin/addproducts" element={<AddProducts />} />
-          <Route path="/admin/customers" element={<Customers />} />
-          <Route path="/admin/payouts" element={<Payouts />} />
-          <Route path="/admin/earnings" element={<Earnings />} />
-          <Route path="/admin/review" element={<Review />} />
-          <Route path="/admin/returns" element={<Return />} />
-          <Route path="/admin/assign-products" element={<AssignProduct />} />
+        <Route path="/admin" element={<AdminPanel />}>
+          <Route path="" element={<Dashboard />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="addproducts" element={<AddProducts />} />
+          <Route path="addproducts/Create" element={<ProductFields />} />
+
+          <Route path="customers" element={<Customers />} />
+          <Route path="payouts" element={<Payouts />} />
+          <Route path="earnings" element={<Earnings />} />
+          <Route path="review" element={<Review />} />
+          <Route path="returns" element={<Return />} />
+          <Route path="assign-products" element={<AssignProduct />} />
           <Route
-            path="/admin/assign-product-list"
+            path="assign-product-list"
             element={<AssignProductList />}
           />
-          <Route path="/admin/request-quote" element={<RequestQuote />} />
-          <Route path="/admin/quoted-product" element={<QuotedProducts />} />
-          <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/admin/ups-shipping" element={<UpsShipping />} />
-          <Route path="/admin/fedex-shipping" element={<FedexShipping />} />
-          <Route path="/admin/shipping-settings" element={<ShippingSetting />} />
-          <Route path="/admin/manage-shipping" element={<ManageShipping />} />
+          <Route path="request-quote" element={<RequestQuote />} />
+          <Route path="quoted-product" element={<QuotedProducts />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="ups-shipping" element={<UpsShipping />} />
+          <Route path="fedex-shipping" element={<FedexShipping />} />
+          <Route path="shipping-settings" element={<ShippingSetting />} />
+          <Route path="manage-shipping" element={<ManageShipping />} />
         </Route>
 
         <Route element={<AccountPanel topMargin={topMargin} />}>
