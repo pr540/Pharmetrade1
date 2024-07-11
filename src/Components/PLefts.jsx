@@ -3,8 +3,21 @@ import Buy from "../assets/Buy.png";
 import bid from "../assets/Bid.png";
 import hand from "../assets/Join.png";
 import sale from "../assets/Sell.png";
+import { useNavigate } from "react-router-dom";
 
 function PLefts() {
+  let navigate = useNavigate();
+
+
+  function handleClick() {
+    navigate("/signup");
+  }
+  function handleBuy() {
+    navigate("/products");
+  }
+  function handleAdmin() {
+    navigate("/admin");
+  }
   const [scrollY, setScrollY] = useState(0);
 
   const handleScroll = () => {
@@ -28,7 +41,7 @@ function PLefts() {
       }`}
     >
       <ul className="list-none space-y-4">
-        <li>
+        <li  onClick={handleBuy}>
           <a
             href="#"
             style={{ borderColor: "#41cdcf", color: "#41cdcf" }}
@@ -40,7 +53,7 @@ function PLefts() {
             <img src={Buy} className="ml-auto mr-6 text-2xl w-8" />
           </a>
         </li>
-        <li>
+        <li onClick={handleClick}>
           <a
             href="#"
             className="flex items-center bg-pink-50 border-2 border-pink-600 text-pink-600 rounded-r-full h-14 w-14 hover:w-28 transition-all duration-400 ease-in-out overflow-hidden relative group"
@@ -52,7 +65,7 @@ function PLefts() {
             <img src={hand} className="ml-auto mr-6 text-2xl w-8" />
           </a>
         </li>
-        <li>
+        <li onClick={handleAdmin}>
           <a
             href="#"
             style={{ borderColor: "#83c847", color: "#83c847" }}

@@ -216,13 +216,13 @@ function Customers() {
   );
 
   return (
-    <div className="bg-gray-100 w-[calc(100%-256px)] h-full flex items-center justify-center">
+    <div className="bg-gray-100 w-full h-full flex items-center justify-center">
       <div className="w-[95%] h-full mt-8">
         <div className="flex justify-between">
           <h1 className="text-[22px] text-blue-900 font-medium">Marketplace Customers</h1>
         </div>
 
-        <div className="flex justify-evenly w-[80%] mt-4 -ml-8">
+        <div className="flex justify-normal flex-wrap gap-2 w-full mt-4 ">
           {stats.map((stat, index) => (
             <div key={index} 
             className="bg-white w-56 rounded-lg shadow-lg h-28 p-4">
@@ -232,10 +232,17 @@ function Customers() {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <h1 className="text-2xl font-semibold">{stat.value}</h1>
-                <span className={`text-sm flex p-1 items-center rounded-lg ${stat.percentage > 0 ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>
+                {/* <span className={`text-sm flex p-1 items-center rounded-lg ${stat.percentage > 0 ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>
                   {stat.percentage > 0 ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />}
-                  {stat.percentage}%
-                </span>
+                  
+                </span> */}
+                <div
+                    className={`text-sm p-1 rounded-lg ${
+                      stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
+                    }`}
+                  >
+                    {stat.percentage > 0 ? "↑" : "↓"} {Math.abs(stat.percentage)}%
+                  </div>
               </div>
             </div>
           ))}
