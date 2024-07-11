@@ -2,7 +2,8 @@ import React from "react";
 import { FiUser } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 // import Logo from "../../assets/Icons/Etrade.png";
-import Logo from "../../../assets/Icons/logo.png";
+// import Logo from "../../../assets/Icons/logo.png";
+import Logo from "../../../assets/logo_04.png";
 
 const AdminNav = () => {
   function handleclicked() {

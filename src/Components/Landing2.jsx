@@ -1,14 +1,18 @@
 
 
 import React, { useState } from "react";
-import slider1 from "../assets/1.png";
-import slider2 from "../assets/2.png";
-import slider3 from "../assets/3.png";
-import slider4 from "../assets/4.png";
+// import slider1 from "../assets/1.png";
+// import slider2 from "../assets/2.png";
+// import slider3 from "../assets/3.png";
+// import slider4 from "../assets/4.png";
+import slider1 from "../assets/S1.jpg";
+import slider2 from "../assets/S2.jpg";
+import slider3 from "../assets/S3.jpg";
+import slider4 from "../assets/S4.jpg";
 
 import bg2 from "../assets/doc.png";
 // import allproduct from "../assets/AllProduct.png";
-import allproduct from "../assets/AllProducts.png"
+import allproduct from "../assets/Products.png";
 import { Link, useNavigate } from "react-router-dom";
 import Products from "./Products";
 import right2 from "../assets/right.png";
@@ -32,7 +36,7 @@ function Landing2() {
     <div className="2xl:ml-2 md:pt-10">
       <div className="md:w-screen md:mx-0 lg:w-screen lg:pl-2 items-center rounded-lg overflow-hidden xl:mx-0 pl-2">
         <div
-          className="  md:w-screen lg:w-screen xl:w-screen md:flex md:flex-row md:justify-center flex flex-row  l:flex l:flex-row  l:gap-48 xl:gap-10  rounded-xl xl:items-center "
+          className="  md:w-screen lg:w-screen xl:w-screen md:flex md:flex-row md:justify-center flex flex-row  l:flex l:flex-row  l:gap-48 xl:gap-4  rounded-xl xl:items-center "
           // style={{ width: "800vh" }}
         >
           {slides.map((item, key) => (

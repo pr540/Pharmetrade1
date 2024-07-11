@@ -170,7 +170,7 @@ function Sliders() {
               </button>
             </div>
           </div>
-          {/* <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-10 ">
+          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-10 ">
             {visibleImages.map((img, index) => (
               <div key={index} className="snap-center shrink-0 ">
                 <div className="">
@@ -206,8 +206,8 @@ function Sliders() {
                 </div>
               </div>
             ))}
-          </div> */}
-          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center overflow-x-scroll snap-x snap-mandatory xl:gap-10">
+          </div>
+          {/* <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center overflow-x-scroll snap-x snap-mandatory xl:gap-10">
             {visibleImages.map((img, index) => (
               <div key={index} className="snap-center shrink-0">
                 <div className="max-w-xs mx-auto bg-white shadow-md rounded-xl overflow-hidden">
@@ -238,7 +238,7 @@ function Sliders() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* <button className="text-xl ml-4"><img src={right} className='w-24'/></button> */}
         </div>

@@ -25,13 +25,13 @@ const Dashboard = () => {
     <div className=" w-full flex justify-center items-center p-4 lg:p-8">
       <div className="w-full h-full ">
         <div className="flex justify-between">
-          <p className="text-2xl text-blue-900 font-medium">Home</p>
+          <p className="text-[22px] text-blue-900 font-medium">Home</p>
         </div>
         <div className="flex h-full justify-normal gap-2 flex-wrap mt-2 w-full items-center ">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="p-4 h-36 small:w-56 w-[80%] border rounded-lg shadow-lg flex justify-between items-center bg-white"
+              className="p-4 h-28 small:w-56 w-[80%] border rounded-lg shadow-lg flex justify-between items-center bg-white"
             >
               <div className="w-full">
                 <div className="flex justify-between items-center">
