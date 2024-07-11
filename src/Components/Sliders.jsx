@@ -1,6 +1,3 @@
-
-
-
 import React from "react";
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
@@ -132,7 +129,7 @@ function Sliders() {
             <p>Special offers</p>
 
             <div className="flex justify-end mr-14 gap-2">
-              <button className="bg-foots rounded-full p-2 ">
+              <button className="bg-foots rounded-full p-2">
                 <img src={left} className="w-4 h-4" onClick={handlePrevious} />
               </button>
               <button className="bg-foots rounded-full px-2 py-2">
@@ -173,7 +170,7 @@ function Sliders() {
               </button>
             </div>
           </div>
-          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-10 ">
+          {/* <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center  overflow-x-scroll snap-x snap-mandatory xl:gap-10 ">
             {visibleImages.map((img, index) => (
               <div key={index} className="snap-center shrink-0 ">
                 <div className="">
@@ -204,6 +201,38 @@ function Sliders() {
                         src={other}
                         className="h-8 p-1"
                       />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div> */}
+          <div className="md:grid md:grid-cols-3 md:grid-rows-2 xl:ml-10 xl:flex xl:justify-center overflow-x-scroll snap-x snap-mandatory xl:gap-10">
+            {visibleImages.map((img, index) => (
+              <div key={index} className="snap-center shrink-0">
+                <div className="max-w-xs mx-auto bg-white shadow-md rounded-xl overflow-hidden">
+                  <img
+                    src={img}
+                    alt={`Product ${index + 1}`}
+                    className="h-52 w-48 object-contain rounded-t-xl bg-foots"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-foot">Nature Mask</h2>
+                    <h3 className="font-semibold text-box-blue">$99.00</h3>
+                    <div className="flex items-center mt-3">
+                      <div className="flex gap-3">
+                        <img
+                          src={addcart}
+                          className="h-8 p-1"
+                          alt="Add to Cart"
+                        />
+                        <img src={fav} className="h-8 p-1" alt="Favorite" />
+                        <img
+                          src={other}
+                          className="h-8 p-1"
+                          alt="Other Action"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -293,9 +322,6 @@ function Sliders() {
 }
 
 export default Sliders;
-
-
-
 
 // import React from "react";
 // import img1 from "../assets/img1.png";
@@ -513,7 +539,7 @@ export default Sliders;
 
 //           {/* <button className="text-xl ml-4"><img src={right} className='w-24'/></button> */}
 //         </div>
-       
+
 //         <div
 //           className={
 //             pop
@@ -596,5 +622,3 @@ export default Sliders;
 // }
 
 // export default Sliders;
-
-
