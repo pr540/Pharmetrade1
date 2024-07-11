@@ -218,13 +218,18 @@
 
 import React from "react";
 import email from "../assets/email.png";
+import logo from "../assets/logo_05.png";
 
 function Footers() {
   return (
     <div className="text-white bg-blue-900 relative z-40">
       <div className="flex flex-col xl:flex-row justify-center xl:gap-20 gap-8 w-full p-6 xl:p-10">
         {/* About Us Section */}
-        <div className="flex flex-col xl:text-md w-full xl:w-auto">
+
+        <div className=" flex items-center">
+          <img src={logo} className="w-40 h-10"/>
+        </div>
+        <div className="flex flex-col xl:text-md  w-full xl:w-auto">
           <p className="text-md font-semibold mb-4">About Us</p>
           <p className="text-md font-thin">
             PharmEtrade is a secure online marketplace for independent

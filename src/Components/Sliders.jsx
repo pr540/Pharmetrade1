@@ -151,7 +151,7 @@ function Sliders() {
           <div className="flex items-center justify-between mr-20 mt-4 gap-2">
             <h1 className="ml-10  text-3xl font-semibold text-fonts">
               {" "}
-              New Product
+              New Products
             </h1>
             <div className="flex items-center ">
               <button className=" bg-foots rounded-full px-2 py-2">

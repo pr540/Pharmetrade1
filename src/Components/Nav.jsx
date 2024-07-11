@@ -4,9 +4,11 @@ import React from "react";
 import Logo from "../assets/logo_04.png";
 import Search from "../assets/search.png";
 import Buy from "../assets/Buy.png";
-import Cart from "../assets/Cart.png";
+import cart from "../assets/Cart_icon.png";
 import bid from "../assets/Bid.png";
-import like from "../assets/Icons/Favorate.png";
+// import like from "../assets/Icons/Favorate.png";
+import like from "../assets/wishlistnav_icon.png";
+import compare from "../assets/CompareNav_icon.png";
 import note from "../assets/Icons/Compare.png";
 import sale from "../assets/Sell.png";
 import hand from "../assets/Join.png";
@@ -223,8 +225,8 @@ function Nav({ topDivRef, cartItems }) {
                       className="w-6 md:w-8 lg:w-10 xl:w-12 pt-2 h-10 md:h-10 lg:h-10 xl:h-12"
                       onClick={handleCart}
                     /> */}
-                    <FiShoppingCart
-                      className="w-6  md:w-8 lg:w-10 xl:w-12 pt-2 h-8 md:h-8 lg:h-8 xl:h-10 text-blue-900 hover:text-gray-400 hover:scale-110 transi duration-500"
+                    <img src={cart}
+                      className="w-2  md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 text-blue-900 hover:text-gray-400 hover:scale-110 transi duration-500"
                       onClick={handleCart}
                     />
                   </button>
@@ -241,7 +243,16 @@ function Nav({ topDivRef, cartItems }) {
                     <img
                       src={like}
                       onClick={handleclick}
-                      className="w-6 md:w-8 lg:w-10 xl:w-12 pt-2 h-10 md:h-12 lg:h-14 xl:h-16 hover:scale-110 transition duration-300"
+                      className="w-2 md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
+                    />{" "}
+                  </button>
+                </li>
+                <li>
+                  <button>
+                    <img
+                      src={compare}
+                      onClick={handleclick}
+                      className="w-2 md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
                     />{" "}
                   </button>
                 </li>
