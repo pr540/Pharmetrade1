@@ -7,21 +7,15 @@ import Footers from "../../Footers";
 import Product from "../../Product";
 import Sliders from "./Sliders";
 import Landing2 from "./Landing2";
-import PLefts from '../../PLefts'
+import PLefts from "../../PLefts";
 function Landing({ topMargin }) {
-
- 
-
-
   return (
-    <div className=" w-screen">
-      
+    <div className=" w-full">
       <div className=" w-full">
         <div
           className=" h-fit  background-animation"
           style={{
-            
-            marginTop: `${topMargin }px`,
+            marginTop: `${topMargin}px`,
           }}
         >
           <div className="mt-1">
@@ -59,13 +53,9 @@ function Landing({ topMargin }) {
             </p>
           </div>
         </div>
-        <div className="w-full flex justify-center ">
-            <div className="Largest:w-[1550px] Laptop:w-full  w-full px-16 ">
-              <Landing2 />
-              <Sliders />
-
-
-            </div>
+        <div className="w-full px-16">
+          <Landing2 />
+          <Sliders />
         </div>
       </div>
     </div>
@@ -73,5 +63,3 @@ function Landing({ topMargin }) {
 }
 
 export default Landing;
-
-

@@ -32,9 +32,9 @@ const MyAccount = () => {
   };
 
   return (
-    <div className=" bg-gray-100 w-[calc(100%-288px)]  flex justify-center font-ubuntu">
+    <div className=" bg-gray-100 w-full  flex justify-center font-ubuntu">
       <div className="w-[95%]  mt-8">
-      <h2 className='text-2xl font-semibold'>My Account</h2>
+      <h2 className='text-[22px] font-semibold text-blue-900'>My Account</h2>
       <div className='flex space-x-4 mt-4 border-b-2  text-xl font-semibold'>
         <div
           className={`py-2 px-4  ${selectedSection === 'details' ? 'border-t-2 border-l-2 border-r-2 border-gray-500' : 'border-white'}`}

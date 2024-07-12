@@ -1,7 +1,5 @@
-
-
-
 import React, { useState } from "react";
+import '../App.css'
 import logoImage from "../assets/logo2.png";
 import background_image from "../assets/homepharma.png";
 // import 'react-datepicker/dist/react-datepicker.css';
@@ -9,49 +7,93 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiCaretUp } from "react-icons/bi";
 // import DatePicker from 'react-datepicker';
 import OTP2 from "./OTP2";
+import FormControl from '@mui/material/FormControl';
+import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 
 function getSteps() {
-  return ["Personal-Info", "Business-Info", "Address-Info", "Done"];
+  return ["Personal-Info", "User-Info", "Bussiness-Info1", "Bussiness-Info-2"];
 }
 
 const Signup = () => {
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const [userType, setUserType] = useState('');
+  const [accountType, setAccountType] = useState('');
+
+  const userTypes = [
+    'Prescription Drug Seller',
+    'General Merchandise Seller',
+    'Vendor',
+    'Normal Customer'
+  ];
+
+  const accountTypes = {
+    default: ['buyer', 'Seller', 'Buyer/Seller'],
+    normalCustomer: ['buyer']
+  };
+
+  const handleUserTypeChange = (e) => {
+    setUserType(e.target.value);
+    setAccountType('');
+  };
+
+  const getAccountTypes = () => {
+    return userType === 'Normal Customer' ? accountTypes.normalCustomer : accountTypes.default;
+  };
+
+  const [isActive, setIsActive] = useState(true);
+
+
+  const handleOptionClick = () => {
+    setIsActive(true);
+    // setIsCheck(!ischeck);
+  };
+
+
+
+  const [isHover, setIsHover] = useState(false);
+
   const [startDate, setStartDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps, setSkippedSteps] = useState([]);
   const [formData, setFormData] = useState({
-    FullName: "",
-    User_Id: "",
-    newsletter: false,
+    First_Name: "",
+    Last_Name: "",
+    Email_id: "",
+    Phone_number: "",
+    password: "",
     confirmPassword: "",
     upnMember: "",
 
     shopName: "",
     legalBusinessName: "",
     dbaName: "",
-    address: "",
+    address1: "",
     city: "",
-    state: "",
+    State: "",
     zip: "",
     seller: "",
     buyer: "",
     buyerseller: "",
-    Email_id: "",
-    Phone_number: "",
-    password: "",
-    Bussinessphone: "",
-    Bussiness_Fax: "",
-    Bussiness_Email: "",
+    newsletter: false,
+
+
+    BusinessPhone: "",
+    Business_Fax: "",
+    Business_Email: "",
     DEA: "",
+    Pharmacy_License: "",
     Bussiness_License: "",
     NPI: "",
     NCPDP: "",
-    Federal: "",
+    Federal_Tax_ID: "",
     Address1: "",
     Address: "",
-    City: "",
-    State: "",
+
+
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
@@ -59,6 +101,7 @@ const Signup = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+    console.log(name,value)
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
@@ -68,57 +111,63 @@ const Signup = () => {
   const validateStep = (step) => {
     let newErrors = {};
     if (step === 0) {
-      if (!formData.FullName) newErrors.FullName = "Full name is required.";
-      if (!formData.User_Id) newErrors.User_Id = "UserId is required.";
+      if (!formData.First_Name) newErrors.First_Name = "First name is required.";
+      if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
+
       if (!formData.Email_id) newErrors.Email_id = "Email_id is required";
       if (!formData.Phone_number)
         newErrors.Phone_number = "Phone_number is required";
       if (!formData.password) newErrors.password = "Password is required.";
       if (!formData.confirmPassword)
         newErrors.confirmPassword = "Confirm password is required";
-    } else if (step === 1) {
+    } else if (step === 2) {
       if (!formData.shopName) newErrors.shopName = "Shop name is required.";
       if (!formData.legalBusinessName)
         newErrors.legalBusinessName = "Legal business name is required.";
+      if (!formData.State) newErrors.State = "Shop name is required.";
+      if (!formData.city) newErrors.city = "Shop name is required.";
+
       if (!formData.dbaName) newErrors.dbaName = "DBA name is required.";
-      if (!formData.address) newErrors.address = "Address is required.";
-      if (!formData.Address) newErrors.Address = "Address is require";
-      if (!formData.city) newErrors.city = "City is required.";
-      if (!formData.state) newErrors.state = "State is required.";
-      if (!formData.zip) newErrors.zip = "Zip is required.";
-      if (!formData.DEA) newErrors.DEA = "DEA is required";
-      if (!formData.Bussinessphone)
+      if (!formData.BusinessPhone)
         newErrors.BusinessPhone = "bussinessphone is required";
-      if (!formData.Bussiness_Fax)
-        newErrors.Bussiness_Fax = "Bussiness_Fax is required";
-      if (!formData.Bussiness_Email)
-        newErrors.Bussiness_Email = " Bussiness_Email is required";
-    } else if (step === 2) {
+      if (!formData.Business_Fax)
+        newErrors.Business_Fax = "Bussiness_Fax is required";
+      if (!formData.Business_Email)
+        newErrors.Business_Email = " Bussiness_Email is required";
+
+      if (!formData.zip) newErrors.zip = "Zip is required.";
+      if (!formData.Address1) newErrors.Address1 = "Address is require";
+      if (!formData.city) newErrors.city = "City is required.";
+      if (!formData.State) newErrors.State = "State is required.";
+
+    } else if (step === 3) {
+      if (!formData.DEA) newErrors.DEA = "DEA is required";
+      if (!formData.Pharmacy_License)
+        newErrors.Pharmacy_License = "Pharmacy_License is required";
       if (!formData.NCPDP) newErrors.NCPDP = "NCPDP is required";
-      if (!formData.Federal) newErrors.Federal = "Federal is required";
-      if (!formData.Bussiness_License)
-        newErrors.Bussiness_License = "Bussiness_License is required";
+      if (!formData.Federal_Tax_ID) newErrors.Federal_Tax_ID = "Federal is required";
+
       if (!formData.NPI) newErrors.NPI = "NPI is required";
     }
 
     setErrors(newErrors);
+    console.log(newErrors)
     return Object.keys(newErrors).length === 0;
   };
 
-  // const handleOTPChange = (otp) => {
-  //   console.log("Current OTP:", otp);
-  // };
+  console.log(formData)
 
   const isStepOptional = (step) => step === 1 || step === 2 || step === 3;
 
   const isStepSkipped = (step) => skippedSteps.includes(step);
 
- 
+
   const navigate = useNavigate();
 
   const handleNext = () => {
     if (validateStep(activeStep)) {
-      if (activeStep === 0 && usertype === "buyer") {
+      
+      if (activeStep === 1 && usertype === "buyer") {
         setActiveStep(3);
       } else if (activeStep === steps.length - 1) {
         navigate('/app');
@@ -137,519 +186,515 @@ const Signup = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  // const activeStep =()=>{
+ 
 
-  // }
-
-  const handleSkip = () => {
-    if (!isStepSkipped(activeStep)) {
-      setSkippedSteps((prevSkippedSteps) => [...prevSkippedSteps, activeStep]);
-    }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  // const handleSkip = () => {
+  //   if (!isStepSkipped(activeStep)) {
+  //     setSkippedSteps((prevSkippedSteps) => [...prevSkippedSteps, activeStep]);
+  //   }
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  // };
 
 
   const [usertype, setusertype] = useState("");
 
   const handleusertypechange = (value) => {
-    // alert("handl usertypkjsdcnc");
     setusertype(value);
-    // if (value === "buyer") {
-    //   if(validateStep(0)==1)
-    //     ;
-    //   setActiveStep(3);
-    // }
+   
   };
+  console.log(activeStep)
 
   const getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
+
           <div>
+
             <div className="flex flex-row  my-4 justify-evenly">
+
+
               <div>
-                <input
-                  id="FullName"
-                  placeholder="FullName"
-                  name="FullName"
-                  value={formData.FullName}
+                <TextField
+                  label="First Name"
+                  id="outlined-size-small"
+                  name="First_Name"
+                  value={formData.First_Name}
                   onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.FullName && { border: "1px solid red" }),
-                  }}
+                  error={!!errors.First_Name}
+
+                  size="small"
                 />
               </div>
 
               <div>
-                <input
-                  id="User_Id"
-                  placeholder="UserId"
-                  name="User_Id"
-                  value={formData.User_Id}
+                <TextField
+                  label="Last Name"
+                  id="outlined-size-small"
+                  name="Last_Name"
+                  value={formData.Last_Name}
                   onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.User_Id && { border: "1px solid red" }),
-                  }}
-                  required
+                  error={!!errors.Last_Name}
+                  size="small"
                 />
+
               </div>
+
             </div>
-            <div className="personal_info  flex flex-row  my-4 justify-evenly">
+
+            <div className="flex flex-row  my-4 justify-evenly">
+
+
               <div>
-                <input
-                  id="Email_id"
-                  placeholder="Emailid"
+                <TextField
+                  label="Email ID"
+                  id="outlined-size-small"
                   name="Email_id"
                   value={formData.Email_id}
                   onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Email_id && { border: "1px solid red" }),
-                  }}
-                  required
+                  error={!!errors.Email_id}
+                  size="small"
                 />
+
               </div>
+
               <div>
-                <input
-                  id="Phone_number"
-                  placeholder="Phonenumber"
+                <TextField
+                  label="Phone Number"
+                  id="outlined-size-small"
                   name="Phone_number"
                   value={formData.Phone_number}
                   onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Phone_number && { border: "1px solid red" }),
-                  }}
-                  required
+                  error={!!errors.Phone_number}
+                  size="small"
                 />
+
               </div>
+
             </div>
+
             <div className="flex flex-row  my-4 justify-evenly">
+
+
               <div>
-                <input
-                  id="password"
-                  placeholder="Password"
+                <TextField
+                  label="Password  "
+                  id="outlined-size-small"
                   name="password"
-                  type="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className=" p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.password && { border: "1px solid red" }),
-                  }}
-                  required
+                  error={!!errors.password}
+                  size="small"
                 />
+
               </div>
 
               <div>
-                <input
-                  id="confirm-password"
-                  placeholder="Confirm Password"
+                <TextField
+                  label="Confirm password"
+                  id="outlined-size-small"
                   name="confirmPassword"
-                  type="password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.confirmPassword && { border: "1px solid red" }),
-                  }}
-                  required
+                  error={!!errors.confirmPassword}
+                  size="small"
                 />
-              </div>
-            </div>
-            <div className=" flex flex-row justify-evenly">
-              <div className="">
-                <input type="checkbox" name="upnMember" required />{" "}
-                <label>Are you a UPN Member</label>
-                {errors.upnMember && (
-                  <div className="text-red-600 flex">{errors.upnMember}</div>
-                )}
+
               </div>
 
-              <div className="flex items-center justify-between ">
-                <div className="flex items-center ">
-                  <input
-                    type="radio"
-                    id="seller"
-                    name="usertype"
-                    value="seller"
-                    checked={usertype === "seller"}
-                    onChange={(e) => handleusertypechange(e.target.value)}
-                  />
-                  <label htmlFor="seller" className="">
-                    Seller
-                  </label>
-                </div>
-                <div className="flex items-center ml-2">
-                  <input
-                    type="radio"
-                    id="buyer"
-                    name="usertype"
-                    value="buyer"
-                    checked={usertype === "buyer"}
-                    onChange={(e) => handleusertypechange(e.target.value)}
-                  />
-                  <label htmlFor="buyer" className="">
-                    Buyer
-                  </label>
-                </div>
-                <div className="flex items-center ml-2">
-                  <input
-                    type="radio"
-                    id="buyer-seller"
-                    name="usertype"
-                    value="buyer-seller"
-                    checked={usertype === "buyer-seller"}
-                    onChange={(e) => handleusertypechange(e.target.value)}
-                  />
-                  <label htmlFor="buyer-seller" className="">
-                    Buyer/Seller
-                  </label>
-                </div>
-              </div>
             </div>
-            <div className=" mx-4 my-4">
-              <input
-                type="checkbox"
-                id="checkbox"
-                name="upnmember"
-                // value={formData.checkbox}
-                // onChange={handleInputChange}
-              />{" "}
-              <span>
-                Please accept PharmEtrade{" "}
-                <Link to="/" style={{ textDecoration: "none" }}>
-                  Terms & Conditions
-                </Link>
-              </span>
-            </div>
-
-            <OTP2 />
           </div>
+
         );
       case 1:
         return (
+
           <div>
-            <div className="flex flex-row  my-4 justify-evenly">
-              <select className="p-2 border w-52 border-gray-500 rounded-lg">
-                <option value="option1">Prescription Drug Seller</option>
-                <option value="option2">General Merchandise Seller</option>
-              </select>
+            <div className="p-4">
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userType">
+                  User Type
+                </label>
+                <select
+                  id="userType"
+                  value={userType}
+                  onChange={handleUserTypeChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">Select User Type</option>
+                  {userTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mb-4  ">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Account Type
+                </label>
+                {getAccountTypes().map((type) => (
+                  <div key={type} className="flex ml-4 items-center mb-2">
+                    <input
+                      type="radio"
+                      id={type}
+                      name="accountType"
+                      value={type}
+                      checked={accountType === type}
+
+
+
+                      onChange={(e) => setAccountType(e.target.value) && handleusertypechange(e.target.value)}
+                      className="mr-2 leading-tight flex"
+                    />
+                    <label htmlFor={type} className="text-gray-700">
+                      {type}
+                    </label>
+                  </div>
+                ))}
+              </div>
 
               <div>
                 <input
-                  id="shop-name"
-                  placeholder="Shop Name"
-                  name="shopName"
-                  value={formData.shopName}
-                  onChange={handleInputChange}
-                  className="p-2 border  border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.shopName && { border: "1px solid red" }),
-                  }}
-                />
+                  type="checkbox"
+                  className="mr-2 leading-tight ml-4" />
+                <label className="text-gray-700 "> Are you  a UPN Member</label>
               </div>
             </div>
-
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
-                <input
-                  id="legal-business-name"
-                  placeholder="Legal Business Name"
-                  name="legalBusinessName"
-                  value={formData.legalBusinessName}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.legalBusinessName && {
-                      border: "1px solid red",
-                    }),
-                  }}
-                />
-              </div>
-              <div>
-                <input
-                  id="dba-name"
-                  placeholder="DBA Name"
-                  name="dbaName"
-                  value={formData.dbaName}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.dbaName && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Bussinessphone */}
-
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
-                <input
-                  id="business-phone"
-                  placeholder="Business-phone"
-                  name="Businessphone"
-                  value={formData.BusinessPhone}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.BusinessPhone && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-              <div>
-                <input
-                  id="Bussiness_Fax"
-                  placeholder="Bussiness Fax"
-                  name="Bussiness_Fax"
-                  value={formData.Bussiness_Fax}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Bussiness_Fax && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-            </div>
-            {/* bussiness phone end */}
-
-            {/* address1 ---start */}
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
-                <input
-                  id=" Bussiness_Email"
-                  placeholder=" Bussiness Email"
-                  name=" Bussiness_Email"
-                  value={formData.Bussiness_Email}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Bussiness_Email && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-
-              {/* address1 ---end */}
-
-              {/* address2 ---start */}
-              <div>
-                <input
-                  id="Address"
-                  placeholder="Address "
-                  name="Address"
-                  value={formData.Address}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Address && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* address2--end */}
-
-            {/* city---start */}
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
-                <input
-                  id="city"
-                  placeholder="City"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.city && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-
-              {/* city--end */}
-
-              {/* state--start */}
-
-              <div>
-                <input
-                  id="state"
-                  placeholder="State"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.state && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-            </div>
-            {/* state--end */}
-
-            {/* ZIP- start */}
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
-                <input
-                  id="zip"
-                  placeholder="Zip"
-                  name="zip"
-                  value={formData.zip}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.zip && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-              {/* zip---end */}
-
-              {/* DEA---start */}
-              <div>
-                <input
-                  id="DEA"
-                  placeholder="DEA"
-                  name="DEA"
-                  value={formData.DEA}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.DEA && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-            </div>
-            {/* DEA ---end */}
           </div>
+
+
+
         );
       case 2:
         return (
-          <div>
-            {/* Address */}
+          <div
+          >
 
-            <div className="flex flex-row my-4 justify-evenly">
-              <div className="flex flex-col">
-                <span> DEA-Expiration-Date</span>
+            <div className="flex flex-row  my-4 justify-evenly">
 
-                <input
-                  type="date"
-                  className="p-2 border w-52 border-gray-500 rounded-lg"
-                />
-              </div>
-              {/* pharmacy_license---start */}
+
               <div>
-                <input
-                  id="Bussiness_License"
-                  placeholder="Bussiness License"
-                  name="Bussiness_License"
-                  value={formData.Bussiness_License}
+                <TextField
+
+                  label="shop Name"
+                  id="outlined-size-small"
+                  name="shopName"
+                  value={formData.shopName}
                   onChange={handleInputChange}
-                  className="p-2 border mt-6 border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Bussiness_License && {
-                      border: "1px solid red",
-                    }),
-                  }}
+                  error={!!errors.shopName}
+                  size="small"
                 />
+
               </div>
 
-              {/* Pharmacy-license---end */}
+              <div>
+                <TextField
+                  label="legal Bussiness Name"
+                  id="outlined-size-small"
+                  name="legalBusinessName"
+                  value={formData.legalBusinessName}
+                  onChange={handleInputChange}
+                  error={!!errors.legalBusinessName}
+                  size="small"
+                />
+
+              </div>
+
             </div>
 
-            <div className="flex flex-row my-4  justify-evenly">
-              <div className="flex flex-col">
-                <span> Bussiness-Expiration-Date</span>
 
-                <input
-                  type="date"
-                  className="p-2 border w-52 border-gray-500 rounded-lg"
+            {/* Address */}
+            <div className="flex flex-row  my-4 justify-evenly">
+
+
+              <div>
+                <TextField
+                  label="dba"
+                  id="outlined-size-small"
+                  name="dbaName"
+                  value={formData.dbaName}
+                  onChange={handleInputChange}
+                  error={!!errors.dbaName}
+                  size="small"
                 />
+
               </div>
 
-              <input
-                id="NPI"
-                placeholder="NPI"
-                name="NPI"
-                value={formData.NPI}
-                onChange={handleInputChange}
-                className="p-2 border mt-5 border-gray-500 rounded-lg"
-                style={{
-                  ...(errors.NPI && { border: "1px solid red" }),
-                }}
-              />
-            </div>
+              <div>
+                <TextField
+                  label="Address1"
+                  id="outlined-size-small"
+                  name="Address1"
+                  value={formData.Address1}
+                  onChange={handleInputChange}
+                  error={!!errors.Address1}
+                  size="small"
+                />
 
-            <div className="flex flex-row my-4  justify-evenly">
-              <div className="flex flex-col">
-                <span className="ml-5">DEA-Licence Copy(jpg,png,png)</span>
-
-                <input type="file" className="p-2 w-52 ml-3" />
-                <div className="flex ml-3">
-                  <BiCaretUp />
-                  <span> File types:jpg,jpeg,png</span>
-                </div>
-                <div className="flex ml-3">
-                  <BiCaretUp />
-                  <span> File Size:jpg,jpeg,png</span>
-                </div>
               </div>
 
-              <div className="flex flex-col">
-                <span>State Licence Copy(jpg,png,png)</span>
-
-                <input type="file" className="p-2  w-52 " />
-                <div className="flex ml-3">
-                  <BiCaretUp />
-                  <span> File types:jpg,jpeg,png</span>
-                </div>
-                <div className="flex ml-3">
-                  <BiCaretUp />
-                  <span> File Size:jpg,jpeg,png</span>
-                </div>
-              </div>
             </div>
 
             <div className="flex flex-row  my-4 justify-evenly">
               <div>
-                <input
-                  id="NCPDP"
-                  placeholder="ncpdp"
-                  name="NCPDP"
-                  value={formData.NCPDP}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.NCPDP && { border: "1px solid red" }),
-                  }}
-                />
-              </div>
-              {/* NCPDP ---end */}
 
+
+                <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                  <InputLabel id="demo-select-small-label"
+                 
+                  >State</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    label="State"
+                    value={formData.State}
+                    name="State"
+                    onChange={handleInputChange}
+     
+
+                  
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"State1"}>state1</MenuItem>
+                    <MenuItem value={"State2"}>state2</MenuItem>
+                    <MenuItem value={"State3"}>state3</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
               <div>
-                <input
-                  id="Federal"
-                  placeholder="Federal Tax ID"
-                  name="Federal"
-                  value={formData.Federal}
-                  onChange={handleInputChange}
-                  className="p-2 border border-gray-500 rounded-lg"
-                  style={{
-                    ...(errors.Federal && { border: "1px solid red" }),
-                  }}
-                />
+                <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                  <InputLabel id="demo-select-small-label"
+                 
+                  >city</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+
+                  
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>city1</MenuItem>
+                    <MenuItem value={20}>city2</MenuItem>
+                    <MenuItem value={30}>city3</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
             </div>
+
+            <div className="flex flex-row  my-4 justify-evenly">
+
+
+              <div>
+                <TextField
+                  label="zip"
+                  id="outlined-size-small"
+                  name="zip"
+                  value={formData.zip}
+                  onChange={handleInputChange}
+                  error={!!errors.zip}
+                  size="small"
+                />
+
+              </div>
+
+              <div>
+                <TextField
+                  label="Business Phone"
+                  id="outlined-size-small"
+                  name="BusinessPhone"
+                  value={formData.BusinessPhone}
+                  onChange={handleInputChange}
+                  error={!!errors.BusinessPhone}
+                  placeholder="Enter your business phone"
+                  size="small"
+                />
+              </div>
+
+            </div>
+
+            <div className="flex flex-row  my-4 justify-evenly">
+
+
+               <div>
+                <TextField
+                  label="Bussiness Fax"
+                  id="outlined-size-small"
+                  name="Business_Fax"
+                  value={formData.Business_Fax}
+                  onChange={handleInputChange}
+                  error={!!errors.Business_Fax}
+                  size="small"
+                />
+
+              </div>
+
+              <div>
+                <TextField
+                  label="Bussiness Email"
+                  id="outlined-size-small"
+                  name="Business_Email"
+                  value={formData.Business_Email}
+                  onChange={handleInputChange}
+                  error={!!errors.Business_Email}
+                  size="small"
+                />
+
+              </div> 
+
+            </div>
+
+
           </div>
         );
       case 3:
         return (
-          <div className="my-6">
-            <div className="flex justify-center items-center">
-              Thank you for registering!
+          <div className="my-2">
+
+            <div className="flex flex-row  my-2 justify-evenly">
+
+
+              <div>
+                <TextField
+                  label="DEA"
+                  id="outlined-size-small"
+                  name="DEA"
+                  value={formData.DEA}
+                  onChange={handleInputChange}
+                  error={!!errors.DEA}
+                  size="small"
+                  style={{width:'98%',marginLeft:'-2px'}}
+               
+                />
+
+              </div>
+
+             
+               <div className="">
+      <TextField
+        label="Pharmacy License"
+        id="outlined-size-small"
+        name="Pharmacy_License"
+        value={formData.Pharmacy_License}
+        onChange={handleInputChange}
+        error={!!errors.Pharmacy_License}
+       
+        placeholder="Enter your pharmacy license"
+        size="small"
+      />
+    </div>
             </div>
-            <div className="flex justify-center ">
-              Your registration is completed.
+            <div className="flex flex-row ml-8 -mt-2  justify-evenly">
+
+              <div className="-ml-3">
+                <span className="text-xs">DEA Expiratio Date</span>
+                <TextField label=''
+                  type="date"
+                  id="outlined-size-small"
+                  style={{ width: '102%' }}
+                  size="small" />
+              </div>
+
+              <div className="ml-8">
+                <span className="text-xs">Pharmacy Expiration Date</span>
+                <TextField label=''
+                  type="date"
+                  id="outlined-size-small"
+                  style={{ width: '91%' }}
+                  size="small" />
+              </div>
+
+            </div>
+
+            <div className="flex flex-row justify-evenly mx-6">
+            <div className="-ml-1">
+                <span className="text-xs">DEA License Copy(jpg,png,jpeg) </span>
+                <TextField label=''
+                  type="file"
+                  id="outlined-size-small"
+                  style={{ width: '108%',fontSize:'5px' }}
+                  size="small" />
+              </div>
+
+              <div className="ml-10">
+                <span className="text-xs">Pharmacy License Copy(jpeg,jpg,png) </span>
+                <TextField label=''
+                  type="file"
+                  id="outlined-size-small"
+                  style={{ width: '101%' }}
+                  size="small" />
+              </div>
+
+            </div>
+
+
+            <div className="flex flex-row  my-2 justify-evenly">
+
+
+              <div>
+                <TextField
+                  label="NPI"
+                  id="outlined-size-small"
+                  name="NPI"
+                  value={formData.NPI}
+                  onChange={handleInputChange}
+                  error={!!errors.NPI}
+                  size="small"
+                />
+
+              </div>
+
+              <div>
+                <TextField
+                  label="NCPDP"
+                  id="outlined-size-small"
+                  name="NCPDP"
+                  value={formData.NCPDP}
+                  onChange={handleInputChange}
+                  error={!!errors.NCPDP}
+                  size="small"
+                />
+
+              </div>
+
+            </div>
+
+            <div className="flex flex-row my-2 justify-start mx-5">
+              <div>
+                <TextField
+                  label="Federal Tax ID"
+                  id="outlined-size-small"
+                  name="Federal_Tax_ID"
+                  value={formData.Federal_Tax_ID}
+                  onChange={handleInputChange}
+                  error={!!errors.Federal_Tax_ID}
+                  size="small"
+                />
+
+              </div>
+
+            </div>
+            <div className="ml-4">
+              <div>
+                <input
+                  type="checkbox"
+                  className="mr-2 leading-tight ml-4" />
+                <label className="text-gray-700  -ml-1"> Signup for News letters</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  className="mr-2 leading-tight ml-4" />
+                <label className="text-gray-700 ">Accepts Terms& Conditions  for Pharmetrade</label>
+              </div>
             </div>
           </div>
         );
@@ -667,28 +712,25 @@ const Signup = () => {
 
         <div className="w-full h-full ">
           <Link to="/">
-            <img src={logoImage} alt="Logo" style={{ width: "220px" }} />
+            <img src={logoImage} alt="Logo" style={{ width: "220px", margin: '5px' }} />
           </Link>
-          <div className="h-full flex justify-center items-center">
-            <div className="bg-white w-[40%] p-8 rounded-lg shadow-lg">
-              <span className="text-blue-900 text-[25px]  text-center font-bold  my-5   flex justify-center items-center  ">
+          <div className="h-[80%]  flex justify-center items-center">
+            <div className="bg-white w-[40%] p-6 rounded-lg shadow-lg">
+              <span className="text-blue-900 text-[25px]  text-center font-bold     flex justify-center items-center  ">
                 SignUp
               </span>
-              <div className="flex my-6">
+              <div className="flex my-4">
                 {steps.map((label, index) => (
                   <div
                     key={label}
                     className="flex  items-center flex-1 flex-col"
-                    //  style={stepStyle}
                   >
                     <div
                       className=" w-11 h-11 border rounded-full bg-blue-900 text-white flex justify-center items-center"
                       style={{
-                        // ...circleStyle,
 
                         ...(activeStep === index ? activeCircleStyle : {}),
-                        // ...(isStepSkipped(index) ? skippedCircleStyle : {}),
-                        // ...(isStepCompleted(index)? completedCircleStyle : {})
+                        
                       }}
                     >
                       {index + 1}
@@ -699,29 +741,30 @@ const Signup = () => {
               </div>
 
               {getStepContent(activeStep)}
-              <div className="flex justify-evenly">
+              <div className="flex justify-evenly m-2">
                 <button
                   onClick={handleBack}
-                  disabled={activeStep === 0}
+                  disabled={activeStep === 0 }
                   // style={buttonStyle}
                   className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
                 >
                   Back
                 </button>
-                {isStepOptional(activeStep) && (
+                {/* {isStepOptional(activeStep) && (
+
                   <button
                     onClick={handleSkip}
                     className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
                   >
                     Skip
                   </button>
-                )}
+                )} */}
 
                 <button
                   onClick={handleNext}
                   className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
                 >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                  {activeStep === steps.length -1 ? "Finish" : "Next"}
                 </button>
               </div>
             </div>
@@ -736,4 +779,3 @@ const activeCircleStyle = {
 };
 
 export default Signup;
-

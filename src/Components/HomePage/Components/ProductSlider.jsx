@@ -45,7 +45,7 @@ const ProductSlider = ({ data, Title }) => {
       <div className="w-full px-5 flex justify-center">
         <div
           ref={carouselContainer}
-          className=" flex w-[97%] gap-4  overflow-x-scroll snap-x snap-mandatory"
+          className=" flex w-[97%] gap-6  overflow-x-scroll snap-x snap-mandatory"
         >
           {data.map((item, index) => (
             <div key={index} className="snap-center shrink-0 ">

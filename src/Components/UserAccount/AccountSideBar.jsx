@@ -35,8 +35,8 @@ const AccountSideBar = () => {
       ];
 
   return (
-    <div className="w-80 p-8 bg-white font-normal shadow-lg font-ubuntu">
-      <nav className='space-y-4'>
+    <div className="w-72 p-4 bg-white font-normal overflow-scroll shadow-lg font-ubuntu">
+      <nav className='space-y-2 text-[14px]'>
         {links.map((link) => (
           <Link
             key={link.path}
