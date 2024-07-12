@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Cart from "./Components/Cart";
-import Landing from "./Components/Landing";
+import Landing from "./Components/HomePage/LandingPage/Landing";
 import Login from "./Components/Login";
-import Nav from "./Components/Nav";
+import Nav from "./Components/HomePage/Layout/Nav";
 import { NavbarProvider } from "./Components/NavbarContext";
 import Product from "./Components/Product";
 import Products from "./Components/Products";
@@ -34,8 +34,8 @@ import ShippingSetting from "./Components/Admin/Settings/ShippingSetting";
 import ManageShipping from "./Components/Admin/Settings/ManageShipping";
 import AddProducts from "./Components/Admin/Dashboard/AddProducts";
 import Orders from "./Components/Admin/Dashboard/Orders";
-import Dashboard from './Components/Admin/Dashboard/Dashboard';
-import Customers from './Components/Admin/Dashboard/Customers';
+import Dashboard from "./Components/Admin/Dashboard/Dashboard";
+import Customers from "./Components/Admin/Dashboard/Customers";
 import Earnings from "./Components/Admin/Earnings/Earnings";
 import Review from "./Components/Admin/Review/Review";
 import Return from "./Components/Admin/Returns/Return";
@@ -44,8 +44,7 @@ import AssignProductList from "./Components/Admin/AssignProductList/AssignProduc
 import RequestQuote from "./Components/Admin/RequestQuote/RequestQuote";
 import QuotedProducts from "./Components/Admin/RequestQuote/QuotedProducts";
 import ProductFields from "./Components/Admin/Components/ProductFields";
-
-
+import HomeLayout from "./Components/HomePage/Layout/HomeLayout";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -75,46 +74,60 @@ function App() {
 
   return (
     <NavbarProvider>
-        {!excludePatterns.test(location.pathname) && (
-            <Nav topDivRef={topDivRef} cartItems={cartItems} />
-        )}
+      {/* {!excludePatterns.test(location.pathname) && (
+        <Nav topDivRef={topDivRef} cartItems={cartItems} />
+      )} */}
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Signin />} />
         <Route path="/otp2" element={<OTP2 />} />
         <Route path="/password" element={<Password />} />
         <Route path="/changepassword" element={<Changepassword />} />
+
         <Route
-          path="/cart"
-          element={
-            <Cart
-            topMargin={topMargin}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-            />
-          }
-        />
-        <Route
-          path="/products"
-          element={<Products addCart={addCart} wishList={wishList} />}
-        />
-        <Route path="/checkout" element={<Checkout topMargin={topMargin} />} />
-        <Route path="/order" element={<Order topMargin={topMargin} />} />
-        <Route path="/pops" element={<Product />} />
-        <Route path="/app" element={<Landing topMargin={topMargin} />} />
-        <Route path="/" element={<Landing topMargin={topMargin} />} />
-        <Route path="/detailspage/:id" element={<Items addCart={addCart} />} />
-        <Route path="/orderhistory" element={<OrderHistory topMargin={topMargin} />} />
-        <Route
-          path="/wishlist"
-          element={
-            <Wishlist
-              topMargin={topMargin}
-              wishItems={wishItems}
-              setWishItems={setWishItems}
-            />
-          }
-        />
+          element={<HomeLayout topDivRef={topDivRef} cartItems={cartItems} />}
+        >
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                topMargin={topMargin}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
+            }
+          />
+          <Route
+            path="/products"
+            element={<Products addCart={addCart} wishList={wishList} />}
+          />
+          <Route
+            path="/checkout"
+            element={<Checkout topMargin={topMargin} />}
+          />
+          <Route path="/order" element={<Order topMargin={topMargin} />} />
+          <Route path="/pops" element={<Product />} />
+          <Route path="/app" element={<Landing topMargin={topMargin} />} />
+          <Route path="/" element={<Landing topMargin={topMargin} />} />
+          <Route
+            path="/detailspage/:id"
+            element={<Items addCart={addCart} />}
+          />
+          <Route
+            path="/orderhistory"
+            element={<OrderHistory topMargin={topMargin} />}
+          />
+          <Route
+            path="/wishlist"
+            element={
+              <Wishlist
+                topMargin={topMargin}
+                wishItems={wishItems}
+                setWishItems={setWishItems}
+              />
+            }
+          />
+        </Route>
 
         <Route path="/admin" element={<AdminPanel />}>
           <Route path="" element={<Dashboard />} />
@@ -128,10 +141,7 @@ function App() {
           <Route path="review" element={<Review />} />
           <Route path="returns" element={<Return />} />
           <Route path="assign-products" element={<AssignProduct />} />
-          <Route
-            path="assign-product-list"
-            element={<AssignProductList />}
-          />
+          <Route path="assign-product-list" element={<AssignProductList />} />
           <Route path="request-quote" element={<RequestQuote />} />
           <Route path="quoted-product" element={<QuotedProducts />} />
           <Route path="settings" element={<Settings />} />
@@ -144,12 +154,8 @@ function App() {
         <Route element={<AccountPanel topMargin={topMargin} />}>
           <Route path="/user" element={<MyAccount />} />
           <Route path="/user/orders" element={<MyOrders />} />
-
-          
         </Route>
       </Routes>
-
-
 
       {/* <ScrollToTop/> */}
       {/* <Landing2 />

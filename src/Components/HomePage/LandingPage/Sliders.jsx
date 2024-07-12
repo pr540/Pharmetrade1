@@ -1,0 +1,178 @@
+import React from "react";
+import img1 from "../../../assets/img1.png";
+import img2 from "../../../assets/img2.png";
+import img3 from "../../../assets/img3.png";
+import img4 from "../../../assets/img4.png";
+import img5 from "../../../assets/img5.png";
+import right from "../../../assets/arrowright.png";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import left from "../../../assets/arrowleft.png";
+import mobile from "../../../assets/mobile.png";
+import { useNavbarContext } from "../../NavbarContext";
+import screen1 from "../../../assets/Icons/Screen dummy-1.png";
+import screen2 from "../../../assets/Icons/Screen dummy-2.png";
+import screen3 from "../../../assets/Icons/Screen dummy-3.png";
+import screen4 from "../../../assets/Icons/Screen dummy-4.png";
+import other from "../../../assets/compare1_Icon.png";
+import addcart from "../../../assets/cart1_icon.png";
+import fav from "../../../assets/Wishlist1_icon.png";
+import mask from "../../../assets/mask.png";
+import covid from "../../../assets/covid.png";
+import covid1 from "../../../assets/covid1.jpg";
+import mask1 from "../../../assets/mask1.jpg";
+import { useState, useRef, useEffect } from "react";
+import { Carousel } from "react-responsive-carousel";
+import Content from "../../Content";
+// import { IoIosArrowUp } from "react-icons/io";
+import OfferSlider from "../Components/OfferSlider";
+import ProductSlider from "../Components/ProductSlider";
+
+function Sliders() {
+  const searchBarRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("");
+          } else {
+            entry.target.classList.remove("");
+          }
+        });
+      },
+      { threshold: 0.5 } // Adjust threshold as needed
+    );
+
+    if (searchBarRef.current) {
+      observer.observe(searchBarRef.current);
+    }
+
+    return () => {
+      if (searchBarRef.current) {
+        observer.unobserve(searchBarRef.current);
+      }
+    };
+  }, []);
+  const images = [img1,img2,img3,img4];
+  const newProducts = [
+    { id: 1, img: img1, name: "Nature Mask", price: "$99.00" },
+    { id: 2, img: img2, name: "Eco-Friendly Mask", price: "$89.00" },
+    { id: 3, img: img3, name: "Reusable Mask", price: "$79.00" },
+    { id: 4, img: img4, name: "Protective Mask", price: "$69.00" },
+    { id: 5, img: img5, name: "Breathable Mask", price: "$59.00" },
+    { id: 6, img: img1, name: "Comfy Mask", price: "$49.00" },
+    { id: 7, img: img2, name: "Stylish Mask", price: "$39.00" },
+    { id: 8, img: img3, name: "Daily Mask", price: "$29.00" },
+    { id: 9, img: img4, name: "Night Mask", price: "$19.00" },
+    { id: 10, img: img5, name: "Morning Mask", price: "$9.00" },
+  ];
+  const mobiles = [mobile, mobile, mobile, mobile, mobile];
+  const screens = [mask, covid, covid1, mask1];
+  const { pop } = useNavbarContext();
+
+
+ 
+
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
+  
+  return (
+    <>
+    
+      <div className="">
+      
+        <OfferSlider
+          images={screens}
+          Title = {"Special Offers"}
+        />
+        <ProductSlider
+          Title={"New Products"}
+          data={newProducts}
+        />
+
+        
+        <div
+          className={
+            pop
+              ? " getTouchs  xl:w-80% relative h-5% md:mt-24 xl:mt-48 xl:mx-8 rounded-md xl:p-10 xl:flex xl:flex-col xl:justify-center"
+              : " getTouchs md:ml-0 md:w-80% md:h-5% xl:w-80% relative h-15% md:mt-12 xl:mt-20 xl:mx-8 rounded-md xl:p-5 xl:flex xl:flex-col xl:justify-center"
+          }
+        >
+          <div className="border-2 md:p-0 border-white w-auto md:h-5% md:w-auto xl:w-auto xl:h-5% lg:ml-4 xl:flex xl:justify-center lg:mr-4 lg:mt-4 lg:mb-4 xl:ml-12 rounded-md">
+            <p className="absolute xl:top-4 z-5 left-1/3 h-5% bg-box-blue text-white px-4 py-2 rounded-md  text-2xl">
+              Get in touch{" "}
+            </p>
+            <div className="ml-10 md:flex md:flex-row md:gap-10 lg:gap-20 xl:flex xl:flex-row xl:gap-50 ">
+              <div className="flex items-center justify-center lg:pb-4 lg:pl-4 xl:pr-4">
+                <div
+                  ref={searchBarRef}
+                  className="relative flex items-center w-full max-w-md"
+                >
+                  <div className="md:w-screen xl:w-fit xl:pl-8 ">
+                    <ul className="md:text-xl xl:text-2xl text-white font-light  bounce-in-top  w-96">
+                      <li className="w-96 ">Manage Inventory</li>
+                      <li className="">Increase cash flow </li>
+                      <li className="">Grow you business</li>
+                      <li className="">Promote products and deals</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-5 pr-36 mt-7  justify-start items-center">
+                <input
+                  type="text"
+                  placeholder="Enter Your Name"
+                  className="w-72 h-10 px-5 "
+                />
+                <input
+                  type="text"
+                  placeholder="Enter Your Contact"
+                  className="w-72 h-10 px-5"
+                />
+                <input
+                  type="text"
+                  placeholder="Enter Your Email"
+                  className="w-72 h-10 px-5"
+                />
+                <button className="bg-box-blue text-white rounded-lg w-fit p-2 my-2">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className=" w-full">
+          <div className="flex justify-center items-center  mt-24">
+            {mobiles.map((item, key) => {
+              return (
+                <div key={key} className="flex justify-center mr-4">
+                  <img
+                    src={item}
+                    alt={`Mobile ${key}`}
+                    className="h-[350px] w-52 xl:w-[250px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      {/* <div
+        className="bg-yellow-100 mt-8 cursor-pointer text-blue-900 font-semibold p-3 flex justify-center items-center text-[17px]"
+        onClick={scrollToTop}
+      >
+        {" "}
+        Back To Top
+        <IoIosArrowUp className="w-8 h-6" />
+      </div> */}
+    </>
+  );
+}
+
+export default Sliders;

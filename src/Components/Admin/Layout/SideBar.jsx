@@ -11,7 +11,7 @@ import settings from "../../../assets/Settings_icon.png";
 import sellerinfo from "../../../assets/Seller_info_icon.png";
 import assign from "../../../assets/Products_list_icon.png";
 
-const Sidebar = ({ setIsOpen }) => {
+const Sidebar = () => {
   let navigate = useNavigate();
   let location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
@@ -48,7 +48,6 @@ const Sidebar = ({ setIsOpen }) => {
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
-    setIsOpen(!isCollapsed);
   };
 
   const navItems = [

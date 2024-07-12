@@ -32,12 +32,13 @@ function PLefts() {
     };
   }, []);
 
-  // console.log(scrollY);
+  console.log(scrollY);
+  
 
   return (
     <div
-      className={`fixed top-44 bottom-0 left-0 overflow-y-auto ${
-        scrollY > 500 && scrollY < 2700 ? "" : "hidden"
+      className={` fixed top-44 bottom-0 left-0 overflow-y-auto ${
+        scrollY > 450 && scrollY < 2700 ? "" : "hidden"
       }`}
     >
       <ul className="list-none space-y-4">

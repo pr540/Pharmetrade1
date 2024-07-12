@@ -219,9 +219,27 @@
 import React from "react";
 import email from "../assets/email.png";
 import logo from "../assets/logo_05.png";
+import { IoIosArrowUp } from "react-icons/io";
+
 
 function Footers() {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+  
   return (
+    <>
+    <div
+        className="bg-yellow-100 mt-8 cursor-pointer text-blue-900 font-semibold p-3 flex justify-center items-center text-[17px]"
+        onClick={scrollToTop}
+      >
+        {" "}
+        Back To Top
+        <IoIosArrowUp className="w-8 h-6" />
+      </div>
     <div className="text-white bg-blue-900 relative z-40">
       <div className="flex flex-col xl:flex-row justify-center xl:gap-20 gap-8 w-full p-6 xl:p-10">
         {/* About Us Section */}
@@ -329,6 +347,7 @@ function Footers() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
