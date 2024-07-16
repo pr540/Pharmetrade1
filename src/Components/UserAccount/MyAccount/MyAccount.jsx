@@ -132,7 +132,8 @@ const userInfo = [
 
 const MyAccount = () => {
   return (
-    <div className=" w-full  flex justify-center font-ubuntu">
+    <>
+    <div className=" w-full bg-gray-100 flex justify-center font-ubuntu">
       <div className="w-[95%] mt-8 ">
         <h2 className="text-[22px] font-semibold text-black mb-12">
           Hello, <span className="font-light">Ram</span>
@@ -181,11 +182,10 @@ const MyAccount = () => {
             </div>
           </div>
         </div>
-        <div>
-          <MyOrders/>
-        </div>
       </div>
     </div>
+    <MyOrders/>
+    </>
   );
 };
 
