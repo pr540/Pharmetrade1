@@ -90,7 +90,8 @@ export default {
         'fonts':'#174363',
         'inp':'#F3FAFE',
         'arr':'#41CDCE',
-        'ink':'#2020D3'
+        'ink':'#2020D3',
+        'cat':'#F6F6FA'
       },
       backgroundImage: {
         'colors': 'linear-gradient(to right, #ADD8E1, #7DC2CB, #A0D2D9, #6AB7C1)'
