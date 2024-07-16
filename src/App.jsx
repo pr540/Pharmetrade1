@@ -24,9 +24,9 @@ import Sidebar from "./Components/Admin/Layout/SideBar";
 import Settings from "./Components/Admin/Settings/Settings";
 // import SellerInfo from "./Components/DashboardAdmin/SellerInfo";
 import Payouts from "./Components/Admin/Payouts/Payouts";
-import AccountPanel from "./Components/UserAccount/AccountPanel";
-import MyAccount from "./Components/UserAccount/MyAccount";
-import MyOrders from "./Components/UserAccount/MyOrders";
+import AccountPanel from "./Components/UserAccount/Layout/AccountPanel";
+import MyAccount from "./Components/UserAccount/MyAccount/MyAccount";
+import MyOrders from "./Components/UserAccount/MyOrders/MyOrders";
 import OrderHistory from "./Components/OrderHistory";
 import UpsShipping from "./Components/Admin/Settings/UpsShipping";
 import FedexShipping from "./Components/Admin/Settings/FedexShipping";
@@ -45,6 +45,17 @@ import RequestQuote from "./Components/Admin/RequestQuote/RequestQuote";
 import QuotedProducts from "./Components/Admin/RequestQuote/QuotedProducts";
 import ProductFields from "./Components/Admin/Components/ProductFields";
 import HomeLayout from "./Components/HomePage/Layout/HomeLayout";
+import DownloadProduct from "./Components/UserAccount/DownloadProduct/DownloadProduct";
+import Addressbook from "./Components/UserAccount/AddressBook/Addressbook";
+import AccountInfo from "./Components/UserAccount/AccountInfo/AccountInfo";
+import StoredPayment from "./Components/UserAccount/StoredPayment/StoredPayment";
+import ProductReview from "./Components/UserAccount/ProductReview/ProductReview";
+import Newsletter from "./Components/UserAccount/Newsletter/Newsletter";
+import DeleteAccount from "./Components/UserAccount/DeleteAccount/DeleteAccount";
+import SavedLater from "./Components/UserAccount/SavedForLater/SavedLater";
+import MyReturn from "./Components/UserAccount/MyReturn/MyReturn";
+import MyWishlist from "./Components/UserAccount/MyWishlist/MyWishlist";
+import MyRequestedQuote from "./Components/UserAccount/MyRequestedQuote/MyRequestedQuote";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -154,6 +165,20 @@ function App() {
         <Route element={<AccountPanel topMargin={topMargin} />}>
           <Route path="/user" element={<MyAccount />} />
           <Route path="/user/orders" element={<MyOrders />} />
+          <Route path="/user/downloads" element={<DownloadProduct/>} />
+          <Route path="/user/address-book" element={<Addressbook/>} />
+          <Route path="/user/account-info" element={<AccountInfo/>} />
+          <Route path="/user/payment-methods" element={<StoredPayment/>} />
+          <Route path="/user/reviews" element={<ProductReview/>} />
+          <Route path="/user/newsletter" element={<Newsletter/>} />
+          <Route path="/user/delete-account" element={<DeleteAccount/>} />
+          <Route path="/user/saved" element={<SavedLater/>} />
+          <Route path="/user/returns" element={<MyReturn/>} />
+          <Route path="/user/wishlist" element={<MyWishlist/>} />
+          <Route path="/user/quote" element={<MyRequestedQuote/>} />
+
+
+
         </Route>
       </Routes>
 
