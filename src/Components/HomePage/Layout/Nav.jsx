@@ -385,7 +385,7 @@ function Nav({ topDivRef, cartItems }) {
   const components = [
     { name: "Allergies", component: <Baby /> },
     { name: "Bath & Body ", component: <Beauty /> },
-    { name: "Coough Cold & flu", component: <HealthTopics /> },
+    { name: "Cough Cold & flu", component: <HealthTopics /> },
     { name: "Digestive", component: <Home /> },
     { name: "drug", component: <Medicines /> },
     { name: "Eye Care", component: <PersonalCare /> },

@@ -32,7 +32,7 @@ function Landing2() {
     "Multi-order merge shipment.",
   ];
   return (
-    <div className=" mt-5 pt-3 w-full ">
+    <div className=" mt-5 pt-3 w-full  ">
       <PLefts />
       <div className="w-full ">
         <div

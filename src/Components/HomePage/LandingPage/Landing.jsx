@@ -18,7 +18,7 @@ function Landing({ topMargin }) {
             marginTop: `${topMargin}px`,
           }}
         >
-          <div className="mt-1">
+          <div className="mt-1 ">
             <p className="text-left md:pt-6 lg:pt-14 md:ml-20  lg:ml-36 lg:text-4xl text-white w-fit">
               <div className=" bounce-in-top overflow-hidden">
                 <span className="text-4xl  text-white  font-extralight">
@@ -53,7 +53,7 @@ function Landing({ topMargin }) {
             </p>
           </div>
         </div>
-        <div className="w-full px-16">
+        <div className="w-full px-8">
           <Landing2 />
           <Sliders />
         </div>

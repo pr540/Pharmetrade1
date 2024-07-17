@@ -1,8 +1,8 @@
-
-
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import logoImage from "../assets/logo2.png";
+import back from "../assets/Previous1_icon.png";
+import next from "../assets/Next1_icon.png"
 import background_image from "../assets/homepharma.png";
 // import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useNavigate } from "react-router-dom";
@@ -127,14 +127,22 @@ const Signup = () => {
       if (!formData.confirmPassword)
         newErrors.confirmPassword = "Confirm password is required";
     } else if (step === 2) {
-      if (!formData.shopName && userType != "Vendor" && userType!="General Merchandise Seller")
+      if (
+        !formData.shopName &&
+        userType != "Vendor" &&
+        userType != "General Merchandise Seller"
+      )
         newErrors.shopName = "Shop name is required.";
       if (!formData.legalBusinessName)
         newErrors.legalBusinessName = "Legal business name is required.";
       if (!formData.State) newErrors.State = "Shop name is required.";
       if (!formData.city) newErrors.city = "Shop name is required.";
 
-      if (!formData.dbaName && userType != "Vendor" && userType!="General Merchandise Seller")
+      if (
+        !formData.dbaName &&
+        userType != "Vendor" &&
+        userType != "General Merchandise Seller"
+      )
         newErrors.dbaName = "DBA name is required.";
       if (!formData.BusinessPhone)
         newErrors.BusinessPhone = "bussinessphone is required";
@@ -148,21 +156,19 @@ const Signup = () => {
       if (!formData.city) newErrors.city = "City is required.";
       if (!formData.State) newErrors.State = "State is required.";
     } else if (step === 3) {
-      if (!formData.DEA) newErrors.DEA = "DEA is required";
-      if (!formData.Pharmacy_License)
-        newErrors.Pharmacy_License = "Pharmacy_License is required";
-      if (!formData.NCPDP) newErrors.NCPDP = "NCPDP is required";
-      if (!formData.Federal_Tax_ID)
-        newErrors.Federal_Tax_ID = "Federal is required";
-
-      if (!formData.NPI) newErrors.NPI = "NPI is required";
+      // if (!formData.DEA) newErrors.DEA = "DEA is required";
+      // if (!formData.Pharmacy_License)
+      //   newErrors.Pharmacy_License = "Pharmacy_License is required";
+      // if (!formData.NCPDP) newErrors.NCPDP = "NCPDP is required";
+      // if (!formData.Federal_Tax_ID)
+      //   newErrors.Federal_Tax_ID = "Federal is required";
+      // if (!formData.NPI) newErrors.NPI = "NPI is required";
     }
 
     setErrors(newErrors);
     console.log(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
 
   const isStepOptional = (step) => step === 1 || step === 2 || step === 3;
 
@@ -174,7 +180,10 @@ const Signup = () => {
     if (validateStep(activeStep)) {
       if (activeStep === 1 && usertype === "buyer") {
         setActiveStep(3);
-      } else if (activeStep === steps.length - 1 || (activeStep==1 && userType==="Normal Customer")) {
+      } else if (
+        activeStep === steps.length - 1 ||
+        (activeStep == 1 && userType === "Normal Customer")
+      ) {
         navigate("/app");
       } else {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -186,7 +195,9 @@ const Signup = () => {
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if(!activeStep){
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
   };
 
   // const handleSkip = () => {
@@ -201,7 +212,7 @@ const Signup = () => {
   const handleusertypechange = (value) => {
     setusertype(value);
   };
-  console.log(typeof usertype,"hmm");
+  console.log(typeof usertype, "hmm");
 
   const getStepContent = (step) => {
     switch (step) {
@@ -305,7 +316,7 @@ const Signup = () => {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="">Select User Type</option>
-                  {userTypes.map((type,index) => (
+                  {userTypes.map((type, index) => (
                     <option key={type} value={type}>
                       {type}
                     </option>
@@ -348,36 +359,47 @@ const Signup = () => {
       case 2:
         return (
           <div>
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div className={`${(userType==="Vendor" || userType==="General Merchandise Seller")  ? "hidden":""}`}>
-                
-                  <TextField
-                    label="Shop Name"
-                    id="outlined-size-small"
-                    name="shopName"
-                    value={formData.shopName}
-                    onChange={handleInputChange}
-                    error={!!errors.shopName}
-                    size="small"
-                  />
-               
+            <div className="flex flex-row  my-4 justify-between">
+              <div
+                className={`${
+                  userType === "Vendor" ||
+                  userType === "General Merchandise Seller"
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                <TextField
+                  label="Shop Name"
+                  id="outlined-size-small"
+                  name="shopName"
+                  value={formData.shopName}
+                  onChange={handleInputChange}
+                  error={!!errors.shopName}
+                  size="small"
+                />
               </div>
-              <div className={`${(userType==="Vendor" || userType==="General Merchandise Seller")  ? "hidden":""}`}>
-                  <TextField
-                    label="DBA"
-                    id="outlined-size-small"
-                    name="dbaName"
-                    value={formData.dbaName}
-                    onChange={handleInputChange}
-                    error={!!errors.dbaName}
-                    size="small"
-                  />
-                </div>
-              
+              <div
+                className={`${
+                  userType === "Vendor" ||
+                  userType === "General Merchandise Seller"
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                <TextField
+                  label="DBA"
+                  id="outlined-size-small"
+                  name="dbaName"
+                  value={formData.dbaName}
+                  onChange={handleInputChange}
+                  error={!!errors.dbaName}
+                  size="small"
+                />
+              </div>
             </div>
 
             {/* Address */}
-            <div className="flex flex-row  my-4 justify-evenly">
+            <div className="flex flex-row  my-4 justify-between">
               <div>
                 <TextField
                   label="Legal Bussiness Name"
@@ -402,9 +424,9 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row  my-4 justify-evenly">
+            <div className="flex flex-row  my-4 justify-between">
               <div>
-                <FormControl sx={{ m: 1, minWidth: 210 }} size="small">
+                <FormControl sx={{  minWidth: 220 }} size="small">
                   <InputLabel id="demo-select-small-label">State</InputLabel>
                   <Select
                     labelId="demo-select-small-label"
@@ -443,7 +465,7 @@ const Signup = () => {
                   </Select>
                 </FormControl>
               </div> */}
-               <div>
+              <div>
                 <TextField
                   label="City"
                   id="outlined-size-small"
@@ -456,7 +478,7 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row  my-4 justify-evenly">
+            <div className="flex flex-row  my-4 justify-between">
               <div>
                 <TextField
                   label="Zip"
@@ -483,7 +505,7 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row  my-4 justify-evenly">
+            <div className="flex flex-row  my-4 justify-between">
               <div>
                 <TextField
                   label="Bussiness Fax"
@@ -507,6 +529,27 @@ const Signup = () => {
                   size="small"
                 />
               </div>
+            </div>
+            <div className="flex w-[500px] flex-row my-2  ">
+              <div
+                className={`${
+                  userType === "Normal Customer" ||
+                  userType === "Prescription Drug Seller" ||
+                  userType === "General Merchandise Seller"
+                    ? "hidden"
+                    : ""
+                }`}>
+                <TextField
+                  label="Federal Tax ID"
+                  id="outlined-size-small"
+                  name="Federal_Tax_ID"
+                  value={formData.Federal_Tax_ID}
+                  onChange={handleInputChange}
+                  error={!!errors.Federal_Tax_ID}
+                  size="small"
+                />
+              </div>
+
             </div>
           </div>
         );
@@ -709,30 +752,42 @@ const Signup = () => {
               </div>
 
               {getStepContent(activeStep)}
-              <div className="flex justify-evenly m-2">
+              <div className="flex justify-evenly m-2" >
+
+                {activeStep ? 
                 <button
                   onClick={handleBack}
-                  disabled={activeStep === 0}
+                  // disabled={}
                   // style={buttonStyle}
-                  className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
+                  className="bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
                 >
-                  Back
-                </button>
-                {/* {isStepOptional(activeStep) && (
+                  <img src={back} className="w-6"/>
+                </button>  : null}
 
-                  <button
-                    onClick={handleSkip}
-                    className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
-                  >
-                    Skip
-                  </button>
-                )} */}
 
-                <button
+                {/* <button
                   onClick={handleNext}
                   className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </button> */}
+                <button
+                  onClick={handleNext}
+                  className="bg-blue-900 w-24 h-10 cursor-pointer  border rounded-lg my-4 flex items-center justify-center"
+                >
+                  {activeStep === steps.length - 1 ? (
+                    <img
+                      src={next}
+                      alt="Finish"
+                      className="w-6 "
+                    />
+                  ) : (
+                    <img
+                      src={next}
+                      alt="Next"
+                      className="w-6"
+                    />
+                  )}
                 </button>
               </div>
             </div>
