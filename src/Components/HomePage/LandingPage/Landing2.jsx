@@ -71,12 +71,12 @@ function Landing2() {
       </div>
       <div className=" flex items-center  justify-evenly ">
         <div
-          className=" bg-yellow-50 mt-  p-4 rounded-2xl transition duration-300 "
+          className=" bg-yellow-50  p-4 rounded-2xl transition duration-300 "
           style={{ height: "fit-content" }}
         >
           <ul className="    space-y-2 lg:w-100% xl:w-auto xl:pr-10 md:pb-6 md:text-lg xl:text-2xl xl:mt-6 font-light pl-4 ">
             {texts.map((items, key) => (
-              <li key={key} className="flex flex-row  text-ink items-center gap-2">
+              <li key={key} className="flex flex-row  text-blue-900 items-center gap-2">
                 <img src={right2} className="w-6 bg-green-500 rounded-full" />
                 {items}
               </li>

@@ -374,9 +374,9 @@ function Nav({ topDivRef, cartItems }) {
   ];
   const downDivItems = [
     { label: "Buy", icon: Buy, path: "/products" },
-    { label: "Join", icon: hand, path: "/" },
-    { label: "Sell", icon: sale, path: "/admin" },
-    { label: "Bid", icon: bid, path: "#" },
+    { label: "Join", icon: hand, path: "/login" },
+    { label: "Sell", icon: sale, path: "/admin/addproducts/Create" },
+    { label: "Bid", icon: bid, path: "/bid" },
     { label: "LinkedIn", icon: linkedin, path: "#" },
     { label: "Facebook", icon: facebook, path: "#" },
     { label: "Insta", icon: insta, path: "#" },
@@ -466,7 +466,7 @@ function Nav({ topDivRef, cartItems }) {
               <div className="flex gap-6 justify-around h-full">
                 {MenuItems.map((item, index) => (
                   <li
-                    className="text-blue-900 flex justify-center items-center w-fit cursor-pointer  font-medium hover:text-green-400 text-[17px]"
+                    className="text-blue-900 flex justify-center items-center w-fit cursor-pointer  font-medium hover:text-green-500 text-[17px]"
                     key={item}
                     onClick={() => handleSelect(index)}
                   >
@@ -596,7 +596,7 @@ function Nav({ topDivRef, cartItems }) {
         {/* down div elemenet  */}
         <div
           className="flex justify-evenly bg-gray-200 h-fit flex-row  md:w-screen  
-           items-center text-black border-2 border-grey-500 shadow-lg  "
+           items-center text-black border-2 border-grey-500 shadow-lg "
         >
           <div className="flex items-center  w-[40%]  lg:gap-10 ">
             <div className="w-full relative flex items-center">

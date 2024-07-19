@@ -123,8 +123,10 @@ import addcart from "../assets/cart1_icon.png";
 import fav from "../assets/Wishlist1_icon.png";
 import nature from "../assets/img1.png";
 import Items from "./Items";
-import next from '../assets/Next_icon.png'
-import previous from '../assets/Previous_icon.png'
+// import next from '../assets/Next_icon.png'
+import next from "../assets/Icons/Next_icon.png"
+import previous from "../assets/Icons/Previous_icon.png"
+// import previous from '../assets/Previous_icon.png'
 
 import { useNavbarContext } from "./NavbarContext";
 import { useNavigate } from "react-router-dom";
@@ -183,6 +185,8 @@ function PRight({ topMargin, addCart, wishList }) {
 
   return (
     <div className="w-full">
+      <div className="flex justify-between bg-blue-900 p-4 rounded-lg">
+      <div className="text-2xl text-white"> Rx Drug</div>
       <div className="flex justify-end ">
         <button
           onClick={handlePreviousPage}
@@ -191,7 +195,7 @@ function PRight({ topMargin, addCart, wishList }) {
         >
           <img src={previous} className="w-2"/>
         </button>
-        <span className="mx-2 px-4  bg-white text-black rounded-lg">
+        <span className="mx-2 px-4 flex items-center  bg-white text-black rounded-lg">
           {currentPage} of {totalPages}
         </span>
         <button
@@ -202,6 +206,9 @@ function PRight({ topMargin, addCart, wishList }) {
           <img src={next} className="w-2"/>
         </button>
       </div>
+
+      </div>
+
       <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-8">
         {currentItems.map((img, index) => (
           <div

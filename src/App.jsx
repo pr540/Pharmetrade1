@@ -56,6 +56,8 @@ import SavedLater from "./Components/UserAccount/SavedForLater/SavedLater";
 import MyReturn from "./Components/UserAccount/MyReturn/MyReturn";
 import MyWishlist from "./Components/UserAccount/MyWishlist/MyWishlist";
 import MyRequestedQuote from "./Components/UserAccount/MyRequestedQuote/MyRequestedQuote";
+import Bid from "./Components/Bid";
+import Buy from "./Components/Buy";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -127,6 +129,14 @@ function App() {
           <Route
             path="/orderhistory"
             element={<OrderHistory topMargin={topMargin} />}
+          />
+          <Route
+            path="/bid"
+            element={<Bid topMargin={topMargin} />}
+          />
+          <Route
+            path="/buy"
+            element={<Buy topMargin={topMargin} />}
           />
           <Route
             path="/wishlist"

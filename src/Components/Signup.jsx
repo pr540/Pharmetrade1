@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import logoImage from "../assets/logo2.png";
 import back from "../assets/Previous1_icon.png";
-import next from "../assets/Next1_icon.png"
+import next from "../assets/Next1_icon.png";
 import background_image from "../assets/homepharma.png";
 // import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useNavigate } from "react-router-dom";
 
 // import DatePicker from 'react-datepicker';
 import FormControl from "@mui/material/FormControl";
-import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Box,
+  Radio,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 
 function getSteps() {
   return ["Personal-Info", "User-Info", "Bussiness-Info1", "Bussiness-Info-2"];
@@ -28,7 +35,7 @@ const Signup = () => {
 
   const accountTypes = {
     default: ["Buyer", "Seller", "Buyer/Seller"],
-    normalCustomer: ["buyer"],
+    normalCustomer: ["Buyer"],
   };
 
   const handleUserTypeChange = (e) => {
@@ -37,7 +44,7 @@ const Signup = () => {
   };
   useEffect(() => {
     if (userType === "Normal Customer") {
-      setAccountType("buyer");
+      setAccountType("Buyer");
     }
   }, [userType]);
 
@@ -88,12 +95,15 @@ const Signup = () => {
     buyer: "",
     buyerseller: "",
     newsletter: false,
-
     BusinessPhone: "",
     Business_Fax: "",
     Business_Email: "",
     DEA: "",
+    DEA_Expiration_Date: "",
+    DEA_License_Copy: "",
     Pharmacy_License: "",
+    Pharmacy_Expiration_Date: "",
+    Pharmacy_License_Copy: "",
     Bussiness_License: "",
     NPI: "",
     NCPDP: "",
@@ -107,6 +117,10 @@ const Signup = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     console.log(name, value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: null,
+    }));
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
@@ -116,60 +130,112 @@ const Signup = () => {
   const validateStep = (step) => {
     let newErrors = {};
     if (step === 0) {
-      if (!formData.First_Name)
+      if (!formData.First_Name.length)
         newErrors.First_Name = "First name is required.";
-      if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
+      if (!formData.Last_Name.length) newErrors.Last_Name = "Last name is required.";
 
-      if (!formData.Email_id) newErrors.Email_id = "Email_id is required";
-      if (!formData.Phone_number)
+      if (!formData.Email_id.length) newErrors.Email_id = "Email_id is required";
+      if (!formData.Phone_number.length)
         newErrors.Phone_number = "Phone_number is required";
-      if (!formData.password) newErrors.password = "Password is required.";
-      if (!formData.confirmPassword)
+      if (!formData.password.length) newErrors.password = "Password is required.";
+      if (!formData.confirmPassword.length)
         newErrors.confirmPassword = "Confirm password is required";
+    } else if (step === 1) {
+      if (!userType) newErrors.userType = "User Type is required";
+
+      if (!accountType) newErrors.accountType = "Account Type is required";
+
+      if (
+        (userType === "Prescription Drug Seller" ||
+          userType === "General Merchandise Seller" ||
+          userType === "Normal Customer") &&
+        !selectedValue
+      )
+        newErrors.upnMember = "UPN Member selection is required"
     } else if (step === 2) {
       if (
         !formData.shopName &&
         userType != "Vendor" &&
-        userType != "General Merchandise Seller"
+        userType != "General Merchandise Seller" &&
+        userType != "Normal Customer"
       )
         newErrors.shopName = "Shop name is required.";
-      if (!formData.legalBusinessName)
+      if (!formData.legalBusinessName && userType != "Normal Customer")
         newErrors.legalBusinessName = "Legal business name is required.";
-      if (!formData.State) newErrors.State = "Shop name is required.";
-      if (!formData.city) newErrors.city = "Shop name is required.";
 
       if (
-        !formData.dbaName &&
+        !formData.dbaName && 
         userType != "Vendor" &&
-        userType != "General Merchandise Seller"
+        userType != "General Merchandise Seller" &&
+        userType != "Normal Customer"
       )
         newErrors.dbaName = "DBA name is required.";
-      if (!formData.BusinessPhone)
+      if (!formData.BusinessPhone && userType != "Normal Customer")
         newErrors.BusinessPhone = "bussinessphone is required";
-      if (!formData.Business_Fax)
+      if (!formData.Business_Fax && userType != "Normal Customer")
         newErrors.Business_Fax = "Bussiness_Fax is required";
-      if (!formData.Business_Email)
+      if (!formData.Business_Email && userType != "Normal Customer")
         newErrors.Business_Email = " Bussiness_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required.";
       if (!formData.Address1) newErrors.Address1 = "Address is require";
       if (!formData.city) newErrors.city = "City is required.";
-      if (!formData.State) newErrors.State = "State is required.";
+      if (!formData.State) newErrors.State = "State is required";
     } else if (step === 3) {
-      // if (!formData.DEA) newErrors.DEA = "DEA is required";
-      // if (!formData.Pharmacy_License)
-      //   newErrors.Pharmacy_License = "Pharmacy_License is required";
-      // if (!formData.NCPDP) newErrors.NCPDP = "NCPDP is required";
-      // if (!formData.Federal_Tax_ID)
-      //   newErrors.Federal_Tax_ID = "Federal is required";
-      // if (!formData.NPI) newErrors.NPI = "NPI is required";
+      if (!formData.DEA && userType != "General Merchandise Seller"
+        && userType != "Vendor"
+      )
+        newErrors.DEA = "DEA is required";
+      if (
+        !formData.DEA_Expiration_Date &&
+        userType != "General Merchandise Seller"
+        && userType != "Vendor"
+      )
+        newErrors.DEA_Expiration_Date = "DEA_Expiration_Date is required";
+      // if (
+      //   !formData.DEA_License_Copy &&
+      //   userType != "General Merchandise Seller"
+      //   && userType != "Vendor"
+      // )
+      //   newErrors.DEA_License_Copy = "DEA_License_Copy is required";
+      if (
+        !formData.Pharmacy_Expiration_Date &&
+        userType != "General Merchandise Seller"
+        && userType != "Vendor"
+      )
+        newErrors.Pharmacy_Expiration_Date =
+          "Pharmacy_Expiration_Date is required";
+      // if (
+      //   !formData.Pharmacy_License_Copy &&
+      //   userType != "General Merchandise Seller"
+      //   && userType != "Vendor"
+      // )
+      //   newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
+      if (
+        !formData.Pharmacy_License &&
+        userType != "General Merchandise Seller"
+        && userType != "Vendor"
+      )
+        newErrors.Pharmacy_License = "Pharmacy_License is required";
+      if (!formData.NCPDP && userType != "General Merchandise Seller"
+        && userType != "Vendor"
+      )
+        newErrors.NCPDP = "NCPDP is required";
+      if (!formData.Federal_Tax_ID && userType != "General Merchandise Seller"
+      
+      )
+        newErrors.Federal_Tax_ID = "Federal is required";
+      if (!formData.NPI && userType != "General Merchandise Seller"
+        && userType != "Vendor"
+      )
+        newErrors.NPI = "NPI is required";
     }
 
     setErrors(newErrors);
     console.log(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
+  console.log(errors)
   const isStepOptional = (step) => step === 1 || step === 2 || step === 3;
 
   const isStepSkipped = (step) => skippedSteps.includes(step);
@@ -181,8 +247,8 @@ const Signup = () => {
       if (activeStep === 1 && usertype === "buyer") {
         setActiveStep(3);
       } else if (
-        activeStep === steps.length - 1 ||
-        (activeStep == 1 && userType === "Normal Customer")
+        activeStep === steps.length
+        // || (activeStep == 1 && userType === "Normal Customer")
       ) {
         navigate("/app");
       } else {
@@ -195,9 +261,18 @@ const Signup = () => {
   };
 
   const handleBack = () => {
-    if(!activeStep){
+    if(activeStep>0)
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    }
+
+    // if(!activeStep){
+    //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // }
+  };
+
+  const [selectedValue, setSelectedValue] = React.useState("");
+
+  const handleChange = (e) => {
+    setSelectedValue(e.target.value);
   };
 
   // const handleSkip = () => {
@@ -206,6 +281,21 @@ const Signup = () => {
   //   }
   //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
   // };
+
+  const formatPhoneNumber = (phoneNumber) => {
+    // Remove non-digit characters
+    phoneNumber = phoneNumber.replace(/\D/g, "");
+
+    // Format as 3-3-4
+    let formattedPhoneNumber = "";
+    for (let i = 0; i < phoneNumber.length; i++) {
+      if (i === 3 || i === 6) {
+        formattedPhoneNumber += "-";
+      }
+      formattedPhoneNumber += phoneNumber[i];
+    }
+    return formattedPhoneNumber;
+  };
 
   const [usertype, setusertype] = useState("");
 
@@ -248,7 +338,7 @@ const Signup = () => {
             <div className="flex flex-row  my-4 justify-evenly">
               <div>
                 <TextField
-                  label="Email ID"
+                  label="Email ID/User ID"
                   id="outlined-size-small"
                   name="Email_id"
                   value={formData.Email_id}
@@ -263,7 +353,7 @@ const Signup = () => {
                   label="Phone Number"
                   id="outlined-size-small"
                   name="Phone_number"
-                  value={formData.Phone_number}
+                  value={formatPhoneNumber(formData.Phone_number)}
                   onChange={handleInputChange}
                   error={!!errors.Phone_number}
                   size="small"
@@ -277,6 +367,7 @@ const Signup = () => {
                   label="Password  "
                   id="outlined-size-small"
                   name="password"
+                  type="password"
                   value={formData.password}
                   onChange={handleInputChange}
                   error={!!errors.password}
@@ -286,9 +377,10 @@ const Signup = () => {
 
               <div>
                 <TextField
-                  label="Confirm password"
+                  label="Confirm Password"
                   id="outlined-size-small"
                   name="confirmPassword"
+                  type="password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   error={!!errors.confirmPassword}
@@ -349,57 +441,72 @@ const Signup = () => {
                 ))}
               </div>
 
-              <div>
-                <input type="checkbox" className="mr-2 leading-tight ml-4" />
-                <label className="text-gray-700 "> Are you a UPN Member</label>
+              {/* <div className={${userType === "Vendor" ? "" :""}}>
+              <input type="checkbox" className="mr-2 leading-tight ml-4" />
+              <label className= "text-gray-700 "> Are you a UPN Member</label>
+            </div> */}
+
+              <div
+                className={`${
+                  userType === "Vendor" ? " opacity-50 pointer-events-none" : ""
+                } flex items-center`}
+              >
+                <label className="text-gray-700"><span className="text-red-500">*</span>Are you a UPN Member</label>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <div>
+                    <Radio
+                      checked={selectedValue === "a"}
+                      onChange={handleChange}
+                      value="a"
+                      name="radio-buttons"
+                      size="small"
+                      slotProps={{ input: { "aria-label": "A" } }}
+                    />
+                    <span>YES</span>
+                  </div>
+                  <div>
+                    <Radio
+                      checked={selectedValue === "b"}
+                      onChange={handleChange}
+                      value="b"
+                      name="radio-buttons"
+                      size="small"
+                      slotProps={{ input: { "aria-label": "B" } }}
+                    />
+                    <span>NO</span>
+                  </div>
+                </Box>
               </div>
+              <span className={` ${errors.upnMember==null ? "hidden":"text-red-700"}`}>{errors.upnMember}</span>
             </div>
           </div>
         );
       case 2:
         return (
-          <div>
-            <div className="flex flex-row  my-4 justify-between">
-              <div
-                className={`${
-                  userType === "Vendor" ||
-                  userType === "General Merchandise Seller"
-                    ? "hidden"
-                    : ""
-                }`}
-              >
-                <TextField
-                  label="Shop Name"
-                  id="outlined-size-small"
-                  name="shopName"
-                  value={formData.shopName}
-                  onChange={handleInputChange}
-                  error={!!errors.shopName}
-                  size="small"
-                />
-              </div>
-              <div
-                className={`${
-                  userType === "Vendor" ||
-                  userType === "General Merchandise Seller"
-                    ? "hidden"
-                    : ""
-                }`}
-              >
-                <TextField
-                  label="DBA"
-                  id="outlined-size-small"
-                  name="dbaName"
-                  value={formData.dbaName}
-                  onChange={handleInputChange}
-                  error={!!errors.dbaName}
-                  size="small"
-                />
-              </div>
+          <div className="grid grid-cols-2 gap-4 align-middle">
+            <div
+              className={`${
+                userType === "Vendor" ||
+                userType === "Normal Customer" ||
+                userType === "General Merchandise Seller"
+                  ? "hidden"
+                  : ""
+              }`}
+            >
+              <TextField
+                label="Shop Name"
+                id="outlined-size-small"
+                name="shopName"
+                value={formData.shopName}
+                onChange={handleInputChange}
+                error={!!errors.shopName}
+                size="small"
+              />
             </div>
 
-            {/* Address */}
-            <div className="flex flex-row  my-4 justify-between">
+            <div
+              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+            >
               <div>
                 <TextField
                   label="Legal Bussiness Name"
@@ -411,86 +518,92 @@ const Signup = () => {
                   size="small"
                 />
               </div>
-              <div>
-                <TextField
-                  label="Address1"
-                  id="outlined-size-small"
-                  name="Address1"
-                  value={formData.Address1}
-                  onChange={handleInputChange}
-                  error={!!errors.Address1}
-                  size="small"
-                />
-              </div>
+            </div>
+            <div
+              className={`${
+                userType === "Vendor" ||
+                userType === "Normal Customer" ||
+                userType === "General Merchandise Seller"
+                  ? "hidden"
+                  : ""
+              }`}
+            >
+              <TextField
+                label="DBA"
+                id="outlined-size-small"
+                name="dbaName"
+                value={formData.dbaName}
+                onChange={handleInputChange}
+                error={!!errors.dbaName}
+                size="small"
+              />
             </div>
 
-            <div className="flex flex-row  my-4 justify-between">
-              <div>
-                <FormControl sx={{  minWidth: 220 }} size="small">
-                  <InputLabel id="demo-select-small-label">State</InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    label="State"
-                    value={formData.State}
-                    name="State"
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"State1"}>state1</MenuItem>
-                    <MenuItem value={"State2"}>state2</MenuItem>
-                    <MenuItem value={"State3"}>state3</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              {/* <div>
-                <FormControl sx={{ m: 1, minWidth: 210 }} size="small">
-                  <InputLabel id="demo-select-small-label">City</InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    name="city"
-                    label="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>city1</MenuItem>
-                    <MenuItem value={20}>city2</MenuItem>
-                    <MenuItem value={30}>city3</MenuItem>
-                  </Select>
-                </FormControl>
-              </div> */}
-              <div>
-                <TextField
-                  label="City"
-                  id="outlined-size-small"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  error={!!errors.city}
-                  size="small"
-                />
-              </div>
+            <div>
+              <TextField
+                label="Address1"
+                id="outlined-size-small"
+                name="Address1"
+                value={formData.Address1}
+                onChange={handleInputChange}
+                error={!!errors.Address1}
+                size="small"
+              />
+            </div>
+            <div>
+              <TextField
+                label="City"
+                id="outlined-size-small"
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                error={!!errors.city}
+                size="small"
+              />
             </div>
 
-            <div className="flex flex-row  my-4 justify-between">
-              <div>
-                <TextField
-                  label="Zip"
-                  id="outlined-size-small"
-                  name="zip"
-                  value={formData.zip}
+            <div>
+              <FormControl
+                sx={{ minWidth: 223 }}
+                size="small"
+                error={!!errors.State}
+              >
+                <InputLabel id="demo-select-small-label">State</InputLabel>
+                <Select
+                  id="demo-select-small"
+                  label="State"
+                  value={formData.State}
+                  name="State"
                   onChange={handleInputChange}
-                  error={!!errors.zip}
-                  size="small"
-                />
-              </div>
 
+                  // error={!!errors.State}
+                >
+                  <MenuItem value="">{/* <em>None</em> */}</MenuItem>
+                  <MenuItem value={"State1"}>State1</MenuItem>
+                  <MenuItem value={"State2"}>State2</MenuItem>
+                  <MenuItem value={"State3"}>State3</MenuItem>
+                </Select>
+                {/* {errors.State && {errors.State}} */}
+              </FormControl>
+            </div>
+
+            <div>
+              <TextField
+                label="Zip"
+                id="outlined-size-small"
+                name="zip"
+                value={formData.zip}
+                onChange={handleInputChange}
+                error={!!errors.zip}
+                size="small"
+              />
+            </div>
+
+            {/* Address */}
+
+            <div
+              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+            >
               <div>
                 <TextField
                   label="Business Phone"
@@ -505,7 +618,9 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row  my-4 justify-between">
+            <div
+              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+            >
               <div>
                 <TextField
                   label="Bussiness Fax"
@@ -517,7 +632,11 @@ const Signup = () => {
                   size="small"
                 />
               </div>
+            </div>
 
+            <div
+              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+            >
               <div>
                 <TextField
                   label="Bussiness Email"
@@ -529,27 +648,6 @@ const Signup = () => {
                   size="small"
                 />
               </div>
-            </div>
-            <div className="flex w-[500px] flex-row my-2  ">
-              <div
-                className={`${
-                  userType === "Normal Customer" ||
-                  userType === "Prescription Drug Seller" ||
-                  userType === "General Merchandise Seller"
-                    ? "hidden"
-                    : ""
-                }`}>
-                <TextField
-                  label="Federal Tax ID"
-                  id="outlined-size-small"
-                  name="Federal_Tax_ID"
-                  value={formData.Federal_Tax_ID}
-                  onChange={handleInputChange}
-                  error={!!errors.Federal_Tax_ID}
-                  size="small"
-                />
-              </div>
-
             </div>
           </div>
         );
@@ -578,7 +676,6 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Pharmacy_License}
                   size="small"
-                  // style={{ width: "100%" }}
                 />
               </div>
             </div>
@@ -588,8 +685,12 @@ const Signup = () => {
                 <TextField
                   label=""
                   type="date"
+                  name="DEA_Expiration_Date"
+                  value={formData.DEA_Expiration_Date}
+                  onChange={handleInputChange}
+
                   id="outlined-size-small"
-                  // style={{ width: "104%" }}
+                  error={!!errors.DEA_Expiration_Date}
                   size="small"
                 />
               </div>
@@ -599,8 +700,13 @@ const Signup = () => {
                 <TextField
                   label=""
                   type="date"
+                  name="Pharmacy_Expiration_Date"
+
                   id="outlined-size-small"
-                  // style={{ width: "93%", marginLeft: "-2px" }}
+                  value={formData.Pharmacy_Expiration_Date}
+                  error={!!errors.Pharmacy_Expiration_Date}
+                  onChange={handleInputChange}
+
                   size="small"
                 />
               </div>
@@ -612,8 +718,11 @@ const Signup = () => {
                 <TextField
                   label=""
                   type="file"
+                  onChange={handleInputChange}
+                  name="DEA_License_Copy"
                   id="outlined-size-small"
-                  // style={{ width: "109%", fontSize: "5px" }}
+                  value={formData.DEA_License_Copy}
+                  error={!!errors.DEA_License_Copy}
                   size="small"
                 />
               </div>
@@ -625,8 +734,11 @@ const Signup = () => {
                 <TextField
                   label=""
                   type="file"
+                  onChange={handleInputChange}
+                  name="Pharmacy_License_Copy"
                   id="outlined-size-small"
-                  // style={{ width: "104%", marginLeft: "-2px" }}
+                  value={formData.Pharmacy_License_Copy}
+                  error={!!errors.Pharmacy_License_Copy}
                   size="small"
                 />
               </div>
@@ -686,8 +798,11 @@ const Signup = () => {
                   className=" leading-tight "
                   onClick={handleVisibleClick}
                 />
-                <label className="text-gray-700 ">
-                  Accepts Terms& Conditions for Pharmetrade
+                <label className="text-gray-700 ml-1 ">
+                  Please Accepts for PharmEtrade{" "}
+                  <Link to="/" className="text-red-500">
+                    Terms& Conditions{" "}
+                  </Link>
                 </label>
               </div>{" "}
               {Visible && (
@@ -705,6 +820,14 @@ const Signup = () => {
                 </div>
               )}
             </div>
+          </div>
+        );
+      case 4:
+        return (
+          <div>
+            Thank you for registering as
+            <span className="font-bold text-green-500"> {userType} </span>, You
+            are successfully registered.
           </div>
         );
     }
@@ -752,41 +875,24 @@ const Signup = () => {
               </div>
 
               {getStepContent(activeStep)}
-              <div className="flex justify-evenly m-2" >
-
-                {activeStep ? 
+              <div className="flex justify-around m-2">
                 <button
                   onClick={handleBack}
-                  // disabled={}
-                  // style={buttonStyle}
-                  className="bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
+                  className={`${
+                    activeStep === 0 ? "opacity-50 " : ""
+                  } bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4 `}
                 >
-                  <img src={back} className="w-6"/>
-                </button>  : null}
+                  <img src={back} className="w-6" />
+                </button>
 
-
-                {/* <button
-                  onClick={handleNext}
-                  className="bg-blue-900 w-24 text-white h-10 cursor-pointer font-semibold border rounded-lg my-4"
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </button> */}
                 <button
                   onClick={handleNext}
                   className="bg-blue-900 w-24 h-10 cursor-pointer  border rounded-lg my-4 flex items-center justify-center"
                 >
                   {activeStep === steps.length - 1 ? (
-                    <img
-                      src={next}
-                      alt="Finish"
-                      className="w-6 "
-                    />
+                    <img src={next} alt="Finish" className="w-6 " />
                   ) : (
-                    <img
-                      src={next}
-                      alt="Next"
-                      className="w-6"
-                    />
+                    <img src={next} alt="Next" className="w-6" />
                   )}
                 </button>
               </div>

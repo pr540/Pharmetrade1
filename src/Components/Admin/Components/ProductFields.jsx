@@ -4,12 +4,14 @@ import { FaAlignJustify } from "react-icons/fa";
 import { FaAlignCenter } from "react-icons/fa";
 import { FaAlignRight } from "react-icons/fa";
 import { SlCamera } from "react-icons/sl";
+import EditingPara from "../Components/EditingPara";
+import filter from "../../../assets/Icons/filter_icon.png"
 function ProductFields() {
   const products = [
     {
       serial: "",
       id: "26509",
-      thumbnail: "img",
+      thumbnail: "Image",
       name: "CARNITOR TAB 330MG UD 90",
       attribute: "Rx Product",
       status: "Enable",
@@ -20,7 +22,7 @@ function ProductFields() {
     {
       serial: "",
       id: "26509",
-      thumbnail: "img",
+      thumbnail: "Image",
       name: "CARNITOR TAB 330MG UD 90",
       attribute: "Rx Product",
       status: "Enable",
@@ -31,7 +33,7 @@ function ProductFields() {
     {
       serial: "",
       id: "26509",
-      thumbnail: "img",
+      thumbnail: "Image",
       name: "CARNITOR TAB 330MG UD 90",
       attribute: "Rx Product",
       status: "Enable",
@@ -361,7 +363,7 @@ function ProductFields() {
             <span className="text-base">Pack Quantity :</span>
 
             <div className=" flex items-center">
-              <div>
+              <div className="flex items-center">
                 <input
                   type="radio"
                   id="full"
@@ -373,7 +375,7 @@ function ProductFields() {
                 />
                 <label htmlFor="full">Full</label>
               </div>
-              <div>
+              <div className="flex items-center">
                 <input
                   type="radio"
                   id="partial"
@@ -409,7 +411,7 @@ function ProductFields() {
             </label> */}
 
             <div className="flex items-center">
-              <div>
+              <div className="flex items-center">
                 <input
                   type="radio"
                   id="original"
@@ -421,7 +423,7 @@ function ProductFields() {
                 />
                 <label htmlFor="original">ORIGINAL PACKAGE</label>
               </div>
-              <div>
+              <div className="flex items-center">
                 <input
                   type="radio"
                   id="non-original"
@@ -459,8 +461,11 @@ function ProductFields() {
         {/* section7 end */}
 
         {/* paragraph start */}
+        <div>
+          <EditingPara/>
+        </div>
 
-        <div className="flex ">
+        {/* <div className="flex ">
           <div className="w-[90%]">
             <div className="toolbar">
               <button
@@ -508,7 +513,7 @@ function ProductFields() {
             </div>
             {/* <div className="content" contentEditable={true}>
           Enter your paragraph here...
-        </div> */}
+        </div> 
             <textarea type="text" />
           </div>
 
@@ -559,7 +564,7 @@ function ProductFields() {
             </div>
             <textarea type="text" className="" />
           </div>
-        </div>
+        </div> */}
         {/* paragraph end */}
         {/* section 8 strt */}
         <div className="flex justify-between items-baseline text-gray-600 my-6">
@@ -668,16 +673,16 @@ function ProductFields() {
             <table className="w-full">
               <thead>
                 <tr className="text-xl border-b bg-blue-900 text-white">
-                  <th className="px-4   text-left text-base h-11">Websites</th>
-                  <th className=" px-4  text-left text-base ">
+                  <th className="px-4 font-normal text-left text-base h-11">Websites</th>
+                  <th className=" px-4 font-normal text-left text-base ">
                     Customer Group
                   </th>
-                  <th className="  px-4   text-base  text-left p-2">Qty</th>
-                  <th className=" px-4    text-base  text-left p-2">
+                  <th className="  px-4  font-normal text-base  text-left p-2">Qty</th>
+                  <th className=" px-4  font-normal  text-base  text-left p-2">
                     ($) Price
                   </th>
-                  <th className=" px-4   text-base  text-left p-2 ">Action</th>
-                  <th className=" px-4     text-base  text-left p-2 ">
+                  <th className=" px-4 font-normal  text-base  text-left p-2 ">Action</th>
+                  <th className=" px-4  font-normal   text-base  text-left p-2 ">
                     <button
                       className="border border-gray-950 bg-white text-black w-14"
                       onClick={handleClick}
@@ -753,7 +758,7 @@ function ProductFields() {
         </div>
         {/* section end */}
         {/* images & video start */}
-        <p>Product Image : (Accepted Fromats: JPEG,PNG)</p>
+        <p>Product Image : (Accepted Formats: JPEG, PNG)</p>
         <div className="App">
           <main className="container mx-auto p-4">
             <div className="flex flex-col items-start">
@@ -825,7 +830,7 @@ function ProductFields() {
               <input type="text" className="h-8 border border-gray-400" />
             </div>
             <div className="flex flex-col mx-6 w-44">
-              <label>width {""} in</label>
+              <label>Width {""} in</label>
               <input type="text" className="h-8 border border-gray-400" />
             </div>
             <div className="flex flex-col  w-44">
@@ -846,12 +851,12 @@ function ProductFields() {
             customer is looking at.{" "}
           </p>
           <button
-            className={`  text-xl font-semibold p-2 ${
+            className={`  text-base font-medium p-2 flex items-center  ${
               buttonClick ? "bg-white text-blue-900" : "bg-blue-900 text-white"
             }`}
             onClick={handleRelateclick}
           >
-            {" "}
+            <img src={filter} className="w-6 h-4 px-1"/>
             Filter
           </button>
         </div>
@@ -894,7 +899,7 @@ function ProductFields() {
               </div>
             </div>
 
-            <div className="flex justify-between ">
+            <div className="flex justify-between  ">
               <div className="flex flex-col w-52">
                 <label> Attribute Set</label>
                 <select className="border rounded-sm">
@@ -947,37 +952,37 @@ function ProductFields() {
           <table className="w-full">
             <thead className="bg-blue-900 text-white">
               <tr className="border-b">
-                <th className=" p-2  text-left text-base  w-32">
+                <th className=" p-4  text-left text-sm  w-32">
                   <select className="text-black">
                     <option>-</option>
                   </select>
                 </th>
-                <th className=" p-2  text-left text-base w-32">ID</th>
-                <th className=" p-2  text-left text-base w-40">Thumbnail</th>
-                <th className=" p-2  text-left text-base  w-96">Name</th>
-                <th className=" p-2  text-left text-base w-44">
+                <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
+                <th className=" p-2 font-medium text-left text-sm w-40">Thumbnail</th>
+                <th className=" p-2 font-medium text-left text-sm  w-80">Name</th>
+                <th className=" p-2 font-medium text-left text-sm w-48">
                   Attribute Set
                 </th>
-                <th className=" p-2  text-left text-base w-32">Status</th>
-                <th className=" p-2  text-left text-base bw-44">Type</th>
-                <th className=" p-2  text-left text-base  w-44">SKU</th>
-                <th className=" p-2  text-left text-base  w-44">Price</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">Status</th>
+                <th className=" p-2 font-medium text-left text-sm bw-44">Type</th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">SKU</th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">Price</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product, index) => (
                 <tr key={index} className="border-b">
                   <td className=" p-2">
-                    <input className=" h-8 w-5" type="checkbox" />
+                    <input className=" h-6 w-4" type="checkbox" />
                   </td>
-                  <td className=" p-2"> {product.id}</td>
-                  <td className=" p-2">{product.thumbnail}</td>
-                  <td className=" p-2">{product.name}</td>
-                  <td className=" p-2">{product.attribute}</td>
-                  <td className=" p-2">{product.status}</td>
-                  <td className=" p-2">{product.type}</td>
-                  <td className=" p-2">{product.sku}</td>
-                  <td className=" p-2">{product.price}</td>
+                  <td className="text-sm p-2"> {product.id}</td>
+                  <td className="text-sm p-2">{product.thumbnail}</td>
+                  <td className="text-sm p-2">{product.name}</td>
+                  <td className="text-sm p-2">{product.attribute}</td>
+                  <td className="text-sm p-2">{product.status}</td>
+                  <td className="text-sm p-2">{product.type}</td>
+                  <td className="text-sm p-2">{product.sku}</td>
+                  <td className="text-sm p-2">{product.price}</td>
                 </tr>
               ))}
             </tbody>
@@ -993,7 +998,7 @@ function ProductFields() {
             at.
           </p>
           <button
-            className={`   text-xl font-semibold p-2 ${
+            className={`   text-base font-medium p-2 flex items-center ${
               ButtonUpClick
                 ? "bg-white text-blue-900"
                 : "bg-blue-900 text-white"
@@ -1001,6 +1006,7 @@ function ProductFields() {
             onClick={click}
           >
             {" "}
+            <img src={filter} className="w-6 h-4 px-1"/>
             Filter
           </button>
         </div>
@@ -1094,39 +1100,39 @@ function ProductFields() {
 
         <div className="my-6 border rounded-md bg-white ">
           <table className="w-full">
-            <thead className="bg-blue-900 text-white">
+            <thead className="bg-blue-900 text-white  ">
               <tr className="border-b">
-                <th className=" p-2  text-left text-base  w-32">
+                <th className=" p-4  text-left text-sm  w-32">
                   <select className="text-black">
                     <option>-</option>
                   </select>
                 </th>
-                <th className=" p-2  text-left text-base w-32">ID</th>
-                <th className=" p-2  text-left text-base w-40">Thumbnail</th>
-                <th className=" p-2  text-left text-base  w-96">Name</th>
-                <th className=" p-2  text-left text-base w-44">
+                <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
+                <th className=" p-2 font-medium text-left text-sm w-40">Thumbnail</th>
+                <th className=" p-2 font-medium text-left text-sm  w-80">Name</th>
+                <th className=" p-2 font-medium text-left text-sm w-48">
                   Attribute Set
                 </th>
-                <th className=" p-2  text-left text-base w-32">Status</th>
-                <th className=" p-2  text-left text-base bw-44">Type</th>
-                <th className=" p-2  text-left text-base  w-44">SKU</th>
-                <th className=" p-2  text-left text-base  w-44">Price</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">Status</th>
+                <th className=" p-2 font-medium text-left text-sm bw-44">Type</th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">SKU</th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">Price</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product, index) => (
                 <tr key={index} className="border-b">
                   <td className=" p-2">
-                    <input className=" h-8 w-5" type="checkbox" />
+                    <input className=" h-6 w-4" type="checkbox" />
                   </td>
-                  <td className=" p-2"> {product.id}</td>
-                  <td className=" p-2">{product.thumbnail}</td>
-                  <td className=" p-2">{product.name}</td>
-                  <td className=" p-2">{product.attribute}</td>
-                  <td className=" p-2">{product.status}</td>
-                  <td className=" p-2">{product.type}</td>
-                  <td className=" p-2">{product.sku}</td>
-                  <td className=" p-2">{product.price}</td>
+                  <td className="text-sm p-2"> {product.id}</td>
+                  <td className="text-sm p-2">{product.thumbnail}</td>
+                  <td className="text-sm p-2">{product.name}</td>
+                  <td className="text-sm p-2">{product.attribute}</td>
+                  <td className="text-sm p-2">{product.status}</td>
+                  <td className="text-sm p-2">{product.type}</td>
+                  <td className="text-sm p-2">{product.sku}</td>
+                  <td className="text-sm p-2">{product.price}</td>
                 </tr>
               ))}
             </tbody>
@@ -1141,13 +1147,14 @@ function ProductFields() {
             cross-sells to the items already in the shopping cart.
           </p>
           <button
-            className={` text-xl font-semibold p-2 ${
+            className={` text-base font-medium  p-2 flex items-center ${
               isButtonClicked
                 ? "bg-white text-blue-900"
                 : "bg-blue-900 text-white"
             }`}
             onClick={handleCrossClick}
           >
+            <img src={filter} className="w-6 h-4 px-1"/>
             Filter
           </button>
         </div>
@@ -1241,39 +1248,39 @@ function ProductFields() {
 
         <div className="my-6 border rounded-md bg-white">
           <table className="w-full">
-            <thead className="bg-blue-900 text-white">
-              <tr className="border-b">
-                <th className=" p-2  text-left text-base  w-32">
+            <thead className="bg-blue-900 text-white ">
+              <tr className="border-b ">
+                <th className=" p-4  text-left text-sm   w-32">
                   <select className="text-black">
                     <option>-</option>
                   </select>
                 </th>
-                <th className=" p-2  text-left text-base w-32">ID</th>
-                <th className="p-2  text-left text-base  w-40">Thumbnail</th>
-                <th className=" p-2  text-left text-base w-96">Name</th>
-                <th className=" p-2  text-left text-base w-44">
+                <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
+                <th className="p-2 font-medium text-left text-sm  w-40">Thumbnail</th>
+                <th className=" p-2 font-medium text-left text-sm w-80">Name</th>
+                <th className=" p-2 font-medium text-left text-sm w-48 ">
                   Attribute Set
                 </th>
-                <th className=" p-2  text-left text-base w-32">Status</th>
-                <th className=" p-2  text-left text-base w-44">Type</th>
-                <th className=" p-2  text-left text-base w-44">SKU</th>
-                <th className=" p-2  text-left text-base w-32">Price</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">Status</th>
+                <th className=" p-2 font-medium text-left text-sm w-44">Type</th>
+                <th className=" p-2 font-medium text-left text-sm w-44">SKU</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">Price</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product, index) => (
                 <tr key={index} className="border-b">
                   <td className=" p-2">
-                    <input className=" h-10 w-5" type="checkbox" />
+                    <input className=" h-6 w-4" type="checkbox" />
                   </td>
-                  <td className=" p-2"> {product.id}</td>
-                  <td className=" p-2">{product.thumbnail}</td>
-                  <td className=" p-2">{product.name}</td>
-                  <td className=" p-2">{product.attribute}</td>
-                  <td className=" p-2">{product.status}</td>
-                  <td className=" p-2">{product.type}</td>
-                  <td className=" p-2">{product.sku}</td>
-                  <td className=" p-2">{product.price}</td>
+                  <td className="text-sm p-2"> {product.id}</td>
+                  <td className="text-sm p-2">{product.thumbnail}</td>
+                  <td className="text-sm p-2">{product.name}</td>
+                  <td className="text-sm p-2">{product.attribute}</td>
+                  <td className="text-sm p-2">{product.status}</td>
+                  <td className="text-sm p-2">{product.type}</td>
+                  <td className="text-sm p-2">{product.sku}</td>
+                  <td className="text-sm p-2">{product.price}</td>
                 </tr>
               ))}
             </tbody>
