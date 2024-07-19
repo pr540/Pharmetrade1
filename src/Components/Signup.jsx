@@ -183,13 +183,13 @@ const Signup = () => {
       if (!formData.State) newErrors.State = "State is required";
     } else if (step === 3) {
       if (!formData.DEA && userType != "General Merchandise Seller"
-        && userType != "Vendor"
+        && userType != "Vendor"  && userType != "Normal Customer"
       )
         newErrors.DEA = "DEA is required";
       if (
         !formData.DEA_Expiration_Date &&
         userType != "General Merchandise Seller"
-        && userType != "Vendor"
+        && userType != "Vendor" && userType != "Normal Customer"
       )
         newErrors.DEA_Expiration_Date = "DEA_Expiration_Date is required";
       // if (
@@ -201,32 +201,32 @@ const Signup = () => {
       if (
         !formData.Pharmacy_Expiration_Date &&
         userType != "General Merchandise Seller"
-        && userType != "Vendor"
+        && userType != "Vendor" && userType != "Normal Customer"
       )
         newErrors.Pharmacy_Expiration_Date =
           "Pharmacy_Expiration_Date is required";
       // if (
       //   !formData.Pharmacy_License_Copy &&
       //   userType != "General Merchandise Seller"
-      //   && userType != "Vendor"
+      //   && userType != "Vendor" && userType != "Normal Customer"
       // )
       //   newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
       if (
         !formData.Pharmacy_License &&
         userType != "General Merchandise Seller"
-        && userType != "Vendor"
+        && userType != "Vendor" && userType != "Normal Customer"
       )
         newErrors.Pharmacy_License = "Pharmacy_License is required";
       if (!formData.NCPDP && userType != "General Merchandise Seller"
-        && userType != "Vendor"
+        && userType != "Vendor" && userType != "Normal Customer"
       )
         newErrors.NCPDP = "NCPDP is required";
       if (!formData.Federal_Tax_ID && userType != "General Merchandise Seller"
-      
+      && userType != "Normal Customer"
       )
         newErrors.Federal_Tax_ID = "Federal is required";
       if (!formData.NPI && userType != "General Merchandise Seller"
-        && userType != "Vendor"
+        && userType != "Vendor" && userType != "Normal Customer"
       )
         newErrors.NPI = "NPI is required";
     }
@@ -827,7 +827,8 @@ const Signup = () => {
           <div>
             Thank you for registering as
             <span className="font-bold text-green-500"> {userType} </span>, You
-            are successfully registered.
+            are successfully registered. 
+            <p>If you have any queries contact us. Help @PharmEtrade.com</p>
           </div>
         );
     }
