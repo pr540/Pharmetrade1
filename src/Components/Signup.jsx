@@ -984,7 +984,7 @@ const Signup = () => {
               Thank you for registering as
               <span className="font-bold text-green-500"> {userType} </span>,
               You are successfully registered.
-              <p>If you have any queries contact us. help@PharmEtrade.com</p>
+              <p>If you have any queries contact us. help@pharmEtrade.com</p>
             </div>
           </div>
         );
