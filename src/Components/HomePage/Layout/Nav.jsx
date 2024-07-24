@@ -324,7 +324,7 @@ import React from "react";
 import Logo from "../../../assets/logo_04.png";
 import Search from "../../../assets/search.png";
 import Buy from "../../../assets/Buy.png";
-import cart from "../../../assets/Cart_icon.png";
+import cart from "../../../assets/CartNav_icon.png";
 import bid from "../../../assets/Bid.png";
 // import like from "../assets/Icons/Favorate.png";
 import like from "../../../assets/wishlistnav_icon.png";
@@ -484,15 +484,15 @@ function Nav({ topDivRef, cartItems }) {
                   <div className="flex  items-center" onClick={handleredirect}>
                     <img
                       src={add}
-                      className="w-6 md:w-8 lg:w-10 h-10 cursor-pointer"
+                      className="w-4 md:w-6 lg:w-8 h-8 cursor-pointer"
                       alt="clickable"
                       onClick={handleredirect}
                     />
-                    <div className="text-blue-900 text-base">
-                      <div className="text-base font-medium ">
+                    <div className="text-blue-900  ">
+                      <div className="text-sm font-medium -mb-2">
                         Hello, Sign in
                       </div>
-                      <div className="text-lg font-semibold">
+                      <div className="text-base font-semibold">
                         Account & Lists
                       </div>
                     </div>
@@ -549,6 +549,8 @@ function Nav({ topDivRef, cartItems }) {
                     </div>
                   )}
                 </div>
+
+                
 
                 <li className="relative ">
                   <a>

@@ -130,13 +130,18 @@ const Signup = () => {
   const validateStep = (step) => {
     let newErrors = {};
     if (step === 0) {
-      if (!formData.First_Name.length)
-        newErrors.First_Name = "First name is required.";
-      if (!formData.Last_Name.length) newErrors.Last_Name = "Last name is required.";
+      const regex = /^[a-zA-Z\s']+$/;
+            if (!formData.First_Name.match (regex))
+              newErrors.First_Name = "First name is required.";
+            if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
+           
+            const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      
+            if (!formData.Email_id.match(regexp)) newErrors.Email_id = "Email_id is required";
+            const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/
 
-      if (!formData.Email_id.length) newErrors.Email_id = "Email_id is required";
-      if (!formData.Phone_number.length)
-        newErrors.Phone_number = "Phone_number is required";
+            if (!formData.Phone_number.match(regphn))
+              newErrors.Phone_number = "Phone_number is required";
       if (!formData.password.length) newErrors.password = "Password is required.";
       if (!formData.confirmPassword.length)
         newErrors.confirmPassword = "Confirm password is required";
@@ -147,7 +152,7 @@ const Signup = () => {
 
       if (
         (userType === "Prescription Drug Seller" ||
-          userType === "General Merchandise Seller" ||
+          userType === "Vendor" ||
           userType === "Normal Customer") &&
         !selectedValue
       )
@@ -177,9 +182,9 @@ const Signup = () => {
       if (!formData.Business_Email && userType != "Normal Customer")
         newErrors.Business_Email = " Bussiness_Email is required";
 
-      if (!formData.zip) newErrors.zip = "Zip is required.";
-      if (!formData.Address1) newErrors.Address1 = "Address is require";
-      if (!formData.city) newErrors.city = "City is required.";
+      if (!formData.zip) newErrors.zip = "Zip is required";
+      if (!formData.Address1) newErrors.Address1 = "Address is required";
+      if (!formData.city) newErrors.city = "City is required";
       if (!formData.State) newErrors.State = "State is required";
     } else if (step === 3) {
       if (!formData.DEA && userType != "General Merchandise Seller"
@@ -448,7 +453,7 @@ const Signup = () => {
 
               <div
                 className={`${
-                  userType === "Vendor" ? " opacity-50 pointer-events-none" : ""
+                  userType === "General Merchandise Seller" ? " opacity-50 pointer-events-none" : ""
                 } flex items-center`}
               >
                 <label className="text-gray-700"><span className="text-red-500">*</span>Are you a UPN Member</label>
@@ -804,7 +809,7 @@ const Signup = () => {
                     Terms& Conditions{" "}
                   </Link>
                 </label>
-              </div>{" "}
+              </div>
               {Visible && (
                 <div>
                   <div className="flex justify-center items-center ">

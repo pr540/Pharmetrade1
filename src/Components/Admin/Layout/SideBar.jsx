@@ -3,13 +3,15 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaChevronDown, FaChevronUp, FaBars, FaTimes } from "react-icons/fa";
 import dashboard from "../../../assets/Dashboard_icon.png";
 import payout from "../../../assets/Payouts_icon.png";
-import earnings from "../../../assets/Earning_icon.png";
+import earnings from "../../../assets/Earnings_icon.png";
 import review from "../../../assets/Review_icon.png";
 import returnicon from "../../../assets/Returns_icon.png";
 import quote from "../../../assets/Request_for_quote_icon.png";
 import settings from "../../../assets/Settings_icon.png";
 import sellerinfo from "../../../assets/Seller_info_icon.png";
-import assign from "../../../assets/Products_list_icon.png";
+// import assign from "../../../assets/Products_list_icon.png";
+import assign from "../../../assets/AssignProducts_icon.png";
+
 
 const Sidebar = () => {
   let navigate = useNavigate();

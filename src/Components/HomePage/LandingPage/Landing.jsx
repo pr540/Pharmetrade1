@@ -53,7 +53,7 @@ function Landing({ topMargin }) {
             </p>
           </div>
         </div>
-        <div className="w-full px-16">
+        <div className="w-full bg-slate-100 px-16">
           <Landing2 />
           <Sliders />
         </div>
