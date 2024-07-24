@@ -240,7 +240,7 @@ function Sliders() {
                   ))}
                 </div>
                 <div className="w-full ">
-                <button className="border border-gray-500 bg-blue-900 text-white mt-2 p-2 rounded-lg w-44">
+                <button className="border border-gray-500 bg-blue-900 text-white mt-2 p-2 rounded-lg w-44 mb-8">
                   Download Now
                 </button>
 
@@ -248,7 +248,7 @@ function Sliders() {
                
               </div>
               <div className="w-[45%] h-full flex justify-center items-center">
-                <img src={mobile} className="w-[300px] h-[500px] " />
+                <img src={mobile} className="w-[250px] h-[400px] " />
               </div>
             </div>
           </div>

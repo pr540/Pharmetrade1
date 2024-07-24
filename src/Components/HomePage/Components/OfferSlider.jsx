@@ -131,7 +131,7 @@ const OfferSlider = ({ images, Title }) => {
                 alt={`Offer ${index + 1}`}
                 />
                 
-              <div className="w-full mt-8 text-black " >
+              <div className="w-full mt-8 text-black flex font-semibold justify-end" >
                 <a href="#" className="hover:text-red-500">
                   See all offers
                 </a>

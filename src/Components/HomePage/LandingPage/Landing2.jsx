@@ -224,7 +224,7 @@ function Landing2() {
       </div>
       <div className="flex flex-col items-center">
         <p className="text-text-blue text-[45px] xl:text-4xl font-semibold mt-6">
-          Grow your business with PharmEtrade
+          Grow your business with Pharm<span className="text-green-500">E</span>trade
         </p>
         <br></br>
         <p className="text-xl font-light xl:text-xl">

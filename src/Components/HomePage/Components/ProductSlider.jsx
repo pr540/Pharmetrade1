@@ -5,7 +5,7 @@ import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
 import addcart from "../../../assets/cart1_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
-import other from "../../../assets/compare1_Icon.png";
+import comp from "../../../assets/Compare2_icon.png";
 
 const ProductSlider = ({ data, Title  }) => {
   const carouselContainer = useRef(null);
@@ -54,6 +54,8 @@ const ProductSlider = ({ data, Title  }) => {
               className="snap-center border rounded-lg bg-gray-200 shrink-0">
               <div className="relative rounded-t-lg   bg-white">
                 <img src={fav} className="absolute h-6 right-0 p-1"/>
+                <img src={comp} className="absolute h-6 bottom-0 right-0 p-1"/>
+
 
                 <img
                   src={item.img}

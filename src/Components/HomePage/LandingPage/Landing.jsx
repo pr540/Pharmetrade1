@@ -41,10 +41,10 @@ function Landing({ topMargin }) {
               </div>
               <div>
                 <p className="font-extralight text-[26px] bounce-in-top text-white mb-2">
-                  to <span className="font-medium ">Buy</span>,
-                  <span className="font-medium">SELL</span> and{" "}
+                  to <span className="font-medium ">Buy</span>,{" "}
+                  <span className="font-medium">Sell</span> &{" "}
                   <span className="font-medium">Bid</span> on{" "}
-                  <span className=" font-medium ">Overstock</span>&{" "}
+                  <span className=" font-medium ">Overstock{" "}</span>&{" "}
                 </p>
               </div>
               <p className="text-white text-[26px] pb-2 bounce-in-top font-light">

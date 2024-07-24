@@ -41,6 +41,10 @@ const Signup = () => {
   const handleUserTypeChange = (e) => {
     setUserType(e.target.value);
     setAccountType("");
+    if (activeStep === 1) {
+      console.log("hello user");
+      validateStep(activeStep);
+    }
   };
   useEffect(() => {
     if (userType === "Normal Customer") {
@@ -113,10 +117,10 @@ const Signup = () => {
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
-
+  const [uploadedFile, setUploadedFile] = useState("");
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    console.log(name, value);
+    const { name, value, type, files, checked } = e.target;
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: null,
@@ -125,26 +129,45 @@ const Signup = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+    if (files) {
+      setUploadedFile(URL.createObjectURL(files[0]));
+    }
+    if (activeStep === 1) {
+      console.log("which step");
+      validateStep(activeStep);
+    }
   };
-  console.log(userType, "user");
+
+  console.log(activeStep, "user");
   const validateStep = (step) => {
+    console.log("heheh", step);
     let newErrors = {};
     if (step === 0) {
       const regex = /^[a-zA-Z\s']+$/;
-            if (!formData.First_Name.match (regex))
-              newErrors.First_Name = "First name is required.";
-            if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
-           
-            const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      
-            if (!formData.Email_id.match(regexp)) newErrors.Email_id = "Email_id is required";
-            const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/
+      const passwordRegex =
+        /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+      if (!formData.First_Name.match(regex))
+        newErrors.First_Name = "First name is required.";
+      if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
 
-            if (!formData.Phone_number.match(regphn))
-              newErrors.Phone_number = "Phone_number is required";
-      if (!formData.password.length) newErrors.password = "Password is required.";
+      const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if (!formData.Email_id.match(regexp))
+        newErrors.Email_id = "Email_id is required";
+      const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
+
+      if (!formData.Phone_number.match(regphn))
+        newErrors.Phone_number = "Phone_number is required";
+      if (!formData.password.length)
+        newErrors.password = ".";
+      else if (!formData.password.match(passwordRegex))
+        newErrors.password =
+          "Password must be at least 8 characters long, contain at least one uppercase letter, and one special character.";
+
       if (!formData.confirmPassword.length)
-        newErrors.confirmPassword = "Confirm password is required";
+        newErrors.confirmPassword = "Confirm password is required.";
+      else if (formData.password !== formData.confirmPassword)
+        newErrors.confirmPassword = "Passwords do not match.";
     } else if (step === 1) {
       if (!userType) newErrors.userType = "User Type is required";
 
@@ -152,11 +175,12 @@ const Signup = () => {
 
       if (
         (userType === "Prescription Drug Seller" ||
+          !formData.upnMember ||
           userType === "Vendor" ||
           userType === "Normal Customer") &&
         !selectedValue
       )
-        newErrors.upnMember = "UPN Member selection is required"
+        newErrors.upnMember = "UPN Member selection is required";
     } else if (step === 2) {
       if (
         !formData.shopName &&
@@ -169,7 +193,7 @@ const Signup = () => {
         newErrors.legalBusinessName = "Legal business name is required.";
 
       if (
-        !formData.dbaName && 
+        !formData.dbaName &&
         userType != "Vendor" &&
         userType != "General Merchandise Seller" &&
         userType != "Normal Customer"
@@ -187,14 +211,18 @@ const Signup = () => {
       if (!formData.city) newErrors.city = "City is required";
       if (!formData.State) newErrors.State = "State is required";
     } else if (step === 3) {
-      if (!formData.DEA && userType != "General Merchandise Seller"
-        && userType != "Vendor"  && userType != "Normal Customer"
+      if (
+        !formData.DEA &&
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       )
         newErrors.DEA = "DEA is required";
       if (
         !formData.DEA_Expiration_Date &&
-        userType != "General Merchandise Seller"
-        && userType != "Vendor" && userType != "Normal Customer"
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       )
         newErrors.DEA_Expiration_Date = "DEA_Expiration_Date is required";
       // if (
@@ -205,11 +233,13 @@ const Signup = () => {
       //   newErrors.DEA_License_Copy = "DEA_License_Copy is required";
       if (
         !formData.Pharmacy_Expiration_Date &&
-        userType != "General Merchandise Seller"
-        && userType != "Vendor" && userType != "Normal Customer"
-      )
+        userType !== "General Merchandise Seller" &&
+        userType !== "Vendor" &&
+        userType !== "Normal Customer"
+      ) {
         newErrors.Pharmacy_Expiration_Date =
-          "Pharmacy_Expiration_Date is required";
+          "Pharmacy Expiration Date is required";
+      } 
       // if (
       //   !formData.Pharmacy_License_Copy &&
       //   userType != "General Merchandise Seller"
@@ -218,20 +248,29 @@ const Signup = () => {
       //   newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
       if (
         !formData.Pharmacy_License &&
-        userType != "General Merchandise Seller"
-        && userType != "Vendor" && userType != "Normal Customer"
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       )
         newErrors.Pharmacy_License = "Pharmacy_License is required";
-      if (!formData.NCPDP && userType != "General Merchandise Seller"
-        && userType != "Vendor" && userType != "Normal Customer"
+      if (
+        !formData.NCPDP &&
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       )
         newErrors.NCPDP = "NCPDP is required";
-      if (!formData.Federal_Tax_ID && userType != "General Merchandise Seller"
-      && userType != "Normal Customer"
+      if (
+        !formData.Federal_Tax_ID &&
+        userType != "General Merchandise Seller" &&
+        userType != "Normal Customer"
       )
         newErrors.Federal_Tax_ID = "Federal is required";
-      if (!formData.NPI && userType != "General Merchandise Seller"
-        && userType != "Vendor" && userType != "Normal Customer"
+      if (
+        !formData.NPI &&
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       )
         newErrors.NPI = "NPI is required";
     }
@@ -240,7 +279,7 @@ const Signup = () => {
     console.log(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  console.log(errors)
+  console.log(errors);
   const isStepOptional = (step) => step === 1 || step === 2 || step === 3;
 
   const isStepSkipped = (step) => skippedSteps.includes(step);
@@ -266,8 +305,7 @@ const Signup = () => {
   };
 
   const handleBack = () => {
-    if(activeStep>0)
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep > 0) setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     // if(!activeStep){
     //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -306,6 +344,10 @@ const Signup = () => {
 
   const handleusertypechange = (value) => {
     setusertype(value);
+    if (activeStep === 1) {
+      console.log("hello user");
+      validateStep(activeStep);
+    }
   };
   console.log(typeof usertype, "hmm");
 
@@ -393,6 +435,18 @@ const Signup = () => {
                 />
               </div>
             </div>
+            <div className="flex text-red-500 items-center justify-center flex-col">
+              {errors?.password?.length>1 && 
+              <div className="w-[80%]">
+                {errors.password}
+              </div>
+              }
+              {/* {errors.confirmPassword && 
+              <div>
+                {errors.confirmPassword}
+              </div>
+              } */}
+            </div>
           </div>
         );
       case 1:
@@ -401,16 +455,19 @@ const Signup = () => {
             <div className="p-4">
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className=" flex gap-2 text-gray-700 text-sm font-bold mb-2"
                   htmlFor="userType"
                 >
                   User Type
+                  <div className="text-red-400">
+                    {errors.userType && <div>{errors.userType}</div>}
+                  </div>
                 </label>
                 <select
                   id="userType"
                   value={userType}
                   onChange={handleUserTypeChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="">Select User Type</option>
                   {userTypes.map((type, index) => (
@@ -422,8 +479,11 @@ const Signup = () => {
               </div>
 
               <div className="mb-4  ">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label className=" flex gap-2 text-gray-700 text-sm font-bold mb-2">
                   Account Type
+                  <div className="text-red-400">
+                    {errors.accountType && <div>{errors.accountType}</div>}
+                  </div>
                 </label>
                 {getAccountTypes().map((type) => (
                   <div key={type} className="flex ml-4 items-center mb-2">
@@ -453,10 +513,14 @@ const Signup = () => {
 
               <div
                 className={`${
-                  userType === "General Merchandise Seller" ? " opacity-50 pointer-events-none" : ""
+                  userType === "General Merchandise Seller"
+                    ? " opacity-50 pointer-events-none"
+                    : ""
                 } flex items-center`}
               >
-                <label className="text-gray-700"><span className="text-red-500">*</span>Are you a UPN Member</label>
+                <label className="text-gray-700">
+                  <span className="text-red-500">*</span>Are you a UPN Member
+                </label>
                 <Box sx={{ display: "flex", gap: 2 }}>
                   <div>
                     <Radio
@@ -482,7 +546,11 @@ const Signup = () => {
                   </div>
                 </Box>
               </div>
-              <span className={` ${errors.upnMember==null ? "hidden":"text-red-700"}`}>{errors.upnMember}</span>
+              <span>
+                {errors.upnMember && (
+                  <span className="text-red-500">{errors.upnMember}</span>
+                )}
+              </span>
             </div>
           </div>
         );
@@ -669,6 +737,7 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.DEA}
                   size="small"
+                  inputProps={{ tabIndex: "1" }}
                 />
               </div>
 
@@ -681,6 +750,9 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Pharmacy_License}
                   size="small"
+                  inputProps={{ tabIndex: "4" }}
+
+                  tabIndex={4}
                 />
               </div>
             </div>
@@ -693,10 +765,11 @@ const Signup = () => {
                   name="DEA_Expiration_Date"
                   value={formData.DEA_Expiration_Date}
                   onChange={handleInputChange}
-
                   id="outlined-size-small"
                   error={!!errors.DEA_Expiration_Date}
                   size="small"
+                  inputProps={{ tabIndex: "2" }}
+                  tabIndex={2}
                 />
               </div>
 
@@ -706,13 +779,13 @@ const Signup = () => {
                   label=""
                   type="date"
                   name="Pharmacy_Expiration_Date"
-
                   id="outlined-size-small"
                   value={formData.Pharmacy_Expiration_Date}
                   error={!!errors.Pharmacy_Expiration_Date}
                   onChange={handleInputChange}
-
                   size="small"
+                  inputProps={{ tabIndex: "5" }}
+                  tabIndex={5}
                 />
               </div>
             </div>
@@ -729,6 +802,8 @@ const Signup = () => {
                   value={formData.DEA_License_Copy}
                   error={!!errors.DEA_License_Copy}
                   size="small"
+                  inputProps={{ tabIndex: "3" }}
+                  tabIndex={3}
                 />
               </div>
 
@@ -745,7 +820,14 @@ const Signup = () => {
                   value={formData.Pharmacy_License_Copy}
                   error={!!errors.Pharmacy_License_Copy}
                   size="small"
+                  inputProps={{ tabIndex: "6" }}
+                  tabIndex={6}
                 />
+                {/* {formData.Pharmacy_License_Copy && (
+                  <span className="text-sm mt-2">
+                    {formData.Pharmacy_License_Copy.name}
+                  </span>
+                )} */}
               </div>
             </div>
 
@@ -759,6 +841,8 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.NPI}
                   size="small"
+                  inputProps={{ tabIndex: "7" }}
+                  tabIndex={7}
                 />
               </div>
 
@@ -771,6 +855,9 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.NCPDP}
                   size="small"
+                  inputProps={{ tabIndex: "8" }}
+                  tabIndex={8}
+
                   // style={{ width: "101%" }}
                 />
               </div>
@@ -786,12 +873,19 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Federal_Tax_ID}
                   size="small"
+                  inputProps={{ tabIndex: "9" }}
+                  tabIndex={9}
                 />
               </div>
             </div>
             <div className=" w-[500px]">
               <div>
-                <input type="checkbox" className=" leading-tight " />
+                <input
+                  type="checkbox"
+                  className=" leading-tight "
+                  inputProps={{ tabIndex: "10" }}
+                  tabIndex={10}
+                />
                 <label className="text-gray-700  ">
                   {" "}
                   Signup for News letters
@@ -802,6 +896,8 @@ const Signup = () => {
                   type="checkbox"
                   className=" leading-tight "
                   onClick={handleVisibleClick}
+                  inputProps={{ tabIndex: "11" }}
+                  tabIndex={11}
                 />
                 <label className="text-gray-700 ml-1 ">
                   Please Accepts for PharmEtrade{" "}
@@ -810,30 +906,33 @@ const Signup = () => {
                   </Link>
                 </label>
               </div>
-              {Visible && (
+              {/* {Visible && (
                 <div>
                   <div className="flex justify-center items-center ">
-                    {/* <h5 className="text-[18px] ml-1">Enter OTP</h5> */}
+                    {/* <h5 className="text-[18px] ml-1">Enter OTP</h5> 
                     <TextField
                       id="standard-basic"
                       label="Enter Captcha"
                       variant="standard"
+                      tabIndex={12}
                     />
 
-                    {/* <OTPInput length={6}  /> */}
+                    {/* <OTPInput length={6}  /> 
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         );
       case 4:
         return (
-          <div>
-            Thank you for registering as
-            <span className="font-bold text-green-500"> {userType} </span>, You
-            are successfully registered. 
-            <p>If you have any queries contact us. Help @PharmEtrade.com</p>
+          <div className="w-full flex justify-center">
+            <div className="">
+              Thank you for registering as
+              <span className="font-bold text-green-500"> {userType} </span>,
+              You are successfully registered.
+              <p>If you have any queries contact us. Help @PharmEtrade.com</p>
+            </div>
           </div>
         );
     }
@@ -858,10 +957,14 @@ const Signup = () => {
           </Link>
           <div className="h-[80%]  flex justify-center items-center">
             <div className="bg-white w-[600px] px-12 py-6 rounded-lg shadow-lg">
-              <span className="text-blue-900 text-[25px]  text-center font-bold     flex justify-center items-center  ">
+              <span
+                className={`text-blue-900 ${
+                  activeStep == 4 ? "hidden" : ""
+                } text-[25px]  text-center font-bold     flex justify-center items-center  `}
+              >
                 SignUp
               </span>
-              <div className="flex my-4">
+              <div className={`flex my-4 ${activeStep == 4 ? "hidden" : ""}  `}>
                 {steps.map((label, index) => (
                   <div
                     key={label}
@@ -884,8 +987,8 @@ const Signup = () => {
               <div className="flex justify-around m-2">
                 <button
                   onClick={handleBack}
-                  className={`${
-                    activeStep === 0 ? "opacity-50 " : ""
+                  className={`${activeStep === 0 ? "opacity-50 " : ""} ${
+                    activeStep === 4 ? "hidden" : ""
                   } bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4 `}
                 >
                   <img src={back} className="w-6" />
@@ -895,8 +998,10 @@ const Signup = () => {
                   onClick={handleNext}
                   className="bg-blue-900 w-24 h-10 cursor-pointer  border rounded-lg my-4 flex items-center justify-center"
                 >
-                  {activeStep === steps.length - 1 ? (
-                    <img src={next} alt="Finish" className="w-6 " />
+                  {activeStep === 4 ? (
+                    <div className="text-white font-bold">
+                      Go To Home
+                    </div>
                   ) : (
                     <img src={next} alt="Next" className="w-6" />
                   )}
