@@ -9,6 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 // import DatePicker from 'react-datepicker';
 import FormControl from "@mui/material/FormControl";
+import refresh from "../assets/reload-arrow (1).png"
+
+
 import {
   Box,
   Radio,
@@ -25,6 +28,21 @@ function getSteps() {
 const Signup = () => {
   const [userType, setUserType] = useState("");
   const [accountType, setAccountType] = useState("");
+
+  const [captcha, setCaptcha] = useState(generateCaptcha());
+  const [userInput, setUserInput] = useState('');
+  const handleRefresh = () => {
+    setCaptcha(generateCaptcha()); // Generate a new CAPTCHA
+    setUserInput('');
+    SetError('');
+  };
+  function generateCaptcha() {
+    return Math.floor(10000 + Math.random() * 90000).toString();
+  }
+
+  function generateCaptcha() {
+    return Math.floor(10000 + Math.random() * 90000).toString();
+  }
 
   const userTypes = [
     "Prescription Drug Seller",
@@ -162,12 +180,14 @@ const Signup = () => {
         newErrors.password = ".";
       else if (!formData.password.match(passwordRegex))
         newErrors.password =
-          "Password must be at least 8 characters long, contain at least one uppercase letter, and one special character.";
+          "Password must be at least 8 characters long, contain atleast one uppercase letter, and one special character.";
 
       if (!formData.confirmPassword.length)
         newErrors.confirmPassword = "Confirm password is required.";
       else if (formData.password !== formData.confirmPassword)
         newErrors.confirmPassword = "Passwords do not match.";
+
+      if (!formData.captcha) newErrors.captcha = "captcha is required"
     } else if (step === 1) {
       if (!userType) newErrors.userType = "User Type is required";
 
@@ -435,6 +455,7 @@ const Signup = () => {
                 />
               </div>
             </div>
+
             <div className="flex text-red-500 items-center justify-center flex-col">
               {errors?.password?.length>1 && 
               <div className="w-[80%]">
@@ -447,6 +468,38 @@ const Signup = () => {
               </div>
               } */}
             </div>
+
+            <div className="flex justify-center items-center">
+              <div className="flex border rounded-md bg-slate-200 p-2 mx-2">
+                <div className="text-xl font-bold  mt-1    ">{captcha}</div>
+
+                <button
+                  onClick={handleRefresh}
+                  className="bg-gray-500 text-white w-8 mx-1 h-8"
+                >
+                  <img src={refresh} />
+                  {/* <p className="text-white">Refresh</p> */}
+                </button>
+              </div>
+              <TextField
+
+                name="captcha"
+
+                type="text"
+
+                value={formData.captcha}
+                onChange={handleInputChange}
+                className=" p-2 mx-2"
+                id="standard-basic"
+                label="Enter Captcha"
+                variant="standard"
+                error={!!errors.captcha}
+
+              />
+
+            </div>
+
+
           </div>
         );
       case 1:
