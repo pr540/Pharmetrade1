@@ -984,7 +984,7 @@ const Signup = () => {
               Thank you for registering as
               <span className="font-bold text-green-500"> {userType} </span>,
               You are successfully registered.
-              <p>If you have any queries contact us. help@pharmetrade.com</p>
+              <p>If you have any queries contact us.<span className="hover:text-red-500 underline"> help@pharmetrade.com </span></p>
             </div>
           </div>
         );
