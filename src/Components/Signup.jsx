@@ -59,10 +59,7 @@ const Signup = () => {
   const handleUserTypeChange = (e) => {
     setUserType(e.target.value);
     setAccountType("");
-    if (activeStep === 1) {
-      console.log("hello user");
-      validateStep(activeStep);
-    }
+   
   };
   useEffect(() => {
     if (userType === "Normal Customer") {
@@ -156,7 +153,7 @@ const Signup = () => {
     }
   };
 
-  console.log(activeStep, "user");
+  console.log(userType, "user");
   const validateStep = (step) => {
     console.log("heheh", step);
     let newErrors = {};
@@ -195,10 +192,10 @@ const Signup = () => {
 
       if (
         (userType === "Prescription Drug Seller" ||
-          !formData.upnMember ||
           userType === "Vendor" ||
-          userType === "Normal Customer") &&
-        !selectedValue
+          userType === "Normal Customer" || userType !== "General Merchandise Seller") &&
+        (!selectedValue && !formData.upnMember )
+
       )
         newErrors.upnMember = "UPN Member selection is required";
     } else if (step === 2) {
@@ -601,7 +598,11 @@ const Signup = () => {
               </div>
               <span>
                 {errors.upnMember && (
-                  <span className="text-red-500">{errors.upnMember}</span>
+                  <span className= {`${
+                    userType === "General Merchandise Seller"
+                      ? " hidden"
+                      : ""
+                  } text-red-500`}>{errors.upnMember}</span>
                 )}
               </span>
             </div>
