@@ -67,7 +67,7 @@ import newsletter from '../../../assets/NewsLetterSubscription_icon.png';
 import savedLater from '../../../assets/SavedForLater_icon.png';
 import returns from '../../../assets/Returns1_icon.png';
 import wishlist from '../../../assets/ManageWishlist_icon.png';
-import quote from '../../../assets/Request_for_quote_icon.png';
+import quote from '../../../assets/RequestForQuote_icon.png';
 
 const AccountSideBar = () => {
   let location = useLocation();
@@ -83,7 +83,7 @@ const AccountSideBar = () => {
     { name: 'Stored Payment Methods', path: '/user/payment-methods', icon: paymentMethods },
     { name: 'My Product Reviews', path: '/user/reviews', icon: productReviews },
     { name: 'Newsletter Subscription', path: '/user/newsletter', icon: newsletter },
-    { name: 'Delete Account', path: '/user/delete-account', icon: newsletter },
+    // { name: 'Delete Account', path: '/user/delete-account', icon: newsletter },
     { name: 'Saved for Later', path: '/user/saved', icon: savedLater },
     { name: 'Returns', path: '/user/returns', icon: returns },
     { name: 'Manage Wishlist', path: '/user/wishlist', icon: wishlist },

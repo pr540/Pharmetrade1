@@ -4,6 +4,8 @@ import { FiPlus } from "react-icons/fi";
 import ProductFields from "../Components/ProductFields";
 import EditFields from "../Components/EditFields";
 import QuoteDetail from "../Components/QuoteDetail";
+import filter from "../../../assets/Filter_icon.png";
+
 
 const RequestQuote = () => {
   const stats = [
@@ -81,7 +83,10 @@ const RequestQuote = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-1">Filter</button>
+          <button className="bg-green-300 p-1 flex items-center">
+              <img src={filter} className="w-8 h-8" />
+              Filter
+            </button>
             <select className="ml-2">
               <option>Columns</option>
             </select>

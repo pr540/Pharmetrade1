@@ -49,7 +49,7 @@ const ProductSection = ({ products, heading, path }) => {
         {products.map((item) => (
           <div
             key={item.id}
-            className="snap-center border rounded-lg bg-gray-200 shrink-0 m-3"
+            className="snap-center  border rounded-lg bg-gray-200 shrink-0 m-3"
           >
             {/* <div className="">
               <img

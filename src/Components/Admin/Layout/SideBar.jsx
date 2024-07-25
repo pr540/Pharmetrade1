@@ -6,7 +6,7 @@ import payout from "../../../assets/Payouts_icon.png";
 import earnings from "../../../assets/Earnings_icon.png";
 import review from "../../../assets/Review_icon.png";
 import returnicon from "../../../assets/Returns_icon.png";
-import quote from "../../../assets/Request_for_quote_icon.png";
+import quote from "../../../assets/RequestForQuote_icon.png";
 import settings from "../../../assets/Settings_icon.png";
 import sellerinfo from "../../../assets/Seller_info_icon.png";
 // import assign from "../../../assets/Products_list_icon.png";

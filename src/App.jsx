@@ -181,7 +181,7 @@ function App() {
           <Route path="/user/payment-methods" element={<StoredPayment/>} />
           <Route path="/user/reviews" element={<ProductReview/>} />
           <Route path="/user/newsletter" element={<Newsletter/>} />
-          <Route path="/user/delete-account" element={<DeleteAccount/>} />
+          {/* <Route path="/user/delete-account" element={<DeleteAccount/>} /> */}
           <Route path="/user/saved" element={<SavedLater/>} />
           <Route path="/user/returns" element={<MyReturn/>} />
           <Route path="/user/wishlist" element={<MyWishlist/>} />

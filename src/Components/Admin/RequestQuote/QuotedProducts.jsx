@@ -10,10 +10,10 @@
 
 // export default QuotedProducts
 
-
 import React, { useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import QuoteDetail from "../Components/QuoteDetail";
+import filter from "../../../assets/Filter_icon.png";
 
 const QuotedProducts = () => {
   const stats = [
@@ -82,7 +82,8 @@ const QuotedProducts = () => {
                       stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
                     }`}
                   >
-                    {stat.percentage > 0 ? "↑" : "↓"} {Math.abs(stat.percentage)}%
+                    {stat.percentage > 0 ? "↑" : "↓"}{" "}
+                    {Math.abs(stat.percentage)}%
                   </div>
                 </div>
               </div>
@@ -91,7 +92,10 @@ const QuotedProducts = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-1">Filter</button>
+            <button className="bg-green-300 p-1 flex items-center">
+              <img src={filter} className="w-8 h-8" />
+              Filter
+            </button>{" "}
             <select className="ml-2">
               <option>Columns</option>
             </select>
@@ -104,12 +108,12 @@ const QuotedProducts = () => {
                   <th className="border-b-2 py-4 min-w-36 pl-4 text-left">
                     Product Id
                   </th>
-                  <th className="border-b-2 min-w-36 text-left">
-                    Thumbnail
-                  </th>
+                  <th className="border-b-2 min-w-36 text-left">Thumbnail</th>
                   <th className="border-b-2 min-w-36 text-left">Name</th>
                   <th className="border-b-2 min-w-36 text-left">Status</th>
-                  <th className="border-b-2 min-w-36 text-left">Bulk Order Quantity</th>
+                  <th className="border-b-2 min-w-36 text-left">
+                    Bulk Order Quantity
+                  </th>
                   <th className="border-b-2 min-w-36 text-left">Created At</th>
                   <th className="border-b-2 min-w-36 text-left">Updated At</th>
                 </tr>
@@ -136,15 +140,13 @@ const QuotedProducts = () => {
                       <td className="border-b-2 min-w-36 text-left">
                         {quoted.status}
                       </td>
-                      <td
-                        className="border-b-2 min-w-36 text-left cursor-pointer">
+                      <td className="border-b-2 min-w-36 text-left cursor-pointer">
                         {quoted.bulk}
                       </td>
-                      <td
-                        className="border-b-2 min-w-36 text-left cursor-pointer">
+                      <td className="border-b-2 min-w-36 text-left cursor-pointer">
                         {quoted.created}
-                      </td><td
-                        className="border-b-2 min-w-36 text-left cursor-pointer">
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left cursor-pointer">
                         {quoted.updated}
                       </td>
                     </tr>

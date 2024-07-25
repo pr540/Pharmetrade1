@@ -5,7 +5,7 @@ import { FaAlignCenter } from "react-icons/fa";
 import { FaAlignRight } from "react-icons/fa";
 import { SlCamera } from "react-icons/sl";
 import EditingPara from "../Components/EditingPara";
-import filter from "../../../assets/Icons/filter_icon.png"
+import filter from "../../../assets/Icons/filter_icon.png";
 function ProductFields() {
   const products = [
     {
@@ -148,213 +148,202 @@ function ProductFields() {
         </div>
         {/* section1 start */}
 
-        <div className="flex  w-full flex-row justify-between">
+        <div className="flex  w-full Largest:w-[80%] flex-row justify-between">
+          <div className="flex flex-col  gap-5 items-center text-gray-600  ">
+            <div className="flex  flex-col">
+              <label className="">
+                Category Specification :
+                <span className="text-red-600 text-xl ">*</span>
+              </label>{" "}
+              <select className=" w-44 h-8 border-slate-300 border">
+                <option>Merchandise</option>
+                <option>OTC Product</option>
+                <option>Rx Product</option>
+              </select>
+            </div>
 
-        <div className="flex flex-col  gap-5 items-center text-gray-600  ">
-          <div className="flex  flex-col">
-            <label className="">
-              Category Specification :
-              <span className="text-red-600 text-xl ">*</span>
-            </label>{" "}
-            <select className=" w-44 h-8 border-slate-300 border">
-              <option>Merchandise</option>
-              <option>OTC Product</option>
-              <option>Rx Product</option>
-            </select>
+            <div className="flex flex-col">
+              <label className="text-base">Brand Name:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base">Sale Price ($):</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base">Form:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-base">Brand Name:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
+          {/* section1 end */}
+
+          {/* section2 start */}
+          <div className="flex flex-col gap-5 items-center text-gray-600 ">
+            <div className="flex flex-col">
+              <label className="">
+                Product Type:<span className="text-red-600 text-xl ">*</span>
+              </label>
+              <select className=" w-44 h-8 border-slate-300 border">
+                <option>General</option>
+                <option>Customizable</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col">
+              <label className="">
+                Price ($) Name:<span className="text-red-600 text-xl">*</span>
+              </label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base"> Sale Price Form:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex  flex-col">
+              <label className="text-base"> Lot Number:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-base">Sale Price ($):</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
+          {/* section2 end */}
+
+          {/* section3 start */}
+
+          <div className="flex flex-col  gap-5 items-baseline text-gray-600 ">
+            <div className="flex flex-col">
+              <label className="">
+                Product Category:
+                <span className="text-red-600 text-xl ">*</span>
+              </label>{" "}
+              <select className=" w-44 h-8 border-slate-300 border">
+                <option>Default Category</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base">UPN Member Price ($):</label>
+              <input
+                type="text"
+                id="Upn_Mem"
+                className="w-44 h-8 border-slate-300 border "
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base">Sale Price To:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base"> Expiration Date:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-base">Form:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
+          {/* section3 end */}
+
+          {/* section4 start */}
+          <div className="flex flex-col  gap-5 items-center text-gray-600 ">
+            <div className="flex flex-col">
+              <label className="">
+                Product Name:<span className="text-red-600 text-xl ">*</span>
+              </label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="">
+                Amount In Stock:<span className="text-red-600 text-xl ">*</span>
+              </label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-base">Manufacturer:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
           </div>
+          {/* section-5 start */}
+          <div className="flex flex-col gap-5  items-center text-gray-600 ">
+            <div className="flex flex-col">
+              <label className="">
+                NDC / UPC:<span className="text-red-600 text-xl">*</span>
+              </label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
 
-  
-        </div>
+            <div className="flex flex-col">
+              <label className="">
+                Taxable:<span className="text-red-600 text-xl">*</span>
+              </label>
+              <select className=" w-44 h-8 border-slate-300 border">
+                <option>No</option>
+              </select>
+            </div>
 
-        {/* section1 end */}
-
-        {/* section2 start */}
-        <div className="flex flex-col gap-5 items-center text-gray-600 ">
-          
-
-          <div className="flex flex-col">
-            <label className="">
-              Product Type:<span className="text-red-600 text-xl ">*</span>
-            </label>
-            <select className=" w-44 h-8 border-slate-300 border">
-              <option>General</option>
-              <option>Customizable</option>
-            </select>
+            <div className="flex flex-col">
+              <label className="text-base">Strength:</label>
+              <input
+                type="text"
+                id="product_name"
+                className=" w-44 h-8 border-slate-300 border"
+              />
+            </div>
           </div>
-
-          <div className="flex flex-col">
-            <label className="">
-              Price ($) Name:<span className="text-red-600 text-xl">*</span>
-            </label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-base"> Sale Price Form:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-          <div className="flex  flex-col">
-            <label className="text-base"> Lot Number:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-       
-        </div>
-
-        {/* section2 end */}
-
-        {/* section3 start */}
-
-        <div className="flex flex-col  gap-5 items-baseline text-gray-600 ">
-          
-
-          <div className="flex flex-col">
-            <label className="">
-              Product Category:<span className="text-red-600 text-xl ">*</span>
-            </label>{" "}
-            <select className=" w-44 h-8 border-slate-300 border">
-              <option>Default Category</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-base">UPN Member Price ($):</label>
-            <input
-              type="text"
-              id="Upn_Mem"
-              className="w-44 h-8 border-slate-300 border "
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-base">Sale Price To:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-base"> Expiration Date:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-         
-        </div>
-
-        {/* section3 end */}
-
-        {/* section4 start */}
-        <div className="flex flex-col  gap-5 items-center text-gray-600 ">
-          <div className="flex flex-col">
-            <label className="">
-              Product Name:<span className="text-red-600 text-xl ">*</span>
-            </label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="">
-              Amount In Stock:<span className="text-red-600 text-xl ">*</span>
-            </label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-base">Manufacturer:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-        </div>
-        {/* section-5 start */}
-        <div className="flex flex-col gap-5  items-center text-gray-600 ">
-          <div className="flex flex-col">
-            <label className="">
-              NDC / UPC:<span className="text-red-600 text-xl">*</span>
-            </label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="">
-              Taxable:<span className="text-red-600 text-xl">*</span>
-            </label>
-            <select className=" w-44 h-8 border-slate-300 border">
-              <option>No</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-base">Strength:</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 border-slate-300 border"
-            />
-          </div>
-        </div>
-        {/* section-5 end */}
-
+          {/* section-5 end */}
         </div>
 
         {/* section6 start */}
@@ -391,7 +380,7 @@ function ProductFields() {
 
             <input
               type="text"
-              className="w-[30%] h-8 border-slate-300 border"
+              className="w-[30%] Largest:w-[15%] h-8 border-slate-300 border"
             />
             <label>EA</label>
           </div>
@@ -447,127 +436,27 @@ function ProductFields() {
           <div>
             <span className="text-base">Pack Condition :</span>
             <input type="checkbox" className="ml-[2%]" />
-            <label className="text-base ml-3">TORN PACKAGE LABEL</label>
+            <label className="text-base ml-1">TORN PACKAGE LABEL</label>
 
             <input type="checkbox" className="ml-[2%]" />
-            <label className="text-base ml-3">OTHER</label>
+            <label className="text-base ml-1">OTHER</label>
 
             <input
               type="text"
-              className="w-[30%] h-8 border-slate-300 border"
+              className="w-[30%] Largest:w-[15%] h-8 border-slate-300 border"
             />
           </div>
         </div>
         {/* section7 end */}
 
         {/* paragraph start */}
-        <div>
-          <EditingPara/>
+        <div className="w-full Largest:w-[80%]">
+          <EditingPara />
         </div>
 
-        {/* <div className="flex ">
-          <div className="w-[90%]">
-            <div className="toolbar">
-              <button
-                onClick={() => this.format("bold")}
-                className="border border-slate-800 w-8"
-              >
-                <b>B</b>
-              </button>
-              <button
-                onClick={() => this.format("italic")}
-                className="border border-slate-800 w-8"
-              >
-                <i>I</i>
-              </button>
-              <button
-                onClick={() => this.format("underline")}
-                className="border border-slate-800 w-8"
-              >
-                <i>U</i>
-              </button>
-              <button
-                onClick={() => this.format("justifyLeft")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignLeft />
-              </button>
-              <button
-                onClick={() => this.format("justifyCenter")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignCenter />
-              </button>
-              <button
-                onClick={() => this.format("justifyRight")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignRight />
-              </button>
-              <button
-                onClick={() => this.format("justifyFull")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignJustify />
-              </button>
-            </div>
-            {/* <div className="content" contentEditable={true}>
-          Enter your paragraph here...
-        </div> 
-            <textarea type="text" />
-          </div>
-
-          <div>
-            <div className="toolbar">
-              <button
-                onClick={() => this.format("bold")}
-                className="border border-slate-800 w-8"
-              >
-                <b>B</b>
-              </button>
-              <button
-                onClick={() => this.format("italic")}
-                className="border border-slate-800 w-8"
-              >
-                <i>I</i>
-              </button>
-              <button
-                onClick={() => this.format("underline")}
-                className="border border-slate-800 w-8"
-              >
-                <i>U</i>
-              </button>
-              <button
-                onClick={() => this.format("justifyLeft")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignLeft />
-              </button>
-              <button
-                onClick={() => this.format("justifyCenter")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignCenter />
-              </button>
-              <button
-                onClick={() => this.format("justifyRight")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignRight />
-              </button>
-              <button
-                onClick={() => this.format("justifyFull")}
-                className="border border-slate-800 w-8"
-              >
-                <FaAlignJustify />
-              </button>
-            </div>
-            <textarea type="text" className="" />
-          </div>
-        </div> */}
         {/* paragraph end */}
         {/* section 8 strt */}
-        <div className="flex justify-between items-baseline text-gray-600 my-6">
+        <div className="flex justify-between items-baseline w-full  Largest:w-[80%] text-gray-600 my-6">
           <div className="flex flex-col">
             <label className="text-base">
               Uri Key: (Related to goggle search)
@@ -617,7 +506,7 @@ function ProductFields() {
         {/* section text area end */}
 
         {/* section9 start */}
-        <div className="flex justify-between items-baseline text-gray-600 my-6">
+        <div className="flex justify-between w-full Largest:w-[80%] items-baseline text-gray-600 my-6">
           <div className="flex flex-col">
             <label className="text-base">Salt Composition:</label>
             <input
@@ -667,21 +556,27 @@ function ProductFields() {
 
         {/* table1 start */}
 
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full Largest:w-[80%]">
           <label className="text-base">Tier Price:</label>
           <div className="border rounded-md  bg-white mt-4">
             <table className="w-full">
               <thead>
                 <tr className="text-xl border-b bg-blue-900 text-white">
-                  <th className="px-4 font-normal text-left text-base h-11">Websites</th>
+                  <th className="px-4 font-normal text-left text-base h-11">
+                    Websites
+                  </th>
                   <th className=" px-4 font-normal text-left text-base ">
                     Customer Group
                   </th>
-                  <th className="  px-4  font-normal text-base  text-left p-2">Qty</th>
+                  <th className="  px-4  font-normal text-base  text-left p-2">
+                    Qty
+                  </th>
                   <th className=" px-4  font-normal  text-base  text-left p-2">
                     ($) Price
                   </th>
-                  <th className=" px-4 font-normal  text-base  text-left p-2 ">Action</th>
+                  <th className=" px-4 font-normal  text-base  text-left p-2 ">
+                    Action
+                  </th>
                   <th className=" px-4  font-normal   text-base  text-left p-2 ">
                     <button
                       className="border border-gray-950 bg-white text-black w-14"
@@ -803,7 +698,7 @@ function ProductFields() {
           </main>
         </div>
         {/* images & video end */}
-        <div>
+        <div className="w-full Largest:w-[80%]">
           <div className="flex justify-between my-6">
             <div className="flex flex-col">
               <p>
@@ -845,7 +740,7 @@ function ProductFields() {
         {/* section inputs end */}
         {/* section start */}
         <h1 className="text-2xl font-semibold">Related Products </h1>
-        <div className="flex  justify-between">
+        <div className="flex  justify-between w-full Largest:w-[80%]">
           <p>
             Related products are shown to customers in addition to the item the
             customer is looking at.{" "}
@@ -856,12 +751,12 @@ function ProductFields() {
             }`}
             onClick={handleRelateclick}
           >
-            <img src={filter} className="w-6 h-4 px-1"/>
+            <img src={filter} className="w-6 h-4 px-1" />
             Filter
           </button>
         </div>
         {isvisible && (
-          <div className=" bg-white p-2 px-5   ">
+          <div className=" bg-white p-2 px-5  w-full Largest:w-[80%] ">
             <div className="flex justify-between">
               <div className="flex flex-col w-52">
                 <label>Id From</label>
@@ -948,7 +843,7 @@ function ProductFields() {
 
         {/* section table start */}
 
-        <div className="my-6 border rounded-md bg-white ">
+        <div className="my-6 border w-full Largest:w-[80%] rounded-md bg-white ">
           <table className="w-full">
             <thead className="bg-blue-900 text-white">
               <tr className="border-b">
@@ -958,15 +853,27 @@ function ProductFields() {
                   </select>
                 </th>
                 <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
-                <th className=" p-2 font-medium text-left text-sm w-40">Thumbnail</th>
-                <th className=" p-2 font-medium text-left text-sm  w-80">Name</th>
+                <th className=" p-2 font-medium text-left text-sm w-40">
+                  Thumbnail
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-80">
+                  Name
+                </th>
                 <th className=" p-2 font-medium text-left text-sm w-48">
                   Attribute Set
                 </th>
-                <th className=" p-2 font-medium text-left text-sm w-32">Status</th>
-                <th className=" p-2 font-medium text-left text-sm bw-44">Type</th>
-                <th className=" p-2 font-medium text-left text-sm  w-44">SKU</th>
-                <th className=" p-2 font-medium text-left text-sm  w-44">Price</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Status
+                </th>
+                <th className=" p-2 font-medium text-left text-sm bw-44">
+                  Type
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  SKU
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  Price
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -991,7 +898,7 @@ function ProductFields() {
         {/* section table end */}
         {/* section start */}
         <h1 className="text-2xl font-semibold">Up-Sell Products </h1>
-        <div className="flex  justify-between">
+        <div className="flex  justify-between w-full Largest:w-[80%]">
           <p>
             An up-sell item is offered to the customer as a pricier or
             higher-quality alternative to the product the customer is looking
@@ -1006,12 +913,12 @@ function ProductFields() {
             onClick={click}
           >
             {" "}
-            <img src={filter} className="w-6 h-4 px-1"/>
+            <img src={filter} className="w-6 h-4 px-1" />
             Filter
           </button>
         </div>
         {isVisible && (
-          <div className=" bg-white p-2 px-5   ">
+          <div className=" bg-white p-2 px-5   w-full Largest:w-[80%]">
             <div className="flex justify-between">
               <div className="flex flex-col w-52">
                 <label>Id From</label>
@@ -1098,7 +1005,7 @@ function ProductFields() {
 
         {/* section table start */}
 
-        <div className="my-6 border rounded-md bg-white ">
+        <div className="my-6 border rounded-md bg-white w-full Largest:w-[80%] ">
           <table className="w-full">
             <thead className="bg-blue-900 text-white  ">
               <tr className="border-b">
@@ -1108,15 +1015,27 @@ function ProductFields() {
                   </select>
                 </th>
                 <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
-                <th className=" p-2 font-medium text-left text-sm w-40">Thumbnail</th>
-                <th className=" p-2 font-medium text-left text-sm  w-80">Name</th>
+                <th className=" p-2 font-medium text-left text-sm w-40">
+                  Thumbnail
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-80">
+                  Name
+                </th>
                 <th className=" p-2 font-medium text-left text-sm w-48">
                   Attribute Set
                 </th>
-                <th className=" p-2 font-medium text-left text-sm w-32">Status</th>
-                <th className=" p-2 font-medium text-left text-sm bw-44">Type</th>
-                <th className=" p-2 font-medium text-left text-sm  w-44">SKU</th>
-                <th className=" p-2 font-medium text-left text-sm  w-44">Price</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Status
+                </th>
+                <th className=" p-2 font-medium text-left text-sm bw-44">
+                  Type
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  SKU
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  Price
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -1141,7 +1060,7 @@ function ProductFields() {
         {/* section table end */}
         {/* section start */}
         <h1 className="text-2xl font-semibold">Cross-Sell Products </h1>
-        <div className="flex justify-between">
+        <div className="flex justify-between w-full Largest:w-[80%]">
           <p>
             These "impulse-buy" products appear next to the shopping cart as
             cross-sells to the items already in the shopping cart.
@@ -1154,12 +1073,12 @@ function ProductFields() {
             }`}
             onClick={handleCrossClick}
           >
-            <img src={filter} className="w-6 h-4 px-1"/>
+            <img src={filter} className="w-6 h-4 px-1" />
             Filter
           </button>
         </div>
         {visible && (
-          <div className=" bg-white p-2 px-5   ">
+          <div className=" bg-white p-2 px-5  w-full Largest:w-[80%] ">
             <div className="flex justify-between">
               <div className="flex flex-col w-52">
                 <label>Id From</label>
@@ -1246,7 +1165,7 @@ function ProductFields() {
 
         {/* section table start */}
 
-        <div className="my-6 border rounded-md bg-white">
+        <div className="my-6 border rounded-md bg-white w-full Largest:w-[80%]">
           <table className="w-full">
             <thead className="bg-blue-900 text-white ">
               <tr className="border-b ">
@@ -1256,15 +1175,25 @@ function ProductFields() {
                   </select>
                 </th>
                 <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
-                <th className="p-2 font-medium text-left text-sm  w-40">Thumbnail</th>
-                <th className=" p-2 font-medium text-left text-sm w-80">Name</th>
+                <th className="p-2 font-medium text-left text-sm  w-40">
+                  Thumbnail
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-80">
+                  Name
+                </th>
                 <th className=" p-2 font-medium text-left text-sm w-48 ">
                   Attribute Set
                 </th>
-                <th className=" p-2 font-medium text-left text-sm w-32">Status</th>
-                <th className=" p-2 font-medium text-left text-sm w-44">Type</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Status
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-44">
+                  Type
+                </th>
                 <th className=" p-2 font-medium text-left text-sm w-44">SKU</th>
-                <th className=" p-2 font-medium text-left text-sm w-32">Price</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Price
+                </th>
               </tr>
             </thead>
             <tbody>

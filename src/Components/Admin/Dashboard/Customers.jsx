@@ -181,6 +181,7 @@ import { FaPlus } from "react-icons/fa6";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import { CiSearch, CiMenuKebab } from "react-icons/ci";
+import filter from "../../../assets/Filter_icon.png";
 
 function Customers() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -263,7 +264,10 @@ function Customers() {
           {/* search end */}
           <div className="flex">
             <div className="flex p-1">
-              <FaFilter className="m-2" />
+            <button className="bg-green-300 p-1 flex items-center">
+              <img src={filter} className="w-8 h-8" />
+              Filter
+            </button>
             </div>
             <div className="flex bg-white  h-11 w-48 justify-evenly border rounded-md">
               <select className="m-2">

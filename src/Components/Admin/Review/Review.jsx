@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import ProductFields from "../Components/ProductFields";
+import filter from "../../../assets/Filter_icon.png";
+
 
 const Review = () => {
   const stats = [
@@ -74,7 +76,8 @@ const Review = () => {
                       stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
                     }`}
                   >
-                    {stat.percentage > 0 ? "↑" : "↓"} {Math.abs(stat.percentage)}%
+                    {stat.percentage > 0 ? "↑" : "↓"}{" "}
+                    {Math.abs(stat.percentage)}%
                   </div>
                 </div>
               </div>
@@ -83,7 +86,10 @@ const Review = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-1">Filter</button>
+            <button className="bg-green-300 p-1 flex items-center">
+              <img src={filter} className="w-8 h-8" />
+              Filter
+            </button>{" "}
             <select className="ml-2">
               <option>Columns</option>
             </select>
@@ -93,12 +99,22 @@ const Review = () => {
             <table className="rounded-lg bg-white w-full">
               <thead className="bg-blue-900 text-white">
                 <tr>
-                  <th className="border-b-2 py-4 min-w-36 pl-4 text-left">ID</th>
-                  <th className="border-b-2 min-w-36 text-left">Price Rating</th>
-                  <th className="border-b-2 min-w-36 text-left">Value Rating</th>
-                  <th className="border-b-2 min-w-36 text-left">Quality Rating</th>
+                  <th className="border-b-2 py-4 min-w-36 pl-4 text-left">
+                    ID
+                  </th>
+                  <th className="border-b-2 min-w-36 text-left">
+                    Price Rating
+                  </th>
+                  <th className="border-b-2 min-w-36 text-left">
+                    Value Rating
+                  </th>
+                  <th className="border-b-2 min-w-36 text-left">
+                    Quality Rating
+                  </th>
                   <th className="border-b-2 min-w-36 text-left">Feed Review</th>
-                  <th className="border-b-2 min-w-36 text-left">Customer Name</th>
+                  <th className="border-b-2 min-w-36 text-left">
+                    Customer Name
+                  </th>
                   <th className="border-b-2 min-w-36 text-left">Status</th>
                   <th className="border-b-2 min-w-36 text-left">Created</th>
                 </tr>
@@ -114,15 +130,33 @@ const Review = () => {
                   records.map((record, index) => (
                     <tr key={index}>
                       {/* Replace these with actual record fields */}
-                      <td className="border-b-2 py-4 min-w-36 pl-4 text-left">{record.id}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.priceRating}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.valueRating}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.qualityRating}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.feedReview}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.customerName}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.status}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.created}</td>
-                      <td className="border-b-2 min-w-36 text-left">{record.action}</td>
+                      <td className="border-b-2 py-4 min-w-36 pl-4 text-left">
+                        {record.id}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.priceRating}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.valueRating}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.qualityRating}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.feedReview}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.customerName}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.status}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.created}
+                      </td>
+                      <td className="border-b-2 min-w-36 text-left">
+                        {record.action}
+                      </td>
                     </tr>
                   ))
                 )}
