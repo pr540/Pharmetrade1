@@ -166,6 +166,7 @@ import logo from "../assets/logo2.png";
 import FormControl from "@mui/material/FormControl";
 import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
+
 // import Otp from './Otp';
 import { Link } from "react-router-dom";
 const Password = () => {
@@ -220,15 +221,19 @@ const Password = () => {
         }}
       />
       <div className="w-full h-full ">
+      <Link to="/">
         <img src={logo} style={{ width: "220px" }} />
+        </Link>
 
         <div className=" h-full flex justify-center items-center">
           <div className="bg-white  w-[550px] border rounded-lg  flex flex-col justify-center items-center shadow-lg">
             <form
               onSubmit={handleSubmit}
-              className="w-full h-full flex justify-center my-8"
+              className="w-full h-full flex  justify-center my-8"
             >
-              <div className="w-[60%] h-full flex flex-col ">
+              <div className="w-full h-full flex flex-col justify-center ">
+              <h2 className="font-semibold text-2xl text-blue-900 flex justify-center ">Forget Password</h2>
+
                 <div className=" flex items-center justify-center  my-5">
                   <TextField
                     label="Email/Phone"
@@ -253,7 +258,8 @@ const Password = () => {
                 <div className=" text-[18px] my-4 flex justify-center">
                   {" "}
                   {/* <span className="text-black">Note :</span>*  */}
-                  Having trouble logging in get help
+                  {/* Having trouble logging in get help */}
+                  Having trouble logging in? {" "}<span className="text-blue-900 underline"> {"  "} Get help here.</span>
                 </div>
 
                 {/* <div>

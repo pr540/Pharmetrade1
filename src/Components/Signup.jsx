@@ -12,6 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import refresh from "../assets/reload-arrow (1).png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useStates } from "react-us-states";
 
 import {
   Box,
@@ -34,7 +35,13 @@ const Signup = () => {
   const [accountType, setAccountType] = useState("");
 
   const [captcha, setCaptcha] = useState(generateCaptcha());
-  const [userInput, setUserInput] = useState("");
+  // const [userInput, setUserInput] = useState("");
+  const [states, setStates] = useState([]);
+
+  useEffect(() => {
+    // Set the states data
+    setStates(useStates); // Adjust based on actual structure
+  }, []);
   const handleRefresh = () => {
     setCaptcha(generateCaptcha()); // Generate a new CAPTCHA
     setUserInput("");
@@ -145,22 +152,40 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const steps = getSteps();
   const [uploadedFile, setUploadedFile] = useState("");
+  const [file1, setfile1] = useState(null);
+  const [file2, setfile2] = useState(null);
+
   const handleInputChange = (e) => {
     const { name, value, type, files, checked } = e.target;
-
+    console.log("hmm");
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: null,
     }));
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-    if (files) {
-      setUploadedFile(URL.createObjectURL(files[0]));
+    if (!files) {
+      setFormData({
+        ...formData,
+        [name]: type === "checkbox" ? checked : value,
+      });
     }
+    else
+    {
+      const file = files[0];
+      setFormData({
+        ...formData,
+        [name]: file,
+      });
+      setUploadedFile(URL.createObjectURL(files[0]));
+      if (name === "DEA_License_Copy") setfile1(file ? file.name : "");
+      else setfile2(file ? file.name : "");
+
+      
+    }
+
+    if (name === "password") validatePassword(value);
+
+   
     if (activeStep === 1) {
-      console.log("which step");
       validateStep(activeStep);
     }
   };
@@ -181,10 +206,23 @@ const Signup = () => {
 
   // const validateForm = () => {
   //   const newErrors = {};
+  const [PasswordErros, setPasswordErrors] = useState({});
+  const validatePassword = (password) => {
+    const newErrors = {};
+    const minLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*]/.test(password);
 
-  console.log(userType, "user");
+    if (!minLength) newErrors.passwordLength = "Min 8 characters";
+    if (!hasUppercase) newErrors.passwordUppercase = "One uppercase letter";
+    if (!hasSpecialChar)
+      newErrors.passwordSpecialChar = "One special character";
+    setisSubmit(true);
+    setPasswordErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const validateStep = (step) => {
-    console.log("heheh", step);
     let newErrors = {};
     if (step === 0) {
       const regex = /^[a-zA-Z\s']+$/;
@@ -202,10 +240,6 @@ const Signup = () => {
 
       if (!formData.Phone_number.match(regphn))
         newErrors.Phone_number = "Phone_number is required";
-      if (!formData.password.length) newErrors.password = ".";
-      else if (!formData.password.match(passwordRegex))
-        newErrors.password =
-          "Password must be at least 8 characters long, contain atleast one uppercase letter, and one special character.";
 
       if (!formData.confirmPassword.length)
         newErrors.confirmPassword = "Confirm password is required.";
@@ -213,6 +247,8 @@ const Signup = () => {
         newErrors.confirmPassword = "Passwords do not match.";
 
       if (!formData.captcha) newErrors.captcha = "captcha is required";
+      if (formData.captcha != captcha)
+        newErrors.captcha = "captcha not matched";
     } else if (step === 1) {
       if (!userType) newErrors.userType = "User Type is required";
 
@@ -349,18 +385,23 @@ const Signup = () => {
     }
 
     setErrors(newErrors);
-    console.log(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  console.log(errors);
   const isStepOptional = (step) => step === 1 || step === 2 || step === 3;
 
   const isStepSkipped = (step) => skippedSteps.includes(step);
 
   const navigate = useNavigate();
+  const [isSubmit, setisSubmit] = useState(true);
 
   const handleNext = () => {
-    if (validateStep(activeStep)) {
+    if (activeStep === 0) validatePassword(formData.password);
+    if (validateStep(activeStep) ) {
+      setisSubmit(true);
+      if (activeStep === 0 && validatePassword(formData.password) == false) {
+        return;
+      }
+
       if (activeStep === 1 && usertype === "buyer") {
         setActiveStep(3);
       } else if (
@@ -374,15 +415,13 @@ const Signup = () => {
           prevSkippedSteps.filter((skipItem) => skipItem !== activeStep)
         );
       }
+    } else {
+      setisSubmit(false);
     }
   };
 
   const handleBack = () => {
     if (activeStep > 0) setActiveStep((prevActiveStep) => prevActiveStep - 1);
-
-    // if(!activeStep){
-    //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // }
   };
 
   const [selectedValue, setSelectedValue] = React.useState("");
@@ -418,12 +457,10 @@ const Signup = () => {
   const handleusertypechange = (value) => {
     setusertype(value);
     if (activeStep === 1) {
-      console.log("hello user");
       validateStep(activeStep);
     }
   };
-  console.log(typeof usertype, "hmm");
-
+  console.log(formData)
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -490,6 +527,68 @@ const Signup = () => {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
+                  error={Object.keys(PasswordErros).length > 0}
+                  helperText={
+                    Object.keys(PasswordErros).length > 0
+                      ? Object.values(PasswordErros).join(", ")
+                      : ""
+                  }
+                  FormHelperTextProps={{
+                    style: { color: isSubmit ? "black" : "red" },
+                  }}
+                  size="small"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {/* <div style={{ color: "black" }}>
+                  {PasswordErros?.passwordLength && (
+                    <div
+                      className={`${
+                        isSubmit == false ? "text-red-500" : "text-black"
+                      }`}
+                    >
+                      * {PasswordErros.passwordLength}
+                    </div>
+                  )}
+                  {PasswordErros?.passwordUppercase && (
+                    <div
+                      className={`${
+                        isSubmit == false ? "text-red-500" : "text-black"
+                      }`}
+                    >
+                      * {PasswordErros.passwordUppercase}
+                    </div>
+                  )}
+                  {PasswordErros?.passwordSpecialChar && (
+                    <div
+                      className={`${
+                        isSubmit == false ? "text-red-500" : "text-black"
+                      }`}
+                    >
+                      * {PasswordErros?.passwordSpecialChar}
+                    </div>
+                  )}
+                </div> */}
+              </div>
+              {/* <div className="w-[220px]">
+                <TextField
+                  label="Password"
+                  id="outlined-size-small"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleInputChange}
                   error={!!errors.password}
                   size="small"
                   InputProps={{
@@ -506,59 +605,8 @@ const Signup = () => {
                     ),
                   }}
                 />
-              </div>
-              {/* <div>
-                {/* <TextField
-                  label="Password  "
-                  id="outlined-size-small"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  error={!!errors.password}
-                  size="small"
-                /> 
-                <FormControl sx={{  width: '25ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password" id="outlined-size-small">Password</InputLabel>
-                <OutlinedInput
-                 label="Password"
-                 size="small"
-                 name="password"
-                 value={formData.password}
-                 onChange={handleInputChange}
-                 error={!!errors.password}
-                  id="outlined-adornment-password"
-                  
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment >
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  // label="Password"
-                />
-                </FormControl>
               </div> */}
 
-              {/* <div>
-                <TextField
-                  label="Confirm Password"
-                  id="outlined-size-small"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  error={!!errors.confirmPassword}
-                  size="small"
-                />
-              </div> */}
               <div className="w-[220px]">
                 <TextField
                   label="Confirm Password"
@@ -819,7 +867,7 @@ const Signup = () => {
               />
             </div>
 
-            <div>
+            {/* <div>
               <FormControl
                 sx={{ minWidth: 223 }}
                 size="small"
@@ -835,12 +883,57 @@ const Signup = () => {
 
                   // error={!!errors.State}
                 >
-                  <MenuItem value="">{/* <em>None</em> */}</MenuItem>
+                  <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {states.map((state) => (
+            <MenuItem key={state.abbreviation} value={state.abbreviation}>
+              {state.name}
+            </MenuItem>
+                  {/* <MenuItem value="">{/* <em>None</em> 
+                  </MenuItem>
                   <MenuItem value={"State1"}>State1</MenuItem>
                   <MenuItem value={"State2"}>State2</MenuItem>
-                  <MenuItem value={"State3"}>State3</MenuItem>
+                  <MenuItem value={"State3"}>State3</MenuItem> 
                 </Select>
-                {/* {errors.State && {errors.State}} */}
+                {/* {errors.State && {errors.State}} 
+              </FormControl>
+            </div> */}
+
+            <div>
+              <FormControl
+                sx={{ minWidth: 223 }}
+                size="small"
+                error={!!errors.State}
+              >
+                <InputLabel id="state-select-label">State</InputLabel>
+                <Select
+                  id="state-select"
+                  label="State"
+                  value={formData.State}
+                  name="State"
+                  onChange={handleInputChange}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 200, // Set the maximum height of the dropdown
+                      },
+                    },
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {states.map((state) => (
+                    <MenuItem
+                      key={state.abbreviation}
+                      value={state.abbreviation}
+                    >
+                      {state.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.State && <span>{errors.State}</span>}
               </FormControl>
             </div>
 
@@ -1016,24 +1109,16 @@ const Signup = () => {
                   onChange={handleInputChange}
                   name="DEA_License_Copy"
                   id="outlined-size-small"
-                  value={formData.DEA_License_Copy}
                   error={!!errors.DEA_License_Copy}
                   size="small"
                   inputProps={{ tabIndex: "3" }}
                   tabIndex={3}
                 />
-                {/* <TextField
-                  label=""
-                  // type="file"
-                  onChange={handleInputChange}
-                  name="DEA_License_Copy"
-                  id="outlined-size-small"
-                  value={formData.DEA_License_Copy}
-                  error={!!errors.DEA_License_Copy}
-                  size="small"
-                  inputProps={{ tabIndex: "3" }}
-                  tabIndex={3}
-                /> */}
+                {file1 && (
+                  <div className={`${file1.length > 0 ? "" : "hidden"}`}>
+                    {file1}
+                  </div>
+                )}
               </div>
 
               <div className="w-[45%]">
@@ -1046,17 +1131,16 @@ const Signup = () => {
                   onChange={handleInputChange}
                   name="Pharmacy_License_Copy"
                   id="outlined-size-small"
-                  value={formData.Pharmacy_License_Copy}
                   error={!!errors.Pharmacy_License_Copy}
                   size="small"
                   inputProps={{ tabIndex: "6" }}
                   tabIndex={6}
                 />
-                {/* {formData.Pharmacy_License_Copy && (
-                  <span className="text-sm mt-2">
-                    {formData.Pharmacy_License_Copy.name}
-                  </span>
-                )} */}
+                {file2 && (
+                  <div className={`${file2.length > 0 ? "" : "hidden"}`}>
+                    {file2}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1161,9 +1245,8 @@ const Signup = () => {
               <span className="font-bold text-green-500"> {userType} </span>,
               You are successfully registered.
               <p>
-                If you have any queries contact us.
-                <span className="hover:text-red-500 underline">
-                  {" "}
+                If you have any queries contact us.{" "}
+                <span className="hover:text-green-500 hover:font-semibold text-blue-900 underline">
                   help@pharmetrade.com{" "}
                 </span>
               </p>

@@ -1,13 +1,15 @@
-
 // Slider.js
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
 import addcart from "../../../assets/cart1_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
 import comp from "../../../assets/Compare2_icon.png";
 
-const ProductSlider = ({ data, Title  }) => {
+const ProductSlider = ({ data, Title }) => {
+  const [rating, setRating] = useState(0);
+  const totalStars = 5;
+
   const carouselContainer = useRef(null);
 
   const navigation = (dir) => {
@@ -23,6 +25,12 @@ const ProductSlider = ({ data, Title  }) => {
       behavior: "smooth",
     });
   };
+
+  const Star = ({ filled, onClick }) => (
+    <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px" }}>
+      {filled ? "★" : "☆"}
+    </span>
+  );
   return (
     <div className="flex mt-12 flex-col justify-center pb-4 gap-6 ">
       <div className="flex justify-between ml-4 text-fonts font-semibold text-3xl">
@@ -51,11 +59,11 @@ const ProductSlider = ({ data, Title  }) => {
           {data.map((item, index) => (
             <div
               key={index}
-              className="snap-center border rounded-lg bg-gray-200 shrink-0">
+              className="snap-center border rounded-lg bg-gray-200 shrink-0"
+            >
               <div className="relative rounded-t-lg   bg-white">
-                <img src={fav} className="absolute h-6 right-0 p-1"/>
-                <img src={comp} className="absolute h-6 bottom-0 right-0 p-1"/>
-
+                <img src={fav} className="absolute h-6 right-1 p-1" />
+                <img src={comp} className="absolute h-6 bottom-0 right-1 p-1" />
 
                 <img
                   src={item.img}
@@ -65,24 +73,40 @@ const ProductSlider = ({ data, Title  }) => {
               <div className=" p-2 rounded-b-lg">
                 <div className="flex justify-between  flex-col font-medium">
                   <h2 className="text-black font-bold">{item.name}</h2>
-                  <div className="flex gap-2">
-                  <h3 className=" text-gray-600 line-through">{item.price}</h3>
-                  <h3 className=" text-gray-600">{"$50.00"}</h3>
-
+                  <div className="flex  justify-between items-center">
+                    <div className="flex gap-2">
+                      <h3 className=" text-gray-600 line-through">
+                        {item.price}
+                      </h3>
+                      <h3 className=" text-gray-600">{"$50.00"}</h3>
+                    </div>
+                    <div>
+                      <img src={addcart} className="h-7 p-1 " />
+                    </div>
                   </div>
                 </div>
-                <div className="flex  border-gray-300   items-center">
-                  <div className="flex items-center ">
+                <div>
+                  {Array.from({ length: totalStars }, (v, i) => (
+                    <Star
+                      key={i}
+                      filled={i < rating}
+                      onClick={() => setRating(i + 1)}
+                    />
+                  ))}
+                  {/* <p>The rating is {rating} out of {totalStars}.</p> */}
+                </div>
+                {/* <div className="flex  border-gray-300   items-center">
+                  {/* <div className="flex items-center ">
                     <img src={addcart} className="h-8 p-1 " />
                     <p className="text-blue-900 font-semibold">Add to Cart</p>
-                  </div>
+                  </div> 
                   {/* <div>
                     <img src={fav} className="h-8 p-1" />
                   </div>
                   <div>
                     <img src={other} className="h-8 p-1" />
-                  </div> */}
-                </div>
+                  </div> 
+                </div> */}
               </div>
             </div>
           ))}
@@ -93,7 +117,6 @@ const ProductSlider = ({ data, Title  }) => {
 };
 
 export default ProductSlider;
-
 
 // import React, { useRef, useEffect } from "react";
 // import left from "../../../assets/arrowleft.png";

@@ -179,7 +179,7 @@ function Landing2() {
     "Receive payments more quickly.",
     "Increase your profits by reducing your inventory.",
     "Utilize deals and discounts to attract pharmacies.",
-    "Compare and list of products with competitive prices.",
+    "Compare and list products with competitive prices.",
     "Save up to 60% with deals and discounts.",
     "Cashbacks and rewards.",
     "Multi-order merge shipment.",
@@ -223,7 +223,7 @@ function Landing2() {
         </div>
       </div>
       <div className="flex flex-col items-center">
-        <p className="text-text-blue text-[45px] xl:text-4xl font-semibold mt-6">
+        <p className="text-text-blue text-[45px] xl:text-4xl font-semibold mt-10">
           Grow your business with Pharm<span className="text-green-500">E</span>trade
         </p>
         <br></br>

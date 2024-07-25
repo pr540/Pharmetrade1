@@ -183,7 +183,9 @@ const Confirmpassword = () => {
       />
 
       <div className="w-full h-full ">
+      <Link to="/">
         <img src={logo} style={{ width: "220px" }} />
+        </Link>
 
         <div className=" h-full flex justify-center items-center">
           <div className="bg-white w-[550px] border rounded-lg  flex flex-col justify-center items-center shadow-lg">

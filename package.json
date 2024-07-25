@@ -24,7 +24,9 @@
     "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.23.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "react-us-states": "^1.0.2",
+    "us-state-codes": "^1.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
