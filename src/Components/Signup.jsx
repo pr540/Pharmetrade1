@@ -9,8 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 // import DatePicker from 'react-datepicker';
 import FormControl from "@mui/material/FormControl";
-import refresh from "../assets/reload-arrow (1).png"
-
+import refresh from "../assets/reload-arrow (1).png";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import {
   Box,
@@ -19,6 +20,9 @@ import {
   MenuItem,
   Select,
   TextField,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 
 function getSteps() {
@@ -30,11 +34,11 @@ const Signup = () => {
   const [accountType, setAccountType] = useState("");
 
   const [captcha, setCaptcha] = useState(generateCaptcha());
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const handleRefresh = () => {
     setCaptcha(generateCaptcha()); // Generate a new CAPTCHA
-    setUserInput('');
-    SetError('');
+    setUserInput("");
+    setErrors("");
   };
   function generateCaptcha() {
     return Math.floor(10000 + Math.random() * 90000).toString();
@@ -44,6 +48,15 @@ const Signup = () => {
     return Math.floor(10000 + Math.random() * 90000).toString();
   }
 
+  // const [showPassword, setShowPassword] = React.useState(false);
+
+  // const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const userTypes = [
     "Prescription Drug Seller",
     "General Merchandise Seller",
@@ -59,7 +72,6 @@ const Signup = () => {
   const handleUserTypeChange = (e) => {
     setUserType(e.target.value);
     setAccountType("");
-   
   };
   useEffect(() => {
     if (userType === "Normal Customer") {
@@ -153,6 +165,23 @@ const Signup = () => {
     }
   };
 
+  const validateDate = (date) => {
+    const selectedDate = new Date(date);
+    const currentDate = new Date();
+    return selectedDate > currentDate;
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  // const validateForm = () => {
+  //   const newErrors = {};
+
   console.log(userType, "user");
   const validateStep = (step) => {
     console.log("heheh", step);
@@ -173,8 +202,7 @@ const Signup = () => {
 
       if (!formData.Phone_number.match(regphn))
         newErrors.Phone_number = "Phone_number is required";
-      if (!formData.password.length)
-        newErrors.password = ".";
+      if (!formData.password.length) newErrors.password = ".";
       else if (!formData.password.match(passwordRegex))
         newErrors.password =
           "Password must be at least 8 characters long, contain atleast one uppercase letter, and one special character.";
@@ -184,7 +212,7 @@ const Signup = () => {
       else if (formData.password !== formData.confirmPassword)
         newErrors.confirmPassword = "Passwords do not match.";
 
-      if (!formData.captcha) newErrors.captcha = "captcha is required"
+      if (!formData.captcha) newErrors.captcha = "captcha is required";
     } else if (step === 1) {
       if (!userType) newErrors.userType = "User Type is required";
 
@@ -193,9 +221,10 @@ const Signup = () => {
       if (
         (userType === "Prescription Drug Seller" ||
           userType === "Vendor" ||
-          userType === "Normal Customer" || userType !== "General Merchandise Seller") &&
-        (!selectedValue && !formData.upnMember )
-
+          userType === "Normal Customer" ||
+          userType !== "General Merchandise Seller") &&
+        !selectedValue &&
+        !formData.upnMember
       )
         newErrors.upnMember = "UPN Member selection is required";
     } else if (step === 2) {
@@ -235,19 +264,43 @@ const Signup = () => {
         userType != "Normal Customer"
       )
         newErrors.DEA = "DEA is required";
+
       if (
         !formData.DEA_Expiration_Date &&
-        userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
-      )
-        newErrors.DEA_Expiration_Date = "DEA_Expiration_Date is required";
+        userType !== "General Merchandise Seller" &&
+        userType !== "Vendor" &&
+        userType !== "Normal Customer"
+      ) {
+        newErrors.DEA_Expiration_Date = "DEA Expiration Date is required";
+      } else if (!validateDate(formData.DEA_Expiration_Date)) {
+        newErrors.DEA_Expiration_Date = "Enter a valid future date";
+      }
+
+      // if (
+      //   !formData.DEA_Expiration_Date &&
+      //   userType != "General Merchandise Seller" &&
+      //   userType != "Vendor" &&
+      //   userType != "Normal Customer"
+      // )
+      //   newErrors.DEA_Expiration_Date = "DEA_Expiration_Date is required";
+
       // if (
       //   !formData.DEA_License_Copy &&
       //   userType != "General Merchandise Seller"
       //   && userType != "Vendor"
       // )
       //   newErrors.DEA_License_Copy = "DEA_License_Copy is required";
+
+      // if (
+      //   !formData.Pharmacy_Expiration_Date &&
+      //   userType !== "General Merchandise Seller" &&
+      //   userType !== "Vendor" &&
+      //   userType !== "Normal Customer"
+      // ) {
+      //   newErrors.Pharmacy_Expiration_Date =
+      //     "Pharmacy Expiration Date is required";
+      // }
+
       if (
         !formData.Pharmacy_Expiration_Date &&
         userType !== "General Merchandise Seller" &&
@@ -256,7 +309,10 @@ const Signup = () => {
       ) {
         newErrors.Pharmacy_Expiration_Date =
           "Pharmacy Expiration Date is required";
-      } 
+      } else if (!validateDate(formData.Pharmacy_Expiration_Date)) {
+        newErrors.Pharmacy_Expiration_Date = "Enter a valid future date";
+      }
+
       // if (
       //   !formData.Pharmacy_License_Copy &&
       //   userType != "General Merchandise Seller"
@@ -425,9 +481,34 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
+            <div className="flex flex-row w-full  my-4 justify-evenly">
+              <div className="w-[220px]">
                 <TextField
+                  label="Password"
+                  id="outlined-size-small"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  error={!!errors.password}
+                  size="small"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </div>
+              {/* <div>
+                {/* <TextField
                   label="Password  "
                   id="outlined-size-small"
                   name="password"
@@ -436,10 +517,37 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.password}
                   size="small"
+                /> 
+                <FormControl sx={{  width: '25ch' }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password" id="outlined-size-small">Password</InputLabel>
+                <OutlinedInput
+                 label="Password"
+                 size="small"
+                 name="password"
+                 value={formData.password}
+                 onChange={handleInputChange}
+                 error={!!errors.password}
+                  id="outlined-adornment-password"
+                  
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment >
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  // label="Password"
                 />
-              </div>
+                </FormControl>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <TextField
                   label="Confirm Password"
                   id="outlined-size-small"
@@ -450,15 +558,42 @@ const Signup = () => {
                   error={!!errors.confirmPassword}
                   size="small"
                 />
+              </div> */}
+              <div className="w-[220px]">
+                <TextField
+                  label="Confirm Password"
+                  id="outlined-size-small"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  error={!!errors.confirmPassword}
+                  size="small"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle confirm password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </div>
             </div>
 
             <div className="flex text-red-500 items-center justify-center flex-col">
-              {errors?.password?.length>1 && 
-              <div className="w-[80%]">
-                {errors.password}
-              </div>
-              }
+              {errors?.password?.length > 1 && (
+                <div className="w-[80%]">{errors.password}</div>
+              )}
               {/* {errors.confirmPassword && 
               <div>
                 {errors.confirmPassword}
@@ -479,11 +614,8 @@ const Signup = () => {
                 </button>
               </div>
               <TextField
-
                 name="captcha"
-
                 type="text"
-
                 value={formData.captcha}
                 onChange={handleInputChange}
                 className=" p-2 mx-2"
@@ -491,12 +623,8 @@ const Signup = () => {
                 label="Enter Captcha"
                 variant="standard"
                 error={!!errors.captcha}
-
               />
-
             </div>
-
-
           </div>
         );
       case 1:
@@ -598,11 +726,13 @@ const Signup = () => {
               </div>
               <span>
                 {errors.upnMember && (
-                  <span className= {`${
-                    userType === "General Merchandise Seller"
-                      ? " hidden"
-                      : ""
-                  } text-red-500`}>{errors.upnMember}</span>
+                  <span
+                    className={`${
+                      userType === "General Merchandise Seller" ? " hidden" : ""
+                    } text-red-500`}
+                  >
+                    {errors.upnMember}
+                  </span>
                 )}
               </span>
             </div>
@@ -805,13 +935,12 @@ const Signup = () => {
                   error={!!errors.Pharmacy_License}
                   size="small"
                   inputProps={{ tabIndex: "4" }}
-
                   tabIndex={4}
                 />
               </div>
             </div>
             <div className="flex flex-row w-[500px] justify-between ">
-              <div className="w-[45%] flex flex-col">
+              {/* <div className="w-[45%] flex flex-col">
                 <span className="text-xs">DEA Expiration Date</span>
                 <TextField
                   label=""
@@ -825,7 +954,40 @@ const Signup = () => {
                   inputProps={{ tabIndex: "2" }}
                   tabIndex={2}
                 />
+              </div> */}
+
+              <div className="w-[45%] flex flex-col">
+                <span className="text-xs">DEA Expiration Date</span>
+                <TextField
+                  label=""
+                  type="date"
+                  name="DEA_Expiration_Date"
+                  value={formData.DEA_Expiration_Date}
+                  onChange={handleInputChange}
+                  id="outlined-size-small"
+                  error={!!errors.DEA_Expiration_Date}
+                  helperText={errors.DEA_Expiration_Date}
+                  size="small"
+                  inputProps={{ tabIndex: "2" }}
+                  tabIndex={2}
+                />
               </div>
+
+              {/* <div className="w-[45%] flex flex-col">
+                <span className="text-xs">Pharmacy Expiration Date</span>
+                <TextField
+                  label=""
+                  type="date"
+                  name="Pharmacy_Expiration_Date"
+                  id="outlined-size-small"
+                  value={formData.Pharmacy_Expiration_Date}
+                  error={!!errors.Pharmacy_Expiration_Date}
+                  onChange={handleInputChange}
+                  size="small"
+                  inputProps={{ tabIndex: "5" }}
+                  tabIndex={5}
+                />
+              </div> */}
 
               <div className="w-[45%] flex flex-col">
                 <span className="text-xs">Pharmacy Expiration Date</span>
@@ -836,6 +998,7 @@ const Signup = () => {
                   id="outlined-size-small"
                   value={formData.Pharmacy_Expiration_Date}
                   error={!!errors.Pharmacy_Expiration_Date}
+                  helperText={errors.Pharmacy_Expiration_Date}
                   onChange={handleInputChange}
                   size="small"
                   inputProps={{ tabIndex: "5" }}
@@ -859,6 +1022,18 @@ const Signup = () => {
                   inputProps={{ tabIndex: "3" }}
                   tabIndex={3}
                 />
+                {/* <TextField
+                  label=""
+                  // type="file"
+                  onChange={handleInputChange}
+                  name="DEA_License_Copy"
+                  id="outlined-size-small"
+                  value={formData.DEA_License_Copy}
+                  error={!!errors.DEA_License_Copy}
+                  size="small"
+                  inputProps={{ tabIndex: "3" }}
+                  tabIndex={3}
+                /> */}
               </div>
 
               <div className="w-[45%]">
@@ -985,7 +1160,13 @@ const Signup = () => {
               Thank you for registering as
               <span className="font-bold text-green-500"> {userType} </span>,
               You are successfully registered.
-              <p>If you have any queries contact us.<span className="hover:text-red-500 underline"> help@pharmetrade.com </span></p>
+              <p>
+                If you have any queries contact us.
+                <span className="hover:text-red-500 underline">
+                  {" "}
+                  help@pharmetrade.com{" "}
+                </span>
+              </p>
             </div>
           </div>
         );
@@ -1053,9 +1234,7 @@ const Signup = () => {
                   className="bg-blue-900 w-24 h-10 cursor-pointer  border rounded-lg my-4 flex items-center justify-center"
                 >
                   {activeStep === 4 ? (
-                    <div className="text-white font-bold">
-                      Go To Home
-                    </div>
+                    <div className="text-white font-bold">Go To Home</div>
                   ) : (
                     <img src={next} alt="Next" className="w-6" />
                   )}
