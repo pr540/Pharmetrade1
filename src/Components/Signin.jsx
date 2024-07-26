@@ -400,8 +400,7 @@ const Signin = () => {
                 <div className="flex justify-center mb-8">
                   <label className="text-[18px] underline hover:text-red-500 ">
                     <Link
-                      to="/signup"
->
+                      to="/signup">
                       {" "}
                       Create Account/ Signup
                     </Link>

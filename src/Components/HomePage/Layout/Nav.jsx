@@ -362,12 +362,14 @@ import PersonalCare from "../../All Category/PersonalCare";
 import Pets from "../../All Category/Pets";
 import SportsNutrition from "../../All Category/SportsNutrition";
 import Suppliments from "../../All Category/Suppliments";
+import WhyPharma from "../NavLinks/WhyPharma";
+
 
 function Nav({ topDivRef, cartItems }) {
   const MenuItems = [
     "Home",
     "Products",
-    "Why ParamETrade",
+    "Why PharamEtrade",
     "About Us",
     "Contact Us",
     "Offers",
@@ -404,6 +406,9 @@ function Nav({ topDivRef, cartItems }) {
   const handleSelect = (index) => {
     if (MenuItems[index] == "Home") navigate("/app");
     else if (MenuItems[index] == "Products") navigate("/products");
+    else if (MenuItems[index] == "Why PharamEtrade") navigate("/whypharmetrade");
+    else if (MenuItems[index] == "About Us") navigate("/aboutus");
+    else if (MenuItems[index] == "Contact Us") navigate("/contactus");
   };
 
   let navigate = useNavigate();

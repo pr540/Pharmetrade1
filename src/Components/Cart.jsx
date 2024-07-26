@@ -264,8 +264,8 @@ function Cart({ topMargin, cartItems, setCartItems }) {
 
   return (
     <div
-      className="w-full h-full flex flex-col justify-center font-sans bg-gray-200 p-4 md:p-10 "
-      style={{ marginTop: `${topMargin-60}px` }}
+      className=" flex flex-col justify-center font-sans bg-gray-200 p-8  "
+      style={{ marginTop: `${topMargin}px` }}
     >
       <p className="text-lg md:text-2xl mb-2 text-black flex">
         PharmaTrade {`>`} Cart

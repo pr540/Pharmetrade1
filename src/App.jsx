@@ -145,11 +145,12 @@ function App() {
            <Route
             path="/whypharmetrade"
             element={<WhyPharma topMargin={topMargin} />}
-          /> <Route
-          path="/buy"
+          /> 
+          <Route
+          path="/aboutus"
           element={<AboutUs topMargin={topMargin} />}
         /> <Route
-        path="/buy"
+        path="/contactus"
         element={<Contactus topMargin={topMargin} />}
       /> <Route
       path="/buy"
