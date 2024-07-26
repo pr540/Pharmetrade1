@@ -58,6 +58,10 @@ import MyWishlist from "./Components/UserAccount/MyWishlist/MyWishlist";
 import MyRequestedQuote from "./Components/UserAccount/MyRequestedQuote/MyRequestedQuote";
 import Bid from "./Components/Bid";
 import Buy from "./Components/Buy";
+import WhyPharma from "./Components/HomePage/NavLinks/WhyPharma";
+import AboutUs from "./Components/HomePage/NavLinks/AboutUs";
+import Contactus from "./Components/HomePage/NavLinks/Contactus";
+import Offers from "./Components/HomePage/NavLinks/Offers";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -138,6 +142,19 @@ function App() {
             path="/buy"
             element={<Buy topMargin={topMargin} />}
           />
+           <Route
+            path="/whypharmetrade"
+            element={<WhyPharma topMargin={topMargin} />}
+          /> <Route
+          path="/buy"
+          element={<AboutUs topMargin={topMargin} />}
+        /> <Route
+        path="/buy"
+        element={<Contactus topMargin={topMargin} />}
+      /> <Route
+      path="/buy"
+      element={<Offers topMargin={topMargin} />}
+    />
           <Route
             path="/wishlist"
             element={

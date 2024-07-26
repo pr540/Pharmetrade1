@@ -89,7 +89,7 @@ import BuyImg from "../../../assets/Buy_icon.png";
 import JoinImg from "../../../assets/Join-icon.png";
 import SellImg from "../../../assets/Sell-icon.png";
 import BidImg from "../../../assets/Bid-icon.png";
-import mobileBuy from "../../../assets/Mobile app.png"; // Default mobile image for Buy
+import mobileBuy from "../../../assets/mobileBuy.png"; // Default mobile image for Buy
 import mobileJoin from "../../../assets/mobileJoin.jpg"; // Mobile image for Join
 import mobileSell from "../../../assets/mobileSell.jpg"; // Mobile image for Sell
 import mobileBid from "../../../assets/mobileBid.jpg"; // Mobile image for Bid
@@ -127,7 +127,7 @@ const MobileView = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSelectedStepIndex((prevIndex) => (prevIndex + 1) % steps.length);
-    }, 4000); // Change every 3 seconds
+    }, 3000); // Change every 3 seconds
 
     return () => clearInterval(interval); // Clean up the interval on component unmount
   }, []);
