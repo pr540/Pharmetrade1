@@ -148,6 +148,7 @@ const Signup = () => {
     Federal_Tax_ID: "",
     Address1: "",
     Address: "",
+    userType : "",
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
@@ -408,6 +409,10 @@ const Signup = () => {
         activeStep === steps.length
         // || (activeStep == 1 && userType === "Normal Customer")
       ) {
+        localStorage.removeItem('formData');
+        formData.userType = userType;
+        localStorage.setItem('formData', JSON.stringify(formData));
+
         navigate("/app");
       } else {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);

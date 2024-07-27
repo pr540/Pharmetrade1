@@ -5,23 +5,16 @@ import whypharma from "../../../assets/WhyPharma.png";
 const WhyPharma = ({ topMargin }) => {
   return (
     <div
-      className="h-screen w-full flex justify-center items-center"
+      className=" relative w-full flex justify-center items-center"
       style={{
         marginTop: `${topMargin}px`,
       }}
     >
-      <img
-        src={background_image}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-        }}
-      />
+      <div
+        className={`flex w-full z-[-1] top-0  absolute justify-center items-center`}
+      >
+        <img className="w-full" src={background_image} />
+      </div>
 
       <div className="w-[80%] h-full flex">
         <div className="w-[65%] h-full flex justify-center mt-6 ">
