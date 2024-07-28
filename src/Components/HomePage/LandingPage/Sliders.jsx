@@ -38,7 +38,7 @@ import { LuClipboardList } from "react-icons/lu";
 import AnimatedText from "../Components/AnimatedText";
 import MobileView from "../Components/MobileView";
 
-function Sliders() {
+function Sliders({wishList,addCart}) {
   const searchBarRef = useRef(null);
 
   useEffect(() => {
@@ -116,6 +116,7 @@ function Sliders() {
         <div className="w-full flex justify-between items-center ">
           <div className="w-[48%]">
             <ProductSection
+             addCart={addCart} wishList={wishList}
               products={newProducts.slice(0, 6)}
               heading="Rx Items"
               path="/products"
@@ -123,6 +124,7 @@ function Sliders() {
           </div>
           <div className="w-[48%]">
             <ProductSection
+             addCart={addCart} wishList={wishList}
               products={newProducts.slice(0, 6)}
               heading="OTC Items"
               path="/bid"
@@ -187,67 +189,6 @@ function Sliders() {
         <div className=" w-full flex justify-center py-4">
           <MobileView/>
         </div>
- 
-       {/* <div className=" w-full flex justify-center py-4">
-           <div className="flex justify-center items-center  mt-16">
-            {mobiles.map((item, key) => {
-              return (
-                <div key={key} className="flex justify-center mr-4">
-                  <img
-                    src={item}
-                    alt={`Mobile ${key}`}
-                    className="h-[350px] w-52 xl:w-[250px] hover:scale-110 transition duration-300 ease-in-out rounded-lg"
-                  />
-                </div>
-              );
-            })}
-          </div> 
-          <div>
-             <div className="w-full flex flex-col items-center justify-center ">
-              <h1 className="text-3xl font-semibold  text-text-blue my-4">
-                Get Our Mobile App Today
-              </h1>
-
-              <div className="flex w-[80%] justify-center">
-                <div className="w-[55%]  h-full flex flex-col justify-center">
-                  <AnimatedText />
-
-                  <div className="flex flex-col  w-[90%]">
-                    {steps.map((step, index) => (
-                      <div
-                        key={index}
-                        className="flex  items-center p-1 rounded-lg shadow-inner border w-full my-2 "
-                      >
-                        
-                        <img
-                          className="text-xl p-1 w-9 h-9 text-blue-900"
-                          src={step.img}
-                        />
-                        <div className=" p-2 w-full ">
-                          <h2 className="text-[16px] font-bold text-blue-900">
-                            {step.heading}
-                          </h2>
-                          <p className="text-[15px] text-gray-700 font-medium">
-                            {step.content}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="w-full ">
-                    <button className="border border-gray-500 bg-blue-900 text-white mt-2 p-2 rounded-lg w-44 mb-8">
-                      Download Now
-                    </button>
-                  </div>
-                </div>
-                <div className="w-[45%] h-full flex justify-center items-center">
-                  <img src={mobile} className="w-[250px] h-[400px] " />
-                </div>
-              </div>
-            </div> 
-            <MobileView/>
-          </div>
-        </div> */}
       </div>
     </>
   );

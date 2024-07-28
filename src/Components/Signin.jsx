@@ -5,6 +5,9 @@
 // import Changepassword from "./Changepassword";
 // // import OTP2 from './OTP2';
 // import { Link } from "react-router-dom";
+// import FormControl from "@mui/material/FormControl";
+// import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
+
 
 // const OTPInput = ({ length, onChangeOTP }) => {
 //   const [otp, setOTP] = useState(new Array(length).fill(""));
@@ -51,7 +54,7 @@
 //   );
 // };
 // const Signin = () => {
-//   const [email_id, setEmail_id] = useState("");
+//   const [email, setEmail] = useState("");
 //   const [password, setPassword] = useState("");
 //   const [errors, setErrors] = useState({});
 
@@ -61,12 +64,12 @@
 
 //   const validate = () => {
 //     let errors = {};
-//     const email_idRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-//     if (!email_id) {
-//       errors.email_id = "Email is required";
-//     } else if (!email_idRegex.test(email_id)) {
-//       errors.email_id = "Email is not valid";
+//     if (!email) {
+//       errors.email = "Email is required";
+//     } else if (!emailRegex.test(email)) {
+//       errors.email = "Email is not valid";
 //     }
 
 //     if (!password) {
@@ -85,7 +88,7 @@
 //       // Handle form submission
 //       console.log("Form submitted successfully");
 //       // Reset form
-//       setEmail_id("");
+//       setEmail("");
 //       setPassword("");
 //       setErrors({});
 //     }
@@ -106,13 +109,13 @@
 //         }}
 //       />
 
-//       <div className="w-full h-full mt-2 ml-2 ">
+//       <div className="w-full h-75%  ml-2 ">
 //         <Link to="/">
 //           <img src={logo} style={{ width: "220px" }} />
 //         </Link>
 //         <div className=" h-full flex justify-center items-center">
 //           <div className="bg-white w-[550px] border rounded-lg  flex flex-col justify-center items-center shadow-lg">
-//             <h2 className="text-blue-900 text-[25px] font-bold my-10">
+//             <h2 className="text-blue-900 text-[25px] font-bold my-8 ">
 //               Sign-In
 //             </h2>
 //             <form
@@ -120,47 +123,49 @@
 //               className="w-full h-full flex justify-center"
 //             >
 //               <div className="w-[60%] h-full flex flex-col ">
-//                 <div className=" flex items-center justify-between  my-5">
-//                   <label htmlFor=" *email" className="text-[18px]">
+//                 <div className=" flex items-center justify-center  ">
+//                   {/* <label htmlFor=" *email" className="text-[18px]">
 //                     <span className="text-red-600"> *</span>Email/Phone
-//                   </label>
-//                   <input
-//                     type="email_id"
-//                     id="email_id"
-//                     value={email_id}
-//                     onChange={(e) => setEmail_id(e.target.value)}
-//                     className="p-2 border border-gray-500 rounded-lg"
-//                     style={{
-//                       ...(errors.email_id && { border: "1px solid red" }),
-//                     }}
-//                   />
+//                   </label> */}
+//                    <div>
+//                 <TextField
+//                   label="Email"
+//                   id="outlined-size-small"
+//                   name="email"
+//                   value={email}
+//                   onChange={(e) => setEmail(e.target.value)}
+//                   error={!!errors.email}
+//                   size="small"
+//                 />
+//               </div>
+
 //                 </div>
-//                 <div className=" flex items-center justify-between my-2 ">
-//                   <label htmlFor="password" className="text-[18px]">
-//                     <span className="text-red-600">*</span>Password
-//                   </label>
-//                   <input
-//                     type="password"
-//                     id="password"
+//                 <div className=" flex items-center justify-center my-4 ">
+                 
+//                   <TextField
+//                     label="Password"
+//                     id="outlined-size-small"
+//                     name="password"
 //                     value={password}
 //                     onChange={(e) => setPassword(e.target.value)}
-//                     className="p-2 border border-gray-500 rounded-lg"
-//                     style={{
-//                       ...(errors.password && { border: "1px solid red" }),
-//                     }}
+//                     error={!!errors.password}
+//                     size="small"
 //                   />
 //                 </div>
 
-//                 <div className="flex justify-between items-center my-4">
-//                   <h5 className="text-[18px] ml-1">Enter OTP</h5>
-//                   <OTPInput length={6} onChangeOTP={handleOTPChange} />
+//                 <div className="flex justify-center items-center my-2">
+//                   {/* <h5 className="text-[18px] ml-1">Enter OTP</h5> */}
+//                   <TextField id="standard-basic" label="Enter OTP" variant="standard"
+//                   size="small"
+//                   onChangeOTP={handleOTPChange} />
+
 //                 </div>
 
-//                 <div className="text-red-500 text-[18px] my-4 flex justify-center">
+//                 {/* <div className="text-red-500 text-[18px] my-4 flex justify-center">
 //                   {" "}
 //                   <span className="text-black">Note :</span>* Fields are
 //                   mandatory
-//                 </div>
+//                 </div> */}
 //                 <div className="flex justify-center my-2">
 //                   <button
 //                     type="submit"
@@ -171,19 +176,25 @@
 //                 </div>
 
 //                 <div className="flex justify-center mb-2">
-//                   <label className="text-[18px] text-blue-700">
+//                   <label className="text-[18px] text-blue-900">
 //                     <Link
 //                       to="/password"
 //                     >
-//                       Forget Password{" "}
+//                       Forgot Password{" "} /
+//                     </Link>
+//                   </label>
+//                   <label className="text-[18px] text-blue-900">
+//                     <Link
+//                       to="/changepassword"
+//                     >
+//                       Change Password{" "}
 //                     </Link>
 //                   </label>
 //                 </div>
 //                 <div className="flex justify-center mb-8">
-//                   <label className="text-[18px]">
+//                   <label className="text-[18px] underline hover:text-red-500 ">
 //                     <Link
-//                       to="/signup"
-//                     >
+//                       to="/signup">
 //                       {" "}
 //                       Create Account/ Signup
 //                     </Link>
@@ -201,17 +212,12 @@
 // export default Signin;
 
 
-
-
 import React, { useState, useRef } from "react";
 import background_image from "../assets/homepharma.png";
-// import logo from "../assets/logo2.png";
-import logo from "../assets/Icons/logo2.png"
-import Changepassword from "./Changepassword";
-// import OTP2 from './OTP2';
+import logo from "../assets/Icons/logo2.png";
 import { Link } from "react-router-dom";
-import FormControl from "@mui/material/FormControl";
-import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
+import refresh from "../assets/reload-arrow (1).png";
 
 
 const OTPInput = ({ length, onChangeOTP }) => {
@@ -252,19 +258,34 @@ const OTPInput = ({ length, onChangeOTP }) => {
             e.key === "Backspace" && handleBackspace(e.target, index)
           }
           ref={(el) => (inputRefs.current[index] = el)}
-          className="w-[22px] h-[22px] flex  border rounded-md border-gray-500  mx-1"
+          className="w-[22px] h-[22px] flex border rounded-md border-gray-500 mx-1"
         />
       ))}
     </div>
   );
 };
+
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [captcha, setCaptcha] = useState("52764"); // Example captcha value
+  const [formData, setFormData] = useState({ captcha: "" });
   const [errors, setErrors] = useState({});
 
   const handleOTPChange = (otp) => {
     console.log("Current OTP:", otp);
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleRefresh = () => {
+    // Logic to refresh captcha
+    setCaptcha("5678"); // Example new captcha value
   };
 
   const validate = () => {
@@ -295,6 +316,7 @@ const Signin = () => {
       // Reset form
       setEmail("");
       setPassword("");
+      setFormData({ captcha: "" });
       setErrors({});
     }
   };
@@ -314,39 +336,32 @@ const Signin = () => {
         }}
       />
 
-      <div className="w-full h-75%  ml-2 ">
+      <div className="w-full h-75% ml-2 ">
         <Link to="/">
           <img src={logo} style={{ width: "220px" }} />
         </Link>
-        <div className=" h-full flex justify-center items-center">
-          <div className="bg-white w-[550px] border rounded-lg  flex flex-col justify-center items-center shadow-lg">
-            <h2 className="text-blue-900 text-[25px] font-bold my-8 ">
+        <div className="h-full flex justify-center items-center">
+          <div className="bg-white w-[550px] border rounded-lg flex flex-col justify-center items-center shadow-lg">
+            <h2 className="text-blue-900 text-[25px] font-bold my-8">
               Sign-In
             </h2>
             <form
               onSubmit={handleSubmit}
-              className="w-full h-full flex justify-center"
+              className="w-full h-full flex flex-col justify-center items-center"
             >
-              <div className="w-[60%] h-full flex flex-col ">
-                <div className=" flex items-center justify-center  ">
-                  {/* <label htmlFor=" *email" className="text-[18px]">
-                    <span className="text-red-600"> *</span>Email/Phone
-                  </label> */}
-                   <div>
-                <TextField
-                  label="Email"
-                  id="outlined-size-small"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  error={!!errors.email}
-                  size="small"
-                />
-              </div>
-
+              <div className="w-[60%] h-full flex flex-col">
+                <div className="flex items-center justify-center">
+                  <TextField
+                    label="Email"
+                    id="outlined-size-small"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={!!errors.email}
+                    size="small"
+                  />
                 </div>
-                <div className=" flex items-center justify-center my-4 ">
-                 
+                <div className="flex items-center justify-center my-4">
                   <TextField
                     label="Password"
                     id="outlined-size-small"
@@ -358,24 +373,35 @@ const Signin = () => {
                   />
                 </div>
 
-                <div className="flex justify-center items-center my-2">
-                  {/* <h5 className="text-[18px] ml-1">Enter OTP</h5> */}
-                  <TextField id="standard-basic" label="Enter OTP" variant="standard"
-                  size="small"
-                  onChangeOTP={handleOTPChange} />
+                
 
-                  {/* <OTPInput length={6}  /> */}
+                <div className="flex justify-center items-center my-2">
+                  <div className="flex border rounded-md bg-slate-200 p-2 mx-2">
+                    <div className="text-xl font-bold mt-1">{captcha}</div>
+                    <button
+                      onClick={handleRefresh}
+                      className="bg-gray-500 text-white w-8 mx-1 h-8"
+                    >
+                      <img src={refresh} alt="Refresh" />
+                    </button>
+                  </div>
+                  <TextField
+                    name="captcha"
+                    type="text"
+                    value={formData.captcha}
+                    onChange={handleInputChange}
+                    className="p-2 mx-2"
+                    id="standard-basic"
+                    label="Enter Captcha"
+                    variant="standard"
+                    error={!!errors.captcha}
+                  />
                 </div>
 
-                {/* <div className="text-red-500 text-[18px] my-4 flex justify-center">
-                  {" "}
-                  <span className="text-black">Note :</span>* Fields are
-                  mandatory
-                </div> */}
                 <div className="flex justify-center my-2">
                   <button
                     type="submit"
-                    className="text-white bg-blue-900 border rounded-lg py-3 px-9 cursor-pointer font-semibold text-[18px] "
+                    className="text-white bg-blue-900 border rounded-lg py-3 px-9 cursor-pointer font-semibold text-[18px]"
                   >
                     Sign In
                   </button>
@@ -383,24 +409,19 @@ const Signin = () => {
 
                 <div className="flex justify-center mb-2">
                   <label className="text-[18px] text-blue-900">
-                    <Link
-                      to="/password"
-                    >
+                    <Link to="/password">
                       Forgot Password{" "} /
                     </Link>
                   </label>
                   <label className="text-[18px] text-blue-900">
-                    <Link
-                      to="/changepassword"
-                    >
+                    <Link to="/changepassword">
                       Change Password{" "}
                     </Link>
                   </label>
                 </div>
                 <div className="flex justify-center mb-8">
-                  <label className="text-[18px] underline hover:text-red-500 ">
-                    <Link
-                      to="/signup">
+                  <label className="text-[18px] underline hover:text-red-500">
+                    <Link to="/signup">
                       {" "}
                       Create Account/ Signup
                     </Link>

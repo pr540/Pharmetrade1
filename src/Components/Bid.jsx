@@ -43,10 +43,10 @@ const Bid = ({ topMargin }) => {
 
   return (
     <div
-      className="w-full h-full flex justify-center items-center"
-      style={{ marginTop: `${topMargin + 20}px` }}
+      className="w-full  flex justify-center items-center"
+      style={{ marginTop: `${topMargin }px` }}
     >
-      <div className="w-[70%] h-full">
+      <div className="w-[70%] bg-slate-100 px-20 py-8 h-full">
         <h2 className="text-2xl mb-4">Request For Quote</h2>
         <form onSubmit={handleSubmit}>
           <div className="gap-4 ">
@@ -102,7 +102,7 @@ const Bid = ({ topMargin }) => {
               />
             </div>
           </div>
-          <div className="border border-gray-200 rounded-lg p-4 mt-4">
+          <div className="border border-gray-200 bg-white rounded-lg p-4 mt-4">
             <h3 className="text-2xl font-semibold  mt-6 mb-4">
               Buyer Information
             </h3>

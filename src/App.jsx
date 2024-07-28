@@ -65,6 +65,11 @@ import Offers from "./Components/HomePage/NavLinks/Offers";
 
 function App() {
   const [count, setCount] = useState(0);
+  const location1 = useLocation();
+  useEffect(() => {
+    console.log("Scrolling at top")
+    window.scrollTo(0, 0);
+  }, [location1.pathname]);
   console.log(window.location.href.includes("/products"));
   const [topMargin, setTopMargin] = useState(0);
   const [wishItems, setWishItems] = useState([]);
@@ -124,8 +129,8 @@ function App() {
           />
           <Route path="/order" element={<Order topMargin={topMargin} />} />
           <Route path="/pops" element={<Product />} />
-          <Route path="/app" element={<Landing topMargin={topMargin} />} />
-          <Route path="/" element={<Landing topMargin={topMargin} />} />
+          <Route path="/app" element={<Landing addCart={addCart} wishList={wishList} topMargin={topMargin} />} />
+          <Route path="/" element={<Landing addCart={addCart} wishList={wishList} topMargin={topMargin} />} />
           <Route
             path="/detailspage/:id"
             element={<Items addCart={addCart} />}

@@ -43,7 +43,7 @@ const RequestQuote = () => {
   ];
 
   return (
-    <div className="relative bg-gray-100 w-full h-full flex justify-center items-center ">
+    <div className="relative bg-gray-100  w-full h-full flex justify-center items-center ">
       <div className=" w-[95%] h-full mt-8">
         <div className=" flex justify-between">
           <p className="text-[22px] text-blue-900 font-medium">
@@ -144,7 +144,7 @@ const RequestQuote = () => {
         </div>
       </div>
       {showEditPopup && selectedRequest && (
-        <div className="absolute inset-0 flex overflow-scroll bg-gray-100 ">
+        <div className="w-full absolute h-full  inset-0 flex overflow-scroll bg-gray-100 ">
           <QuoteDetail request={selectedRequest} />
         </div>
       )}

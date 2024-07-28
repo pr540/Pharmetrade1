@@ -32,7 +32,7 @@ function PLefts() {
     };
   }, []);
 
-  console.log(scrollY);
+  // console.log(scrollY);
   
 
   return (

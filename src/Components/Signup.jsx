@@ -148,7 +148,7 @@ const Signup = () => {
     Federal_Tax_ID: "",
     Address1: "",
     Address: "",
-    userType : "",
+    userType: "",
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
@@ -168,9 +168,7 @@ const Signup = () => {
         ...formData,
         [name]: type === "checkbox" ? checked : value,
       });
-    }
-    else
-    {
+    } else {
       const file = files[0];
       setFormData({
         ...formData,
@@ -179,13 +177,10 @@ const Signup = () => {
       setUploadedFile(URL.createObjectURL(files[0]));
       if (name === "DEA_License_Copy") setfile1(file ? file.name : "");
       else setfile2(file ? file.name : "");
-
-      
     }
 
     if (name === "password") validatePassword(value);
 
-   
     if (activeStep === 1) {
       validateStep(activeStep);
     }
@@ -302,60 +297,53 @@ const Signup = () => {
       )
         newErrors.DEA = "DEA is required";
 
+    
+
       if (
-        !formData.DEA_Expiration_Date &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
         userType != "Normal Customer"
       ) {
-        newErrors.DEA_Expiration_Date = "DEA Expiration Date is required";
-      } else if (!validateDate(formData.DEA_Expiration_Date)) {
-        newErrors.DEA_Expiration_Date = "Enter a valid future date";
+        if (!formData.DEA_Expiration_Date) {
+          newErrors.DEA_Expiration_Date =
+            "DEA Expiration Date is required";
+        } else if (!validateDate(formData.DEA_Expiration_Date)) {
+          newErrors.DEA_Expiration_Date = "Enter a valid future date";
+        }
       }
 
-      // if (
-      //   !formData.DEA_Expiration_Date &&
-      //   userType != "General Merchandise Seller" &&
-      //   userType != "Vendor" &&
-      //   userType != "Normal Customer"
-      // )
-      //   newErrors.DEA_Expiration_Date = "DEA_Expiration_Date is required";
-
-      // if (
-      //   !formData.DEA_License_Copy &&
-      //   userType != "General Merchandise Seller"
-      //   && userType != "Vendor"
-      // )
-      //   newErrors.DEA_License_Copy = "DEA_License_Copy is required";
-
-      // if (
-      //   !formData.Pharmacy_Expiration_Date &&
-      //   userType !== "General Merchandise Seller" &&
-      //   userType !== "Vendor" &&
-      //   userType !== "Normal Customer"
-      // ) {
-      //   newErrors.Pharmacy_Expiration_Date =
-      //     "Pharmacy Expiration Date is required";
-      // }
+  
 
       if (
-        !formData.Pharmacy_Expiration_Date &&
+        !formData.DEA_License_Copy &&
+        userType != "General Merchandise Seller"
+        && userType != "Vendor" &&
+        userType != "Normal Customer"
+      )
+        newErrors.DEA_License_Copy = "DEA_License_Copy is required";
+
+     
+
+      if (
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
         userType != "Normal Customer"
       ) {
-        newErrors.Pharmacy_Expiration_Date =
-          "Pharmacy Expiration Date is required";
-      } else if (!validateDate(formData.Pharmacy_Expiration_Date)) {
-        newErrors.Pharmacy_Expiration_Date = "Enter a valid future date";
+        if (!formData.Pharmacy_Expiration_Date) {
+          newErrors.Pharmacy_Expiration_Date =
+            "Pharmacy Expiration Date is required";
+        } else if (!validateDate(formData.Pharmacy_Expiration_Date)) {
+          newErrors.Pharmacy_Expiration_Date = "Enter a valid future date";
+        }
       }
 
-      // if (
-      //   !formData.Pharmacy_License_Copy &&
-      //   userType != "General Merchandise Seller"
-      //   && userType != "Vendor" && userType != "Normal Customer"
-      // )
-      //   newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
+      if (
+        !formData.Pharmacy_License_Copy &&
+        userType != "General Merchandise Seller"
+        && userType != "Vendor" && userType != "Normal Customer"
+      )
+        newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
+
       if (
         !formData.Pharmacy_License &&
         userType != "General Merchandise Seller" &&
@@ -397,7 +385,7 @@ const Signup = () => {
 
   const handleNext = () => {
     if (activeStep === 0) validatePassword(formData.password);
-    if (validateStep(activeStep) ) {
+    if (validateStep(activeStep)) {
       setisSubmit(true);
       if (activeStep === 0 && validatePassword(formData.password) == false) {
         return;
@@ -409,9 +397,9 @@ const Signup = () => {
         activeStep === steps.length
         // || (activeStep == 1 && userType === "Normal Customer")
       ) {
-        localStorage.removeItem('formData');
+        localStorage.removeItem("formData");
         formData.userType = userType;
-        localStorage.setItem('formData', JSON.stringify(formData));
+        localStorage.setItem("formData", JSON.stringify(formData));
 
         navigate("/app");
       } else {
@@ -465,7 +453,7 @@ const Signup = () => {
       validateStep(activeStep);
     }
   };
-  console.log(formData)
+  console.log(formData);
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -872,38 +860,6 @@ const Signup = () => {
               />
             </div>
 
-            {/* <div>
-              <FormControl
-                sx={{ minWidth: 223 }}
-                size="small"
-                error={!!errors.State}
-              >
-                <InputLabel id="demo-select-small-label">State</InputLabel>
-                <Select
-                  id="demo-select-small"
-                  label="State"
-                  value={formData.State}
-                  name="State"
-                  onChange={handleInputChange}
-
-                  // error={!!errors.State}
-                >
-                  <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {states.map((state) => (
-            <MenuItem key={state.abbreviation} value={state.abbreviation}>
-              {state.name}
-            </MenuItem>
-                  {/* <MenuItem value="">{/* <em>None</em> 
-                  </MenuItem>
-                  <MenuItem value={"State1"}>State1</MenuItem>
-                  <MenuItem value={"State2"}>State2</MenuItem>
-                  <MenuItem value={"State3"}>State3</MenuItem> 
-                </Select>
-                {/* {errors.State && {errors.State}} 
-              </FormControl>
-            </div> */}
 
             <div>
               <FormControl
@@ -1010,7 +966,7 @@ const Signup = () => {
         return (
           <div className="my-2 w-full flex flex-col justify-center items-center ">
             <div className="flex flex-row w-[500px]   my-3 justify-between">
-              <div>
+              <div className="w-[45%]">
                 <TextField
                   label="DEA"
                   id="outlined-size-small"
@@ -1023,7 +979,7 @@ const Signup = () => {
                 />
               </div>
 
-              <div>
+              <div className="w-[45%]">
                 <TextField
                   label="Pharmacy License"
                   id="outlined-size-small"
@@ -1038,21 +994,7 @@ const Signup = () => {
               </div>
             </div>
             <div className="flex flex-row w-[500px] justify-between ">
-              {/* <div className="w-[45%] flex flex-col">
-                <span className="text-xs">DEA Expiration Date</span>
-                <TextField
-                  label=""
-                  type="date"
-                  name="DEA_Expiration_Date"
-                  value={formData.DEA_Expiration_Date}
-                  onChange={handleInputChange}
-                  id="outlined-size-small"
-                  error={!!errors.DEA_Expiration_Date}
-                  size="small"
-                  inputProps={{ tabIndex: "2" }}
-                  tabIndex={2}
-                />
-              </div> */}
+             
 
               <div className="w-[45%] flex flex-col">
                 <span className="text-xs">DEA Expiration Date</span>
@@ -1070,22 +1012,6 @@ const Signup = () => {
                   tabIndex={2}
                 />
               </div>
-
-              {/* <div className="w-[45%] flex flex-col">
-                <span className="text-xs">Pharmacy Expiration Date</span>
-                <TextField
-                  label=""
-                  type="date"
-                  name="Pharmacy_Expiration_Date"
-                  id="outlined-size-small"
-                  value={formData.Pharmacy_Expiration_Date}
-                  error={!!errors.Pharmacy_Expiration_Date}
-                  onChange={handleInputChange}
-                  size="small"
-                  inputProps={{ tabIndex: "5" }}
-                  tabIndex={5}
-                />
-              </div> */}
 
               <div className="w-[45%] flex flex-col">
                 <span className="text-xs">Pharmacy Expiration Date</span>
@@ -1150,7 +1076,7 @@ const Signup = () => {
             </div>
 
             <div className="flex flex-row w-[500px]  my-3 justify-between">
-              <div>
+              <div className="w-[45%]">
                 <TextField
                   label="NPI"
                   id="outlined-size-small"
@@ -1164,7 +1090,7 @@ const Signup = () => {
                 />
               </div>
 
-              <div>
+              <div className="w-[45%]">
                 <TextField
                   label="NCPDP"
                   id="outlined-size-small"
@@ -1182,7 +1108,7 @@ const Signup = () => {
             </div>
 
             <div className="flex w-[500px] flex-row my-2 justify-start ">
-              <div>
+              <div className="w-[45%]">
                 <TextField
                   label="Federal Tax ID"
                   id="outlined-size-small"

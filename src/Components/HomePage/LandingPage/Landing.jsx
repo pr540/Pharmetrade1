@@ -8,7 +8,7 @@ import Product from "../../Product";
 import Sliders from "./Sliders";
 import Landing2 from "./Landing2";
 import PLefts from "../../PLefts";
-function Landing({ topMargin }) {
+function Landing({ topMargin, wishList, addCart }) {
   return (
     <div className=" w-full">
       <div className=" w-full">
@@ -54,8 +54,8 @@ function Landing({ topMargin }) {
           </div>
         </div>
         <div className="w-full bg-slate-100 px-16">
-          <Landing2 />
-          <Sliders />
+          <Landing2  addCart={addCart} wishList={wishList} />
+          <Sliders  addCart={addCart} wishList={wishList} />
         </div>
       </div>
     </div>

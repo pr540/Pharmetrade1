@@ -31,12 +31,39 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import addcart from "../../../assets/cart1_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
+import nature from "../../../assets/img1.png";
+
 import other from "../../../assets/compare1_Icon.png";
-const ProductSection = ({ products, heading, path }) => {
+const ProductSection = ({ products, heading, path,addCart,wishList }) => {
 
   const [rating, setRating] = useState(0);
   const totalStars = 5;
+  const images = Array(115).fill(nature);
+  function handleCart(index) {
+    console.log("hmm")
+    const prolist = {
+      id: index,
+      src: images[index],
+      price: "$50.99",
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    addCart(prolist);
+  }
 
+  function handleClick(index) {
+    alert("Add 1 item into wishlist");
+    const prolist = {
+      id: index,
+      src: images[index],
+      price: "$50.99",
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    wishList(prolist);
+  }
   const Star = ({ filled, onClick }) => (
     <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px" }}>
       {filled ? "★" : "☆"}
@@ -46,7 +73,7 @@ const ProductSection = ({ products, heading, path }) => {
     <div className="bg-white w-full p-4">
       <h1 className="text-2xl font-bold text-text-blue">{heading}</h1>
       <div className="grid grid-cols-3 grid-rows-2 p-2">
-        {products.map((item) => (
+        {products.map((item,index) => (
           <div
             key={item.id}
             className="snap-center  border rounded-lg bg-gray-200 shrink-0 m-3"
@@ -59,7 +86,7 @@ const ProductSection = ({ products, heading, path }) => {
               />
             </div> */}
             <div className="relative rounded-t-lg   bg-white">
-              <img src={fav} className="absolute h-6 right-0 p-1" />
+              <img src={fav} onClick={()=>handleClick(index)} className="absolute h-6 right-0 p-1" />
 
               <img
                 src={item.img}
@@ -83,7 +110,7 @@ const ProductSection = ({ products, heading, path }) => {
                       </h3>
                       <h3 className=" text-gray-600">{"$50.00"}</h3>
                     </div>
-                    <div>
+                    <div onClick={()=>handleCart(index)}>
                       <img src={addcart} className="h-7 p-1 " />
                     </div>
                   </div>

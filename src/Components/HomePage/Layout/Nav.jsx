@@ -45,6 +45,8 @@ import Suppliments from "../../All Category/Suppliments";
 import WhyPharma from "../NavLinks/WhyPharma";
 
 function Nav({ topDivRef, cartItems }) {
+
+  const [selectedIndex, setSelectedIndex] = useState();
   const MenuItems = [
     "Home",
     "Products",
@@ -53,6 +55,7 @@ function Nav({ topDivRef, cartItems }) {
     "Contact Us",
     "Offers",
   ];
+
   const downDivItems = [
     { label: "Buy", icon: Buy, path: "/products" },
     { label: "Join", icon: hand, path: "/login" },
@@ -63,6 +66,7 @@ function Nav({ topDivRef, cartItems }) {
     { label: "Insta", icon: insta, path: "#" },
     { label: "Twitter", icon: twitter, path: "#" },
   ];
+
   const components = [
     { name: "Allergies", component: <Baby /> },
     { name: "Bath & Body ", component: <Beauty /> },
@@ -83,13 +87,14 @@ function Nav({ topDivRef, cartItems }) {
   ];
 
   const handleSelect = (index) => {
-    if (MenuItems[index] == "Home") navigate("/app");
-    else if (MenuItems[index] == "Products") navigate("/products");
-    else if (MenuItems[index] == "Why PharamEtrade")
-      navigate("/whypharmetrade");
-    else if (MenuItems[index] == "About Us") navigate("/aboutus");
-    else if (MenuItems[index] == "Contact Us") navigate("/contactus");
+    setSelectedIndex(index);
+    if (MenuItems[index] === "Home") navigate("/app");
+    else if (MenuItems[index] === "Products") navigate("/products");
+    else if (MenuItems[index] === "Why PharamEtrade") navigate("/whypharmetrade");
+    else if (MenuItems[index] === "About Us") navigate("/aboutus");
+    else if (MenuItems[index] === "Contact Us") navigate("/contactus");
   };
+
 
   let navigate = useNavigate();
 
@@ -152,7 +157,11 @@ function Nav({ topDivRef, cartItems }) {
               <div className="flex gap-6 justify-around h-full">
                 {MenuItems.map((item, index) => (
                   <li
-                    className="text-blue-900 flex justify-center items-center w-fit cursor-pointer  font-medium hover:text-green-500 text-[17px]"
+                    className={`text-blue-900 flex justify-center items-center w-fit cursor-pointer font-medium text-[17px] ${
+                      selectedIndex === index
+                        ? "text-green-500"
+                        : "hover:text-green-500"
+                    }`}
                     key={item}
                     onClick={() => handleSelect(index)}
                   >

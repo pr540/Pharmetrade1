@@ -53,7 +53,7 @@ function Wishlist({ topMargin, wishItems, setWishItems }) {
 
   return (
     <div className="bg-gray-200 p-8" style={{ marginTop: `${topMargin}px` }}>
-      <h1 className="text-2xl mb-2">Pharmetrade {">"} Wishlist</h1>
+      <h1 className="text-2xl mb-2">PharmEtrade {">"} Wishlist</h1>
       <div className="w-full h-full bg-white rounded-lg shadow-lg p-4">
         <div className="flex justify-between">
           <h1 className="text-2xl m-5">Wishlist</h1>

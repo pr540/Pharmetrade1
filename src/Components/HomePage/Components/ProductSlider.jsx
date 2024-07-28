@@ -5,10 +5,12 @@ import right from "../../../assets/arrowright.png";
 import addcart from "../../../assets/cart1_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
 import comp from "../../../assets/Compare2_icon.png";
+import nature from "../../../assets/img1.png";
 
-const ProductSlider = ({ data, Title }) => {
+const ProductSlider = ({ data, Title , addCart, wishList}) => {
   const [rating, setRating] = useState(0);
   const totalStars = 5;
+  const images = Array(115).fill(nature);
 
   const carouselContainer = useRef(null);
 
@@ -25,7 +27,31 @@ const ProductSlider = ({ data, Title }) => {
       behavior: "smooth",
     });
   };
+  function handleCart(index) {
+    console.log("hmm")
+    const prolist = {
+      id: index,
+      src: images[index],
+      price: "$50.99",
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    addCart(prolist);
+  }
 
+  function handleClick(index) {
+    alert("Add 1 item into wishlist");
+    const prolist = {
+      id: index,
+      src: images[index],
+      price: "$50.99",
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    wishList(prolist);
+  }
   const Star = ({ filled, onClick }) => (
     <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px" }}>
       {filled ? "★" : "☆"}
@@ -62,7 +88,7 @@ const ProductSlider = ({ data, Title }) => {
               className="snap-center border rounded-lg bg-gray-200 shrink-0"
             >
               <div className="relative rounded-t-lg   bg-white">
-                <img src={fav} className="absolute h-6 right-1 p-1" />
+                <img onClick={()=>handleClick(index)} src={fav} className="absolute h-6 right-1 p-1" />
                 <img src={comp} className="absolute h-6 bottom-0 right-1 p-1" />
 
                 <img
@@ -80,7 +106,7 @@ const ProductSlider = ({ data, Title }) => {
                       </h3>
                       <h3 className=" text-gray-600">{"$50.00"}</h3>
                     </div>
-                    <div>
+                    <div onClick={()=>handleCart(index)}>
                       <img src={addcart} className="h-7 p-1 " />
                     </div>
                   </div>

@@ -268,7 +268,7 @@ function Cart({ topMargin, cartItems, setCartItems }) {
       style={{ marginTop: `${topMargin}px` }}
     >
       <p className="text-lg md:text-2xl mb-2 text-black flex">
-        PharmaTrade {`>`} Cart
+        PharmEtrade {`>`} Cart
       </p>
       <div className="w-full bg-white rounded-lg shadow-lg p-5">
         <h2 className="text-xl md:text-2xl mb-4">Cart</h2>

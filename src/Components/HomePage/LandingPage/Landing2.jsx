@@ -171,7 +171,7 @@ import offer4 from "../../../assets/IMG_4.jpg";
 // import offer7 from "../../../assets/IMG_7.jpg";
 // import offer8 from "../../../assets/IMG_8.jpg";
 
-function Landing2() {
+function Landing2({wishList,addCart}) {
   const navigate = useNavigate();
   const slides = [slider1, slider2, slider3, slider4];
   const texts = [
@@ -223,7 +223,7 @@ function Landing2() {
         </div>
       </div>
       <div className="flex flex-col items-center">
-        <p className="text-text-blue text-[45px] xl:text-4xl font-semibold mt-10">
+        <p className="text-text-blue text-[45px] xl:text-4xl font-semibold mt-10 ">
           Grow your business with Pharm<span className="text-green-500">E</span>trade
         </p>
         <br></br>
@@ -270,7 +270,7 @@ function Landing2() {
         <OfferSlider images={screens} Title={"Special Offers"} />
       </div>
       <div>
-        <ProductSlider Title={"Recent Sold Products"} data={newProducts} />
+        <ProductSlider addCart={addCart} wishList={wishList} Title={"Recent Sold Products"} data={newProducts} />
       </div>
       <div className="flex justify-center">
         <img
