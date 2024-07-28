@@ -1,11 +1,58 @@
+// import React from "react";
+// import background_image from "../../../assets/homepharma.png";
+// import whypharma from "../../../assets/WhyPharma.png";
+
+// const WhyPharma = ({ topMargin }) => {
+//   return (
+//     <div
+//       className=" relative w-full flex justify-center items-center"
+//       style={{
+//         marginTop: `${topMargin}px`,
+//       }}
+//     >
+//       <div
+//         className={`flex w-full z-[-1] top-0  absolute justify-center items-center`}
+//       >
+//         <img className="w-full" src={background_image} />
+//       </div>
+
+//       <div className="w-[80%] h-full flex">
+//         <div className="w-[65%] h-full flex justify-center mt-6 ">
+//           <img src={whypharma} className="h-[430px] " />
+//         </div>
+//         <div className="w-[35%] h-full flex flex-col -mt-5 justify-center">
+//           <h2 className="text-3xl text-blue-900 font-semibold">
+//             Why PharmEtrade
+//           </h2>
+//           <p className="my-2">
+//             Pharmetrade revolutionizes the pharmaceutical marketplace with an
+//             all-in-one platform for seamless buyer and seller interactions.
+//             Users can list products, place bids, and communicate directly with
+//             sellers, ensuring a streamlined and secure transaction process.
+//           </p>
+//           <p>
+//             As the go-to destination for pharmaceutical trading, Pharmetrade
+//             offers a comprehensive solution for buying, selling, and bidding on
+//             products. Join us today and experience the future of pharmaceutical
+//             commerce.
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default WhyPharma;
+
+
 import React from "react";
 import background_image from "../../../assets/homepharma.png";
 import whypharma from "../../../assets/WhyPharma.png";
 
-const WhyPharma = ({ topMargin }) => {
+const AboutUs = ({ topMargin }) => {
   return (
     <div
-      className=" relative w-full flex justify-center items-center"
+      className=" w-full relative flex justify-center items-center"
       style={{
         marginTop: `${topMargin}px`,
       }}
@@ -16,30 +63,30 @@ const WhyPharma = ({ topMargin }) => {
         <img className="w-full" src={background_image} />
       </div>
 
-      <div className="w-[80%] h-full flex">
-        <div className="w-[65%] h-full flex justify-center mt-6 ">
-          <img src={whypharma} className="h-[430px] " />
+      <div className="w-full h-screen flex justify-center items-center">
+        <div className="w-[54%] h-full  flex justify-end  ">
+          <img src={whypharma} className="w-[450px] object-contain " />
         </div>
-        <div className="w-[35%] h-full flex flex-col -mt-5 justify-center">
-          <h2 className="text-3xl text-blue-900 font-semibold">
-            Why PharmEtrade
-          </h2>
-          <p className="my-2">
+        <div className="w-[42%] justify-center  min-h-full flex flex-col  ">
+          <div className="w-full pr-20 flex flex-col  gap-5 h-[350px]">
+            <h2 className="text-3xl text-blue-900 font-semibold">Why PharmEtrade</h2>
+            <p className="w-full">
             Pharmetrade revolutionizes the pharmaceutical marketplace with an
-            all-in-one platform for seamless buyer and seller interactions.
-            Users can list products, place bids, and communicate directly with
-            sellers, ensuring a streamlined and secure transaction process.
-          </p>
-          <p>
+           all-in-one platform for seamless buyer and seller interactions.
+           Users can list products, place bids, and communicate directly with
+           sellers, ensuring a streamlined and secure transaction process.
+            </p>
+            <p>
             As the go-to destination for pharmaceutical trading, Pharmetrade
             offers a comprehensive solution for buying, selling, and bidding on
             products. Join us today and experience the future of pharmaceutical
             commerce.
-          </p>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default WhyPharma;
+export default AboutUs;

@@ -304,9 +304,9 @@ const Signup = () => {
 
       if (
         !formData.DEA_Expiration_Date &&
-        userType !== "General Merchandise Seller" &&
-        userType !== "Vendor" &&
-        userType !== "Normal Customer"
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       ) {
         newErrors.DEA_Expiration_Date = "DEA Expiration Date is required";
       } else if (!validateDate(formData.DEA_Expiration_Date)) {
@@ -340,9 +340,9 @@ const Signup = () => {
 
       if (
         !formData.Pharmacy_Expiration_Date &&
-        userType !== "General Merchandise Seller" &&
-        userType !== "Vendor" &&
-        userType !== "Normal Customer"
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       ) {
         newErrors.Pharmacy_Expiration_Date =
           "Pharmacy Expiration Date is required";
