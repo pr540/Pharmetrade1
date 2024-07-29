@@ -53,7 +53,7 @@ const Contactus = ({ topMargin }) => {
         marginTop: `${topMargin}px`,
       }}
     >
-      <img
+      {/* <img
         src={background_image}
         alt="Background"
         style={{
@@ -65,11 +65,11 @@ const Contactus = ({ topMargin }) => {
           left: 0,
           zIndex: -1,
         }}
-      />
+      /> */}
 
-      <div className="w-full h-full flex mb-8">
+      <div className="w-full h-full flex items-center mb-8">
         <div className="w-[30%] h-full flex flex-col p-6  bg-opacity-75 rounded-lg shadow-lg">
-          <h2 className="text-3xl text-blue-900 font-semibold mb-4">
+          <h2 className="text-3xl text-blue-900 font-semibold my-4">
             Contact Us
           </h2>
           <form className="flex flex-col gap-4">
@@ -88,18 +88,20 @@ const Contactus = ({ topMargin }) => {
             </button>
           </form>
         </div>
-        <div className="w-[30%] h-full justify-center bg-gray-300">
-          <div>
-            <h2>Location</h2>
-            <p>121 Rock Sreet, 21 Avenue, New York, NY 92103-9000</p>
+        <div className="w-[30%] h-full flex flex-col justify-center items-center bg-slate-200 ">
+          <div className="w-[200px] flex flex-col justify-center items-center my-6">
+            <h2 className="text-2xl text-blue-900 font-semibold">Location</h2>
+            <p className=" text-[17px]">121 Rock Sreet, 21 Avenue, New York, NY 92103-9000</p>
           </div>
-          <div>
-            <h2>Call Us</h2>
+          <div className="flex  w-[200px] flex-col justify-center items-center my-6 ">
+            <h2 className="text-2xl text-blue-900 font-semibold">Call Us</h2>
             <p>1 (234) 567-891</p>
             <p>1 (234) 567-891</p>
-          </div><div>
-            <h2>Location</h2>
-            <p>121 Rock Sreet, 21 Avenue, New York, NY 92103-9000</p>
+          </div>
+          <div className=" flex  w-[200px] flex-col justify-center items-center my-6">
+            <h2 className="text-2xl text-blue-900 font-semibold">Email Address</h2>
+            <p>info@pharmetrade.com</p>
+            <p>info@pharmetrade.com</p>
           </div>
         </div>
 

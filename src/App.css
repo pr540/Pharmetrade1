@@ -65,24 +65,19 @@ body {
     animation: scroll-horizontal 2s linear infinite;
   }
   @keyframes backgroundChange {
-    0% {
+    0%, 100% {
       background-image: url('../src/assets/Frame 7.png');
     }
-    33% {
+    /* 50% {
       background-image: url('../src/assets/Frame 8.png');
-    }
-    66% {
+    } */
+    /* 66% {
       background-image: url('../src/assets/Frame 9.png');
     }
     100% {
       background-image: url('../src/assets/Frame 7.png');
-    }
-    /* 66% {
-      background-image: url('/images/background3.jpg');
-    }
-    100% {
-      background-image: url('/images/background1.jpg');
     } */
+    
   }
   
   .background-animation {
@@ -100,3 +95,22 @@ body {
   .getTouchs{
     background-image: url(../src/assets/h1-slider01.jpeg);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
