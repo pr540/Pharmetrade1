@@ -8,13 +8,12 @@
 // import FormControl from "@mui/material/FormControl";
 // import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
-
 // const OTPInput = ({ length, onChangeOTP }) => {
 //   const [otp, setOTP] = useState(new Array(length).fill(""));
 //   const inputRefs = useRef([]);
 
 //   const handleChange = (element, index) => {
-//     const value = element.value.replace(/[^0-9]/g, ""); 
+//     const value = element.value.replace(/[^0-9]/g, "");
 //     if (value) {
 //       const newOTP = [...otp];
 //       newOTP[index] = value;
@@ -141,7 +140,7 @@
 
 //                 </div>
 //                 <div className=" flex items-center justify-center my-4 ">
-                 
+
 //                   <TextField
 //                     label="Password"
 //                     id="outlined-size-small"
@@ -211,21 +210,25 @@
 
 // export default Signin;
 
-
 import React, { useState, useRef } from "react";
 import background_image from "../assets/homepharma.png";
 import logo from "../assets/Icons/logo2.png";
 import { Link } from "react-router-dom";
 import { TextField } from "@mui/material";
 import refresh from "../assets/reload-arrow (1).png";
-
-
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {
+ 
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 const OTPInput = ({ length, onChangeOTP }) => {
   const [otp, setOTP] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
 
   const handleChange = (element, index) => {
-    const value = element.value.replace(/[^0-9]/g, ""); 
+    const value = element.value.replace(/[^0-9]/g, "");
     if (value) {
       const newOTP = [...otp];
       newOTP[index] = value;
@@ -268,7 +271,7 @@ const OTPInput = ({ length, onChangeOTP }) => {
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [captcha, setCaptcha] = useState("52764"); // Example captcha value
+  const [captcha, setCaptcha] = useState(generateCaptcha());
   const [formData, setFormData] = useState({ captcha: "" });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -276,7 +279,9 @@ const Signin = () => {
   const handleOTPChange = (otp) => {
     console.log("Current OTP:", otp);
   };
-
+  function generateCaptcha() {
+    return Math.floor(10000 + Math.random() * 90000).toString();
+  }
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -286,7 +291,7 @@ const Signin = () => {
 
   const handleRefresh = () => {
     // Logic to refresh captcha
-    setCaptcha("5678"); // Example new captcha value
+    setCaptcha(generateCaptcha()); // Example new captcha value
   };
 
   const validate = () => {
@@ -301,8 +306,16 @@ const Signin = () => {
 
     if (!password) {
       errors.password = "Password is required";
-    } else if (password.length < 6) {
-      errors.password = "Password must be at least 6 characters long";
+    } 
+    if(!formData.captcha)
+    {
+      errors.captcha = "captcha is required";
+
+    }
+    else if(formData.captcha!= captcha)
+    {
+      errors.captcha = "captcha not matched";
+
     }
 
     setErrors(errors);
@@ -321,9 +334,12 @@ const Signin = () => {
       setErrors({});
     }
   };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen ">
       <img
         src={background_image}
         style={{
@@ -350,8 +366,8 @@ const Signin = () => {
               onSubmit={handleSubmit}
               className="w-full h-full flex flex-col justify-center items-center"
             >
-              <div className="w-[60%] h-full flex flex-col">
-                <div className="flex items-center justify-center">
+              <div className="w-[60%] justify-center items-center h-full flex flex-col">
+                <div className="flex w-[80%] items-center justify-center">
                   <TextField
                     label="Email"
                     id="outlined-size-small"
@@ -360,10 +376,12 @@ const Signin = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     error={!!errors.email}
                     size="small"
+                    className="w-full"
                   />
                 </div>
-                <div className="flex items-center justify-center my-4">
+                <div className="flex w-[80%] items-center justify-center my-4">
                   <TextField
+                    className="w-full"
                     label="Password"
                     id="outlined-size-small"
                     name="password"
@@ -371,11 +389,28 @@ const Signin = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     error={!!errors.password}
+                    helperText={
+                      password.length > 0 &&
+                      errors.password
+                    }
+                   
                     size="small"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
+                  
                 </div>
-
-                
 
                 <div className="flex justify-center items-center my-2">
                   <div className="flex border rounded-md bg-slate-200 p-2 mx-2">
@@ -397,6 +432,10 @@ const Signin = () => {
                     label="Enter Captcha"
                     variant="standard"
                     error={!!errors.captcha}
+                    helperText={
+                      formData.captcha!= captcha &&
+                      errors.captcha
+                    }
                   />
                 </div>
 
@@ -411,22 +450,15 @@ const Signin = () => {
 
                 <div className="flex justify-center mb-2">
                   <label className="text-[18px] text-blue-900">
-                    <Link to="/password">
-                      Forgot Password{" "} /
-                    </Link>
+                    <Link to="/password">Forgot Password /</Link>
                   </label>
                   <label className="text-[18px] text-blue-900">
-                    <Link to="/changepassword">
-                      Change Password{" "}
-                    </Link>
+                    <Link to="/changepassword">Change Password </Link>
                   </label>
                 </div>
                 <div className="flex justify-center mb-8">
                   <label className="text-[18px] underline hover:text-red-500">
-                    <Link to="/signup">
-                      {" "}
-                      Create Account/ Signup
-                    </Link>
+                    <Link to="/signup"> Create Account/ Signup</Link>
                   </label>
                 </div>
               </div>

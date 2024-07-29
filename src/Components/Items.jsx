@@ -123,7 +123,7 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
 
   return (
     <div
-      className=" bg-white  flex flex-col justify-center items-center w-full h-full mt-8 font-sans"
+      className="   flex flex-col justify-center items-center w-full h-full mt-8 font-sans"
       style={{
         marginTop: `${topMargin}px`,
       }}
@@ -475,7 +475,7 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
         )}
         {show == 5 && (
           <div>
-            <h2 className="text-3xl font-bold text-blue-900">
+            <h2 className="text-3xl  font-bold text-blue-900">
               SIMILAR PRODUCTS
             </h2>
           </div>

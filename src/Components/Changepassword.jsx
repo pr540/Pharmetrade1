@@ -42,7 +42,6 @@ const Confirmpassword = () => {
     return Object.keys(errors).length === 0;
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validate()) {
@@ -87,8 +86,8 @@ const Confirmpassword = () => {
                 <h2 className="font-semibold text-2xl text-blue-900 flex justify-center ">
                   Change Password
                 </h2>
-              {/* <div className="w-[70%] h-full flex flex-col "> */}
-                <div className=" flex items-center justify-center  my-2">
+                {/* <div className="w-[70%] h-full flex flex-col "> */}
+                <div className=" flex mt-6 items-center justify-center  my-2">
                   <TextField
                     label="Username"
                     value={username}
@@ -139,6 +138,13 @@ const Confirmpassword = () => {
                   >
                     Submit
                   </button>
+                </div>
+                <div className="text-[18px] my-4 gap-1 flex justify-center">
+                  Need help?{" "}
+                  <span className="text-blue-900 underline">
+                    Contact support
+                  </span>y
+                  .
                 </div>
               </div>
               {/* </div> */}

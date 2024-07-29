@@ -94,14 +94,13 @@ const Password = () => {
                   </button>
                 </div>
 
-                <div className=" text-[18px] my-4 flex justify-center">
+                <div className=" text-[18px] my-4 gap-1 flex justify-center">
                   {" "}
                   {/* <span className="text-black">Note :</span>*  */}
                   {/* Having trouble logging in get help */}
                   Having trouble logging in?{" "}
                   <span className="text-blue-900 underline">
-                    {" "}
-                    {"  "} Get help here.
+                     Get help here.
                   </span>
                 </div>
               </div>
