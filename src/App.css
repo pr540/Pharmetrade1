@@ -68,9 +68,9 @@ body {
     0%, 100% {
       background-image: url('../src/assets/Frame 7.png');
     }
-    50% {
+    /* 50% {
       background-image: url('../src/assets/Frame 8.png');
-    }
+    } */
     /* 66% {
       background-image: url('../src/assets/Frame 9.png');
     }
