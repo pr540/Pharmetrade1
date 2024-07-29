@@ -271,6 +271,7 @@ const Signin = () => {
   const [captcha, setCaptcha] = useState("52764"); // Example captcha value
   const [formData, setFormData] = useState({ captcha: "" });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleOTPChange = (otp) => {
     console.log("Current OTP:", otp);
@@ -366,6 +367,7 @@ const Signin = () => {
                     label="Password"
                     id="outlined-size-small"
                     name="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     error={!!errors.password}

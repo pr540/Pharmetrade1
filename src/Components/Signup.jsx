@@ -186,6 +186,8 @@ const Signup = () => {
     }
   };
 
+  
+
   const validateDate = (date) => {
     const selectedDate = new Date(date);
     const currentDate = new Date();
@@ -520,6 +522,7 @@ const Signup = () => {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
+  
                   error={Object.keys(PasswordErros).length > 0}
                   helperText={
                     Object.keys(PasswordErros).length > 0
@@ -608,6 +611,7 @@ const Signup = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
+                  disabled = {!formData.password}
                   error={!!errors.confirmPassword}
                   size="small"
                   InputProps={{

@@ -131,7 +131,7 @@ const ProductSection = ({ products, heading, path,addCart,wishList }) => {
                     <Star
                       key={i}
                       filled={i < rating}
-                      onClick={() => setRating(i + 1)}
+                      // onClick={() => setRating(i + 1)}
                     />
                   ))}
                   {/* <p>The rating is {rating} out of {totalStars}.</p> */}

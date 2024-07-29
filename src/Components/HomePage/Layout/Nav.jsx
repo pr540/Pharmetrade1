@@ -293,7 +293,7 @@ function Nav({ topDivRef, cartItems }) {
                   <a>
                     <img
                       src={compare}
-                      onClick={handleclick}
+                      // onClick={handleclick}
                       className="w-2 md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
                     />{" "}
                   </a>

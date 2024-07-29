@@ -123,13 +123,13 @@ import addcart from "../assets/cart1_icon.png";
 import fav from "../assets/Wishlist1_icon.png";
 import nature from "../assets/img1.png";
 import Items from "./Items";
-import next from '../assets/Next_icon.png'
+import next from "../assets/Next_icon.png";
 // import next from "../assets/Icons/Next_icon.png"
 // import previous from "../assets/Icons/Previous_icon.png"
-import previous from '../assets/Previous_icon.png'
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import search from '../assets/search-icon.png'
+import previous from "../assets/Previous_icon.png";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import search from "../assets/search-icon.png";
 import { useNavbarContext } from "./NavbarContext";
 import { useNavigate } from "react-router-dom";
 
@@ -159,7 +159,7 @@ function PRight({ topMargin, addCart, wishList }) {
   }
 
   function handleClick(index) {
-    alert('Add 1 item into wishlist');
+    alert("Add 1 item into wishlist");
     const prolist = {
       id: index,
       src: images[index],
@@ -185,61 +185,61 @@ function PRight({ topMargin, addCart, wishList }) {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
+    "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: 'auto',
+      width: "auto",
     },
   }));
 
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
+  const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'white',
-    width: '100%',
-    '& .MuiInputBase-input': {
+    color: "white",
+    width: "100%",
+    "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
-      paddingLeft:` calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
+      paddingLeft: ` calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create("width"),
+      [theme.breakpoints.up("sm")]: {
+        width: "12ch",
+        "&:focus": {
+          width: "20ch",
         },
       },
     },
   }));
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between bg-blue-900 p-4 rounded-lg">
-      <div className="text-2xl text-white"> Rx Drug</div>
-     
-      <Search>
+    <div className="w-full ">
+      <div className="flex justify-between bg-blue-900 p-2 rounded-lg">
+        <div className="text-2xl text-white"> Rx Drug</div>
+
+        <Search>
           <SearchIconWrapper>
             <img src={search} className="w-4" />
             {/* <SearchIcon /> */}
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
+            inputProps={{ "aria-label": "search" }}
           />
         </Search>
       </div>
@@ -277,8 +277,12 @@ function PRight({ topMargin, addCart, wishList }) {
                 />
               </li>
               <li>
-                <img src={fav} alt="Favorite" className="h-8 p-[6px]"
-                onClick={()=> handleClick(index + indexOfFirstItem)} />
+                <img
+                  src={fav}
+                  alt="Favorite"
+                  className="h-8 p-[6px]"
+                  onClick={() => handleClick(index + indexOfFirstItem)}
+                />
               </li>
               <li>
                 <img src={other} alt="Other" className="h-8 p-[6px]" />
@@ -295,7 +299,7 @@ function PRight({ topMargin, addCart, wishList }) {
           disabled={currentPage === 1}
           className="mx-2 px-4 border p-2 text-white rounded-lg"
         >
-          <img src={previous} className="w-2"/>
+          <img src={previous} className="w-2" />
         </button>
         <span className="mx-2 px-4 flex items-center  bg-white text-black rounded-lg">
           {currentPage} of {totalPages}
@@ -305,7 +309,7 @@ function PRight({ topMargin, addCart, wishList }) {
           disabled={currentPage === totalPages}
           className="mx-2 px-4 border p-2 text-white rounded-lg"
         >
-          <img src={next} className="w-2"/>
+          <img src={next} className="w-2" />
         </button>
       </div>
     </div>
