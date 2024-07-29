@@ -155,10 +155,9 @@ const Signup = () => {
   const [uploadedFile, setUploadedFile] = useState("");
   const [file1, setfile1] = useState(null);
   const [file2, setfile2] = useState(null);
-
+  console.log(formData);
   const handleInputChange = (e) => {
     const { name, value, type, files, checked } = e.target;
-    console.log("hmm");
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: null,
@@ -170,23 +169,51 @@ const Signup = () => {
       });
     } else {
       const file = files[0];
-      setFormData({
-        ...formData,
-        [name]: file,
-      });
-      setUploadedFile(URL.createObjectURL(files[0]));
-      if (name === "DEA_License_Copy") setfile1(file ? file.name : "");
-      else setfile2(file ? file.name : "");
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (name === "Pharmacy_License_Copy") {
+        setfile2(null),
+          setFormData((prev) => ({
+            ...prev,
+            [name]: "",
+          }));
+      }
+      if (name === "DEA_License_Copy") {
+        setfile1(null),
+          setFormData((prev) => ({
+            ...prev,
+            [name]: "",
+          }));
+      }
+      if (allowedTypes.includes(file.type)) {
+        setFormData({
+          ...formData,
+          [name]: file,
+        });
+        setUploadedFile(URL.createObjectURL(files[0]));
+        if (name === "DEA_License_Copy") setfile1(file ? file.name : "");
+        else setfile2(file ? file.name : "");
+      } else {
+        if (name === "Pharmacy_License_Copy") {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: "upload only jpg, jpeg, or png file",
+          }));
+        }
+        if (name === "DEA_License_Copy") {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: "upload only jpg, jpeg, or png file",
+          }));
+        }
+      }
     }
-
+    console.log(formData);
     if (name === "password") validatePassword(value);
 
     if (activeStep === 1) {
       validateStep(activeStep);
     }
   };
-
-  
 
   const validateDate = (date) => {
     const selectedDate = new Date(date);
@@ -219,6 +246,7 @@ const Signup = () => {
     setPasswordErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  const [usertype, setusertype] = useState("");
 
   const validateStep = (step) => {
     let newErrors = {};
@@ -236,8 +264,13 @@ const Signup = () => {
         newErrors.Email_id = "Email_id is required";
       const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
 
-      if (!formData.Phone_number.match(regphn))
-        newErrors.Phone_number = "Phone_number is required";
+      if (!formData.Phone_number.match(regphn)) {
+        console.log(formData.Phone_number.length, "hmmmm");
+        if (formData.Phone_number.length === 0) {
+          newErrors.Phone_number = "Phone Number is required";
+        } else if (formData.Phone_number.length !== 12)
+          newErrors.Phone_number = "Phone Number must be 10 digits";
+      }
 
       if (!formData.confirmPassword.length)
         newErrors.confirmPassword = "Confirm password is required.";
@@ -299,32 +332,25 @@ const Signup = () => {
       )
         newErrors.DEA = "DEA is required";
 
-    
-
       if (
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
         userType != "Normal Customer"
       ) {
         if (!formData.DEA_Expiration_Date) {
-          newErrors.DEA_Expiration_Date =
-            "DEA Expiration Date is required";
+          newErrors.DEA_Expiration_Date = "DEA Expiration Date is required";
         } else if (!validateDate(formData.DEA_Expiration_Date)) {
           newErrors.DEA_Expiration_Date = "Enter a valid future date";
         }
       }
 
-  
-
       if (
         !formData.DEA_License_Copy &&
-        userType != "General Merchandise Seller"
-        && userType != "Vendor" &&
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
         userType != "Normal Customer"
       )
         newErrors.DEA_License_Copy = "DEA_License_Copy is required";
-
-     
 
       if (
         userType != "General Merchandise Seller" &&
@@ -341,8 +367,9 @@ const Signup = () => {
 
       if (
         !formData.Pharmacy_License_Copy &&
-        userType != "General Merchandise Seller"
-        && userType != "Vendor" && userType != "Normal Customer"
+        userType != "General Merchandise Seller" &&
+        userType != "Vendor" &&
+        userType != "Normal Customer"
       )
         newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
 
@@ -384,11 +411,17 @@ const Signup = () => {
 
   const navigate = useNavigate();
   const [isSubmit, setisSubmit] = useState(true);
+  console.log("hh",activeStep,usertype)
 
   const handleNext = () => {
     if (activeStep === 0) validatePassword(formData.password);
     if (validateStep(activeStep)) {
       setisSubmit(true);
+      if (activeStep === 2 && userType === "Normal Customer") {
+
+        setActiveStep(4);
+        return;
+      }
       if (activeStep === 0 && validatePassword(formData.password) == false) {
         return;
       }
@@ -447,22 +480,23 @@ const Signup = () => {
     return formattedPhoneNumber;
   };
 
-  const [usertype, setusertype] = useState("");
 
   const handleusertypechange = (value) => {
+    console.log("value",value)
     setusertype(value);
     if (activeStep === 1) {
       validateStep(activeStep);
     }
   };
-  console.log(formData);
+  console.log(usertype);
+  console.log(errors);
   const getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
-          <div>
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
+          <div className="w-full">
+            <div className="flex flex-row w-full  my-4 justify-evenly">
+              <div className="w-[45%] ">
                 <TextField
                   label="First Name"
                   id="outlined-size-small"
@@ -471,10 +505,11 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.First_Name}
                   size="small"
+                  className="w-full"
                 />
               </div>
 
-              <div>
+              <div className="w-[45%]">
                 <TextField
                   label="Last Name"
                   id="outlined-size-small"
@@ -483,12 +518,13 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Last_Name}
                   size="small"
+                  className="w-full"
                 />
               </div>
             </div>
 
-            <div className="flex flex-row  my-4 justify-evenly">
-              <div>
+            <div className="flex flex-row  w-full my-4 justify-evenly">
+              <div className="w-[45%] ">
                 <TextField
                   label="Email ID/User ID"
                   id="outlined-size-small"
@@ -497,10 +533,11 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Email_id}
                   size="small"
+                  className="w-full"
                 />
               </div>
 
-              <div>
+              <div className="w-[45%] ">
                 <TextField
                   label="Phone Number"
                   id="outlined-size-small"
@@ -509,12 +546,18 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Phone_number}
                   size="small"
+                  helperText={
+                    errors?.Phone_number !== null && formData.Phone_number != 0
+                      ? errors.Phone_number
+                      : ""
+                  }
+                  className="w-full"
                 />
               </div>
             </div>
 
-            <div className="flex flex-row w-full  my-4 justify-evenly">
-              <div className="w-[220px]">
+            <div className="flex flex-row  w-full my-4 justify-evenly">
+              <div className="w-[45%] ">
                 <TextField
                   label="Password"
                   id="outlined-size-small"
@@ -522,9 +565,9 @@ const Signup = () => {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
-  
                   error={Object.keys(PasswordErros).length > 0}
                   helperText={
+                    formData.password.length > 0 &&
                     Object.keys(PasswordErros).length > 0
                       ? Object.values(PasswordErros).join(", ")
                       : ""
@@ -546,64 +589,11 @@ const Signup = () => {
                       </InputAdornment>
                     ),
                   }}
+                  className="w-full"
                 />
-                {/* <div style={{ color: "black" }}>
-                  {PasswordErros?.passwordLength && (
-                    <div
-                      className={`${
-                        isSubmit == false ? "text-red-500" : "text-black"
-                      }`}
-                    >
-                      * {PasswordErros.passwordLength}
-                    </div>
-                  )}
-                  {PasswordErros?.passwordUppercase && (
-                    <div
-                      className={`${
-                        isSubmit == false ? "text-red-500" : "text-black"
-                      }`}
-                    >
-                      * {PasswordErros.passwordUppercase}
-                    </div>
-                  )}
-                  {PasswordErros?.passwordSpecialChar && (
-                    <div
-                      className={`${
-                        isSubmit == false ? "text-red-500" : "text-black"
-                      }`}
-                    >
-                      * {PasswordErros?.passwordSpecialChar}
-                    </div>
-                  )}
-                </div> */}
               </div>
-              {/* <div className="w-[220px]">
-                <TextField
-                  label="Password"
-                  id="outlined-size-small"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  error={!!errors.password}
-                  size="small"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div> */}
 
-              <div className="w-[220px]">
+              <div className="w-[45%] ">
                 <TextField
                   label="Confirm Password"
                   id="outlined-size-small"
@@ -611,9 +601,17 @@ const Signup = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  disabled = {!formData.password}
+                  // disabled={!formData.password}
                   error={!!errors.confirmPassword}
                   size="small"
+                  helperText={
+                    !formData.confirmPassword
+                      ? ""
+                      : errors.confirmPassword
+                      ? errors.confirmPassword
+                      : ""
+                  }
+                  className="w-full"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -793,7 +791,7 @@ const Signup = () => {
                 userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
-              }`}
+              } w-full`}
             >
               <TextField
                 label="Shop Name"
@@ -803,6 +801,7 @@ const Signup = () => {
                 onChange={handleInputChange}
                 error={!!errors.shopName}
                 size="small"
+                className="w-[92%]"
               />
             </div>
 
@@ -818,6 +817,7 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.legalBusinessName}
                   size="small"
+                  className="w-[92%]"
                 />
               </div>
             </div>
@@ -828,7 +828,7 @@ const Signup = () => {
                 userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
-              }`}
+              } `}
             >
               <TextField
                 label="DBA"
@@ -838,6 +838,7 @@ const Signup = () => {
                 onChange={handleInputChange}
                 error={!!errors.dbaName}
                 size="small"
+                className="w-[92%]"
               />
             </div>
 
@@ -850,6 +851,7 @@ const Signup = () => {
                 onChange={handleInputChange}
                 error={!!errors.Address1}
                 size="small"
+                className="w-[92%]"
               />
             </div>
             <div>
@@ -861,13 +863,13 @@ const Signup = () => {
                 onChange={handleInputChange}
                 error={!!errors.city}
                 size="small"
+                className="w-[92%]"
               />
             </div>
 
-
             <div>
               <FormControl
-                sx={{ minWidth: 223 }}
+                className="w-[92%]"
                 size="small"
                 error={!!errors.State}
               >
@@ -911,6 +913,7 @@ const Signup = () => {
                 onChange={handleInputChange}
                 error={!!errors.zip}
                 size="small"
+                className="w-[92%]"
               />
             </div>
 
@@ -929,6 +932,7 @@ const Signup = () => {
                   error={!!errors.BusinessPhone}
                   placeholder="Enter your business phone"
                   size="small"
+                  className="w-[92%]"
                 />
               </div>
             </div>
@@ -945,6 +949,7 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Business_Fax}
                   size="small"
+                  className="w-[92%]"
                 />
               </div>
             </div>
@@ -961,6 +966,7 @@ const Signup = () => {
                   onChange={handleInputChange}
                   error={!!errors.Business_Email}
                   size="small"
+                  className="w-[92%]"
                 />
               </div>
             </div>
@@ -969,7 +975,7 @@ const Signup = () => {
       case 3:
         return (
           <div className="my-2 w-full flex flex-col justify-center items-center ">
-            <div className="flex flex-row w-[500px]   my-3 justify-between">
+            <div className="flex flex-row w-full   my-3 justify-between">
               <div className="w-[45%]">
                 <TextField
                   label="DEA"
@@ -980,6 +986,7 @@ const Signup = () => {
                   error={!!errors.DEA}
                   size="small"
                   inputProps={{ tabIndex: "1" }}
+                  className="w-full"
                 />
               </div>
 
@@ -994,12 +1001,11 @@ const Signup = () => {
                   size="small"
                   inputProps={{ tabIndex: "4" }}
                   tabIndex={4}
+                  className="w-full"
                 />
               </div>
             </div>
-            <div className="flex flex-row w-[500px] justify-between ">
-             
-
+            <div className="flex flex-row w-full justify-between ">
               <div className="w-[45%] flex flex-col">
                 <span className="text-xs">DEA Expiration Date</span>
                 <TextField
@@ -1010,10 +1016,14 @@ const Signup = () => {
                   onChange={handleInputChange}
                   id="outlined-size-small"
                   error={!!errors.DEA_Expiration_Date}
-                  helperText={errors.DEA_Expiration_Date}
                   size="small"
                   inputProps={{ tabIndex: "2" }}
                   tabIndex={2}
+                  className="w-full"
+                  helperText={
+                    formData.DEA_Expiration_Date!=null ?
+                    errors.DEA_Expiration_Date : ""
+                  }
                 />
               </div>
 
@@ -1026,16 +1036,21 @@ const Signup = () => {
                   id="outlined-size-small"
                   value={formData.Pharmacy_Expiration_Date}
                   error={!!errors.Pharmacy_Expiration_Date}
-                  helperText={errors.Pharmacy_Expiration_Date}
                   onChange={handleInputChange}
                   size="small"
                   inputProps={{ tabIndex: "5" }}
                   tabIndex={5}
+                  className="w-full"
+                  helperText={
+                    formData.Pharmacy_Expiration_Date!=null ?
+                    errors.Pharmacy_Expiration_Date : ""
+                  }
+
                 />
               </div>
             </div>
 
-            <div className="flex flex-row w-[500px] justify-between ">
+            <div className="flex flex-row w-full justify-between ">
               <div className=" w-[45%]">
                 <span className="text-xs">DEA License Copy(jpg,png,jpeg) </span>
                 <TextField
@@ -1048,6 +1063,8 @@ const Signup = () => {
                   size="small"
                   inputProps={{ tabIndex: "3" }}
                   tabIndex={3}
+                  className="w-full"
+                  helperText={errors?.DEA_License_Copy}
                 />
                 {file1 && (
                   <div className={`${file1.length > 0 ? "" : "hidden"}`}>
@@ -1070,6 +1087,8 @@ const Signup = () => {
                   size="small"
                   inputProps={{ tabIndex: "6" }}
                   tabIndex={6}
+                  className="w-full"
+                  helperText={errors?.Pharmacy_License_Copy}
                 />
                 {file2 && (
                   <div className={`${file2.length > 0 ? "" : "hidden"}`}>
@@ -1079,7 +1098,7 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row w-[500px]  my-3 justify-between">
+            <div className="flex flex-row w-full  my-3 justify-between">
               <div className="w-[45%]">
                 <TextField
                   label="NPI"
@@ -1091,6 +1110,7 @@ const Signup = () => {
                   size="small"
                   inputProps={{ tabIndex: "7" }}
                   tabIndex={7}
+                  className="w-full"
                 />
               </div>
 
@@ -1105,13 +1125,14 @@ const Signup = () => {
                   size="small"
                   inputProps={{ tabIndex: "8" }}
                   tabIndex={8}
+                  className="w-full"
 
                   // style={{ width: "101%" }}
                 />
               </div>
             </div>
 
-            <div className="flex w-[500px] flex-row my-2 justify-start ">
+            <div className="flex w-full flex-row my-2 justify-start ">
               <div className="w-[45%]">
                 <TextField
                   label="Federal Tax ID"
@@ -1123,10 +1144,11 @@ const Signup = () => {
                   size="small"
                   inputProps={{ tabIndex: "9" }}
                   tabIndex={9}
+                  className="w-full"
                 />
               </div>
             </div>
-            <div className=" w-[500px]">
+            <div className=" w-full">
               <div>
                 <input
                   type="checkbox"
