@@ -3,12 +3,14 @@ import React, { useRef, useState } from "react";
 import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
 import addcart from "../../../assets/cart1_icon.png";
-import fav from "../../../assets/Wishlist1_icon.png";
+import emptyHeart from "../../../assets/Wishlist1_icon.png";
+import filledHeart from "../../../assets/wishlist2_icon.png";
 import comp from "../../../assets/Compare2_icon.png";
 import nature from "../../../assets/img1.png";
 
-const ProductSlider = ({ data, Title , addCart, wishList}) => {
+const ProductSlider = ({ data, Title, addCart, wishList }) => {
   const [rating, setRating] = useState(0);
+  const [favoriteItems, setFavoriteItems] = useState({});
   const totalStars = 5;
   const images = Array(115).fill(nature);
 
@@ -28,7 +30,7 @@ const ProductSlider = ({ data, Title , addCart, wishList}) => {
     });
   };
   function handleCart(index) {
-    console.log("hmm")
+    console.log("hmm");
     const prolist = {
       id: index,
       src: images[index],
@@ -41,7 +43,11 @@ const ProductSlider = ({ data, Title , addCart, wishList}) => {
   }
 
   function handleClick(index) {
-    alert("Add 1 item into wishlist");
+    setFavoriteItems(prevState => ({
+      ...prevState,
+      [index]: !prevState[index]
+    }));
+    // alert("Add 1 item into wishlist");
     const prolist = {
       id: index,
       src: images[index],
@@ -53,13 +59,16 @@ const ProductSlider = ({ data, Title , addCart, wishList}) => {
     wishList(prolist);
   }
   const Star = ({ filled, onClick }) => (
-    <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px" }}>
+    <span
+      onClick={onClick}
+      style={{ cursor: "pointer", fontSize: "25px", color: "orange" }}
+    >
       {filled ? "★" : "☆"}
     </span>
   );
   return (
-    <div className="flex mt-12 flex-col justify-center pb-4 gap-6 ">
-      <div className="flex justify-between ml-4 text-fonts font-semibold text-3xl">
+    <div className="flex mt-6 flex-col justify-center pb-4 gap-6  ">
+      <div className="flex justify-between ml-4  font-semibold text-3xl">
         <p>{Title}</p>
 
         <div className="flex justify-end mr-14 gap-2">
@@ -77,7 +86,7 @@ const ProductSlider = ({ data, Title , addCart, wishList}) => {
           </button>
         </div>
       </div>
-      <div className="w-full px-4 flex justify-center ">
+      <div className="w-full p-4 flex justify-center bg-white ">
         <div
           ref={carouselContainer}
           className=" flex w-full gap-6 overflow-x-scroll snap-x snap-mandatory"
@@ -85,18 +94,24 @@ const ProductSlider = ({ data, Title , addCart, wishList}) => {
           {data.map((item, index) => (
             <div
               key={index}
-              className="snap-center border rounded-lg bg-gray-200 shrink-0"
+              className="snap-center border rounded-sm bg-white shrink-0"
             >
-              <div className="relative rounded-t-lg   bg-white">
-                <img onClick={()=>handleClick(index)} src={fav} className="absolute h-6 right-1 p-1" />
-                <img src={comp} className="absolute h-6 bottom-0 right-1 p-1" />
+              <div className="relative  bg-slate-100 m-2">
+                {/* <img onClick={()=>handleClick(index)} src={fav} className="absolute h-6 right-1 p-1" /> */}
+                <img
+                  onClick={() => handleClick(index)}
+                  src={favoriteItems[index] ? filledHeart : emptyHeart}
+                  className="absolute h-7 right-1 p-1 cursor-pointer"
+                  alt="Favorite Icon"
+                />
+                <img src={comp} className="absolute h-7 bottom-0 right-1 p-1" />
 
                 <img
                   src={item.img}
                   className="h-48 w-48  object-contain rounded-lg "
                 />
               </div>
-              <div className=" p-2 rounded-b-lg">
+              <div className=" p-2 ">
                 <div className="flex justify-between  flex-col font-medium">
                   <h2 className="text-black font-bold">{item.name}</h2>
                   <div className="flex  justify-between items-center">
@@ -106,7 +121,7 @@ const ProductSlider = ({ data, Title , addCart, wishList}) => {
                       </h3>
                       <h3 className=" text-gray-600">{"$50.00"}</h3>
                     </div>
-                    <div onClick={()=>handleCart(index)}>
+                    <div onClick={() => handleCart(index)}>
                       <img src={addcart} className="h-7 p-1 " />
                     </div>
                   </div>

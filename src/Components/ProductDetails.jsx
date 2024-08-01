@@ -13,17 +13,6 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const images = Array(4).fill(nature);
 
-  // const handleClick = (event) => {
-  //   event.stopPropagation();
-  //   console.log("Clicked to open Items");
-  //   setPop(true);
-  // };
-
-  // const handleClose = (event) => {
-  //   event.stopPropagation();
-  //   console.log("Clicked to close Items");
-  //   setPop(false);
-  // };
   return (
     <div className="w-full h-full flex justify-center mb-20">
       <div className="h-full w-[90%] ">
@@ -85,62 +74,6 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-
-        {/* <h2 className="text-2xl font-bold mt-10 text-blue-900">
-          RATINGS & REVIEWS
-        </h2>
-
-        <h2 className="text-2xl font-bold mt-10 text-blue-900">ALTERNATIVES</h2> */}
-
-        {/* <div>
-          <div className="w-full">
-            
-            <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-12">
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className="w-full max-w-lg border p-2 rounded-xl"
-                  onClick={handleClick}>
-                  <Link to="/detailspage">
-                    <div className="flex justify-center">
-                      <img
-                        src={img}
-                        alt={`nature-${index}`}
-                        className="h-48 w-36 pl-3 bg-foots rounded-lg"
-                      />
-                    </div>
-                  </Link>
-                  <div className="w-full py-2">
-                    <h2 className="text-fonts">SKU 6545555</h2>
-                    <h1 className="text-fonts">$50.99</h1>
-                  </div>
-                  <div className="flex flex-row items-center justify-between w-full px-1">
-                    <div className="text-foot text-xs">UPN member price:</div>
-                    <div className="text-lg font-semibold">$45.00</div>
-                  </div>
-                  <ul className="flex flex-row justify-around gap-5 py-4">
-                    <li>
-                      <img src={addcart} alt="Add to cart" className="size-8" />
-                    </li>
-                    <li>
-                      <img src={fav} alt="Favorite" className="size-8" />
-                    </li>
-                    <li>
-                      <img src={other} alt="Other" className="size-8" />
-                    </li>
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
-
-        {/* <h2 className="text-2xl font-bold mt-10 text-blue-900">
-          CUSTOMERS ALSO BOUGHT
-        </h2> */}
-        {/* <h2 className="text-2xl font-bold mt-10 text-blue-900">
-          SIMILAR PRODUCTS
-        </h2> */}
       </div>
     </div>
   );

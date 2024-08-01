@@ -10,7 +10,7 @@ import Landing2 from "./Landing2";
 import PLefts from "../../PLefts";
 function Landing({ topMargin, wishList, addCart }) {
   return (
-    <div className=" w-full">
+    <div className=" w-full font-sans">
       <div className=" w-full">
         <div
           className=" h-fit  background-animation"
@@ -53,7 +53,7 @@ function Landing({ topMargin, wishList, addCart }) {
             </p>
           </div>
         </div>
-        <div className="w-full bg-slate-100 px-16">
+        <div className="w-full bg-slate-200 px-6">
           <Landing2  addCart={addCart} wishList={wishList} />
           <Sliders  addCart={addCart} wishList={wishList} />
         </div>

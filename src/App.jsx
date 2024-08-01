@@ -121,7 +121,7 @@ function App() {
           />
           <Route
             path="/products"
-            element={<Products addCart={addCart} wishList={wishList} />}
+            element={<Products addCart={addCart} wishList={wishList} topMargin={topMargin} />}
           />
           <Route
             path="/checkout"
@@ -133,7 +133,7 @@ function App() {
           <Route path="/" element={<Landing addCart={addCart} wishList={wishList} topMargin={topMargin} />} />
           <Route
             path="/detailspage/:id"
-            element={<Items addCart={addCart} />}
+            element={<Items addCart={addCart} topMargin={topMargin} />}
           />
           <Route
             path="/orderhistory"

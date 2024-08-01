@@ -28,18 +28,12 @@ import aproduct from "../assets/aboutproduct_icon.png"
 import wishlist from "../assets/Wishllist_icon.png"
 
 
-// const cartItems = [
-//   { id: 1, name: "Item 1", quantity: 2 },
-//   { id: 2, name: "Item 2", quantity: 1 },
-//   { id: 3, name: "Item 3", quantity: 3 },
-// ];
 
 function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
   const [count, setCount] = useState(0);
   const [selectedDiv, setSelectedDiv] = useState("div1");
   const [img, setimg] = useState(nature);
   const [show, setshow] = useState(1);
-  // const [isCartVisible, setIsCartVisible] = useState(false);
   const { id } = useParams();
   const images = Array(8).fill(nature);
 
@@ -76,16 +70,12 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
     };
     addCart(prolist);
     navigate("/cart");
-    // setIsCartVisible(!isCartVisible);
   }
 
   const components = {
     div1: (
       <div>
-        {/* <h2> Vitamin - C</h2>
-        <h2> Syrup</h2>
-        <h2> 1000Mg</h2>
-        <h2> Nature</h2> */}
+       
         <button>shell</button>
       </div>
     ),
@@ -94,11 +84,6 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
         <button>marble</button>
       </div>
     ),
-    // div3: (
-    //   <div>
-    //     <h2>Review</h2>
-    //   </div>
-    // ),
   };
 
   let navigate = useNavigate();
@@ -123,14 +108,16 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
 
   return (
     <div
-      className="   flex flex-col justify-center items-center w-full h-full mt-8 font-sans"
+      className="  flex flex-col  font-sans"
       style={{
         marginTop: `${topMargin}px`,
-      }}
-    >
-      <div className=" rounded-lg flex gap-20 mt-40 justify-around bg-white h-full w-full">
+      }}>
+    
+      <div className="  flex gap-20  justify-around h-full w-full"
+       
+          >
         <div className="w-[40%] h-full">
-          <div className="flex flex-col ml-16 -mt-10">
+          <div className="flex flex-col ml-16 ">
             <div className="bg-gray-200 border rounded-lg w-68 h-[350px] flex justify-center items-center">
               <img src={img} className=" object-contain h-72 " />
             </div>
@@ -482,7 +469,7 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
         )}
       </div>
       <ScrollToTop/>
-    </div>
+     </div>
   );
 }
 

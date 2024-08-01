@@ -32,11 +32,14 @@ import { Link } from "react-router-dom";
 import addcart from "../../../assets/cart1_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
 import nature from "../../../assets/img1.png";
+import emptyHeart from "../../../assets/Wishlist1_icon.png";
+import filledHeart from "../../../assets/wishlist2_icon.png";
 
 import other from "../../../assets/compare1_Icon.png";
 const ProductSection = ({ products, heading, path,addCart,wishList }) => {
 
   const [rating, setRating] = useState(0);
+  const [favoriteItems, setFavoriteItems] = useState({});
   const totalStars = 5;
   const images = Array(115).fill(nature);
   function handleCart(index) {
@@ -65,7 +68,7 @@ const ProductSection = ({ products, heading, path,addCart,wishList }) => {
     wishList(prolist);
   }
   const Star = ({ filled, onClick }) => (
-    <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px" }}>
+    <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px", color:"orange" }}>
       {filled ? "★" : "☆"}
     </span>
   );
@@ -86,8 +89,14 @@ const ProductSection = ({ products, heading, path,addCart,wishList }) => {
               />
             </div> */}
             <div className="relative rounded-t-lg   bg-white">
-              <img src={fav} onClick={()=>handleClick(index)} className="absolute h-6 right-0 p-1" />
+              {/* <img src={fav} onClick={()=>handleClick(index)} className="absolute h-6 right-0 p-1" /> */}
 
+              <img
+                  onClick={() => handleClick(index)}
+                  src={favoriteItems[index] ? filledHeart : emptyHeart}
+                  className="absolute h-7 right-1 p-1 cursor-pointer"
+                  alt="Favorite Icon"
+                />
               <img
                 src={item.img}
                 className="h-48 w-48  object-contain rounded-lg "

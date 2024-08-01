@@ -205,8 +205,8 @@ function Landing2({wishList,addCart}) {
 
   return (
     <div className="pt-6 w-full">
-      <PLefts />
-      <div className="w-full">
+      {/* <PLefts /> */}
+      <div className="w-full ">
         <div className="flex justify-around gap-6">
           {slides.map((item, key) => (
             <div
@@ -222,12 +222,21 @@ function Landing2({wishList,addCart}) {
           ))}
         </div>
       </div>
-      <div className="flex flex-col items-center">
-        <p className="text-text-blue text-[45px] xl:text-4xl font-semibold mt-10 ">
+
+
+      <div className="mt-6">
+        <OfferSlider images={screens} Title={"Special Offers"} />
+      </div>
+      <div>
+        <ProductSlider addCart={addCart} wishList={wishList} Title={"Recent Sold Products"} data={newProducts} />
+      </div>
+
+      <div className="flex flex-col items-center ">
+        <p className=" text-[45px] xl:text-4xl font-semibold mt-10 ">
           Grow your business with Pharm<span className="text-green-500">E</span>trade
         </p>
         <br></br>
-        <p className="text-xl font-light xl:text-xl">
+        <p className="text-xl font-light text-gray-900 xl:text-xl">
           We understand your needs. We care about your business.
         </p>
         <br></br>
@@ -244,12 +253,12 @@ function Landing2({wishList,addCart}) {
       <div>
         <ProductSlider Title={"Recent Sold Products"} data={newProducts} />
       </div> */}
-      <div className="flex items-center justify-evenly">
+      <div className="flex items-center justify-evenly ">
         <div
           className="bg-yellow-50 p-4 rounded-2xl transition duration-300"
           style={{ height: "fit-content" }}
         >
-          <ul className="space-y-2 lg:w-100% xl:w-auto xl:pr-10 md:pb-6 md:text-lg xl:text-2xl xl:mt-6 font-light pl-4">
+          <ul className="space-y-2 lg:w-100% font-sans  xl:w-auto xl:pr-10 md:pb-6 md:text-lg xl:text-2xl xl:mt-6 font-medium pl-4">
             {texts.map((items, key) => (
               <li
                 key={key}
@@ -266,12 +275,7 @@ function Landing2({wishList,addCart}) {
         </div>
       </div>
 
-      <div>
-        <OfferSlider images={screens} Title={"Special Offers"} />
-      </div>
-      <div>
-        <ProductSlider addCart={addCart} wishList={wishList} Title={"Recent Sold Products"} data={newProducts} />
-      </div>
+     
       <div className="flex justify-center">
         <img
           src={allproduct}

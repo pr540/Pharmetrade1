@@ -3,15 +3,19 @@ import React from "react";
 // import Logo from "../assets/Icons/logo.png";
 import Logo from "../../../assets/logo_04.png";
 import Search from "../../../assets/search.png";
-import Buy from "../../../assets/Buy.png";
 import cart from "../../../assets/CartNav_icon.png";
-import bid from "../../../assets/Bid.png";
 // import like from "../assets/Icons/Favorate.png";
 import like from "../../../assets/wishlistnav_icon.png";
 import compare from "../../../assets/CompareNav_icon.png";
 import note from "../../../assets/Icons/Compare.png";
-import sale from "../../../assets/Sell.png";
-import hand from "../../../assets/Join.png";
+// import Buy from "../../../assets/Buy.png";
+// import sale from "../../../assets/Sell.png";
+// import join from "../../../assets/Join.png";
+// import bid from "../../../assets/Bid.png";
+import Buy from "../../../assets/Buy1.png"
+import join from "../../../assets/Join1.png"
+import sell from "../../../assets/Sell1.png"
+import bid from "../../../assets/Bid1.png"
 import BackgroundImage from "../../../assets/BackgroundImage.png";
 import { Link, useNavigate } from "react-router-dom";
 import menu from "../../../assets/menu.png";
@@ -19,10 +23,10 @@ import { useState, useEffect, useRef } from "react";
 import add from "../../../assets/add.png";
 // import linkedin from "../assets/linkedin.png";
 
-import linkedin from "../../../assets/Icons/linkedin_icon.png";
-import facebook from "../../../assets/Icons/facebook_icon.png";
-import insta from "../../../assets/Icons/instagram_icon.png";
-import twitter from "../../../assets/Icons/twitter_icon.png";
+import linkedin from "../../../assets/linkedin_icon.png";
+import facebook from "../../../assets/facebook_icon.png";
+import insta from "../../../assets/instagram_icon.png";
+import twitter from "../../../assets/twitter_icon.png";
 // import facebook from "../assets/facebook.png";
 import { FaFacebook, FaInstagramSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
@@ -43,14 +47,44 @@ import Pets from "../../All Category/Pets";
 import SportsNutrition from "../../All Category/SportsNutrition";
 import Suppliments from "../../All Category/Suppliments";
 import WhyPharma from "../NavLinks/WhyPharma";
+import search from "../../../assets/search-icon.png";
 
 function Nav({ topDivRef, cartItems }) {
-
   const [selectedIndex, setSelectedIndex] = useState();
+
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [popUps, setPopUps] = useState(<Baby />);
+  const dropdownRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleItemClick = (name) => {
+    setPopUps(name);
+  };
+
+  const handleCatMouseLeave = () => {
+    setPopUps(null);
+  };
+  
+
+
   const MenuItems = [
     "Home",
     "Products",
-    "Why PharamEtrade",
+    "Why PharmEtrade",
     "About Us",
     "Contact Us",
     "Offers",
@@ -58,13 +92,20 @@ function Nav({ topDivRef, cartItems }) {
 
   const downDivItems = [
     { label: "Buy", icon: Buy, path: "/products" },
-    { label: "Join", icon: hand, path: "/login" },
-    { label: "Sell", icon: sale, path: "/admin/addproducts/Create" },
+    { label: "Join", icon: join, path: "/login" },
+    { label: "Sell", icon: sell, path: "/admin/addproducts/Create" },
     { label: "Bid", icon: bid, path: "/bid" },
-    { label: "LinkedIn", icon: linkedin, path: "#" },
-    { label: "Facebook", icon: facebook, path: "#" },
-    { label: "Insta", icon: insta, path: "#" },
-    { label: "Twitter", icon: twitter, path: "#" },
+    // { label: "LinkedIn", icon: linkedin, path: "#" },
+    // { label: "Facebook", icon: facebook, path: "#" },
+    // { label: "Insta", icon: insta, path: "#" },
+    // { label: "Twitter", icon: twitter, path: "#" },
+  ];
+
+  const downSocialItems = [
+    { icon: linkedin, path: "#" },
+    { icon: facebook, path: "#" },
+    { icon: insta, path: "#" },
+    { icon: twitter, path: "#" },
   ];
 
   const components = [
@@ -72,7 +113,7 @@ function Nav({ topDivRef, cartItems }) {
     { name: "Bath & Body ", component: <Beauty /> },
     { name: "Cough Cold & flu", component: <HealthTopics /> },
     { name: "Digestive", component: <Home /> },
-    { name: "drug", component: <Medicines /> },
+    { name: "Drug", component: <Medicines /> },
     { name: "Eye Care", component: <PersonalCare /> },
     { name: "Ear Nose", component: <Pets /> },
     { name: "First Aid", component: <SportsNutrition /> },
@@ -90,17 +131,17 @@ function Nav({ topDivRef, cartItems }) {
     setSelectedIndex(index);
     if (MenuItems[index] === "Home") navigate("/app");
     else if (MenuItems[index] === "Products") navigate("/products");
-    else if (MenuItems[index] === "Why PharamEtrade") navigate("/whypharmetrade");
+    else if (MenuItems[index] === "Why PharmEtrade")
+      navigate("/whypharmetrade");
     else if (MenuItems[index] === "About Us") navigate("/aboutus");
     else if (MenuItems[index] === "Contact Us") navigate("/contactus");
   };
-
 
   let navigate = useNavigate();
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isCategory, setIsCategory] = useState(false);
-  const [popUps, setPopUps] = useState(<Baby />);
+  // const [popUps, setPopUps] = useState(<Baby />);
   const FormData = JSON.parse(localStorage.getItem("formData"));
 
   const handleMouseEnter = () => {
@@ -141,16 +182,16 @@ function Nav({ topDivRef, cartItems }) {
   return (
     <div
       ref={topDivRef}
-      className=" fixed w-screen pt-1  px-2 z-10 bg-white text-grey-500"
+      className=" fixed w-screen pt-1   z-10 bg-white text-grey-500"
     >
       <div className=" flex flex-col w-full justify-between ">
         <ul className=" text-3xl w-full  ">
-          <div className="flex flex-row justify-between  gap-4 md:gap-12 lg:gap-10  items-center  text-xl fontbg-white text-gray-500 ">
+          <div className="flex flex-row h-[60px] justify-between  gap-4 md:gap-12 lg:gap-10  items-center  text-xl fontbg-white text-gray-500 ">
             <div>
               <img
                 src={Logo}
                 onClick={() => navigate("/")}
-                className="w-12 md:w-20 lg:w-36 xl:w-64 h-14 ml-2 md:ml-4 lg:ml-14 lg:overflow-x-hidden xl-0"
+                className="w-12 md:w-16 lg:w-32 xl:w-60 h-12 ml-2 md:ml-2 lg:ml-12 lg:overflow-x-hidden xl-0"
               />
             </div>
             <div className="  h-full   md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6 px-4 items-center">
@@ -304,82 +345,9 @@ function Nav({ topDivRef, cartItems }) {
         </ul>
         {/* down div elemenet  */}
         <div
-          className="flex justify-evenly bg-gray-200 h-fit flex-row  md:w-screen  
-           items-center text-black border-2 border-grey-500 shadow-lg "
+          className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen  
+           items-center text-black  border-grey-500 shadow-lg "
         >
-          <div className="flex items-center  w-[40%]  lg:gap-10 ">
-            <div className="w-full relative flex items-center">
-              <a
-                className="h-8 px-3 pt-2 text-left text-[12px] text-gray-500 bg-white border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onMouseEnter={mouseUp}
-                onMouseLeave={mouseDown}
-              >
-                All Categories
-                {isCategory && (
-                  <div className="">
-                    <div
-                      className=" absolute z-10"
-                      style={{
-                        top: "30px",
-                        left: "0px",
-                      }}
-                    >
-                      <div className="bg-white px-4 py-3 rounded shadow-lg w-64">
-                        <div className="w-full justify-center items-center"></div>
-                        {components.map((items, index) => (
-                          <ul key={index}>
-                            <li className="mt-2">
-                              <a
-                                className="hover:text-black text-xl m text-blue-500"
-                                onClick={() => hanldeUp(items.name)}
-                                onMouseLeave={() => handleLeave(items.name)}
-                              >
-                                {items.name}
-                              </a>
-                              {popUps === items.name && (
-                                <div
-                                  className="absolute bg-white border border-gray-300 rounded shadow-lg"
-                                  style={{
-                                    top: "0%",
-                                    left: "100%",
-                                    width: "150px",
-                                  }} // Adjust width and position as needed
-                                >
-                                  {items.component}
-                                </div>
-                              )}
-                            </li>
-                          </ul>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </a>
-
-              <input
-                type="text"
-                placeholder="Search for products..."
-                className="flex-grow h-8 p-2 px-4 border-t border-b border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <a className="w-[40px] flex items-center justify-center h-8 p-2 bg-blue-500 text-white border border-blue-500 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <svg
-                  className="w-full h-full"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-4.35-4.35m1.85-2.15A7 7 0 1113 5a7 7 0 015 12.35z"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
           <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
             {downDivItems.map((item, index) => (
               <li
@@ -399,6 +367,79 @@ function Nav({ topDivRef, cartItems }) {
                   alt={item.label}
                 />
                 <div className="text-[15px] ml-1 ">{item.label}</div>
+              </li>
+            ))}
+          </div>
+          <div className="flex items-center  w-[40%]  lg:gap-10 ">
+            <div ref={dropdownRef} className="w-full relative flex items-center">
+              <button
+                className="h-11 px-3 font-semibold text-left text-[16px] text-gray-500 bg-white border border-gray-300 rounded-l-md "
+                onClick={handleDropdownToggle}
+              >
+                All 
+                <span>V</span>
+              </button>
+
+              {isDropdownOpen && (
+                <div
+                  className="absolute z-10"
+                  style={{ top: "30px", left: "0px" }}
+                >
+                  <div className="bg-white px-4 py-3 rounded shadow-lg w-64">
+                    {/* <div className="w-full justify-center items-center"></div> */}
+                    {components.map((items, index) => (
+                      <ul key={index}>
+                        <li className="">
+                          <a
+                            className="hover:text-black text-lg font-medium text-blue-900"
+                            onClick={() => handleItemClick(items.name)}
+                            onMouseLeave={handleCatMouseLeave}
+                          >
+                            {items.name}
+                          </a>
+                          {popUps === items.name && (
+                            <div
+                              className="absolute bg-white border border-gray-300 rounded shadow-lg"
+                              style={{
+                                top: "0%",
+                                left: "100%",
+                                width: "150px",
+                              }} // Adjust width and position as needed
+                            >
+                              {items.component}
+                            </div>
+                          )}
+                        </li>
+                      </ul>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <input
+                type="text"
+                placeholder="Search for products..."
+                className="flex-grow h-11  p-4 border-t border-b border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <a className="w-[40px] flex items-center justify-center h-11 p-2 bg-blue-500 text-white border border-blue-500 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <img src={search} />
+              </a>
+            </div>
+          </div>
+
+          <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
+            {downSocialItems.map((item, index) => (
+              <li
+                key={index}
+                onClick={() => navigate(item.path)}
+                className="flex gap-1 items-center justify-center cursor-pointer hover:text-green-400 "
+              >
+                <img
+                  src={item.icon}
+                  className="max-w-8 max-h-8"
+                  alt={item.label}
+                />
+                {/* <div className="text-[15px] ml-1 ">{item.label}</div> */}
               </li>
             ))}
           </div>

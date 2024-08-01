@@ -1,13 +1,23 @@
-import React from "react";
-
+import React, { useEffect, useRef } from "react";
 import PLeft from "./PLeft";
 import PRight from "./PRight";
-import PLefts from "./PLefts";
-function Products({ addCart ,wishList}) {
+
+function Products({ addCart, wishList, topMargin }) {
+
+
   return (
-    <div className="mt-48 mb-10 flex flex-row justify-center pr-20 gap-10">
-      <PLeft />
-      <PRight addCart={addCart} wishList={wishList} />
+    <div
+      className="flex flex-row justify-center pr-4 h-screen gap-10"
+      style={{
+        marginTop: `${topMargin + 4}px`,
+      }}
+    >
+      <div  className="h-screen flex justify-center w-72 overflow-y-scroll">
+        <PLeft />
+      </div>
+      <div  className="w-[calc(100%-288px)] h-screen overflow-y-scroll">
+        <PRight addCart={addCart} wishList={wishList} topMargin={topMargin} />
+      </div>
     </div>
   );
 }
