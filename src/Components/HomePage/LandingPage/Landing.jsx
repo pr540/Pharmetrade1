@@ -63,3 +63,74 @@ function Landing({ topMargin, wishList, addCart }) {
 }
 
 export default Landing;
+
+
+
+
+// import React from "react";
+// import Slider from "react-slick"; // Import the Slider component from react-slick
+// import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
+// import "slick-carousel/slick/slick-theme.css";
+// import Landing2 from "./Landing2";
+// import Sliders from "./Sliders";
+// import banner1 from "../../../assets/Banner 1.jpg"
+// import banner2 from "../../../assets/Banner 2.jpg"
+// import banner3 from "../../../assets/Banner 3.jpg"
+
+
+// function Landing({ topMargin, wishList, addCart }) {
+//   const settings = {
+//     dots: true,
+//     infinite: true,
+//     speed: 500,
+//     slidesToShow: 1,
+//     slidesToScroll: 1,
+//   };
+
+//   return (
+//     <div className="w-full font-sans">
+//       <div className="w-full">
+//         <div
+//           className="h-fit"
+//           style={{
+//             marginTop: `${topMargin}px`,
+//           }}
+//         >
+//           {/* Carousel Section */}
+//           <div className=" w-full h-[350px] overflow-hidden"> {/* Adjust height here */}
+//             <Slider {...settings}>
+//               {/* Replace these image sources with your own */}
+//               <div>
+//                 <img
+//                   src={banner1}
+//                   alt="Carousel Image 1"
+//                   className="w-full h-[300px] object-contain" // Adjust height here
+//                 />
+//               </div>
+//               <div>
+//                 <img
+//                   src={banner2}
+//                   alt="Carousel Image 2"
+//                   className="w-full h-[300px] object-contain" // Adjust height here
+//                 />
+//               </div>
+//               <div>
+//                 <img
+//                   src={banner3}
+//                   alt="Carousel Image 3"
+//                   className="w-full h-[300px] object-contain" // Adjust height here
+//                 />
+//               </div>
+//             </Slider>
+//           </div>
+//         </div>
+//         <div className="w-full bg-slate-200 px-6">
+//           <Landing2 addCart={addCart} wishList={wishList} />
+//           <Sliders addCart={addCart} wishList={wishList} />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Landing;

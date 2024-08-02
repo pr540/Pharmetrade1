@@ -26,7 +26,9 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
+    "react-slick": "^0.30.2",
     "react-us-states": "^1.0.2",
+    "slick-carousel": "^1.8.1",
     "us-state-codes": "^1.1.2"
   },
   "devDependencies": {

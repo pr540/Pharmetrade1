@@ -3,19 +3,22 @@ import React from "react";
 // import Logo from "../assets/Icons/logo.png";
 import Logo from "../../../assets/logo_04.png";
 import Search from "../../../assets/search.png";
-import cart from "../../../assets/CartNav_icon.png";
+// import cart from "../../../assets/CartNav_icon.png";
+import cart from "../../../assets/cartNav2.png";
 // import like from "../assets/Icons/Favorate.png";
 import like from "../../../assets/wishlistnav_icon.png";
-import compare from "../../../assets/CompareNav_icon.png";
+// import compare from "../../../assets/CompareNav_icon.png";
+import compare from "../../../assets/CompareNav2.png";
+
 import note from "../../../assets/Icons/Compare.png";
 // import Buy from "../../../assets/Buy.png";
 // import sale from "../../../assets/Sell.png";
 // import join from "../../../assets/Join.png";
 // import bid from "../../../assets/Bid.png";
-import Buy from "../../../assets/Buy1.png"
-import join from "../../../assets/Join1.png"
-import sell from "../../../assets/Sell1.png"
-import bid from "../../../assets/Bid1.png"
+import Buy from "../../../assets/Buy1.png";
+import join from "../../../assets/Join1.png";
+import sell from "../../../assets/Sell1.png";
+import bid from "../../../assets/Bid1.png";
 import BackgroundImage from "../../../assets/BackgroundImage.png";
 import { Link, useNavigate } from "react-router-dom";
 import menu from "../../../assets/menu.png";
@@ -48,10 +51,10 @@ import SportsNutrition from "../../All Category/SportsNutrition";
 import Suppliments from "../../All Category/Suppliments";
 import WhyPharma from "../NavLinks/WhyPharma";
 import search from "../../../assets/search-icon.png";
+import dropdown from "../../../assets/Down-arrow .png";
 
 function Nav({ topDivRef, cartItems }) {
   const [selectedIndex, setSelectedIndex] = useState();
-
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [popUps, setPopUps] = useState(<Baby />);
@@ -78,8 +81,6 @@ function Nav({ topDivRef, cartItems }) {
   const handleCatMouseLeave = () => {
     setPopUps(null);
   };
-  
-
 
   const MenuItems = [
     "Home",
@@ -309,14 +310,12 @@ function Nav({ topDivRef, cartItems }) {
                     /> */}
                     <img
                       src={cart}
-                      className="w-2  md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 text-blue-900 hover:text-gray-400 hover:scale-110 transi duration-500"
+                      className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9 text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"
                       onClick={handleCart}
                     />
                   </a>
                   <div
-                    className={`absolute -top-2  text-blue-900 right-4 font-semibold ${
-                      cartItems.length == 0 ? "hidden" : ""
-                    }`}
+                    className={`absolute  text-white rounded-full px-1 text-xs border bg-blue-900 top-1 left-2 font-medium `}
                   >
                     {cartItems.length}
                   </div>
@@ -335,7 +334,7 @@ function Nav({ topDivRef, cartItems }) {
                     <img
                       src={compare}
                       // onClick={handleclick}
-                      className="w-2 md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
+                      className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9 hover:scale-110 transition duration-300"
                     />{" "}
                   </a>
                 </li>
@@ -371,13 +370,18 @@ function Nav({ topDivRef, cartItems }) {
             ))}
           </div>
           <div className="flex items-center  w-[40%]  lg:gap-10 ">
-            <div ref={dropdownRef} className="w-full relative flex items-center">
+            <div
+              ref={dropdownRef}
+              className="w-full relative flex items-center"
+            >
               <button
-                className="h-11 px-3 font-semibold text-left text-[16px] text-gray-500 bg-white border border-gray-300 rounded-l-md "
+                className="h-11 pl-3 font-medium text-left text-[14px] flex items-center text-gray-600  bg-gray-100 border-gray-300 rounded-l-md border focus:ring-2 focus:ring-blue-500 "
                 onClick={handleDropdownToggle}
               >
-                All 
-                <span>V</span>
+                All
+                <span>
+                  <img src={dropdown} className="h-4 w-4" />
+                </span>
               </button>
 
               {isDropdownOpen && (
@@ -391,7 +395,7 @@ function Nav({ topDivRef, cartItems }) {
                       <ul key={index}>
                         <li className="">
                           <a
-                            className="hover:text-black text-lg font-medium text-blue-900"
+                            className="hover:text-black text-sm font-medium text-blue-900"
                             onClick={() => handleItemClick(items.name)}
                             onMouseLeave={handleCatMouseLeave}
                           >
@@ -416,14 +420,16 @@ function Nav({ topDivRef, cartItems }) {
                 </div>
               )}
 
-              <input
-                type="text"
-                placeholder="Search for products..."
-                className="flex-grow h-11  p-4 border-t border-b border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <a className="w-[40px] flex items-center justify-center h-11 p-2 bg-blue-500 text-white border border-blue-500 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <img src={search} />
-              </a>
+              <div className=" flex w-full h-11 border ">
+                <input
+                  type="text"
+                  placeholder="Search for products..."
+                  className="flex-grow  p-4 borde-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <a className="w-[40px] flex items-center justify-center  p-2 bg-blue-900 text-white  border-blue-500 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <img src={search} />
+                </a>
+              </div>
             </div>
           </div>
 
