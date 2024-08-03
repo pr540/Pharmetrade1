@@ -1223,18 +1223,17 @@
 
 // export default ProductFields;
 
-import React, { useState } from "react";
-import { FaAlignLeft } from "react-icons/fa";
-import { FaAlignJustify } from "react-icons/fa";
-import { FaAlignCenter } from "react-icons/fa";
-import { FaAlignRight } from "react-icons/fa";
-import { SlCamera } from "react-icons/sl";
-import EditingPara from "../Components/EditingPara";
 
-import { useDropzone } from "react-dropzone";
+
+import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { useDropzone } from "react-dropzone";
+// import OtherProductFields from "./OtherProductFields";
 import filter from "../../../assets/Icons/filter_icon.png";
+
+
 function ProductFields() {
+
   const products = [
     {
       serial: "",
@@ -1271,7 +1270,59 @@ function ProductFields() {
     },
   ];
 
+  const [activeTab, setActiveTab] = useState(0);
   const [images, setImages] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const handleClick = () => {
+    setIsPopupVisible(true);
+  };
+  const handleremove = () => {
+    setIsPopupVisible(false);
+  };
+
+
+   // Relate filter
+   const [isvisible, setIsvisible] = useState(false);
+   const [buttonClick, setButtonClick] = useState(false);
+   const handleRelateclick = () => {
+     setIsvisible(true);
+     setButtonClick(true);
+   };
+ 
+   const handleRelateClick = () => {
+     setIsvisible(false);
+     setButtonClick(false);
+   };
+
+    // filter upsell pop ups
+  const [isVisible, setIsVisible] = useState(false);
+  const [ButtonUpClick, setButtonUpClick] = useState(false);
+
+  const click = () => {
+    setIsVisible(true);
+    setButtonUpClick(true);
+  };
+
+  const Click = () => {
+    setIsVisible(false);
+    setButtonUpClick(false);
+  };
+    // crosee sell filter
+    const [visible, setVisible] = useState(false);
+    const [isButtonClicked, setButtonClicked] = useState(false);
+    const handleCrossClick = () => {
+      setVisible(true);
+      setButtonClicked(true);
+    };
+    const handleCrossRemoveClick = () => {
+      setVisible(false);
+      setButtonClicked(false);
+    };
+
+  const tabs = ["General Info", "Details","Details","Details", "Details","Product Image"];
 
   const onDrop = (acceptedFiles) => {
     const newImages = acceptedFiles.map((file) => ({
@@ -1291,283 +1342,1197 @@ function ProductFields() {
     multiple: true,
   });
 
-  // const [selectedImage, setSelectedImage] = useState(null);
-  // const [preview, setPreview] = useState(null);
-
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     setSelectedImage(file);
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setPreview(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   } else {
-  //     setSelectedImage(null);
-  //     setPreview(null);
-  //   }
-  // }
-  // const handleRemoveImage = () => {
-  //   setSelectedImage(null);
-  //   setPreview(null);
-  // };
-
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-
-  const handleClick = () => {
-    setIsPopupVisible(true);
-  };
-  const handleremove = () => {
-    setIsPopupVisible(false);
+  const handleEditProduct = () => {
+    setShowPopup(true);
   };
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [dragActive, setDragActive] = useState(false);
-
-  const handleDragEnter = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(true);
+  const handleClosePopup = () => {
+    setShowPopup(false);
   };
 
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-  };
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 0:
+        return (
+          <div className="space-y-4 w-full flex">
+            <div className="  h-full flex ">
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
+              <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm">
+                <div className="w-[95%] mx-4">
+                  <div className="flex gap-4 my-4">
+                    <div>
+                      <label>
+                        Category Specification:
+                        <span className="text-red-600">*</span>
+                      </label>
+                      <select className="w-56 h-8 
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      >
+                        <option>Merchandise</option>
+                        <option>OTC Product</option>
+                        <option>Rx Product</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label>
+                        Product Type:<span className="text-red-600">*</span>
+                      </label>
+                      <select
+                        // style={{boxShadow:'5px 1px 18px blue'}}                      
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      >
+                        <option>General</option>
+                        <option>Customizable</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label>
+                        Product Category:
+                        <span className="text-red-600">*</span>
+                      </label>
+                      <select className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      >
+                        <option>Default Category</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 my-4">
+                    <div>
+                      <label>
+                        Product Name:<span className="text-red-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        // className="w-56 h-8 border border-gray-300 rounded p-2"
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-    const files = e.dataTransfer.files;
-    if (files && files[0]) {
-      setSelectedImage(URL.createObjectURL(files[0]));
-    }
-  };
+                      />
+                    </div>
+                    <div>
+                      <label>
+                        NDC / UDC:<span className="text-red-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedImage(URL.createObjectURL(file));
-    }
-  };
+                      />
+                    </div>
+                    <div>
+                      <label>
+                        Brand Name:<span className="text-red-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  const [selectedOption, setSelectedOption] = useState("full");
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-4 my-4">
+                    <div>
+                      <label>
+                        Price ($):<span className="text-red-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
+                      />
+                    </div>
+                    <div className="">
+                      <label>
+                        Amount in Stock:<span className="text-red-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  const [selectedProductOption, setSelectedProductOption] = useState("");
+                      />
+                    </div>
 
-  const handleProductOptionChange = (e) => {
-    setSelectedProductOption(e.target.value);
-  };
+                    <div>
+                      <label >
+                        Taxable:<span className="text-red-600">*</span>
+                      </label>
+                      <select
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      >
+                        <option>No</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div >
+                    <div className="flex flex-col ">
+                      <div>
+                        <label>Product Details:</label>
+                        <textarea
+                          className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        />
+                      </div>
+                      <div>
+                        <label>About the Product:</label>
+                        <textarea
+                          className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  // filter upsell pop ups
-  const [isVisible, setIsVisible] = useState(false);
-  const [ButtonUpClick, setButtonUpClick] = useState(false);
+              <div className="w-[25%]">
+                <div className="my-3 ">
+                  <p className="text-sm">Product Image: ( JPEG, PNG)</p>
+                  <div className="flex flex-col items-center p-4 border rounded-lg shadow-md">
+                    <div
+                      {...getRootProps()}
+                      className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                    >
+                      <input {...getInputProps()} />
+                      <p className="text-gray-500 text-center">
+                        Click here or drag and drop images
+                      </p>
+                    </div>
+                    <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                      {images.map((image, index) => (
+                        <div key={index} className="">
+                          <img
+                            src={image.preview}
+                            alt={`Preview ${index}`}
+                            className="w-48 h-14 object-cover "
+                          />
+                          <button
+                            onClick={() => removeImage(index)}
+                            className="text-sm  text-red-500 bg-white rounded-full p-1 hover:bg-gray-100"
+                          >
+                            <FaTrash className="" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm">
+              <div className="flex ">
+          <div className='flex flex-col w-[80%]'>
 
-  const click = () => {
-    setIsVisible(true);
-    setButtonUpClick(true);
-  };
+            <div className="flex items-center gap-8 my-3">
+              <div className="flex flex-col">
+                <label className="text-sm">UPN Member Price ($):</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  const Click = () => {
-    setIsVisible(false);
-    setButtonUpClick(false);
-  };
-  // Relate filter
-  const [isvisible, setIsvisible] = useState(false);
-  const [buttonClick, setButtonClick] = useState(false);
-  const handleRelateclick = () => {
-    setIsvisible(true);
-    setButtonClick(true);
-  };
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm">Sale Price ($):</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8 
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  const handleRelateClick = () => {
-    setIsvisible(false);
-    setButtonClick(false);
-  };
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm">Sale Price Form ($):</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
 
-  // crosee sell filter
-  const [visible, setVisible] = useState(false);
-  const [isButtonClicked, setButtonClicked] = useState(false);
-  const handleCrossClick = () => {
-    setVisible(true);
-    setButtonClicked(true);
-  };
-  const handleCrossRemoveClick = () => {
-    setVisible(false);
-    setButtonClicked(false);
-  };
-  return (
-    <div className="w-full h-full justify-center overflow-x-hidden flex items-center">
-      <div className="w-[95%]  h-full">
-        <div className="  flex flex-col my-8">
-          <h1 className="text-2xl font-medium text-black ">ADD PRODUCT</h1>
-          <p className=" my-1 w-[90px] border-blue-600 border-b-[3px]"></p>
+                />
+              </div>
+
+
+            </div>
+
+            <div className="flex items-center gap-8 my-3">
+              <div className="flex flex-col">
+                <label className="text-sm">Sale Price To($):</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm">Manufacturer:</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8 
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm">
+                  Strength:</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8 
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+              </div>
+
+
+
+            </div>
+
+            <div className="flex items-center gap-8 my-3">
+              <div className="flex flex-col">
+                <label className="text-sm">
+                  Form:</label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm">Lot Number:
+                </label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8 
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm">
+                  Expiration Date:
+                </label>
+                <input
+                  type="text"
+                  id="Upn_Mem"
+                  className="w-56 h-8
+                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+              </div>
+            </div>
+          </div>
+          </div>
+
+          {/* section 2 */}
+          <div className="">
+          <div className=" my-4 flex items-center">
+            <span className="text-sm">Pack Quantity : {" "}</span> 
+
+            <div className=" flex items-center">
+              <div className="flex items-center">
+                {" "}
+                <input
+                  type="radio"
+                  id="full"
+                  name="option"
+                  value="full"
+                  // checked={selectedOption === "full"}
+                  // onChange={handleOptionChange}
+                  className="mx-1"
+                /> {" "}
+                <label htmlFor="full" className='text-sm mx-1'>Full</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="partial"
+                  name="option"
+                  value="partial"
+                  // checked={selectedOption === "partial"}
+                  // onChange={handleOptionChange}
+                  className="ml-2
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+
+                />
+                <label htmlFor="partial" className='text-sm mx-1'>Partial</label>
+              </div>
+            </div>
+
+            <input
+              type="text"
+              className="w-[30%] Largest:w-[15%] mx-1 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none  focus:shadow focus:shadow-blue-400"
+            />
+            <label className='text-sm mx-1'>EA</label>
+          </div>
+        </div>
+        {/* section 2 end */}
+
+        {/* section3 start */}
+        <div>
+        <div>
+          <div className=" my-4 flex items-center">
+            <span className="text-sm">Pack Type :</span>
+
+
+
+            <div className="flex items-center">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="original"
+                  name="product"
+                  value="original"
+                  // checked={selectedProductOption === "original"}
+                  // onChange={handleProductOptionChange}
+                  className="ml-2"
+                /> 
+                <label htmlFor="original" className='text-sm mx-1'> {" "} ORIGINAL PACKAGE</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="non-original"
+                  name="product"
+                  value="non-original"
+                  // checked={selectedProductOption === "non-original"}
+                  // onChange={handleProductOptionChange}
+                  className="ml-2"
+                />
+                <label htmlFor="non-original" className='text-sm mx-1'>
+                  ORIGINAL PACKAGE - NON SEALED
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        {/* section 3 end */}
+
+        {/* section4 start */}
+        <div>
+        <div className=" my-4">
+          <div>
+            <span className="text-sm">Pack Condition :</span>
+            <input type="checkbox" className="ml-[2%]" />
+            <label className="text-sm ml-1">TORN PACKAGE LABEL</label>
+
+            <input type="checkbox" className="ml-[2%]" />
+            <label className="text-sm ml-1">OTHER</label>
+
+            <input
+              type="text"
+              className=" mx-1 w-[30%] Largest:w-[15%] h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none  focus:shadow focus:shadow-blue-400"
+            />
+          </div>
+        </div>
+        </div>
+        {/* section4 end */}
+
+         
+
+        </div>
+        );
+        case 2:
+        return (
+         <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm ">
+          <div className=" ">
+           <div className="flex justify-between items-baseline w-full  Largest:w-[95%]  my-6 gap-6">
+          <div className="flex flex-col">
+            <label className="text-sm">
+              Uri Key : (Related to google <br />
+              search)
+            </label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+          <div className="flex flex-col ml-4">
+            <label className="text-sm">
+              Meta Title:(Related to google search)
+            </label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+
+          <div className="flex flex-col mx-4">
+            <label className="text-sm">
+              Meta Keywords:(Related to google search)
+            </label>
+            <textarea
+              type=""
+              id="product_name"
+              className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+
+          <div className="flex flex-col mx-1">
+            <label className="text-sm">
+              Meta Description:(Research to google search)
+            </label>
+            <textarea
+              type="area"
+              id="product_name"
+              className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+        </div>
+        {/* section2 start */}
+        <div className="flex justify-between w-full Largest:w-[80%] items-baseline  my-6 gap-6">
+          <div className="flex flex-col ">
+            <label className="text-sm">Salt Composition:</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+          <div className="flex flex-col ">
+            <label className="text-sm">Height {""}(in):</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+
+          <div className="flex flex-col ">
+            <label className="text-sm">Width{""}(in):</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+
+          <div className="flex flex-col ">
+            <label className="text-sm">Length{""}(in):</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+
+          {/* <div className="flex flex-col">
+            <label className="text-sm"> Weight{""}(in):</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-44 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-blue-900 focus:shadow-sm focus:shadow-blue-400"
+            />
+          </div> */}
         </div>
 
-        <div className="flex flex-row w-full Largest:w-[80%]  justify-between text-sm">
-          {/* section1 start */}
-          <div className="flex flex-col w-[80%]">
-            <div className="flex items-center  gap-8 my-3">
-              <div className="flex  flex-col">
-                <label className="">
-                  Category Specification :
-                  <span className="text-red-600 text-base ">*</span>
-                </label>{" "}
-                <select className=" w-52 h-8 border-slate-300 border rounded-md">
+        {/* section2 end */}
+
+        {/* section 3 start  */}
+            <div>
+            <div className="flex flex-col">
+            <label className="text-sm"> Weight{""}(in):</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+          </div>
+            </div>
+        {/* section3 end */}
+
+       
+        </div>
+         {/* section4 start */}
+         <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm my-4">
+            <div className="flex flex-col  ">
+          <label className="text-base">Tier Price:</label>
+          <div className="border rounded-md  bg-white ">
+            <table className="w-full Largest:w-[80%] ">
+              <thead className="p-10">
+                <tr className="text-xl border-b bg-blue-900 text-white">
+                  <th className=" font-normal text-center text-base h-11">
+                    Websites
+                  </th>
+                  <th className="  font-normal text-center text-base ">
+                    Customer Group
+                  </th>
+                  <th className="    font-normal text-base  text-center ">
+                    Qty
+                  </th>
+                  <th className="  font-normal  text-base  text-center ">
+                    ($) Price
+                  </th>
+                  <th className="  font-normal  text-base  text-center  ">
+                    Action
+                  </th>
+                  <th className="   font-normal   text-base  text-left  ">
+                    <button
+                      className="border border-gray-950 bg-white text-black w-14"
+                      onClick={handleClick}
+                    >
+                      Add
+                    </button>{" "}
+                  </th>
+                </tr>
+              </thead>
+              {isPopupVisible && (
+                // <div>
+                <tbody className="w-full Largest:w-[80%]">
+                  <tr>
+                    <td className="border bg-slate-200">
+                      <select className=" py-1 text-left text-base h-11  w-40 m-2 ">
+                        <option className=" py-2 text-left text-base h-11 ">
+                          All Websites
+                        </option>
+                        <option>Main Website</option>
+                      </select>
+                    </td>
+                    <td className="border bg-slate-200">
+                      <select className=" py-1 text-left text-base h-11 w-40 m-2">
+                        <option className=" py-1 text-left text-base h-11 hover:bg-blue-900">
+                          All Groups
+                        </option>
+                        <option>Not Logged In</option>
+                        <option>General</option>
+                        <option>Prescription seller</option>
+                        <option>General Merchandise seller</option>
+                        <option>UPN Member</option>
+                      </select>
+                    </td>
+                    <td className="border bg-slate-200">
+                      <input
+                        type="text"
+                        className=" py-1  m-2  text-left text-base h-11 w-40 "
+                      />
+                    </td>
+                    <td className="border bg-slate-200">
+                      <input
+                        type="text"
+                        className=" border m-2   py-1 text-left text-base h-11 w-40"
+                      />
+                    </td>
+                    <td className=" w-36">
+                      <button
+                        className=" m-2 border-slate-700 bg-blue-900 text-white w-20 flex justify-center p-2"
+                        onClick={handleremove}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+            </table>
+          </div>
+        </div>
+            </div>
+        {/* section4 end */}
+        {/* section 5 start */}
+        <div>
+        <div className="my-6">
+          <span className="text-base">
+            States (Please select multiple states by clicking on Ctrl Button) :
+          </span>
+          <div>
+            <select className="w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"  
+            >
+              <option>All Selected</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+        {/* section5 end */}
+
+        {/* section 6 start */}
+        <div>
+        {/* <div className="w-full Largest:w-[80%]">
+          <div className="flex justify-between my-6">
+            <div className="flex flex-col">
+              <p>
+                Customizable products allow customers to choose options (Ex:
+                shirt color). You need to create a simple product for each
+              </p>
+              <p>customization (Ex: a product for each color).</p>
+            </div>
+            <div>
+              <button className="border border-gray-600 bg-blue-900 text-white text-base p-2 font-semibold w-60">
+                {" "}
+                Create Customization
+              </button>
+            </div>
+          </div>
+        </div> */}
+        </div>
+
+        {/* section 6 end */}
+         </div>
+        );
+        case 3: 
+        return(
+          <div>
+
+<div className="w-full Largest:w-[80%]">
+          <div className="flex justify-between my-6">
+            <div className="flex flex-col">
+              <p>
+                Customizable products allow customers to choose options (Ex:
+                shirt color). You need to create a simple product for each
+              </p>
+              <p>customization (Ex: a product for each color).</p>
+            </div>
+            <div>
+              <button className="border rounded-md border-gray-600 bg-blue-900 text-white text-base p-2 font-semibold w-60">
+                {" "}
+                Create Customization
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* section start */}
+            <div className="my-3">
+          <div className="flex flex-row w-[80%] gap-4">
+            <div className="flex flex-col">
+              <label className='text-sm'>Height {""} in</label>
+              <input type="text"
+                className="w-56 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"  
+              />
+            </div>
+            <div className="flex flex-col mx-6 ">
+              <label className='text-sm'>Width {""} in</label>
+              <input type="text" className="w-56 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"  
+              />
+            </div>
+            <div className="flex flex-col  ">
+              <label className='text-sm'>Length {""} in</label>
+              <input type="text" className="w-56 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"  
+              />
+            </div>
+            <div className='flex my-5 justify-end mx-7'>
+            <button className="border rounded-lg border-gray-400  bg-blue-900 text-white text-base  font-semibold  w-24 h-9  ">
+              SAVE
+            </button>
+          </div>
+          </div>
+         
+        </div>
+
+        {/* section start */}
+
+        <h1 className="text-2xl font-semibold">Related Products </h1>
+        <div className="flex  justify-between w-full Largest:w-[80%]">
+          <p>
+            Related products are shown to customers in addition to the item the
+            customer is looking at.{" "}
+          </p>
+          <button
+            className={`  text-base font-medium p-2 flex items-center  ${
+              buttonClick ? "bg-white text-blue-900" : "bg-blue-900 text-white"
+            }`}
+            onClick={handleRelateclick}
+          >
+            <img src={filter} className="w-6 h-4 px-1" />
+            Filter
+          </button>
+        </div>
+        {isvisible && (
+          <div className=" bg-white p-2 px-5  w-full Largest:w-[80%] ">
+            <div className="flex justify-between">
+              <div className="flex flex-col w-52">
+                <label>Id From</label>
+                <input className="border rounded-sm" />
+              </div>
+              <div className="flex flex-col w-52">
+                <label>Price From</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Name</label>
+                <input className="border rounded-sm" />
+              </div>
+            </div>
+
+            <div className="flex justify-between">
+              <div className="flex flex-col w-52">
+                <label>to</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>to</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Status</label>
+                <select className="border rounded-sm">
+                  <option></option>
+                  <option>Enable</option>
+                  <option>Disable</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-between  ">
+              <div className="flex flex-col w-52">
+                <label> Attribute Set</label>
+                <select className="border rounded-sm">
+                  <option></option>
                   <option>Merchandise</option>
                   <option>OTC Product</option>
                   <option>Rx Product</option>
                 </select>
               </div>
-              <div className="flex flex-col">
-                <label className="">
-                  Product Type:
-                  <span className="text-red-600 text-base ">*</span>
-                </label>
-                <select className=" w-52 h-8 border-slate-300 border rounded-md">
-                  <option>General</option>
-                  <option>Customizable</option>
+
+              <div className="flex flex-col w-52">
+                <label>Type</label>
+                <select className="border rounded-sm w-">
+                  <option></option>
+                  <option>Simple Product</option>
+                  <option>Virtual Product</option>
+                  <option>Configurable Product</option>
+                  <option>Downloadable Product</option>
+                  <option>Grouped Product</option>
+                  <option>Bundle Product</option>
+                  <option>Quote </option>
                 </select>
               </div>
 
-              <div className="flex flex-col">
-                <label className="">
-                  Product Category:
-                  <span className="text-red-600 text-base ">*</span>
-                </label>{" "}
-                <select className=" w-52 h-8 border-slate-300 border rounded-md ">
-                  <option>Default Category</option>
-                </select>
+              <div className="flex flex-col w-52">
+                <label>SKU</label>
+                <input className="border rounded-sm" />
               </div>
             </div>
 
-            {/* section2 start */}
-
-            <div className="flex items-center  gap-8 my-3">
-              <div className="flex flex-col">
-                <label className="">
-                  Product Name:
-                  <span className="text-red-600 text-base ">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="product_name"
-                  className=" w-52 h-8 border-slate-300 border rounded-md"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label className="">
-                  NDC / UDC:<span className="text-red-600 text-base ">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="product_name"
-                  className=" w-52 h-8 border-slate-300 border rounded-md"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label className="">
-                  Brand Name:<span className="text-red-600 text-base ">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="product_name"
-                  className=" w-52 h-8 border-slate-300 border rounded-md"
-                />
-              </div>
-            </div>
-
-            {/* section3 start */}
-
-            <div className="flex items-center gap-8 my-3">
-              <div className="flex flex-col">
-                <label className="">
-                  Price ($) :<span className="text-red-600 text-base">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="product_name"
-                  className=" w-52 h-8 border-slate-300 border rounded-md"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label className="">
-                  Amount In Stock:
-                  <span className="text-red-600 text-base ">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="product_name"
-                  className=" w-52 h-8 border-slate-300 border rounded-md"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="">
-                  Taxable:<span className="text-red-600 text-base">*</span>
-                </label>
-                <select className=" w-52 h-8 border-slate-300 border rounded-md">
-                  <option>No</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex flex-row items-center gap-12 text-sm">
-              <div className="flex flex-col">
-                <label className="">Product Details:</label>
-                <textarea
-                  type="text"
-                  id="product_name"
-                  className=" w-80 h-14 border-slate-300 border rounded-md "
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="">About the Product:</label>
-                <textarea
-                  type="text"
-                  id="product_name"
-                  className=" w-80 h-14 border-slate-300 border rounded-md"
-                />
-              </div>
+            <div className="my-4 flex justify-end">
+              <button
+                onClick={handleRelateClick}
+                className="bg-blue-900 p-2 text-white border rounded-md"
+              >
+                {" "}
+                Cancel
+              </button>
+              <button className="bg-blue-900 text-white p-2 mx-4 border rounded-md">
+                Apply Filter
+              </button>
             </div>
           </div>
+        )}
 
-          <div className="w-[20%] my-4">
-            <p>Product Image : (Accepted Formats: JPEG, PNG)</p>
+        {/* section start */}
+          <div>
+          <div className="my-6 border w-full Largest:w-[80%] rounded-md bg-white ">
+          <table className="w-full">
+            <thead className="bg-blue-900 text-white">
+              <tr className="border-b">
+                <th className=" p-4  text-left text-sm  w-32">
+                  <select className="text-black">
+                    <option>-</option>
+                  </select>
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
+                <th className=" p-2 font-medium text-left text-sm w-40">
+                  Thumbnail
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-80">
+                  Name
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-48">
+                  Attribute Set
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Status
+                </th>
+                <th className=" p-2 font-medium text-left text-sm bw-44">
+                  Type
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  SKU
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  Price
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product, index) => (
+                <tr key={index} className="border-b">
+                  <td className=" p-2">
+                    <input className=" h-6 w-4" type="checkbox" />
+                  </td>
+                  <td className="text-sm p-2"> {product.id}</td>
+                  <td className="text-sm p-2">{product.thumbnail}</td>
+                  <td className="text-sm p-2">{product.name}</td>
+                  <td className="text-sm p-2">{product.attribute}</td>
+                  <td className="text-sm p-2">{product.status}</td>
+                  <td className="text-sm p-2">{product.type}</td>
+                  <td className="text-sm p-2">{product.sku}</td>
+                  <td className="text-sm p-2">{product.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+          </div>
+        {/* section end */}
+          </div>
+        );
+        case 4:
+          return (
+            <div>
+              <h1 className="text-2xl font-semibold">Up-Sell Products </h1>
+        <div className="flex  justify-between w-full Largest:w-[80%]">
+          <p>
+            An up-sell item is offered to the customer as a pricier or
+            higher-quality alternative to the product the customer is looking
+            at.
+          </p>
+          <button
+            className={` text-base font-medium p-2 flex items-center ${
+              ButtonUpClick
+                ? "bg-white text-blue-900"
+                : "bg-blue-900 text-white"
+            }`}
+            onClick={click}
+          >
+            {" "}
+            <img src={filter} className="w-6 h-3 px-1" />
+            Filter
+          </button>
+        </div>
+        {isVisible && (
+          <div className=" bg-white p-2 px-5   w-full Largest:w-[80%]">
+            <div className="flex justify-between">
+              <div className="flex flex-col w-52">
+                <label>Id From</label>
+                <input className="border rounded-sm" />
+              </div>
+              <div className="flex flex-col w-52">
+                <label>Price From</label>
+                <input className="border rounded-sm" />
+              </div>
 
+              <div className="flex flex-col w-52">
+                <label>Name</label>
+                <input className="border rounded-sm" />
+              </div>
+            </div>
+
+            <div className="flex justify-between">
+              <div className="flex flex-col w-52">
+                <label>to</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>to</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Status</label>
+                <select className="border rounded-sm">
+                  <option></option>
+                  <option>Enable</option>
+                  <option>Disable</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-between ">
+              <div className="flex flex-col w-52">
+                <label> Attribute Set</label>
+                <select className="border rounded-sm">
+                  <option></option>
+                  <option>Merchandise</option>
+                  <option>OTC Product</option>
+                  <option>Rx Product</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Type</label>
+                <select className="border rounded-sm w-">
+                  <option></option>
+                  <option>Simple Product</option>
+                  <option>Virtual Product</option>
+                  <option>Configurable Product</option>
+                  <option>Downloadable Product</option>
+                  <option>Grouped Product</option>
+                  <option>Bundle Product</option>
+                  <option>Quote </option>
+                </select>
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>SKU</label>
+                <input className="border rounded-sm" />
+              </div>
+            </div>
+
+            <div className="my-4 flex justify-end">
+              <button
+                onClick={Click}
+                className="bg-blue-900 p-2 text-white border rounded-md"
+              >
+                {" "}
+                Cancel
+              </button>
+              <button className="bg-blue-900 text-white p-2 mx-4 border rounded-md">
+                Apply Filter
+              </button>
+            </div>
+          </div>
+        )} 
+         <div className="my-6 border rounded-md bg-white w-full Largest:w-[80%] ">
+          <table className="w-full">
+            <thead className="bg-blue-900 text-white  ">
+              <tr className="border-b">
+                <th className=" p-4  text-left text-sm  w-32">
+                  <select className="text-black">
+                    <option>-</option>
+                  </select>
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
+                <th className=" p-2 font-medium text-left text-sm w-40">
+                  Thumbnail
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-80">
+                  Name
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-48">
+                  Attribute Set
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Status
+                </th>
+                <th className=" p-2 font-medium text-left text-sm bw-44">
+                  Type
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  SKU
+                </th>
+                <th className=" p-2 font-medium text-left text-sm  w-44">
+                  Price
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product, index) => (
+                <tr key={index} className="border-b">
+                  <td className=" p-2">
+                    <input className=" h-6 w-4" type="checkbox" />
+                  </td>
+                  <td className="text-sm p-2"> {product.id}</td>
+                  <td className="text-sm p-2">{product.thumbnail}</td>
+                  <td className="text-sm p-2">{product.name}</td>
+                  <td className="text-sm p-2">{product.attribute}</td>
+                  <td className="text-sm p-2">{product.status}</td>
+                  <td className="text-sm p-2">{product.type}</td>
+                  <td className="text-sm p-2">{product.sku}</td>
+                  <td className="text-sm p-2">{product.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div> 
+        {/* section start */}
+        <h1 className="text-2xl font-semibold">Cross-Sell Products </h1>
+        <div className="flex justify-between w-full Largest:w-[80%]">
+          <p>
+            These "impulse-buy" products appear next to the shopping cart as
+            cross-sells to the items already in the shopping cart.
+          </p>
+          <button
+            className={` text-base font-medium  p-2 flex items-center ${
+              isButtonClicked
+                ? "bg-white text-blue-900"
+                : "bg-blue-900 text-white"
+            }`}
+            onClick={handleCrossClick}
+          >
+            <img src={filter} className="w-6 h-3 px-1" />
+            Filter
+          </button>
+        </div>
+        {visible && (
+          <div className=" bg-white p-2 px-5  w-full Largest:w-[80%] ">
+            <div className="flex justify-between">
+              <div className="flex flex-col w-52">
+                <label>Id From</label>
+                <input className="border rounded-sm" />
+              </div>
+              <div className="flex flex-col w-52">
+                <label>Price From</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Name</label>
+                <input className="border rounded-sm" />
+              </div>
+            </div>
+
+            <div className="flex justify-between">
+              <div className="flex flex-col w-52">
+                <label>to</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>to</label>
+                <input className="border rounded-sm" />
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Status</label>
+                <select className="border rounded-sm">
+                  <option></option>
+                  <option>Enable</option>
+                  <option>Disable</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-between ">
+              <div className="flex flex-col w-52">
+                <label> Attribute Set</label>
+                <select className="border rounded-sm">
+                  <option></option>
+                  <option>Merchandise</option>
+                  <option>OTC Product</option>
+                  <option>Rx Product</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>Type</label>
+                <select className="border rounded-sm w-">
+                  <option></option>
+                  <option>Simple Product</option>
+                  <option>Virtual Product</option>
+                  <option>Configurable Product</option>
+                  <option>Downloadable Product</option>
+                  <option>Grouped Product</option>
+                  <option>Bundle Product</option>
+                  <option>Quote </option>
+                </select>
+              </div>
+
+              <div className="flex flex-col w-52">
+                <label>SKU</label>
+                <input className="border rounded-sm" />
+              </div>
+            </div>
+
+            <div className="my-4 flex justify-end">
+              <button
+                onClick={handleCrossRemoveClick}
+                className="bg-blue-900 p-2 text-white border rounded-md"
+              >
+                {" "}
+                Cancel
+              </button>
+              <button className="bg-blue-900 text-white p-2 mx-4 border rounded-md">
+                Apply Filter
+              </button>
+            </div>
+          </div>
+        )}
+        <div className="my-6 border rounded-md bg-white w-full Largest:w-[80%]">
+          <table className="w-full">
+            <thead className="bg-blue-900 text-white ">
+              <tr className="border-b ">
+                <th className=" p-4  text-left text-sm   w-32">
+                  <select className="text-black">
+                    <option>-</option>
+                  </select>
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-32">ID</th>
+                <th className="p-2 font-medium text-left text-sm  w-40">
+                  Thumbnail
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-80">
+                  Name
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-48 ">
+                  Attribute Set
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Status
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-44">
+                  Type
+                </th>
+                <th className=" p-2 font-medium text-left text-sm w-44">SKU</th>
+                <th className=" p-2 font-medium text-left text-sm w-32">
+                  Price
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product, index) => (
+                <tr key={index} className="border-b">
+                  <td className=" p-2">
+                    <input className=" h-6 w-4" type="checkbox" />
+                  </td>
+                  <td className="text-sm p-2"> {product.id}</td>
+                  <td className="text-sm p-2">{product.thumbnail}</td>
+                  <td className="text-sm p-2">{product.name}</td>
+                  <td className="text-sm p-2">{product.attribute}</td>
+                  <td className="text-sm p-2">{product.status}</td>
+                  <td className="text-sm p-2">{product.type}</td>
+                  <td className="text-sm p-2">{product.sku}</td>
+                  <td className="text-sm p-2">{product.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {/* section end */}
+            </div>
+          );
+      case 5:
+        return (
+          <div className="space-y-4">
+            <p>Product Image: (Accepted Formats: JPEG, PNG)</p>
             <div className="flex flex-col items-center p-4 border rounded-lg shadow-md">
               <div
                 {...getRootProps()}
-                className="w- bg-white p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
               >
                 <input {...getInputProps()} />
                 <p className="text-gray-500 text-center">
                   Click here or drag and drop images
                 </p>
               </div>
-
               <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                 {images.map((image, index) => (
                   <div key={index} className="relative">
                     <img
                       src={image.preview}
                       alt={`Preview ${index}`}
-                      className="w-56 h-20 object-cover rounded-lg"
+                      className="w-full h-40 object-cover"
                     />
                     <button
                       onClick={() => removeImage(index)}
@@ -1580,14 +2545,57 @@ function ProductFields() {
               </div>
             </div>
           </div>
-        </div>
+        );
+      default:
+        return null;
+    }
+  };
 
-        <div className="flex justify-end my-4">
-          <button className="bg-blue-900 p-3 rounded-md text-white font-medium ">
-            More Option
-          </button>
-        </div>
+  return (
+    <div className="w-full max-w-4xl mx-auto mt-10">
+      <div className="flex flex-col justify-center  items-center">
+        <h1 className="  text-2xl font-medium text-blue-900">ADD PRODUCT</h1>
+        <p className="border-b border-blue-500 w-48 "></p>
       </div>
+      <div className="border-b border-gray-200 mb-6">
+        <ul className="flex">
+          {tabs.map((tab, index) => (
+            <li key={index} className="mr-2">
+              <button
+                className={`px-4 py-2 focus:outline-none ${activeTab === index
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-gray-500"
+                  }`}
+                onClick={() => setActiveTab(index)}
+              >
+                {tab}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>{renderTabContent()}</div>
+      {/* <div className="flex justify-end mt-4">
+        <button
+          onClick={handleEditProduct}
+          className="bg-blue-900 p-3 rounded-md text-white font-medium"
+        >
+          More Option
+        </button>
+      </div> */}
+      {/* {showPopup && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <button
+              onClick={handleClosePopup}
+              className="absolute top-0 right-0 mt-4 mr-4 text-gray-500"
+            >
+              Close
+            </button>
+            <OtherProductFields />
+          </div>
+        </div>
+      )} */}
     </div>
   );
 }

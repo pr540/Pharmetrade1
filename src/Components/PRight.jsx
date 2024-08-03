@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // import fav from "../assets/fav.png";
 // import other from "../assets/other.png";
 import other from "../assets/compare1_Icon.png";
-import addcart from "../assets/cart1_icon.png";
+import addcart from "../assets/cartw_icon.png";
 import fav from "../assets/Wishlist1_icon.png";
 import nature from "../assets/img1.png";
 import Items from "./Items";

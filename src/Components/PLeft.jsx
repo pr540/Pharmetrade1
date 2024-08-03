@@ -105,7 +105,7 @@ const categories = [
 
 function PLeft() {
   return (
-    <div className="w-full overflow-y-scroll h-full bg-sky-200 text-white text-lg py-4 pl-4   ">
+    <div className="w-full overflow-y-scroll h-full bg-slate-50 text-white text-lg py-4 pl-4   ">
       {categories.map((category, index) => (
         <div
           key={index}

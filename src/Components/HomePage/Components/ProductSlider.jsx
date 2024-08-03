@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
-import addcart from "../../../assets/cart1_icon.png";
+import addcart from "../../../assets/cartw_icon.png";
 import emptyHeart from "../../../assets/Wishlist1_icon.png";
 import filledHeart from "../../../assets/wishlist2_icon.png";
 import comp from "../../../assets/Compare2_icon.png";
@@ -114,17 +114,16 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
               <div className=" p-2 ">
                 <div className="flex justify-between  flex-col font-medium">
                   <h2 className="text-black font-bold">{item.name}</h2>
-                  <div className="flex  justify-between items-center">
-                    <div className="flex gap-2">
-                      <h3 className=" text-gray-600 line-through">
+                  {/* <div className="flex  justify-between items-center"> */}
+                    <div className="flex gap-1 items-center ">
+                      <h3 className=" text-black font-semibold">
                         {item.price}
                       </h3>
-                      <h3 className=" text-gray-600">{"$50.00"}</h3>
+                      <span className="text-[10px] line-through">($99.69)</span>
+                      {/* <h3 className=" text-gray-600">{"$50.00"}</h3> */}
                     </div>
-                    <div onClick={() => handleCart(index)}>
-                      <img src={addcart} className="h-7 p-1 " />
-                    </div>
-                  </div>
+                    
+                  {/* </div> */}
                 </div>
                 <div>
                   {Array.from({ length: totalStars }, (v, i) => (
@@ -148,6 +147,10 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                     <img src={other} className="h-8 p-1" />
                   </div> 
                 </div> */}
+                <div onClick={() => handleCart(index)} className="bg-blue-900 flex p-1 rounded-lg justify-center items-center">
+                      <img src={addcart} className="h-7 p-1 " />
+                      <p className="text-white">ADD</p>
+                    </div>
               </div>
             </div>
           ))}
