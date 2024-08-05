@@ -143,6 +143,7 @@ import React from "react";
 import email from "../assets/email.png";
 import logo from "../assets/logo_05.png";
 import { IoIosArrowUp } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function Footers() {
@@ -215,9 +216,9 @@ function Footers() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="underline">
+                  <Link  className="underline">
                     Terms & Conditions
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="underline">

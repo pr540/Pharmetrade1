@@ -1224,16 +1224,13 @@
 // export default ProductFields;
 
 
+
+
 import React, { useState } from "react";
-import { FaTrash } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
-// import OtherProductFields from "./OtherProductFields";
 import filter from "../../../assets/Icons/filter_icon.png";
 import deleteicon from '../../../assets/trash.png'
 function ProductFields() {
-
-
-
 
   const products = [
     {
@@ -1323,7 +1320,25 @@ function ProductFields() {
       setButtonClicked(false);
     };
 
-  const tabs = ["Product Info", "Price Details"," Key Details","Related Products", " Products","Product Image"];
+    // video 
+    const [selectedVideos, setSelectedVideos] = useState([]);
+    const [videoPreviews, setVideoPreviews] = useState([]);
+  
+    const handleVideoSelect = (event) => {
+      const files = Array.from(event.target.files);
+      setSelectedVideos(files);
+  
+      const previews = files.map((file) => URL.createObjectURL(file));
+      setVideoPreviews(previews);
+    };
+  
+    const handleClearSelection = () => {
+      setSelectedVideos([]);
+      setVideoPreviews([]);
+    };
+  
+
+  const tabs = ["Product Info", "Price Details"," Key Details","Related Products", " Products"," Images & Videos"];
 
   const onDrop = (acceptedFiles) => {
     const newImages = acceptedFiles.map((file) => ({
@@ -2048,12 +2063,12 @@ function ProductFields() {
             customer is looking at.{" "}
           </p>
           <button
-            className={`  text-base font-medium p-2 flex items-center  ${
+            className={`  text-base font-medium p-2 rounded-md  h-8 flex items-center  ${
               buttonClick ? "bg-white text-blue-900" : "bg-blue-900 text-white"
             }`}
             onClick={handleRelateclick}
           >
-            <img src={filter} className="w-6 h-4 px-1" />
+            <img src={filter} className="w-6 h-3 px-1" />
             Filter
           </button>
         </div>
@@ -2211,7 +2226,7 @@ function ProductFields() {
             at.
           </p>
           <button
-            className={` text-base font-medium p-2 flex items-center ${
+            className={` text-base font-medium p-2 rounded-md  h-8 flex items-center ${
               ButtonUpClick
                 ? "bg-white text-blue-900"
                 : "bg-blue-900 text-white"
@@ -2367,7 +2382,7 @@ function ProductFields() {
             cross-sells to the items already in the shopping cart.
           </p>
           <button
-            className={` text-base font-medium  p-2 flex items-center ${
+            className={` text-base font-medium  p-2 rounded-md  h-8 flex items-center ${
               isButtonClicked
                 ? "bg-white text-blue-900"
                 : "bg-blue-900 text-white"
@@ -2519,7 +2534,9 @@ function ProductFields() {
         return (
           <div className="space-y-4">
             <p>Product Image: (Accepted Formats: JPEG, PNG)</p>
-            <div className="flex flex-col items-center p-4 border rounded-lg shadow-md">
+            <div className="flex flex-col  p-4 border rounded-lg shadow-md">
+            <h1 className="text-xl font-bold mb-4 text-justify">Upload Images</h1>
+
               <div
                 {...getRootProps()}
                 className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
@@ -2547,6 +2564,63 @@ function ProductFields() {
                   </div>
                 ))}
               </div>
+            </div>
+
+                <h1>Product Video :(Accepted Format :MP4,MPEG)  </h1>
+            <div className="border shadow-md flex w-full rounded-md  mb-4">
+
+              <div className="w-[50%]">
+              <div className="p-3">
+      <h1 className="text-xl font-bold mb-4">Upload Videos</h1>
+      <input
+        type="file"
+        accept="video/*"
+        multiple
+        onChange={handleVideoSelect}
+        className="block mb-4 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+      />
+      <div className="flex flex-wrap gap-4 mb-4">
+        {videoPreviews.map((preview, index) => (
+          <div key={index} className="w-1/4">
+            <video
+              src={preview}
+              controls
+              className="w-full rounded-lg shadow-md"
+            />
+          </div>
+        ))}
+      </div>
+      {selectedVideos.length > 0 && (
+        <button
+          onClick={handleClearSelection}
+          className="bg-red-500 h-7 text-white px-4  rounded shadow hover:bg-red-600"
+        >
+          Clear 
+        </button>
+      )}
+    </div>
+
+              </div>
+
+              <div className="flex flex-col w-[50%] p-4">
+
+                <div className="flex flex-col">
+                  <span>Url :</span>
+                  <input className="w-96 h-8 border  focus:outline-none  rounded-md focus:shadow focus:shadow-blue-400"/>
+                </div>
+                <div className="flex flex-col">
+                  <span>Title :</span>
+                  <input className="w-96 h-8 border focus:outline-none rounded-md focus:shadow focus:shadow-blue-400"/>
+                </div>
+                <div className="flex flex-col">
+                  <span>Description :</span>
+                  <textarea className="w-96 h-10 border focus:outline-none rounded-md focus:shadow focus:shadow-blue-400"/>
+                </div>
+
+              </div>
+             
+
+
             </div>
           </div>
         );

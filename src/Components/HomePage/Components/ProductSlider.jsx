@@ -119,10 +119,10 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                 <img
                   onClick={() => handleClick(index)}
                   src={favoriteItems[index] ? filledHeart : emptyHeart}
-                  className="absolute h-7 right-1 p-1 cursor-pointer"
+                  className="absolute h-7 w-7 right-1 p-1 cursor-pointer"
                   alt="Favorite Icon"
                 />
-                <img src={comp} className="absolute h-7 bottom-0 right-1 p-1" />
+                <img src={comp} className="absolute h-7 w-7 bottom-0 right-1 p-1" />
 
                 <img
                   src={item.img}

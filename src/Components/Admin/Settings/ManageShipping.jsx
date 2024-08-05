@@ -103,7 +103,7 @@ const ManageShipping = () => {
             Allowed Shipping
           </h2>
           <button
-            className="border rounded-full w-24 bg-blue-900 text-white h-9"
+            className="border rounded-md p-2 px-3 justify-center items-center font-bold bg-blue-900 text-white h-9"
             onClick={handleSave}
           >
             SAVE

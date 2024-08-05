@@ -129,7 +129,7 @@ const AddProducts = () => {
         <div className="w-full">
           <div className="flex justify-end">
             <button className="bg-green-300 p-1 flex items-center">
-              <img src={filter} className="w-8 h-8" />
+              <img src={filter} className="w-8 h-6" />
               Filter
             </button>
             <select className="ml-2">

@@ -40,7 +40,7 @@ function UpsShipping() {
       <div className='flex justify-between  border-b border-black my-5 p-4'>
         <h1 className='text-xl text-blue-900 font-semibold'>MARKETPLACE UPS CONFIGURATION</h1>
         <button 
-          className='border rounded-lg px-4 text-[15px] bg-blue-900 text-white '
+          className='border rounded-md p-2 px-3 font-bold flex justify-center items-center text-[15px] bg-blue-900 text-white '
           onClick={handleSubmit}
         >
           SAVE

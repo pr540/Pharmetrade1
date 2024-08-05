@@ -71,10 +71,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Landing2 from "./Landing2";
 import Sliders from "./Sliders";
-import banner1 from "../../../assets/Banner1.jpg";
-import banner2 from "../../../assets/Banner2.jpg";
-import banner3 from "../../../assets/Banner3.jpg";
-import banner4 from "../../../assets/Banner4.jpg";
+import banner1 from "../../../assets/BannerText1.png";
+import banner2 from "../../../assets/BannerText2.jpg";
+import banner3 from "../../../assets/BannerText3.jpg";
+import banner4 from "../../../assets/BannerText4.jpg";
 import "./Landing.css";
 
 function Landing({ topMargin, wishList, addCart }) {
@@ -102,7 +102,7 @@ function Landing({ topMargin, wishList, addCart }) {
             <Slider {...settings}>
               <div>
                 <img
-                  src={banner3}
+                  src={banner1}
                   alt="Carousel Image 1"
                   className="w-full h-[350px]"
                 />
@@ -116,7 +116,7 @@ function Landing({ topMargin, wishList, addCart }) {
               </div>
               <div>
                 <img
-                  src={banner1}
+                  src={banner3}
                   alt="Carousel Image 3"
                   className="w-full h-[350px]"
                 />

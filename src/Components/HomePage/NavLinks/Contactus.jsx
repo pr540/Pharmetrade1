@@ -172,10 +172,10 @@ const Contactus = ({ topMargin }) => {
           </form>
         </div>
         <div className="w-[30%] h-full flex flex-col justify-center items-center bg-slate-200">
-          <div className="w-[200px] flex flex-col justify-center items-center my-6">
+          <div className="w-[210px] flex flex-col justify-center items-center my-6">
             <img src={location} className="h-10 w-12" />
             <h2 className="text-2xl text-blue-900 font-semibold">Location</h2>
-            <p className="text-[17px]">5 Cold Hill Road South, Unit 27, Mendham, NJ 07945</p>
+            <p className="text-[17px] w-full">5 Cold Hill Road South, Unit 27, Mendham, NJ 07945</p>
           </div>
           <div className="flex w-[200px] flex-col justify-center items-center my-6">
             <img src={call} className="h-10 w-10" />

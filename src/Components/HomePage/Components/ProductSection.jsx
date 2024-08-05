@@ -91,7 +91,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
               <img
                 onClick={() => handleClick(index)}
                 src={favoriteItems.includes(index) ? filledHeart : emptyHeart}
-                className="absolute h-7 right-1 p-1 cursor-pointer"
+                className="absolute h-6 w-6  right-1 p-1 cursor-pointer"
                 alt="Favorite Icon"
               />
               <img

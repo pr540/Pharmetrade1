@@ -280,7 +280,7 @@ function Landing2({wishList,addCart}) {
           src={allproduct}
           alt="Descriptive Alt Text"
           onClick={() => navigate("/products")}
-          className="cursor-pointer w-56 mb-8"
+          className="cursor-pointer w-48 mb-8"
         />
       </div>
     </div>

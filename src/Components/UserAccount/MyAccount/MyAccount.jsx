@@ -140,7 +140,7 @@ const MyAccount = () => {
         </h2>
 
         <div className="relative border rounded-lg  bg-white border-gray-400 mb-4">
-          <div className="absolute -top-6 ml-8 bg-blue-900 text-white rounded-lg flex p-3">
+          <div className="absolute -top-6 ml-8 bg-blue-900 text-white rounded-lg flex gap-2 p-3">
             <img src={myaccount} className="w-6 h-6" alt="My Account" />
             <button>User Id: 56683998</button>
           </div>

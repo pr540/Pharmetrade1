@@ -265,7 +265,7 @@ function Customers() {
           <div className="flex">
             <div className="flex p-1">
             <button className="bg-green-300 p-1 flex items-center">
-              <img src={filter} className="w-8 h-8" />
+              <img src={filter} className="w-8 h-6" />
               Filter
             </button>
             </div>

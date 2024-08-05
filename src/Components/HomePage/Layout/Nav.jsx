@@ -208,7 +208,7 @@ function Nav({ topDivRef, cartItems }) {
     >
       <div className=" flex flex-col w-full justify-between ">
         <ul className=" text-3xl w-full  ">
-          <div className="flex flex-row h-[60px] justify-between  gap-4 md:gap-12 lg:gap-10  items-center  text-xl fontbg-white text-gray-500 ">
+          <div className="flex flex-row h-[60px] justify-between  gap-4 md:gap-12 lg:gap-10  items-center  text-xl bg-white text-gray-500 ">
             <div>
               <img
                 src={Logo}
@@ -217,12 +217,12 @@ function Nav({ topDivRef, cartItems }) {
               />
             </div>
             <div className="  h-full   md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6 px-4 items-center">
-              <div className="flex gap-3 justify-around h-full  items-center j">
+              <div className="flex gap-3 justify-around h-full items-center j">
                 {MenuItems.map((item, index) => (
                   <li
-                    className={`text-blue-900  hover:border-gray-500 rounded-md flex justify-center p-1 px-1 items-center w-fit cursor-pointer font-medium text-[17px] ${
+                    className={`text-blue-900  hover:bg-slate-200  rounded-md flex justify-center p-1 px-2 items-center w-fit cursor-pointer font-medium text-[17px] ${
                       selectedIndex === index
-                        ? " bg-blue-900 text-white border-0 font-semibold"
+                        ? " bg-blue-900 hover:text-blue-900 text-white border-0 font-semibold"
                         : "border-transparent border-2"
                     }`}
                     key={item}
