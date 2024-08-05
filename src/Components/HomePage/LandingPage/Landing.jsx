@@ -65,122 +65,17 @@
 // export default Landing;
 
 
-
-
-// import React from "react";
-// import Slider from "react-slick"; // Import the Slider component from react-slick
-// import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
-// import "slick-carousel/slick/slick-theme.css";
-// import Landing2 from "./Landing2";
-// import Sliders from "./Sliders";
-// import banner1 from "../../../assets/Banner 1.jpg"
-// import banner2 from "../../../assets/Banner 2.jpg"
-// import banner3 from "../../../assets/Banner 3.jpg"
-
-
-// function Landing({ topMargin, wishList, addCart }) {
-//   const settings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//   };
-
-//   return (
-//     <div className="w-full font-sans">
-//       <div className="w-full">
-//         <div
-//           className="h-fit"
-//           style={{
-//             marginTop: `${topMargin}px`,
-//           }}
-//         >
-//           <div className=" w-full h-[350px] overflow-hidden">
-//             <Slider {...settings}>
-//               <div>
-//                 <img
-//                   src={banner3}
-//                   alt="Carousel Image 1"
-//                   className="w-full h-[350px] " // Adjust height here
-//                 />
-//               </div>
-//               <div>
-//                 <img
-//                   src={banner2}
-//                   alt="Carousel Image 2"
-//                   className="w-full h-[350px] " // Adjust height here
-//                 />
-//               </div>
-//               <div>
-//                 <img
-//                   src={banner1}
-//                   alt="Carousel Image 3"
-//                   className="w-full h-[350px]" // Adjust height here
-//                 />
-//               </div>
-//             </Slider>
-//           </div>
-//         </div>
-//         <div className="w-full bg-slate-200 px-6">
-//           <Landing2 addCart={addCart} wishList={wishList} />
-//           <Sliders addCart={addCart} wishList={wishList} />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Landing;
-
-
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Landing2 from "./Landing2";
 import Sliders from "./Sliders";
-import banner1 from "../../../assets/Banner1offer.jpg";
-import banner2 from "../../../assets/Banner4offer.png";
-import banner3 from "../../../assets/Banner 3.jpg";
-import leftArrow from "../../../assets/Arrow2.png"; // Import your left arrow image
-import rightArrow from "../../../assets/Arrow1.png"; // Import your right arrow image
-
-// Custom arrow components with images
-const Arrow = ({ className, style, onClick, direction }) => {
-  const arrowStyle = {
-    position: "absolute",
-    width: "40px",
-    height: "40px",
-    background: "transparent",
-    borderRadius: "50%",
-    cursor: "pointer",
-    zIndex: 1,
-  };
-
-  return (
-    <div
-      className={`${className} ${direction}`}
-      style={arrowStyle}
-      onClick={onClick}
-    >
-      {direction === "left" ? (
-        <img
-          src={leftArrow}
-          alt="Left Arrow"
-          style={{ width: "100%", height: "100%", position:"relative", left:"30px" }}
-        />
-      ) : (
-        <img
-          src={rightArrow}
-          alt="Right Arrow"
-          style={{ width: "100%", height: "100%", position:"relative", right:"30px"}}
-        />
-      )}
-    </div>
-  );
-};
-
+import banner1 from "../../../assets/Banner1.jpg";
+import banner2 from "../../../assets/Banner2.jpg";
+import banner3 from "../../../assets/Banner3.jpg";
+import banner4 from "../../../assets/Banner4.jpg";
+import "./Landing.css";
 
 function Landing({ topMargin, wishList, addCart }) {
   const settings = {
@@ -189,8 +84,9 @@ function Landing({ topMargin, wishList, addCart }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <Arrow direction="left" />,
-    nextArrow: <Arrow direction="right" />,
+    arrows: true,
+    autoplay: true,       // Auto play slides
+    autoplaySpeed: 3000,  // Slide change interval (3 seconds)
   };
 
   return (
@@ -202,13 +98,13 @@ function Landing({ topMargin, wishList, addCart }) {
             marginTop: `${topMargin}px`,
           }}
         >
-          <div className="w-full h-[350px] overflow-hidden">
+          <div className="w-full relative h-[350px] overflow-hidden">
             <Slider {...settings}>
               <div>
                 <img
                   src={banner3}
                   alt="Carousel Image 1"
-                  className="w-full h-[350px]  "
+                  className="w-full h-[350px]"
                 />
               </div>
               <div>
@@ -222,6 +118,13 @@ function Landing({ topMargin, wishList, addCart }) {
                 <img
                   src={banner1}
                   alt="Carousel Image 3"
+                  className="w-full h-[350px]"
+                />
+              </div>
+              <div>
+                <img
+                  src={banner4}
+                  alt="Carousel Image 4"
                   className="w-full h-[350px]"
                 />
               </div>

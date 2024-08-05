@@ -37,6 +37,8 @@ import { IoSearchOutline, IoLockClosedOutline } from "react-icons/io5";
 import { LuClipboardList } from "react-icons/lu";
 import AnimatedText from "../Components/AnimatedText";
 import MobileView from "../Components/MobileView";
+import offersbanner from "../../../assets/Offersbanner.webp"
+import OffersSlider from "../Components/OfferBannerSlider";
 
 function Sliders({wishList,addCart}) {
   const searchBarRef = useRef(null);
@@ -134,6 +136,10 @@ function Sliders({wishList,addCart}) {
         {/* <div>
           <ProductSlider Title={"New Products"} data={newProducts} />
         </div> */}
+        
+        <div className="mt-8">
+          <OffersSlider />
+        </div>
 
         <div
           className={

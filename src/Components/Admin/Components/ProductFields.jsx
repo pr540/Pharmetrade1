@@ -1224,15 +1224,16 @@
 // export default ProductFields;
 
 
-
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 // import OtherProductFields from "./OtherProductFields";
 import filter from "../../../assets/Icons/filter_icon.png";
-
-
+import deleteicon from '../../../assets/trash.png'
 function ProductFields() {
+
+
+
 
   const products = [
     {
@@ -1322,7 +1323,7 @@ function ProductFields() {
       setButtonClicked(false);
     };
 
-  const tabs = ["General Info", "Details","Details","Details", "Details","Product Image"];
+  const tabs = ["Product Info", "Price Details"," Key Details","Related Products", " Products","Product Image"];
 
   const onDrop = (acceptedFiles) => {
     const newImages = acceptedFiles.map((file) => ({
@@ -1354,12 +1355,12 @@ function ProductFields() {
     switch (activeTab) {
       case 0:
         return (
-          <div className="space-y-4 w-full flex">
+          // <div className="space-y-4 w-full flex">
             <div className="  h-full flex ">
 
 
               <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm">
-                <div className="w-[95%] mx-4">
+                <div className="w-[80%] mx-4">
                   <div className="flex gap-4 my-4">
                     <div>
                       <label>
@@ -1482,7 +1483,7 @@ function ProductFields() {
                 </div>
               </div>
 
-              <div className="w-[25%]">
+              <div className="w-[20%]">
                 <div className="my-3 ">
                   <p className="text-sm">Product Image: ( JPEG, PNG)</p>
                   <div className="flex flex-col items-center p-4 border rounded-lg shadow-md">
@@ -1505,9 +1506,11 @@ function ProductFields() {
                           />
                           <button
                             onClick={() => removeImage(index)}
-                            className="text-sm  text-red-500 bg-white rounded-full p-1 hover:bg-gray-100"
+                            className=" rounded-full p-1 hover:bg-gray-100 text-red-400"
                           >
-                            <FaTrash className="" />
+                            <img src={deleteicon} className="w-24"/>
+
+                            {/* <FaTrash className="w-4" /> */}
                           </button>
                         </div>
                       ))}
@@ -1516,7 +1519,7 @@ function ProductFields() {
                 </div>
               </div>
             </div>
-          </div>
+          // </div> 
         );
       case 1:
         return (
@@ -1748,7 +1751,7 @@ function ProductFields() {
         return (
          <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm ">
           <div className=" ">
-           <div className="flex justify-between items-baseline w-full  Largest:w-[95%]  my-6 gap-6">
+           <div className="flex justify-between items-baseline w-full  Largest:w-[80%]  my-6 gap-6">
           <div className="flex flex-col">
             <label className="text-sm">
               Uri Key : (Related to google <br />
@@ -1880,9 +1883,9 @@ function ProductFields() {
                   <th className="  font-normal  text-base  text-center  ">
                     Action
                   </th>
-                  <th className="   font-normal   text-base  text-left  ">
+                  <th className="   font-normal   text-base  text-center  ">
                     <button
-                      className="border border-gray-950 bg-white text-black w-14"
+                      className="border border-gray-950 -ml-3 bg-white text-black w-14"
                       onClick={handleClick}
                     >
                       Add
@@ -2538,7 +2541,8 @@ function ProductFields() {
                       onClick={() => removeImage(index)}
                       className="text-sm absolute top-0 right-0 m-1 text-red-500 bg-white rounded-full p-1 hover:bg-gray-100"
                     >
-                      <FaTrash />
+                      <img src={deleteicon} className="w-4"/>
+                      {/* <FaTrash /> */}
                     </button>
                   </div>
                 ))}
@@ -2554,17 +2558,17 @@ function ProductFields() {
   return (
     <div className="w-full max-w-4xl mx-auto mt-10">
       <div className="flex flex-col justify-center  items-center">
-        <h1 className="  text-2xl font-medium text-blue-900">ADD PRODUCT</h1>
-        <p className="border-b border-blue-500 w-48 "></p>
+        <h1 className="text-2xl font-medium text-blue-900">ADD PRODUCT</h1>
+        <p className="border-b border-blue-900 w-48 "></p>
       </div>
-      <div className="border-b border-gray-200 mb-6">
+      <div className=" mb-6">
         <ul className="flex">
           {tabs.map((tab, index) => (
-            <li key={index} className="mr-2">
+            <li key={index} className=" mr-2 ">
               <button
-                className={`px-4 py-2 focus:outline-none ${activeTab === index
-                  ? "text-blue-500 border-b-2 border-blue-500"
-                  : "text-gray-500"
+                className={`w-full flex justify-center items-center px-2 py-1 mt-7  border shadow-md m-1 rounded-md border-blue-900 ${activeTab === index
+                  ? "text-white  bg-blue-900"
+                  : "text-blue-900"
                   }`}
                 onClick={() => setActiveTab(index)}
               >

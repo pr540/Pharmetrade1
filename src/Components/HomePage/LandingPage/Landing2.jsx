@@ -233,13 +233,12 @@ function Landing2({wishList,addCart}) {
 
       <div className="flex flex-col items-center ">
         <p className=" text-[45px] xl:text-4xl font-semibold mt-10 ">
-          Grow your business with Pharm<span className="text-green-500">E</span>trade
+          Grow your business with PharmEtrade
         </p>
         <br></br>
-        <p className="text-xl font-light text-gray-900 xl:text-xl">
+        <p className="text-xl mb-2 font-light text-gray-900 xl:text-xl">
           We understand your needs. We care about your business.
         </p>
-        <br></br>
         <p className="text-xl font-light xl:text-xl">
           We've designed a platform especially for you. Start saving today.
         </p>
@@ -281,7 +280,7 @@ function Landing2({wishList,addCart}) {
           src={allproduct}
           alt="Descriptive Alt Text"
           onClick={() => navigate("/products")}
-          className="cursor-pointer w-64 mb-8"
+          className="cursor-pointer w-56 mb-8"
         />
       </div>
     </div>

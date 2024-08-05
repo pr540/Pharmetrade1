@@ -60,12 +60,12 @@ const OfferSlider = ({ images, Title }) => {
       <div className="w-full px-1 flex justify-between">
         <div
           ref={carouselContainer}
-          className="flex w-full  gap-2 overflow-x-scroll "
+          className="flex w-full   gap-2 overflow-x-scroll "
         >
           {images.map((img, index) => (
-            <div key={index} className="border bg-white shadow-2xl min-w-[300px] Laptop:min-w-[320px] p-4 relative flex flex-col items-center justify-center">
+            <div key={index} className="border bg-white shadow-2xl min-w-[300px] Laptop:min-w-[320px] p-4 relative flex flex-col gap-3 items-center justify-center">
               {index < overlayTexts.length && (
-                <p className="mb-2 text-lg font-semibold">
+                <p className=" w-full text-[17px] font-semibold">
                   {overlayTexts[index]}
                 </p>
               )}

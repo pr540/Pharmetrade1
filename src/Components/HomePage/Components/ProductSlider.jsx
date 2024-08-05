@@ -5,12 +5,14 @@ import right from "../../../assets/arrowright.png";
 import addcart from "../../../assets/cartw_icon.png";
 import emptyHeart from "../../../assets/Wishlist1_icon.png";
 import filledHeart from "../../../assets/wishlist2_icon.png";
-import comp from "../../../assets/Compare2_icon.png";
+import comp from "../../../assets/CompareNav2.png";
 import nature from "../../../assets/img1.png";
 
 const ProductSlider = ({ data, Title, addCart, wishList }) => {
   const [rating, setRating] = useState(0);
   const [favoriteItems, setFavoriteItems] = useState({});
+  const [cartQuantities, setCartQuantities] = useState({});
+
   const totalStars = 5;
   const images = Array(115).fill(nature);
 
@@ -29,25 +31,42 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
       behavior: "smooth",
     });
   };
-  function handleCart(index) {
-    console.log("hmm");
-    const prolist = {
-      id: index,
-      src: images[index],
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    addCart(prolist);
-  }
-
-  function handleClick(index) {
-    setFavoriteItems(prevState => ({
-      ...prevState,
-      [index]: !prevState[index]
+  const handleCart = (index) => {
+    const currentQuantity = cartQuantities[index] || 0;
+    if (currentQuantity === 0) {
+      const prolist = {
+        id: index,
+        src: images[index],
+        price: "$50.99",
+        rate: "SKU 6545555",
+        rates: "UPN member price:",
+        ratesupn: "$45.00",
+      };
+      addCart(prolist);
+    }
+    setCartQuantities((prev) => ({
+      ...prev,
+      [index]: currentQuantity + 1,
     }));
-    // alert("Add 1 item into wishlist");
+  };
+
+  const handleQuantityChange = (index, delta) => {
+    setCartQuantities((prev) => {
+      const newQuantity = (prev[index] || 0) + delta;
+      if (newQuantity <= 0) {
+        const updatedQuantities = { ...prev };
+        delete updatedQuantities[index];
+        return updatedQuantities;
+      }
+      return { ...prev, [index]: newQuantity };
+    });
+  };
+
+  const handleClick = (index) => {
+    setFavoriteItems((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
     const prolist = {
       id: index,
       src: images[index],
@@ -57,7 +76,7 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
       ratesupn: "$45.00",
     };
     wishList(prolist);
-  }
+  };
   const Star = ({ filled, onClick }) => (
     <span
       onClick={onClick}
@@ -67,8 +86,8 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
     </span>
   );
   return (
-    <div className="flex mt-6 flex-col justify-center pb-4 gap-6  ">
-      <div className="flex justify-between ml-4  font-semibold text-3xl">
+    <div className="flex mt-6 flex-col justify-center pb-4 gap-6">
+      <div className="flex justify-between ml-4 font-semibold text-3xl">
         <p>{Title}</p>
 
         <div className="flex justify-end mr-14 gap-2">
@@ -86,18 +105,17 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
           </button>
         </div>
       </div>
-      <div className="w-full p-4 flex justify-center bg-white ">
+      <div className="w-full p-4 flex justify-center bg-white">
         <div
           ref={carouselContainer}
-          className=" flex w-full gap-6 overflow-x-scroll snap-x snap-mandatory"
+          className="flex w-full gap-6 overflow-x-scroll snap-x snap-mandatory"
         >
           {data.map((item, index) => (
             <div
               key={index}
               className="snap-center border rounded-sm bg-white shrink-0"
             >
-              <div className="relative  bg-slate-100 m-2">
-                {/* <img onClick={()=>handleClick(index)} src={fav} className="absolute h-6 right-1 p-1" /> */}
+              <div className="relative bg-slate-100 m-2">
                 <img
                   onClick={() => handleClick(index)}
                   src={favoriteItems[index] ? filledHeart : emptyHeart}
@@ -108,22 +126,16 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
 
                 <img
                   src={item.img}
-                  className="h-48 w-48  object-contain rounded-lg "
+                  className="h-48 w-48 object-contain rounded-lg"
                 />
               </div>
-              <div className=" p-2 ">
-                <div className="flex justify-between  flex-col font-medium">
+              <div className="p-2">
+                <div className="flex justify-between flex-col font-medium">
                   <h2 className="text-black font-bold">{item.name}</h2>
-                  {/* <div className="flex  justify-between items-center"> */}
-                    <div className="flex gap-1 items-center ">
-                      <h3 className=" text-black font-semibold">
-                        {item.price}
-                      </h3>
-                      <span className="text-[10px] line-through">($99.69)</span>
-                      {/* <h3 className=" text-gray-600">{"$50.00"}</h3> */}
-                    </div>
-                    
-                  {/* </div> */}
+                  <div className="flex gap-1 items-center">
+                    <h3 className="text-black font-semibold">{item.price}</h3>
+                    <span className="text-[10px] line-through">($99.69)</span>
+                  </div>
                 </div>
                 <div>
                   {Array.from({ length: totalStars }, (v, i) => (
@@ -133,24 +145,33 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                       onClick={() => setRating(i + 1)}
                     />
                   ))}
-                  {/* <p>The rating is {rating} out of {totalStars}.</p> */}
                 </div>
-                {/* <div className="flex  border-gray-300   items-center">
-                  {/* <div className="flex items-center ">
-                    <img src={addcart} className="h-8 p-1 " />
-                    <p className="text-blue-900 font-semibold">Add to Cart</p>
-                  </div> 
-                  {/* <div>
-                    <img src={fav} className="h-8 p-1" />
+                {cartQuantities[index] ? (
+                  <div className="flex text-white justify-between items-center px-3 gap-2 mt-2">
+                    <button
+                      onClick={() => handleQuantityChange(index, -1)}
+                      disabled={(cartQuantities[index] || 0) <= 0}
+                      className="bg-blue-900 w-[30px]  p-1 rounded-lg"
+                    >
+                      -
+                    </button>
+                    <span className="px-2 text-black">{cartQuantities[index]}</span>
+                    <button
+                      onClick={() => handleQuantityChange(index, 1)}
+                      className="bg-blue-900 w-[30px]  p-1 rounded-lg"
+                    >
+                      +
+                    </button>
                   </div>
-                  <div>
-                    <img src={other} className="h-8 p-1" />
-                  </div> 
-                </div> */}
-                <div onClick={() => handleCart(index)} className="bg-blue-900 flex p-1 rounded-lg justify-center items-center">
-                      <img src={addcart} className="h-7 p-1 " />
-                      <p className="text-white">ADD</p>
-                    </div>
+                ) : (
+                  <div
+                    onClick={() => handleCart(index)}
+                    className="bg-blue-900 flex gap-1 p-1 rounded-lg justify-center items-center mt-2 cursor-pointer"
+                  >
+                    <img src={addcart} className="h-7 p-1" />
+                    <p className="text-white font-semibold">ADD</p>
+                  </div>
+                )}
               </div>
             </div>
           ))}

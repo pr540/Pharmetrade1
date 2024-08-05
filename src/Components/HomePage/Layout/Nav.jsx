@@ -15,10 +15,14 @@ import note from "../../../assets/Icons/Compare.png";
 // import sale from "../../../assets/Sell.png";
 // import join from "../../../assets/Join.png";
 // import bid from "../../../assets/Bid.png";
-import Buy from "../../../assets/Buy1.png";
-import join from "../../../assets/Join1.png";
-import sell from "../../../assets/Sell1.png";
-import bid from "../../../assets/Bid1.png";
+// import Buy from "../../../assets/Buy1.png";
+// import join from "../../../assets/Join1.png";
+// import sell from "../../../assets/Sell1.png";
+// import bid from "../../../assets/Bid1.png";
+import join from "../../../assets/Join3d.png";
+import Buy from "../../../assets/buy3d.png";
+import sell from "../../../assets/sell3d.png";
+import bid from "../../../assets/Bid3d.png";
 import BackgroundImage from "../../../assets/BackgroundImage.png";
 import { Link, useNavigate } from "react-router-dom";
 import menu from "../../../assets/menu.png";
@@ -92,10 +96,10 @@ function Nav({ topDivRef, cartItems }) {
   ];
 
   const downDivItems = [
-    { label: "Buy", icon: Buy, path: "/products" },
-    { label: "Join", icon: join, path: "/login" },
-    { label: "Sell", icon: sell, path: "/admin/addproducts/Create" },
-    { label: "Bid", icon: bid, path: "/bid" },
+    { label: "BUY", icon: Buy, path: "/products" },
+    { label: "JOIN", icon: join, path: "/login" },
+    { label: "SELL", icon: sell, path: "/admin/addproducts/Create" },
+    { label: "BID", icon: bid, path: "/bid" },
     // { label: "LinkedIn", icon: linkedin, path: "#" },
     // { label: "Facebook", icon: facebook, path: "#" },
     // { label: "Insta", icon: insta, path: "#" },
@@ -179,6 +183,23 @@ function Nav({ topDivRef, cartItems }) {
   function hanldeUp(items) {
     setPopUps(items);
   }
+  const [isContainerFocused, setIsContainerFocused] = useState(false);
+  const [isButtonFocused, setIsButtonFocused] = useState(false);
+  const handleFocusIn = (e) => {
+    if (e.target.className.includes("container-focus")) {
+      setIsContainerFocused(true);
+    } else if (e.target.className.includes("button-focus")) {
+      setIsButtonFocused(true);
+    }
+  };
+
+  const handleFocusOut = (e) => {
+    if (e.target.className.includes("container-focus")) {
+      setIsContainerFocused(false);
+    } else if (e.target.className.includes("button-focus")) {
+      setIsButtonFocused(false);
+    }
+  };
 
   return (
     <div
@@ -325,7 +346,7 @@ function Nav({ topDivRef, cartItems }) {
                     <img
                       src={like}
                       onClick={handleclick}
-                      className="w-2 md:w-4 lg:w-6 xl:w-8 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
+                      className="w-1 md:w-3 lg:w-5 xl:w-7 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
                     />{" "}
                   </a>
                 </li>
@@ -352,7 +373,7 @@ function Nav({ topDivRef, cartItems }) {
               <li
                 key={index}
                 onClick={() => navigate(item.path)}
-                className={`flex gap-1 items-center justify-center cursor-pointer hover:text-green-400 ${
+                className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-green-400 ${
                   item.label == "Sell"
                     ? FormData?.userType === "Normal Customer"
                       ? "hidden"
@@ -369,14 +390,22 @@ function Nav({ topDivRef, cartItems }) {
               </li>
             ))}
           </div>
-          <div className="flex items-center  w-[40%]  lg:gap-10 ">
+          <div className="flex bg-white rounded-l-md items-center w-[40%] lg:gap-10">
             <div
               ref={dropdownRef}
-              className="w-full relative flex items-center"
+              className={`w-full relative flex items-center ${
+                isContainerFocused ? "ring-2 ring-blue-500 rounded-md" : ""
+              }`}
+              onFocus={handleFocusIn}
+              onBlur={handleFocusOut}
             >
               <button
-                className="h-11 pl-3 font-medium text-left text-[14px] flex items-center text-gray-600  bg-gray-100 border-gray-300 rounded-l-md border focus:ring-2 focus:ring-blue-500 "
+                className={`h-12 pl-2 mr-[1px] font-semibold text-left gap-1 text-[14px] flex items-center text-gray-600 bg-gray-100 border-gray-300 rounded-l-md border ${
+                  isButtonFocused ? "ring-2 ring-blue-500" : ""
+                } button-focus`}
                 onClick={handleDropdownToggle}
+                onFocus={handleFocusIn}
+                onBlur={handleFocusOut}
               >
                 All
                 <span>
@@ -390,7 +419,6 @@ function Nav({ topDivRef, cartItems }) {
                   style={{ top: "30px", left: "0px" }}
                 >
                   <div className="bg-white px-4 py-3 rounded shadow-lg w-64">
-                    {/* <div className="w-full justify-center items-center"></div> */}
                     {components.map((items, index) => (
                       <ul key={index}>
                         <li className="">
@@ -408,7 +436,7 @@ function Nav({ topDivRef, cartItems }) {
                                 top: "0%",
                                 left: "100%",
                                 width: "150px",
-                              }} // Adjust width and position as needed
+                              }}
                             >
                               {items.component}
                             </div>
@@ -420,19 +448,18 @@ function Nav({ topDivRef, cartItems }) {
                 </div>
               )}
 
-              <div className=" flex w-full h-11 border ">
+              <div className="flex w-full h-12 border container-focus">
                 <input
                   type="text"
                   placeholder="Search for products..."
-                  className="flex-grow  p-4 borde-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-grow p-4 border-none focus:outline-none container-focus"
                 />
-                <a className="w-[40px] flex items-center justify-center  p-2 bg-blue-900 text-white  border-blue-500 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <a className="w-[40px] flex items-center justify-center p-2 bg-blue-900 text-white border-blue-500 rounded-r-md focus:outline-none container-focus">
                   <img src={search} />
                 </a>
               </div>
             </div>
           </div>
-
           <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
             {downSocialItems.map((item, index) => (
               <li
