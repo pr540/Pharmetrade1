@@ -7,7 +7,7 @@ import { useState } from "react";
 
 function AdminPanel() {
   return (
-    <div className="flex flex-col h-screen overflow-hidden  w-screen bg-gray-100 font-ubuntu">
+    <div className="flex flex-col h-screen overflow-hidden  w-screen bg-gray-100 ">
       <AdminNav />
       <div className="flex w-screen h-full overflow-hidden   ">
         <Sidebar />

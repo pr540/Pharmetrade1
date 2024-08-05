@@ -150,7 +150,7 @@ function Sliders({wishList,addCart}) {
         >
           <div className="border-2 md:p-0 border-white w-auto md:h-5% md:w-auto xl:w-auto xl:h-5% lg:ml-4 xl:flex xl:justify-center lg:mr-4 lg:mt-4 lg:mb-4 xl:ml-12 rounded-md">
             <p className="absolute xl:top-4 z-5 right-1/2  h-5% bg-box-blue text-white px-4 py-2 rounded-md  text-2xl">
-              Get in touch{" "}
+              Get In Touch{" "}
             </p>
             <div className="ml-10 md:flex md:flex-row md:gap-10 lg:gap-20 xl:flex xl:flex-row xl:gap-50 ">
               <div className="flex items-center justify-center lg:pb-4 lg:pl-4 xl:pr-4">

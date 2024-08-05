@@ -1171,7 +1171,7 @@ const Signup = () => {
                 />
                 <label className="text-gray-700 ml-1 ">
                   Please Accepts for PharmEtrade{" "}
-                  <Link to="/" className="text-red-500">
+                  <Link to="/termsandconditions" className="text-red-500">
                     Terms& Conditions{" "}
                   </Link>
                 </label>

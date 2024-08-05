@@ -217,13 +217,13 @@ function Nav({ topDivRef, cartItems }) {
               />
             </div>
             <div className="  h-full   md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6 px-4 items-center">
-              <div className="flex gap-6 justify-around h-full">
+              <div className="flex gap-3 justify-around h-full  items-center j">
                 {MenuItems.map((item, index) => (
                   <li
-                    className={`text-blue-900 flex justify-center items-center w-fit cursor-pointer font-medium text-[17px] ${
+                    className={`text-blue-900  hover:border-gray-500 rounded-md flex justify-center p-1 px-1 items-center w-fit cursor-pointer font-medium text-[17px] ${
                       selectedIndex === index
-                        ? "text-green-500"
-                        : "hover:text-green-500"
+                        ? " bg-blue-900 text-white border-0 font-semibold"
+                        : "border-transparent border-2"
                     }`}
                     key={item}
                     onClick={() => handleSelect(index)}
@@ -232,6 +232,8 @@ function Nav({ topDivRef, cartItems }) {
                   </li>
                 ))}
               </div>
+
+          
 
               <div className=" flex  flex-row gap-4 text-md  items-center font-thin">
                 <div

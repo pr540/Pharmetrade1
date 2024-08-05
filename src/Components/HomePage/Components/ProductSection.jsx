@@ -27,11 +27,9 @@
 
 // export default ProductSection;
 
-
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import addcart from "../../../assets/cart1_icon.png";
+import addcart from "../../../assets/cartw_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
 import nature from "../../../assets/img1.png";
 import emptyHeart from "../../../assets/Wishlist1_icon.png";
@@ -64,13 +62,18 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
       setFavoriteItems([...favoriteItems, index]);
     } else {
       // Remove from wishlist
-      const updatedItems = favoriteItems.filter(itemIndex => itemIndex !== index);
+      const updatedItems = favoriteItems.filter(
+        (itemIndex) => itemIndex !== index
+      );
       setFavoriteItems(updatedItems);
     }
   };
 
   const Star = ({ filled, onClick }) => (
-    <span onClick={onClick} style={{ cursor: "pointer", fontSize: "25px", color: "orange" }}>
+    <span
+      onClick={onClick}
+      style={{ cursor: "pointer", fontSize: "25px", color: "orange" }}
+    >
       {filled ? "★" : "☆"}
     </span>
   );
@@ -78,10 +81,13 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
   return (
     <div className="bg-white w-full p-4">
       <h1 className="text-2xl font-bold text-text-blue">{heading}</h1>
-      <div className="grid grid-cols-3 grid-rows-2 p-2">
+      <div className="grid grid-cols-3 grid-rows-2  p-2">
         {products.map((item, index) => (
-          <div key={item.id} className="snap-center border rounded-lg bg-gray-200 shrink-0 m-3">
-            <div className="relative rounded-t-lg bg-white">
+          <div
+            key={item.id}
+            className="snap-center border rounded-sm bg-white shrink-0 m-3"
+          >
+            <div className="relative rounded-t-sm bg-slate-100 m-2">
               <img
                 onClick={() => handleClick(index)}
                 src={favoriteItems.includes(index) ? filledHeart : emptyHeart}
@@ -90,7 +96,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
               />
               <img
                 src={item.img} // Assuming item.img contains image URL
-                className="h-48 w-48 object-contain rounded-lg"
+                className="h-40 w-40 object-contain rounded-lg"
                 alt={item.name}
               />
               <img
@@ -103,12 +109,9 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
               <div className="flex justify-between flex-col font-medium">
                 <h2 className="text-black font-bold">{item.name}</h2>
                 <div className="flex justify-between items-center">
-                  <div className="flex gap-2">
-                    <h3 className="text-gray-600 line-through">{item.price}</h3>
-                    <h3 className="text-gray-600">{"$50.00"}</h3>
-                  </div>
-                  <div onClick={() => handleCart(index)}>
-                    <img src={addcart} className="h-7 p-1" alt="Add to Cart Icon" />
+                  <div className="flex gap-1 items-center">
+                    <h3 className="text-black font-semibold">{item.price}</h3>
+                    <span className="text-[10px] line-through">($99.69)</span>
                   </div>
                 </div>
               </div>
@@ -120,6 +123,16 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
                     onClick={() => setRating(i + 1)}
                   />
                 ))}
+              </div>
+              {/* <div onClick={() => handleCart(index)}>
+                <img src={addcart} className="h-7 p-1" alt="Add to Cart Icon" />
+              </div> */}
+              <div
+                onClick={() => handleCart(index)}
+                className="bg-blue-900 flex gap-1 p-1 rounded-lg justify-center items-center  cursor-pointer"
+              >
+                <img src={addcart} className="h-7 p-1" />
+                <p className="text-white font-semibold">ADD</p>
               </div>
             </div>
           </div>

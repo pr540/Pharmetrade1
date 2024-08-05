@@ -62,6 +62,7 @@ import WhyPharma from "./Components/HomePage/NavLinks/WhyPharma";
 import AboutUs from "./Components/HomePage/NavLinks/AboutUs";
 import Contactus from "./Components/HomePage/NavLinks/Contactus";
 import Offers from "./Components/HomePage/NavLinks/Offers";
+import TermsAndConditions from "./Components/TermsAndConditions";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -101,6 +102,7 @@ function App() {
       )} */}
       <Routes>
         <Route path="/signup" element={<Signup />} />
+        <Route path="/termsandconditions" element={<TermsAndConditions />} />
         <Route path="/login" element={<Signin />} />
         <Route path="/otp2" element={<OTP2 />} />
         <Route path="/password" element={<Password />} />
