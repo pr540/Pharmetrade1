@@ -120,7 +120,7 @@ function PRight({ topMargin, addCart, wishList }) {
   }));
 
   return (
-    <div className="w-full mt-1 h-full overflow-y-scroll">
+    <div className="w-full mt-4 h-full overflow-y-scroll">
       <div className=" flex justify-between bg-blue-900 p-2 rounded-lg">
         <div className="text-2xl text-white"> Rx Drug</div>
 

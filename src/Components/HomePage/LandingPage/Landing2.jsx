@@ -232,10 +232,9 @@ function Landing2({wishList,addCart}) {
       </div>
 
       <div className="flex flex-col items-center ">
-        <p className=" text-[45px] xl:text-4xl font-semibold mt-10 ">
+        <p className=" text-[45px] mb-2 xl:text-4xl font-semibold mt-10 ">
           Grow your business with PharmEtrade
         </p>
-        <br></br>
         <p className="text-xl mb-2 font-light text-gray-900 xl:text-xl">
           We understand your needs. We care about your business.
         </p>
@@ -246,17 +245,10 @@ function Landing2({wishList,addCart}) {
           <img src={line} className="w-fit h-8 mt-6" />
         </p>
       </div>
-      {/* <div>
-        <OfferSlider images={screens} Title={"Special Offers"} />
-      </div>
-      <div>
-        <ProductSlider Title={"Recent Sold Products"} data={newProducts} />
-      </div> */}
-      <div className="flex items-center justify-evenly ">
+      <div className="flex items-center -mb-8 justify-evenly">
         <div
           className="bg-yellow-50 p-4 rounded-2xl transition duration-300"
-          style={{ height: "fit-content" }}
-        >
+          style={{ height: "fit-content" }}>
           <ul className="space-y-2 lg:w-100% font-sans  xl:w-auto xl:pr-10 md:pb-6 md:text-lg xl:text-2xl xl:mt-6 font-medium pl-4">
             {texts.map((items, key) => (
               <li
@@ -270,7 +262,7 @@ function Landing2({wishList,addCart}) {
           </ul>
         </div>
         <div>
-          <img src={bg2} alt="Pharmacy" className="rounded-xl object-cover" />
+          <img src={bg2} alt="Pharmacy" className="rounded-xl  object-cover" />
         </div>
       </div>
 

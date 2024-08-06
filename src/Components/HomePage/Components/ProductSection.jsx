@@ -81,7 +81,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
   return (
     <div className="bg-white w-full p-4">
       <h1 className="text-2xl font-bold text-text-blue">{heading}</h1>
-      <div className="grid grid-cols-3 grid-rows-2  p-2">
+      <div className="grid grid-cols-3 grid-rows-1 gap-0  p-2">
         {products.map((item, index) => (
           <div
             key={item.id}

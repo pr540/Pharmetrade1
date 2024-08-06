@@ -119,7 +119,7 @@ function Sliders({wishList,addCart}) {
           <div className="w-[48%]">
             <ProductSection
              addCart={addCart} wishList={wishList}
-              products={newProducts.slice(0, 6)}
+              products={newProducts.slice(0, 3)}
               heading="Rx Items"
               path="/products"
             />
@@ -127,7 +127,7 @@ function Sliders({wishList,addCart}) {
           <div className="w-[48%]">
             <ProductSection
              addCart={addCart} wishList={wishList}
-              products={newProducts.slice(0, 6)}
+              products={newProducts.slice(0, 3)}
               heading="OTC Items"
               path="/bid"
             />

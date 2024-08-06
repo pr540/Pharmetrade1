@@ -250,6 +250,8 @@ const Signup = () => {
 
   const validateStep = (step) => {
     let newErrors = {};
+    const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     if (step === 0) {
       const regex = /^[a-zA-Z\s']+$/;
       const passwordRegex =
@@ -258,7 +260,6 @@ const Signup = () => {
         newErrors.First_Name = "First name is required.";
       if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
 
-      const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!formData.Email_id.match(regexp))
         newErrors.Email_id = "Email_id is required";
