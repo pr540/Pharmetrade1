@@ -113,17 +113,18 @@ import React from "react";
 import myaccount from "../../../assets/My Account.png";
 import { FaEnvelope, FaPhone } from "react-icons/fa";
 import MyOrders from "../MyOrders/MyOrders";
-
+import cell from '../../../assets/telephone-call .png'
+import email from '../../../assets/useremail.png'
 
 const userInfo = [
   {
-    icon: <FaEnvelope className="text-blue-500 mr-3" />,
+    icon: <img src={email} className="w-4 -mt-5" />,
     label: "Email Address",
     action: "Change email address",
     value: "Ram@phametrade.com",
   },
   {
-    icon: <FaPhone className="text-blue-500 mr-3" />,
+    icon: <img src={cell} className="w-4 -mt-5" />,
     label: "Mobile Number",
     action: "Change Mobile Number",
     value: "667-337-8934",
@@ -147,13 +148,18 @@ const MyAccount = () => {
           <div className="flex justify-between mt-10 px-2 py-4">
             {userInfo.map((info, index) => (
               <div key={index} className="flex items-center">
-                <div>{info.icon}</div>
-                <div>
-                  <p>
-                    {info.label} |{" "}
-                    <span className="text-blue-500">{info.action}</span>
+                <div className="px-2">{info.icon}</div>
+                <div >
+                  <div className="flex">
+                  <p className="font-semibold">
+                    {info.label} :{" "}
+                   
                   </p>
-                  <p>{info.value}</p>
+                  <span className="">{info.value}</span>
+                  </div>
+                  <p className="text-blue-500">
+                  {info.action}
+                  </p>
                 </div>
               </div>
             ))}
@@ -167,14 +173,14 @@ const MyAccount = () => {
           </div>
           <div className="flex justify-between">
             <div>
-              <h3 className="mb-2">DEFAULT BILLING ADDRESS</h3>
+              <h3 className="mb-2 font-semibold">DEFAULT BILLING ADDRESS</h3>
               <p>Venkat Gollapalli</p>
               <p>Valley Pharmacy</p>
               <p>107 rt 10 E</p>
               <p>Succasunna New Jersey 07876</p>
             </div>
             <div>
-              <h3 className="mb-2">DEFAULT SHIPPING ADDRESS</h3>
+              <h3 className="mb-2 font-semibold">DEFAULT SHIPPING ADDRESS</h3>
               <p>Venkat Gollapalli</p>
               <p>Valley Pharmacy</p>
               <p>107 rt 10 E</p>

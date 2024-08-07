@@ -92,7 +92,7 @@ function Nav({ topDivRef, cartItems }) {
     "Why PharmEtrade",
     "About Us",
     "Contact Us",
-    "Offers",
+    "Request Demo",
   ];
 
   const downDivItems = [
@@ -128,7 +128,7 @@ function Nav({ topDivRef, cartItems }) {
     { name: "Pain Relief & Management ", component: <Suppliments /> },
     { name: "Pediatric Care ", component: <Suppliments /> },
     { name: "Personal Care ", component: <Suppliments /> },
-    { name: "Pet  ", component: <Suppliments /> },
+    // { name: "Pet  ", component: <Suppliments /> },
     { name: "Prescription & Packaging  ", component: <Suppliments /> },
   ];
 
@@ -140,6 +140,7 @@ function Nav({ topDivRef, cartItems }) {
       navigate("/whypharmetrade");
     else if (MenuItems[index] === "About Us") navigate("/aboutus");
     else if (MenuItems[index] === "Contact Us") navigate("/contactus");
+    else if (MenuItems[index] === "Request Demo") navigate("/requestdemo");
   };
 
   let navigate = useNavigate();
@@ -213,14 +214,14 @@ function Nav({ topDivRef, cartItems }) {
               <img
                 src={Logo}
                 onClick={() => navigate("/")}
-                className="w-12 md:w-16 lg:w-32 xl:w-60 h-12 ml-2 md:ml-2 lg:ml-12 lg:overflow-x-hidden xl-0"
+                className="w-12 md:w-16 lg:w-32 xl:w-60 h-12 ml-2 md:ml-2 lg:ml-12 hover:cursor-pointer lg:overflow-x-hidden xl-0"
               />
             </div>
             <div className="  h-full   md:flex md:flex-row md:gap-4 lg:gap-4 xl:flex xl:flex-row xl:justify-between xl:gap-6 px-4 items-center">
               <div className="flex gap-3 justify-around h-full items-center j">
                 {MenuItems.map((item, index) => (
                   <li
-                    className={`text-blue-900  hover:bg-slate-200  rounded-md flex justify-center p-1 px-2 items-center w-fit cursor-pointer font-medium text-[17px] ${
+                    className={`text-blue-900  hover:bg-slate-200  rounded-md flex justify-center p-1 px-1 items-center w-fit cursor-pointer font-medium text-[17px] ${
                       selectedIndex === index
                         ? "bg-slate-200 hover:text-blue-900 text-blue-900 border-0 font-semibold"
                         : "border-transparent border-2"
@@ -368,8 +369,7 @@ function Nav({ topDivRef, cartItems }) {
         {/* down div elemenet  */}
         <div
           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen  
-           items-center text-black  border-grey-500 shadow-lg "
-        >
+           items-center text-black  border-grey-500 shadow-lg ">
           <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
             {downDivItems.map((item, index) => (
               <li

@@ -253,7 +253,7 @@ function Landing2({wishList,addCart}) {
             <img
               src={item}
               alt={`Slide ${key}`}
-              className="h-full w-full rounded-xl"
+              className="h-full w-full rounded-xl hover:cursor-pointer"
             />
           </div>
         ))}

@@ -54,7 +54,7 @@ const QuotedProducts = () => {
     <div className="relative bg-gray-100 w-full h-full flex justify-center items-center ">
       <div className=" w-[95%] h-full mt-8">
         <div className=" flex justify-between">
-          <p className="text-[22px] text-blue-900 font-medium">
+          <p className="text-[22px] text-blue-900 font-semibold">
             {" "}
             All Quoted Products{" "}
           </p>
@@ -92,8 +92,8 @@ const QuotedProducts = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-1 flex items-center">
-              <img src={filter} className="w-8 h-8" />
+            <button className="bg-green-300 p-2 h-7 rounded-md flex items-center">
+              <img src={filter} className="w-6 h-6" />
               Filter
             </button>{" "}
             <select className="ml-2">

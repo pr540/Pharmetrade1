@@ -64,12 +64,13 @@ import Contactus from "./Components/HomePage/NavLinks/Contactus";
 import Offers from "./Components/HomePage/NavLinks/Offers";
 import TermsAndConditions from "./Components/TermsAndConditions";
 import AddXlSheet from "./Components/Admin/Dashboard/Products/AddXlSheet";
+import RequestDemo from "./Components/HomePage/NavLinks/RequestDemo";
 
 function App() {
   const [count, setCount] = useState(0);
   const location1 = useLocation();
   useEffect(() => {
-    console.log("Scrolling at top")
+    console.log("Scrolling at top");
     window.scrollTo(0, 0);
   }, [location1.pathname]);
   console.log(window.location.href.includes("/products"));
@@ -124,7 +125,13 @@ function App() {
           />
           <Route
             path="/products"
-            element={<Products addCart={addCart} wishList={wishList} topMargin={topMargin} />}
+            element={
+              <Products
+                addCart={addCart}
+                wishList={wishList}
+                topMargin={topMargin}
+              />
+            }
           />
           <Route
             path="/checkout"
@@ -132,8 +139,26 @@ function App() {
           />
           <Route path="/order" element={<Order topMargin={topMargin} />} />
           <Route path="/pops" element={<Product />} />
-          <Route path="/app" element={<Landing addCart={addCart} wishList={wishList} topMargin={topMargin} />} />
-          <Route path="/" element={<Landing addCart={addCart} wishList={wishList} topMargin={topMargin} />} />
+          <Route
+            path="/app"
+            element={
+              <Landing
+                addCart={addCart}
+                wishList={wishList}
+                topMargin={topMargin}
+              />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Landing
+                addCart={addCart}
+                wishList={wishList}
+                topMargin={topMargin}
+              />
+            }
+          />
           <Route
             path="/detailspage/:id"
             element={<Items addCart={addCart} topMargin={topMargin} />}
@@ -142,28 +167,23 @@ function App() {
             path="/orderhistory"
             element={<OrderHistory topMargin={topMargin} />}
           />
+          <Route path="/bid" element={<Bid topMargin={topMargin} />} />
+          <Route path="/buy" element={<Buy topMargin={topMargin} />} />
           <Route
-            path="/bid"
-            element={<Bid topMargin={topMargin} />}
-          />
-          <Route
-            path="/buy"
-            element={<Buy topMargin={topMargin} />}
-          />
-           <Route
             path="/whypharmetrade"
             element={<WhyPharma topMargin={topMargin} />}
-          /> 
+          />
+          <Route path="/aboutus" element={<AboutUs topMargin={topMargin} />} />{" "}
           <Route
-          path="/aboutus"
-          element={<AboutUs topMargin={topMargin} />}
-        /> <Route
-        path="/contactus"
-        element={<Contactus topMargin={topMargin} />}
-      /> <Route
-      path="/buy"
-      element={<Offers topMargin={topMargin} />}
-    />
+            path="/contactus"
+            element={<Contactus topMargin={topMargin} />}
+          />
+           <Route
+            path="/requestdemo"
+            element={<RequestDemo topMargin={topMargin} />}
+          />
+          
+          <Route path="/buy" element={<Offers topMargin={topMargin} />} />
           <Route
             path="/wishlist"
             element={
@@ -183,7 +203,7 @@ function App() {
           {/* <Route path="addproducts/Create" element={<ProductFields />} /> */}
           <Route path="add-single-product" element={<ProductFields />} />
           <Route path="add-xl-sheet" element={<AddXlSheet />} />
-          
+
           <Route path="customers" element={<Customers />} />
           <Route path="payouts" element={<Payouts />} />
           <Route path="earnings" element={<Earnings />} />
@@ -203,20 +223,17 @@ function App() {
         <Route element={<AccountPanel topMargin={topMargin} />}>
           <Route path="/user" element={<MyAccount />} />
           <Route path="/user/orders" element={<MyOrders />} />
-          <Route path="/user/downloads" element={<DownloadProduct/>} />
-          <Route path="/user/address-book" element={<Addressbook/>} />
-          <Route path="/user/account-info" element={<AccountInfo/>} />
-          <Route path="/user/payment-methods" element={<StoredPayment/>} />
-          <Route path="/user/reviews" element={<ProductReview/>} />
-          <Route path="/user/newsletter" element={<Newsletter/>} />
+          <Route path="/user/downloads" element={<DownloadProduct />} />
+          <Route path="/user/address-book" element={<Addressbook />} />
+          <Route path="/user/account-info" element={<AccountInfo />} />
+          <Route path="/user/payment-methods" element={<StoredPayment />} />
+          <Route path="/user/reviews" element={<ProductReview />} />
+          <Route path="/user/newsletter" element={<Newsletter />} />
           {/* <Route path="/user/delete-account" element={<DeleteAccount/>} /> */}
-          <Route path="/user/saved" element={<SavedLater/>} />
-          <Route path="/user/returns" element={<MyReturn/>} />
-          <Route path="/user/wishlist" element={<MyWishlist/>} />
-          <Route path="/user/quote" element={<MyRequestedQuote/>} />
-
-
-
+          <Route path="/user/saved" element={<SavedLater />} />
+          <Route path="/user/returns" element={<MyReturn />} />
+          <Route path="/user/wishlist" element={<MyWishlist />} />
+          <Route path="/user/quote" element={<MyRequestedQuote />} />
         </Route>
       </Routes>
 

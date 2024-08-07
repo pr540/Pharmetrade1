@@ -40,7 +40,7 @@ function UpsShipping() {
       <div className='flex justify-between  border-b border-black my-5 p-4'>
         <h1 className='text-xl text-blue-900 font-semibold'>MARKETPLACE UPS CONFIGURATION</h1>
         <button 
-          className='border rounded-md p-2 px-3 font-bold flex justify-center items-center text-[15px] bg-blue-900 text-white '
+          className='border rounded-lg h-8 p-2 px-4 font-bold flex justify-center items-center text-[15px] bg-blue-900 text-white '
           onClick={handleSubmit}
         >
           SAVE
@@ -51,25 +51,26 @@ function UpsShipping() {
 
       <div className="w-[80%] flex justify-between text-gray-600 my-4">
         <div className="flex flex-col">
-          <label className="text-lg">
+          <label className="text-lg font-semibold">
             Access License Number:<span className="text-red-600 text-xl">*</span>
           </label>
           <input
             type="text"
             name="accessLicenseNumber"
-            className='border rounded-md h-8 w-80'
+            className='border rounded-md h-8 w-80 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400'
             value={formData.accessLicenseNumber}
             onChange={handleChange}
+            
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-lg">
+          <label className="text-lg font-semibold">
             User Id:<span className="text-red-600 text-2xl">*</span>
           </label>
           <input
             type="text"
             name="userId"
-            className='border rounded-md h-8 w-80'
+            className='border rounded-md h-8 w-80 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400'
             value={formData.userId}
             onChange={handleChange}
           />
@@ -78,25 +79,25 @@ function UpsShipping() {
 
       <div className="w-[80%] flex justify-between text-gray-600 my-4">
         <div className="flex flex-col">
-          <label className="text-lg">
-            Password:<span className="text-red-600 text-xl">*</span>
+          <label className="text-lg font-semibold">
+            Password:<span className="text-red-600 text-xl font-semibold">*</span>
           </label>
           <input
             type="text"
             name="password"
-            className='border rounded-md h-8 w-80'
+            className='border rounded-md h-8 w-80 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400'
             value={formData.password}
             onChange={handleChange}
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-lg">
+          <label className="text-lg font-semibold">
             Shipper Number:<span className="text-red-600 text-xl">*</span>
           </label>
           <input
             type="text"
             name="shipperNumber"
-            className='border rounded-md h-8 w-80'
+            className='border rounded-md h-8 w-80 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400'
             value={formData.shipperNumber}
             onChange={handleChange}
           />

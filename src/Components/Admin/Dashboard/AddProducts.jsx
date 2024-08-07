@@ -63,7 +63,7 @@ const AddProducts = () => {
   });
 
   const handleAddNewProductClick = () => {
-    navigate("Create");
+    navigate("/admin/add-single-product");
   };
 
   const handleEditProduct = () => {
@@ -78,7 +78,7 @@ const AddProducts = () => {
     <div className="relative bg-gray-100 w-full h-full flex justify-center items-center">
       <div className="w-[95%] h-full mt-4">
         <div className="flex justify-between">
-          <h2 className="text-[22px] text-blue-900 font-medium">
+          <h2 className="text-[22px] text-blue-900 font-semibold">
             Marketplace Product List
           </h2>
           <button
@@ -128,8 +128,8 @@ const AddProducts = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-1 flex items-center">
-              <img src={filter} className="w-8 h-6" />
+            <button className="bg-green-300 p-2 h-8 rounded-md flex items-center">
+              <img src={filter} className="w-6 h-6" />
               Filter
             </button>
             <select className="ml-2">

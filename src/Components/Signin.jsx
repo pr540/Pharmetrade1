@@ -329,17 +329,32 @@ const Signin = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   const handleLogin = async () => {
-    const response = await loginCustomer(email, password)
-      .then((token) => {
-        setAuthToken(token);
-        console.log("sucess");
-      })
-      .catch((err) => {
-        console.error("Login failed:", err);
+    const url =
+      "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Login";
+    const data = {
+      UserName: "sofiya@gmail.com",
+      Password: "sofiya@16",
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
-    console.log(response.token);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Login successful:", result);
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
@@ -455,7 +470,10 @@ const Signin = () => {
                 </div>
                 <div className="flex justify-center mb-8">
                   <label className="text-[18px] ">
-                  New Customer ? <Link className="underline hover:text-red-500" to="/signup">Start Here</Link>
+                    New Customer ?{" "}
+                    <Link className="underline hover:text-red-500" to="/signup">
+                      Start Here
+                    </Link>
                   </label>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for the API
-const BASE_URL = "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/";
+const BASE_URL = "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/";
 
 // Create an Axios instance with default settings
 const apiClient = axios.create({
@@ -9,30 +9,26 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 5000,  // 5 seconds timeout
 });
 
-// Function to log in a customer and store the token
 export const loginCustomer = async (userName, password) => {
   try {
-    // Make a POST request to the login endpoint with the username and password
-    const response = await apiClient.post(`/Customer/Login`, null, {
-      params: {
-        UserName: encodeURIComponent(userName),
-        Password: encodeURIComponent(password)
-      }
-    });
-
-    // Extract the token from the response data
-    const { token } = response.data;
-
-    // Save the token to local storage or any other secure storage mechanism
-    localStorage.setItem('accessToken', token);
-
-    // Return the token
-    return token;
+    console.log(userName, password, "hmm");
+    const response = await apiClient.post(`/Customer/Login?UserName=${userName}&Password=${password}`);
+    console.log(response,"response");
+    return response;
   } catch (error) {
-    // Log and rethrow the error for further handling
-    console.error('Error logging in customer:', error);
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Server error:', error.response.status, error.response.data);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('No response received:', error.request);
+    } else {
+      // Something else happened while setting up the request
+      console.error('Error setting up request:', error.message);
+    }
     throw error;
   }
 };

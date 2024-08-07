@@ -49,10 +49,10 @@ function Orders() {
     <div className="bg-gray-100 w-full h-full flex items-center justify-center">
       <div className="w-[95%] h-full mt-4">
         <div className="flex justify-between">
-          <h1 className="text-[22px] text-blue-900 font-medium">List of Orders</h1>
-          <button className="bg-blue-900 flex items-center text-white p-2 text-[15px] rounded-md">
+          <h1 className="text-[22px] text-blue-900 font-semibold">List of Orders</h1>
+          {/* <button className="bg-blue-900 flex items-center text-white p-2 text-[15px] rounded-md">
             <FaPlus /> Add New Product
-          </button>
+          </button> */}
         </div>
 
         <div className="flex flex-wrap my-4 gap-2 -ml-8 justify-normal items-center p-4">
@@ -98,18 +98,18 @@ function Orders() {
             <CiSearch className="absolute right-0 top-4 text-gray-400 mr-2" />
           </div>
           {/* search end */}
-          <div className="flex">
-            <div className="flex p-1">
-            <button className="bg-green-300 p-1 flex items-center">
-              <img src={filter} className="w-8 h-6" />
+          <div className="flex gap-2">
+            <div className="flex  ">
+            <button className="bg-green-300 p-2 h-8 rounded-md flex items-center">
+              <img src={filter} className="w-6 h-6" />
               Filter
             </button>
               {/* <FaFilter className="m-2" /> */}
               {/* <button className='text-2xl'>Filter</button> */}
             </div>
-            <div className="flex bg-white h-11 w-48 justify-evenly border rounded-md">
+            <div className="flex bg-white h-9 p-2 items-center w-48 justify-evenly border rounded-md">
      
-              <select className="m-2">
+              <select className="">
                 <option>-Select Group-</option>
               </select>
             </div>

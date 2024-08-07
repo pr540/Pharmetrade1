@@ -15,7 +15,7 @@ const ShippingSetting = () => {
             Shipping Origin Address
           </h2>
           <button
-            className="border rounded-md font-bold p-2 px-3 justify-center items-center text-[15px] bg-blue-900 text-white "
+            className="border rounded-md font-bold p-2 px-4 h-8 flex justify-center items-center text-[15px] bg-blue-900 text-white "
             // onClick={handleSubmit}
           >
             SAVE
@@ -25,44 +25,44 @@ const ShippingSetting = () => {
 
         <div className="flex justify-between items-center text-gray-600 my-6 ">
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               Company
               <span className="text-red-600 text-2xl ">*</span>
             </label>{" "}
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               Phone Number<span className="text-red-600 text-2xl ">*</span>
             </label>
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               Street Address<span className="text-red-600 text-2xl ">*</span>
             </label>{" "}
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               Address<span className="text-red-600 text-2xl ">*</span>
             </label>
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
         </div>
@@ -72,43 +72,43 @@ const ShippingSetting = () => {
         {/* section2 start */}
         <div className="flex justify-between items-center text-gray-600 my-6">
           <div className="flex flex-col ">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               City<span className="text-red-600 text-xl">*</span>
             </label>
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               State/provincee<span className="text-red-600 text-xl">*</span>
               </label>
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               Zip/Postal Code<span className="text-red-600 text-xl">*</span>
             </label>
             <input
               type="text"
               id="product_name"
-              className=" w-56 h-8 border-slate-300 border"
+              className=" w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-base">
+            <label className="text-base font-semibold">
               Country<span className="text-red-600 text-xl">*</span>
             </label>
             <input
               type="text"
               id="Upn_Mem"
-              className="w-56 h-8 border-slate-300 border "
+              className="w-56 h-8 rounded-md border-slate-300 border focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400 "
             />
           </div>
         </div>

@@ -21,8 +21,8 @@ import upsShippingIcon from "../../../assets/UPSShipping_icon.png";
 import fedexShippingIcon from "../../../assets/UPSShipping_icon.png";
 import shippingSettingIcon from "../../../assets/ShippingSetting_icon.png";
 import manageShippingIcon from "../../../assets/ManageShipping_icon.png";
-import singleProductIcon from "../../../assets/ManageShipping_icon.png";
-import xlSheetIcon from "../../../assets/ManageShipping_icon.png";
+import singleProductIcon from "../../../assets/AddSingleProduct.png";
+import xlSheetIcon from "../../../assets/BulkProduct.png";
 
 const Sidebar = () => {
   let navigate = useNavigate();
@@ -86,19 +86,20 @@ const Sidebar = () => {
           isOpen: isProductsDropdownOpen,
           toggleDropdown: toggleProductsDropdown,
           links: [
+            // {
+            //   to: "/admin/market-product-list",
+            //   label: "Market Products List",
+            //   icon: singleProductIcon,
+            // },
             {
+              // to: "/admin/add-single-product",
               to: "/admin/market-product-list",
-              label: "Market Products List",
-              icon: singleProductIcon,
-            },
-            {
-              to: "/admin/add-single-product",
-              label: "Add Single Product",
+              label: "Product",
               icon: singleProductIcon,
             },
             {
               to: "/admin/add-xl-sheet",
-              label: "Add XL Sheet",
+              label: "Add Bulk Products",
               icon: xlSheetIcon,
             },
           ],

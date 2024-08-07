@@ -5,7 +5,7 @@ const StoredPayment = () => {
     <div className="bg-gray-100 w-full h-full flex items-center justify-center">
       <div className="w-[95%] h-full mt-4 ">
         <div className=" flex justify-between">
-          <p className="text-[22px] text-blue-900 font-medium mb-8">
+          <p className="text-[22px] text-blue-900 font-semibold mb-8">
             {" "}
             Stored Payment Methods{" "}
           </p>

@@ -220,7 +220,7 @@ function Customers() {
     <div className="bg-gray-100 w-full h-full flex items-center justify-center">
       <div className="w-[95%] h-full mt-8">
         <div className="flex justify-between">
-          <h1 className="text-[22px] text-blue-900 font-medium">Marketplace Customers</h1>
+          <h1 className="text-[22px] text-blue-900 font-semibold">Marketplace Customers</h1>
         </div>
 
         <div className="flex justify-normal flex-wrap gap-2 w-full mt-4 ">
@@ -264,12 +264,12 @@ function Customers() {
           {/* search end */}
           <div className="flex">
             <div className="flex p-1">
-            <button className="bg-green-300 p-1 flex items-center">
-              <img src={filter} className="w-8 h-6" />
+            <button className="bg-green-300 p-2 h-8 rounded-md flex items-center">
+              <img src={filter} className="w-6 h-6" />
               Filter
             </button>
             </div>
-            <div className="flex bg-white  h-11 w-48 justify-evenly border rounded-md">
+            <div className="flex bg-white items-center h-9 w-48 justify-evenly border rounded-md">
               <select className="m-2">
                 <option>-Select Group-</option>
               </select>

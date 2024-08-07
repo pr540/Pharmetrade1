@@ -18,7 +18,7 @@ const AboutUs = ({ topMargin }) => {
         <img className="w-full" src={background_image} />
       </div>
 
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-screen flex">
         <div className="w-[54%] h-full  flex justify-end  ">
           <img src={whypharma} className="w-[450px] object-contain " />
         </div>
