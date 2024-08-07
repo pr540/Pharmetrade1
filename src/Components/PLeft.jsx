@@ -99,7 +99,6 @@ const categories = [
   "Pain Relief & Management",
   "Pediatric Care",
   "Personal Care",
-  "Pet",
   "Presciption & Packaging"
 ];
 
