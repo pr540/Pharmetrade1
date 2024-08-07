@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // import addcart from "../assets/addcart.png";
 // import fav from "../assets/fav.png";
 // import other from "../assets/other.png";
-import other from "../assets/compare1_Icon.png";
+// import other from "../assets/compare1_Icon.png";
 import addcart from "../assets/cartw_icon.png";
 import fav from "../assets/Wishlist1_icon.png";
 import nature from "../assets/img1.png";
@@ -19,6 +19,7 @@ import { useNavbarContext } from "./NavbarContext";
 import { useNavigate } from "react-router-dom";
 import emptyHeart from "../assets/Wishlist1_icon.png";
 import filledHeart from "../assets/wishlist2_icon.png";
+import other from "../assets/CompareNav2.png";
 
 function PRight({ topMargin, addCart, wishList }) {
   const { pop, setPop } = useNavbarContext();
@@ -27,6 +28,8 @@ function PRight({ topMargin, addCart, wishList }) {
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const [favoriteItems, setFavoriteItems] = useState({});
+  const [rating, setRating] = useState(0);
+  const totalStars = 5;
 
   const handleClose = (event) => {
     event.stopPropagation();
@@ -47,9 +50,9 @@ function PRight({ topMargin, addCart, wishList }) {
   }
 
   function handleClick(index) {
-    setFavoriteItems(prevState => ({
+    setFavoriteItems((prevState) => ({
       ...prevState,
-      [index]: !prevState[index]
+      [index]: !prevState[index],
     }));
     // alert("Add 1 item into wishlist");
     const prolist = {
@@ -119,9 +122,18 @@ function PRight({ topMargin, addCart, wishList }) {
     },
   }));
 
+  const Star = ({ filled, onClick }) => (
+    <span
+      onClick={onClick}
+      style={{ cursor: "pointer", fontSize: "25px", color: "orange" }}
+    >
+      {filled ? "★" : "☆"}
+    </span>
+  );
+
   return (
     <div className="w-full mt-4 h-full overflow-y-scroll">
-      <div className=" flex justify-between bg-blue-900 p-2 rounded-lg">
+      <div className=" flex justify-between bg-blue-900 p-1 rounded-lg">
         <div className="text-2xl text-white"> Rx Drug</div>
 
         <Search>
@@ -141,40 +153,45 @@ function PRight({ topMargin, addCart, wishList }) {
           {currentItems.map((img, index) => (
             <div
               key={index + indexOfFirstItem}
-              className="w-full max-w-md border p-2 rounded-xl shadow-md"
+              className="w-full max-w-md border p-2  shadow-md"
             >
               {/* <Link to={`/detailspage/${index + indexOfFirstItem}`}> */}
-                <div className="flex justify-center relative">
-                  {/* <img
-                    src={fav}
-                    alt="Favorite"
-                    className="h-8 p-[6px]  absolute left-0 "
-                    onClick={() => handleClick(index + indexOfFirstItem)}
-                  /> */}
-                   <img
-                    onClick={() => handleClick(index + indexOfFirstItem)}
-                    src={favoriteItems[index] ? filledHeart : emptyHeart}
-                    className="h-8 p-[6px]  absolute right-0 "
+              <div className="flex justify-center bg-slate-200 relative">
+                <img
+                  onClick={() => handleClick(index + indexOfFirstItem)}
+                  src={favoriteItems[index] ? filledHeart : emptyHeart}
+                  className="h-8 p-[6px]  absolute right-0 "
                   alt="Favorite Icon"
                 />
-                
+                <img
+                  src={other}
+                  className="h-5 w-5 right-1 absolute bottom-1 text-green-700"
+                  alt="Other Icon"
+                />
+
                 <Link to={`/detailspage/${index + indexOfFirstItem}`}>
                   <img
                     src={img}
                     alt={`nature-${index + indexOfFirstItem}`}
-                    className="h-36 w-32 pl-3  bg-foots rounded-lg"
+                    className="h-40 w-28 rounded-lg"
                   />
-                  </Link>
-                </div>
+                </Link>
+              </div>
               {/* </Link> */}
               <div className="w-full py-1">
                 <h2 className="text-fonts">SKU 6545555</h2>
-                <div className="flex gap-1 items-center">
-                  <h1 className="text-fonts font-semibold">$50.99</h1>
-                  {/* <span className="text-[10px] line-through">($45.69)</span> */}
-                </div>
+                <h1 className="text-fonts font-semibold">$50.99</h1>
               </div>
-              <div className="flex flex-row items-center justify-between w-full mt-4 px-1">
+              <div>
+                {Array.from({ length: totalStars }, (v, i) => (
+                  <Star
+                    key={i}
+                    filled={i < rating}
+                    onClick={() => setRating(i + 1)}
+                  />
+                ))}
+              </div>
+              <div className="flex flex-row items-center justify-between w-full px-1">
                 <div className="text-foot text-xs">UPN Member Price:</div>
                 <div className="text-base font-semibold">$45.00</div>
               </div>

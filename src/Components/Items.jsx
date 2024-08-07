@@ -113,7 +113,7 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
         marginTop: `${topMargin}px`,
       }}>
     
-      <div className="  flex gap-20  justify-around h-full w-full"
+      <div className="  flex gap-20 mt-4 justify-around h-full w-full"
        
           >
         <div className="w-[40%] h-full">

@@ -2629,10 +2629,18 @@ function ProductFields() {
 
   return (
     <div className="w-full max-w-4xl mx-auto mt-10">
-      <div className="flex flex-col justify-start ">
+      {/* <div className="flex flex-col justify-start ">
         <h1 className="text-2xl font-bold text-blue-900 -mt-5">ADD PRODUCT</h1>
         <p className="border-b border-blue-900 w-40  "></p>
-      </div>
+      </div> */}
+      <div className="flex  justify-between items-baseline">
+        <div>
+        <h1 className="text-2xl font-bold text-blue-900 -mt-5">ADD PRODUCT</h1>
+        <p className="border-b border-blue-900 w-40  "></p>
+        </div>
+        <div >
+          <button className="border bg-blue-900 text-white -mt-5 h-8 p-2 w-16 rounded-md font-semibold  flex items-center justify-center">Save</button></div>
+      </div>
       <div className=" mb-6   ">
         <ul className="flex  border-b border-white  w-[76%] opacity-1">
           {tabs.map((tab, index) => (

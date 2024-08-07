@@ -45,13 +45,13 @@ const RequestDemo = ({ topMargin }) => {
         <img className="w-full opacity-50" src={background_image} alt="Background" />
       </div>
 
-      <div className="w-full h-screen flex">
-        <div className="w-[54%] p-12 m-4 flex flex-col gap-6">
+      <div className="w-full h-screen flex items-center">
+        <div className="w-[54%] p-20 m-4 flex flex-col gap-6">
             <h1 className='text-7xl text-black'>Unlock Your Marketplace Potential with a Live Demo</h1>
             <p className='text-black text-xl'>See how our platform can elevate your buying and selling experience. 
                 Join our live demo to explore powerful features designed for your success.</p>
         </div>
-        <div className="w-[42%] flex flex-col m-4 bg-white p-8">
+        <div className="w-[42%]  flex flex-col m-4 bg-white p-8">
           <h2 className="text-xl font-bold mb-4">SCHEDULE A LIVE DEMO TODAY</h2>
           <form className="w-full flex flex-col space-y-4">
             <div className="flex space-x-4">

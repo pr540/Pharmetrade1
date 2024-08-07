@@ -56,17 +56,19 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
   };
 
   const handleClick = (index) => {
-    const existingIndex = favoriteItems.indexOf(index);
-    if (existingIndex === -1) {
-      // Add to wishlist
-      setFavoriteItems([...favoriteItems, index]);
-    } else {
-      // Remove from wishlist
-      const updatedItems = favoriteItems.filter(
-        (itemIndex) => itemIndex !== index
-      );
-      setFavoriteItems(updatedItems);
-    }
+    setFavoriteItems((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+    const prolist = {
+      id: index,
+      src: images[index],
+      price: "$50.99",
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    wishList(prolist);
   };
 
   const Star = ({ filled, onClick }) => (
@@ -93,7 +95,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
                   e.stopPropagation(); // Prevent event from bubbling to parent
                   handleClick(index);
                 }}
-                src={favoriteItems.includes(index) ? filledHeart : emptyHeart}
+                src={favoriteItems[index] ? filledHeart : emptyHeart}
                 className="absolute h-6 w-6  right-1 p-1 cursor-pointer"
                 alt="Favorite Icon"
               />
@@ -119,6 +121,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
                   </div>
                 </div>
               </div>
+            
               <div>
                 {Array.from({ length: totalStars }, (v, i) => (
                   <Star

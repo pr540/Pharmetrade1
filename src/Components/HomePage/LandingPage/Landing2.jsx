@@ -292,7 +292,7 @@ function Landing2({wishList,addCart}) {
                 key={key}
                 className="flex flex-row text-blue-900 items-center gap-2"
               >
-                <img src={right2} className="w-6 bg-green-500 rounded-full" />
+                <img src={right2} className="w-6 bg-blue-900 rounded-full" />
                 {items}
               </li>
             ))}
