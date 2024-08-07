@@ -6,7 +6,7 @@ const MyRequestedQuote = () => {
       <div className="w-[95%] h-full mt-4">
         <div className="flex justify-between mb-4">
           <h1 className="text-[22px] text-blue-900 font-semibold">
-            MyRequestedQuote
+            My Requested Quote
           </h1>
         </div>
       </div>

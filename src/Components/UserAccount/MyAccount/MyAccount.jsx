@@ -120,7 +120,7 @@ const userInfo = [
   {
     icon: <img src={email} className="w-4 -mt-5" />,
     label: "Email Address",
-    action: "Change email address",
+    action: "Change Email Address",
     value: "Ram@phametrade.com",
   },
   {
