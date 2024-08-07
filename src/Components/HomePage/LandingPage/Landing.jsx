@@ -102,7 +102,7 @@ function Landing({ topMargin, wishList, addCart }) {
             <Slider {...settings}>
               <div>
                 <img
-                  src={banner1}
+                  src={banner4}
                   alt="Carousel Image 1"
                   className="w-full h-[350px]"
                 />
@@ -123,7 +123,7 @@ function Landing({ topMargin, wishList, addCart }) {
               </div>
               <div>
                 <img
-                  src={banner4}
+                  src={banner1}
                   alt="Carousel Image 4"
                   className="w-full h-[350px]"
                 />
