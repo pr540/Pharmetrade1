@@ -181,9 +181,13 @@ function Nav({ topDivRef, cartItems }) {
   function handleorder() {
     navigate("/orderhistory");
   }
+  function handlesignup() {
+    navigate("/signup");
+  }
   function hanldeUp(items) {
     setPopUps(items);
   }
+
   const [isContainerFocused, setIsContainerFocused] = useState(false);
   const [isButtonFocused, setIsButtonFocused] = useState(false);
   const handleFocusIn = (e) => {
@@ -249,7 +253,7 @@ function Nav({ topDivRef, cartItems }) {
                       alt="clickable"
                       onClick={handleredirect}
                     />
-                    <div className="text-blue-900  ">
+                    <div className="text-blue-900 hover:cursor-pointer ">
                       <div className="text-sm font-medium -mb-2">
                         Hello, Sign in
                       </div>
@@ -263,13 +267,13 @@ function Nav({ topDivRef, cartItems }) {
                       <div className="bg-white p-4 rounded shadow-lg w-64">
                         <div className="w-full justify-center items-center">
                           <a
-                            className="bg-blue-900 text-white py-1 px-2 rounded "
+                            className="bg-blue-900 text-white py-1 hover:cursor-pointer px-2 rounded "
                             onClick={handleredirect}
                           >
                             Sign In
                           </a>
                         </div>
-                        <p className="mb-1 text-lg">New customer? Start here</p>
+                        <p className="mb-1 text-lg hover:cursor-pointer" onClick={handlesignup} >New customer? Start here</p>
                         <h2
                           className="text-lg font-semibold cursor-pointer"
                           onClick={handleuser}
