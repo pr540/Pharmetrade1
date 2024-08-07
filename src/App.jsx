@@ -63,6 +63,7 @@ import AboutUs from "./Components/HomePage/NavLinks/AboutUs";
 import Contactus from "./Components/HomePage/NavLinks/Contactus";
 import Offers from "./Components/HomePage/NavLinks/Offers";
 import TermsAndConditions from "./Components/TermsAndConditions";
+import AddXlSheet from "./Components/Admin/Dashboard/Products/AddXlSheet";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -178,9 +179,11 @@ function App() {
         <Route path="/admin" element={<AdminPanel />}>
           <Route path="" element={<Dashboard />} />
           <Route path="orders" element={<Orders />} />
-          <Route path="addproducts" element={<AddProducts />} />
-          <Route path="addproducts/Create" element={<ProductFields />} />
-
+          <Route path="market-product-list" element={<AddProducts />} />
+          {/* <Route path="addproducts/Create" element={<ProductFields />} /> */}
+          <Route path="add-single-product" element={<ProductFields />} />
+          <Route path="add-xl-sheet" element={<AddXlSheet />} />
+          
           <Route path="customers" element={<Customers />} />
           <Route path="payouts" element={<Payouts />} />
           <Route path="earnings" element={<Earnings />} />

@@ -218,11 +218,8 @@ import { TextField } from "@mui/material";
 import refresh from "../assets/reload-arrow (1).png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
- 
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
+import { InputAdornment, IconButton } from "@mui/material";
+import { loginCustomer, setAuthToken } from "../Api/Api";
 const OTPInput = ({ length, onChangeOTP }) => {
   const [otp, setOTP] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
@@ -306,16 +303,11 @@ const Signin = () => {
 
     if (!password) {
       errors.password = "Password is required";
-    } 
-    if(!formData.captcha)
-    {
-      errors.captcha = "captcha is required";
-
     }
-    else if(formData.captcha!= captcha)
-    {
+    if (!formData.captcha) {
+      errors.captcha = "captcha is required";
+    } else if (formData.captcha != captcha) {
       errors.captcha = "captcha not matched";
-
     }
 
     setErrors(errors);
@@ -336,6 +328,18 @@ const Signin = () => {
   };
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleLogin = async () => {
+    const response = await loginCustomer(email, password)
+      .then((token) => {
+        setAuthToken(token);
+        console.log("sucess");
+      })
+      .catch((err) => {
+        console.error("Login failed:", err);
+      });
+    console.log(response.token);
   };
 
   return (
@@ -389,11 +393,7 @@ const Signin = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     error={!!errors.password}
-                    helperText={
-                      password.length > 0 &&
-                      errors.password
-                    }
-                   
+                    helperText={password.length > 0 && errors.password}
                     size="small"
                     InputProps={{
                       endAdornment: (
@@ -409,7 +409,6 @@ const Signin = () => {
                       ),
                     }}
                   />
-                  
                 </div>
 
                 <div className="flex justify-center items-center my-2">
@@ -432,16 +431,14 @@ const Signin = () => {
                     label="Enter Captcha"
                     variant="standard"
                     error={!!errors.captcha}
-                    helperText={
-                      formData.captcha!= captcha &&
-                      errors.captcha
-                    }
+                    helperText={formData.captcha != captcha && errors.captcha}
                   />
                 </div>
 
                 <div className="flex justify-center my-2">
                   <button
                     type="submit"
+                    onClick={() => handleLogin()}
                     className="text-white bg-blue-900 border rounded-lg py-3 px-9 cursor-pointer font-semibold text-[18px]"
                   >
                     Sign In
@@ -457,8 +454,8 @@ const Signin = () => {
                   </label>
                 </div>
                 <div className="flex justify-center mb-8">
-                  <label className="text-[18px] underline hover:text-red-500">
-                    <Link to="/signup"> Create Account/ Signup</Link>
+                  <label className="text-[18px] ">
+                  New Customer ? <Link className="underline hover:text-red-500" to="/signup">Start Here</Link>
                   </label>
                 </div>
               </div>

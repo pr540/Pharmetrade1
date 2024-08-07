@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaChevronDown, FaChevronUp, FaBars, FaTimes } from "react-icons/fa";
@@ -18,16 +14,15 @@ import homeIcon from "../../../assets/Home_icon.png";
 import productsIcon from "../../../assets/Products_icon.png";
 import customersIcon from "../../../assets/Customers_icon.png";
 import ordersIcon from "../../../assets/Orders_icon.png";
-// import requestedQuoteIcon from "../../../assets/RequestedQuote_icon.png";
 import requestedQuoteIcon from "../../../assets/RequestedForQuote_icon.png";
 import quotedProductsIcon from "../../../assets/RequestedForQuote_icon.png";
-// import quotedProductsIcon from "../../../assets/QuotedProducts_icon.png";
 import profileSettingIcon from "../../../assets/ProfileSetting_icon.png";
 import upsShippingIcon from "../../../assets/UPSShipping_icon.png";
 import fedexShippingIcon from "../../../assets/UPSShipping_icon.png";
-// import fedexShippingIcon from "../../../assets/FedexShipping_icon.png";
 import shippingSettingIcon from "../../../assets/ShippingSetting_icon.png";
 import manageShippingIcon from "../../../assets/ManageShipping_icon.png";
+import singleProductIcon from "../../../assets/ManageShipping_icon.png";
+import xlSheetIcon from "../../../assets/ManageShipping_icon.png";
 
 const Sidebar = () => {
   let navigate = useNavigate();
@@ -36,6 +31,7 @@ const Sidebar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isQDropdownOpen, setIsQDropdownOpen] = useState(false);
   const [isSDropdownOpen, setIsSDropdownOpen] = useState(false);
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleClick = (path) => {
@@ -64,6 +60,13 @@ const Sidebar = () => {
     setIsSDropdownOpen(!isSDropdownOpen);
   };
 
+  const toggleProductsDropdown = () => {
+    if (isCollapsed) {
+      setIsCollapsed(false);
+    }
+    setIsProductsDropdownOpen(!isProductsDropdownOpen);
+  };
+
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
@@ -77,7 +80,29 @@ const Sidebar = () => {
       links: [
         { to: "/admin", label: "Home", icon: homeIcon },
         { to: "/admin/orders", label: "Orders", icon: ordersIcon },
-        { to: "/admin/addproducts", label: "Products", icon: productsIcon },
+        {
+          label: "Products",
+          icon: productsIcon,
+          isOpen: isProductsDropdownOpen,
+          toggleDropdown: toggleProductsDropdown,
+          links: [
+            {
+              to: "/admin/market-product-list",
+              label: "Market Products List",
+              icon: singleProductIcon,
+            },
+            {
+              to: "/admin/add-single-product",
+              label: "Add Single Product",
+              icon: singleProductIcon,
+            },
+            {
+              to: "/admin/add-xl-sheet",
+              label: "Add XL Sheet",
+              icon: xlSheetIcon,
+            },
+          ],
+        },
         { to: "/admin/customers", label: "Customers", icon: customersIcon },
       ],
     },
@@ -117,8 +142,16 @@ const Sidebar = () => {
       isOpen: isQDropdownOpen,
       toggleDropdown: toggleQDropdown,
       links: [
-        { to: "/admin/request-quote", label: "All Requested Quote", icon: requestedQuoteIcon },
-        { to: "/admin/quoted-product", label: "All Quoted Products", icon: quotedProductsIcon },
+        {
+          to: "/admin/request-quote",
+          label: "All Requested Quote",
+          icon: requestedQuoteIcon,
+        },
+        {
+          to: "/admin/quoted-product",
+          label: "All Quoted Products",
+          icon: quotedProductsIcon,
+        },
       ],
     },
     {
@@ -127,11 +160,31 @@ const Sidebar = () => {
       isOpen: isSDropdownOpen,
       toggleDropdown: toggleSDropdown,
       links: [
-        { to: "/admin/settings", label: "Profile Setting", icon: profileSettingIcon },
-        { to: "/admin/ups-shipping", label: "UPS Shipping", icon: upsShippingIcon },
-        { to: "/admin/fedex-shipping", label: "Fedex Shipping", icon: fedexShippingIcon },
-        { to: "/admin/shipping-settings", label: "Shipping Setting", icon: shippingSettingIcon },
-        { to: "/admin/manage-shipping", label: "Manage Multi Shipping", icon: manageShippingIcon },
+        {
+          to: "/admin/settings",
+          label: "Profile Setting",
+          icon: profileSettingIcon,
+        },
+        {
+          to: "/admin/ups-shipping",
+          label: "UPS Shipping",
+          icon: upsShippingIcon,
+        },
+        {
+          to: "/admin/fedex-shipping",
+          label: "Fedex Shipping",
+          icon: fedexShippingIcon,
+        },
+        {
+          to: "/admin/shipping-settings",
+          label: "Shipping Setting",
+          icon: shippingSettingIcon,
+        },
+        {
+          to: "/admin/manage-shipping",
+          label: "Manage Multi Shipping",
+          icon: manageShippingIcon,
+        },
       ],
     },
     {
@@ -143,7 +196,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`p-2 bg-blue-900 absolute h-[calc(100%-80px)] overflow-scroll z-[100] font-normal flex flex-col shadow-lg  ${
+      className={`p-2 bg-blue-900 absolute h-[calc(100%-80px)] overflow-scroll z-[100] font-normal flex flex-col shadow-lg ${
         isCollapsed ? "min-w-16 items-center" : "min-w-64"
       }`}
     >
@@ -164,7 +217,7 @@ const Sidebar = () => {
           <div key={index}>
             {item.label && item.links ? (
               <div
-                className="flex items-center justify-between p-2 text-white  hover:bg-gray-400 cursor-pointer"
+                className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
                 onClick={item.toggleDropdown}
               >
                 <div className="flex items-center">
@@ -175,13 +228,13 @@ const Sidebar = () => {
                   (item.isOpen ? (
                     <FaChevronUp
                       className={`mr-2 ${
-                        item?.links?.length > 0 ? "" : "hidden"
+                        item.links.length > 0 ? "" : "hidden"
                       }`}
                     />
                   ) : (
                     <FaChevronDown
                       className={`mr-2 ${
-                        item?.links?.length > 0 ? "" : "hidden"
+                        item.links.length > 0 ? "" : "hidden"
                       }`}
                     />
                   ))}
@@ -204,18 +257,75 @@ const Sidebar = () => {
               <ul className="ml-6">
                 {item.links.map((link, idx) => (
                   <li key={idx}>
-                    <Link
-                      to={link.to}
-                      onClick={() => handleClick(link.to)}
-                      className={`flex items-center p-2 ${
-                        activeLink === link.to
-                          ? "text-white bg-gray-400"
-                          : "text-white"
-                      } hover:text-white hover:bg-gray-400`}
-                    >
-                      <img src={link.icon} className="w-4 h-4" alt={link.label} />
-                      <span className="ml-3">{link.label}</span>
-                    </Link>
+                    {link.label && link.links ? (
+                      <div
+                        className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
+                        onClick={link.toggleDropdown}
+                      >
+                        <div className="flex items-center">
+                          <img
+                            src={link.icon}
+                            className="w-4 h-4"
+                            alt={link.label}
+                          />
+                          <span className="ml-3">{link.label}</span>
+                        </div>
+                        {link.isOpen ? (
+                          <FaChevronUp
+                            className={`mr-2 ${
+                              link.links.length > 0 ? "" : "hidden"
+                            }`}
+                          />
+                        ) : (
+                          <FaChevronDown
+                            className={`mr-2 ${
+                              link.links.length > 0 ? "" : "hidden"
+                            }`}
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <Link
+                        to={link.to}
+                        onClick={() => handleClick(link.to)}
+                        className={`flex items-center p-2 ${
+                          activeLink === link.to
+                            ? "text-white bg-gray-400"
+                            : "text-white"
+                        } hover:text-white hover:bg-gray-400`}
+                      >
+                        <img
+                          src={link.icon}
+                          className="w-4 h-4"
+                          alt={link.label}
+                        />
+                        <span className="ml-3">{link.label}</span>
+                      </Link>
+                    )}
+                    {link.isOpen && !isCollapsed && link.links && (
+                      <ul className="ml-6">
+                        {link.links.map((sublink, subidx) => (
+                          <li key={subidx}>
+                            <Link
+                              to={sublink.to}
+                              onClick={() => handleClick(sublink.to)}
+                              className={`flex items-center p-2 ${
+                                activeLink === sublink.to
+                                  ? "text-white bg-gray-400"
+                                  : "text-white"
+                              } hover:text-white hover:bg-gray-400`}
+                            >
+                              <img
+                                src={sublink.icon}
+                                className="w-4 h-4"
+                                alt={sublink.label}
+                              />
+                              <span className="ml-3">{sublink.label}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -228,4 +338,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

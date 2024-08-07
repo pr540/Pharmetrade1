@@ -173,7 +173,26 @@ import offer4 from "../../../assets/IMG_4.jpg";
 
 function Landing2({wishList,addCart}) {
   const navigate = useNavigate();
-  const slides = [slider1, slider2, slider3, slider4];
+  const slides = [slider1, slider4, slider2, slider3];
+
+  const handleClick = (index) => {
+    switch (index) {
+      case 0:
+        navigate('/products');
+        break;
+      case 1:
+        navigate('/login');
+        break;
+      case 2:
+        navigate('/admin/market-product-list');
+        break;
+      case 3:
+        navigate('/bid');
+        break;
+      default:
+        break;
+    }
+  }
   const texts = [
     "Boost sales by promoting new and special products.",
     "Receive payments more quickly.",
@@ -206,7 +225,7 @@ function Landing2({wishList,addCart}) {
   return (
     <div className="pt-6 w-full">
       {/* <PLefts /> */}
-      <div className="w-full ">
+      {/* <div className="w-full ">
         <div className="flex justify-around gap-6">
           {slides.map((item, key) => (
             <div
@@ -221,7 +240,25 @@ function Landing2({wishList,addCart}) {
             </div>
           ))}
         </div>
+      </div> */}
+
+<div className="w-full">
+      <div className="flex justify-around gap-6">
+        {slides.map((item, key) => (
+          <div
+            key={key}
+            className="hover:scale-110 w-fit h-fit rounded-xl transition duration-300 ease-in-out max-w-sm p-1"
+            onClick={() => handleClick(key)}
+          >
+            <img
+              src={item}
+              alt={`Slide ${key}`}
+              className="h-full w-full rounded-xl"
+            />
+          </div>
+        ))}
       </div>
+    </div>
 
 
       <div className="mt-6">

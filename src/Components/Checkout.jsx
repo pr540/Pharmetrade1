@@ -284,7 +284,7 @@ function Checkout({ topMargin }) {
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <button className="bg-green-600 px-4 py-2 rounded-3xl text-black">
+              <button className="bg-blue-900 px-4 py-2 rounded-3xl text-white font-semibold">
                 <Link to="/order">Place order</Link>
               </button>
             </div>

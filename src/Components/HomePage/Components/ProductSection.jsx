@@ -28,7 +28,7 @@
 // export default ProductSection;
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import addcart from "../../../assets/cartw_icon.png";
 import fav from "../../../assets/Wishlist1_icon.png";
 import nature from "../../../assets/img1.png";
@@ -41,7 +41,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
   const [favoriteItems, setFavoriteItems] = useState([]);
   const totalStars = 5;
   const images = Array(115).fill(nature);
-
+  const navigate = useNavigate();
   const handleCart = (index) => {
     console.log("Adding to cart:", index);
     const prolist = {
@@ -89,7 +89,10 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
           >
             <div className="relative rounded-t-sm bg-slate-100 m-2">
               <img
-                onClick={() => handleClick(index)}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent event from bubbling to parent
+                  handleClick(index);
+                }}
                 src={favoriteItems.includes(index) ? filledHeart : emptyHeart}
                 className="absolute h-6 w-6  right-1 p-1 cursor-pointer"
                 alt="Favorite Icon"
@@ -97,6 +100,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
               <img
                 src={item.img} // Assuming item.img contains image URL
                 className="h-40 w-40 object-contain rounded-lg"
+                onClick={() => navigate(`/detailspage/${index}`)}
                 alt={item.name}
               />
               <img

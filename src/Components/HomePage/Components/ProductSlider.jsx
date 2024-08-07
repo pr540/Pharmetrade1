@@ -7,6 +7,7 @@ import emptyHeart from "../../../assets/Wishlist1_icon.png";
 import filledHeart from "../../../assets/wishlist2_icon.png";
 import comp from "../../../assets/CompareNav2.png";
 import nature from "../../../assets/img1.png";
+import { useNavigate } from "react-router-dom";
 
 const ProductSlider = ({ data, Title, addCart, wishList }) => {
   const [rating, setRating] = useState(0);
@@ -17,7 +18,7 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
   const images = Array(115).fill(nature);
 
   const carouselContainer = useRef(null);
-
+  const naviagte = useNavigate();
   const navigation = (dir) => {
     const container = carouselContainer.current;
 
@@ -117,15 +118,23 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
             >
               <div className="relative bg-slate-100 m-2">
                 <img
-                  onClick={() => handleClick(index)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent event from bubbling to parent
+                    handleClick(index);
+                  }}
                   src={favoriteItems[index] ? filledHeart : emptyHeart}
                   className="absolute h-7 w-7 right-1 p-1 cursor-pointer"
                   alt="Favorite Icon"
                 />
-                <img src={comp} className="absolute h-7 w-7 bottom-0 right-1 p-1" />
+                <img
+                  src={comp}
+                  className="absolute h-7 w-7 bottom-0 right-1 p-1"
+                />
 
                 <img
                   src={item.img}
+                  onClick={() => naviagte(`/detailspage/${index}`)}
+                  alt={item.name}
                   className="h-48 w-48 object-contain rounded-lg"
                 />
               </div>
@@ -155,7 +164,9 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                     >
                       -
                     </button>
-                    <span className="px-2 text-black">{cartQuantities[index]}</span>
+                    <span className="px-2 text-black">
+                      {cartQuantities[index]}
+                    </span>
                     <button
                       onClick={() => handleQuantityChange(index, 1)}
                       className="bg-blue-900 w-[30px]  p-1 rounded-lg"

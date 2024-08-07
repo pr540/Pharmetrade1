@@ -11,7 +11,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"PT Sans"', 'sans-serif'],
-        ubuntu: ['Ubuntu', 'sans-serif'],
+        // ubuntu: ['Ubuntu', 'sans-serif'],
       },
       colors: {
         'custom-blue': '#98C8F4',  // Custom color name and value

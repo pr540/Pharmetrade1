@@ -98,7 +98,7 @@ function Nav({ topDivRef, cartItems }) {
   const downDivItems = [
     { label: "BUY", icon: Buy, path: "/products" },
     { label: "JOIN", icon: join, path: "/login" },
-    { label: "SELL", icon: sell, path: "/admin/addproducts/Create" },
+    { label: "SELL", icon: sell, path: "/admin/market-product-list" },
     { label: "BID", icon: bid, path: "/bid" },
     // { label: "LinkedIn", icon: linkedin, path: "#" },
     // { label: "Facebook", icon: facebook, path: "#" },
@@ -222,7 +222,7 @@ function Nav({ topDivRef, cartItems }) {
                   <li
                     className={`text-blue-900  hover:bg-slate-200  rounded-md flex justify-center p-1 px-2 items-center w-fit cursor-pointer font-medium text-[17px] ${
                       selectedIndex === index
-                        ? " bg-blue-900 hover:text-blue-900 text-white border-0 font-semibold"
+                        ? "bg-slate-200 hover:text-blue-900 text-blue-900 border-0 font-semibold"
                         : "border-transparent border-2"
                     }`}
                     key={item}
@@ -375,7 +375,7 @@ function Nav({ topDivRef, cartItems }) {
               <li
                 key={index}
                 onClick={() => navigate(item.path)}
-                className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-green-400 ${
+                className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-black ${
                   item.label == "Sell"
                     ? FormData?.userType === "Normal Customer"
                       ? "hidden"

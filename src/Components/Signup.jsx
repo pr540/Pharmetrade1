@@ -320,7 +320,7 @@ const Signup = () => {
       if (!formData.Business_Email && userType != "Normal Customer")
         newErrors.Business_Email = " Bussiness_Email is required";
       else if (!formData.Business_Email.match(regexp))
-        newErrors.Email_id = "Email is required";
+        newErrors.Business_Email = " Bussiness_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required";
       if (!formData.Address1) newErrors.Address1 = "Address is required";

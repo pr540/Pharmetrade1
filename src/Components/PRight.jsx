@@ -154,7 +154,7 @@ function PRight({ topMargin, addCart, wishList }) {
                    <img
                     onClick={() => handleClick(index + indexOfFirstItem)}
                     src={favoriteItems[index] ? filledHeart : emptyHeart}
-                    className="h-8 p-[6px]  absolute left-0 "
+                    className="h-8 p-[6px]  absolute right-0 "
                   alt="Favorite Icon"
                 />
                 

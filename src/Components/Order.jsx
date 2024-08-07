@@ -7,21 +7,21 @@ function Order({topMargin}) {
       <div className='bg-white border-1 rounded-r-md m-10 w-[95%] p-10'>
         <h2  className='text-4xl font-bold my-2'> Order Received</h2>
         <div className='bg-slate-100 w-[95%] m-10  my-12 '>
-          <div className='p-10 border-b-2 border-white'>
+          <div className='p-4 border-b-2 border-white'>
             <h4 className='text-xl'>Order Number:</h4>
           </div>
           
-          <div  className='p-10 border-b-2 border-white'>
+          <div  className='p-4 border-b-2 border-white'>
      
             <h4 className='text-xl'>Date:</h4>
           </div>
           
-          <div className='p-10 border-b-2 border-white'>
+          <div className='p-4 border-b-2 border-white'>
            {/* style={{ padding: '10px',borderBottom:'2px solid white' }}> */}
             <h4 className='text-xl'>Total:</h4>
           </div>
           
-          <div className='p-10' >
+          <div className='p-4' >
             <h4 className='text-xl'>Payment Method:</h4>
           </div>
         </div>
