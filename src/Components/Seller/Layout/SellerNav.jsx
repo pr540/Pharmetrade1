@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo_04.png";
 import user from '../../../assets/user.png'
 
-const AdminNav = () => {
+const SellerNav = () => {
   function handleclicked() {
     navigate("/app");
   }
@@ -30,4 +30,4 @@ const AdminNav = () => {
   );
 };
 
-export default AdminNav;
+export default SellerNav;

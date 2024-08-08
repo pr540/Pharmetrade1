@@ -78,8 +78,8 @@ const Sidebar = () => {
       isOpen: isDropdownOpen,
       toggleDropdown: toggleDropdown,
       links: [
-        { to: "/admin", label: "Home", icon: homeIcon },
-        { to: "/admin/orders", label: "Orders", icon: ordersIcon },
+        { to: "/seller", label: "Home", icon: homeIcon },
+        { to: "/seller/orders", label: "Orders", icon: ordersIcon },
         {
           label: "Products",
           icon: productsIcon,
@@ -87,53 +87,53 @@ const Sidebar = () => {
           toggleDropdown: toggleProductsDropdown,
           links: [
             // {
-            //   to: "/admin/market-product-list",
+            //   to: "/seller/market-product-list",
             //   label: "Market Products List",
             //   icon: singleProductIcon,
             // },
             {
-              // to: "/admin/add-single-product",
-              to: "/admin/market-product-list",
+              // to: "/seller/add-single-product",
+              to: "/seller/market-product-list",
               label: "Product",
               icon: singleProductIcon,
             },
             {
-              to: "/admin/add-xl-sheet",
+              to: "/seller/add-xl-sheet",
               label: "Add Bulk Products",
               icon: xlSheetIcon,
             },
           ],
         },
-        { to: "/admin/customers", label: "Customers", icon: customersIcon },
+        { to: "/seller/customers", label: "Customers", icon: customersIcon },
       ],
     },
     {
-      to: "/admin/payouts",
+      to: "/seller/payouts",
       label: "Pay Outs",
       icon: payout,
     },
     {
-      to: "/admin/earnings",
+      to: "/seller/earnings",
       label: "Earnings",
       icon: earnings,
     },
     {
-      to: "/admin/review",
+      to: "/seller/review",
       label: "Review",
       icon: review,
     },
     {
-      to: "/admin/returns",
+      to: "/seller/returns",
       label: "Returns",
       icon: returnicon,
     },
     {
-      to: "/admin/assign-products",
+      to: "/seller/assign-products",
       label: "Assign Products",
       icon: assign,
     },
     {
-      to: "/admin/assign-product-list",
+      to: "/seller/assign-product-list",
       label: "Assign Product List",
       icon: assign,
     },
@@ -144,12 +144,12 @@ const Sidebar = () => {
       toggleDropdown: toggleQDropdown,
       links: [
         {
-          to: "/admin/request-quote",
+          to: "/seller/request-quote",
           label: "All Requested Quote",
           icon: requestedQuoteIcon,
         },
         {
-          to: "/admin/quoted-product",
+          to: "/seller/quoted-product",
           label: "All Quoted Products",
           icon: quotedProductsIcon,
         },
@@ -162,27 +162,27 @@ const Sidebar = () => {
       toggleDropdown: toggleSDropdown,
       links: [
         {
-          to: "/admin/settings",
+          to: "/seller/settings",
           label: "Profile Setting",
           icon: profileSettingIcon,
         },
         {
-          to: "/admin/ups-shipping",
+          to: "/seller/ups-shipping",
           label: "UPS Shipping",
           icon: upsShippingIcon,
         },
         {
-          to: "/admin/fedex-shipping",
+          to: "/seller/fedex-shipping",
           label: "Fedex Shipping",
           icon: fedexShippingIcon,
         },
         {
-          to: "/admin/shipping-settings",
+          to: "/seller/shipping-settings",
           label: "Shipping Setting",
           icon: shippingSettingIcon,
         },
         {
-          to: "/admin/manage-shipping",
+          to: "/seller/manage-shipping",
           label: "Manage Multi Shipping",
           icon: manageShippingIcon,
         },

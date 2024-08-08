@@ -1,14 +1,14 @@
 import React from "react";
 import Sidebar from "./SideBar";
-import AdminNav from "./AdminNav";
+import SellerNav from "./SellerNav";
 
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
-function AdminPanel() {
+function SellerPanel() {
   return (
     <div className="flex flex-col h-screen overflow-hidden  w-screen bg-gray-100 ">
-      <AdminNav />
+      <SellerNav />
       <div className="flex w-screen h-full overflow-hidden   ">
         <Sidebar />
         <div className="w-full h-full  flex justify-end ">
@@ -23,4 +23,4 @@ function AdminPanel() {
   );
 }
 
-export default AdminPanel;
+export default SellerPanel;

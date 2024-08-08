@@ -98,7 +98,7 @@ function Nav({ topDivRef, cartItems }) {
   const downDivItems = [
     { label: "BUY", icon: Buy, path: "/products" },
     { label: "JOIN", icon: join, path: "/login" },
-    { label: "SELL", icon: sell, path: "/admin/market-product-list" },
+    { label: "SELL", icon: sell, path: "/seller/market-product-list" },
     { label: "BID", icon: bid, path: "/bid" },
     // { label: "LinkedIn", icon: linkedin, path: "#" },
     // { label: "Facebook", icon: facebook, path: "#" },
@@ -306,7 +306,7 @@ function Nav({ topDivRef, cartItems }) {
                                 : ""
                             }`}
                           >
-                            <Link to="/admin" className="text-lg text-blue-900">
+                            <Link to="/seller" className="text-lg text-blue-900">
                               Seller Dashboard
                             </Link>
                           </li>

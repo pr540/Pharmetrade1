@@ -63,7 +63,7 @@ const AddProducts = () => {
   });
 
   const handleAddNewProductClick = () => {
-    navigate("/admin/add-single-product");
+    navigate("/seller/add-single-product");
   };
 
   const handleEditProduct = () => {

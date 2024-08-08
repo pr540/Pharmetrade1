@@ -206,9 +206,9 @@ function Footers() {
               <p className="text-md mb-4 font-semibold">Quick Links</p>
               <ul className="list-disc list-inside ">
                 <li>
-                  <a href="#" className="underline ">
+                  <Link to="/seller" className="underline ">
                     Seller Dashboard
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="underline">
@@ -216,7 +216,7 @@ function Footers() {
                   </a>
                 </li>
                 <li>
-                  <Link  className="underline">
+                  <Link to="/termsandconditions" className="underline">
                     Terms & Conditions
                   </Link>
                 </li>
@@ -231,9 +231,9 @@ function Footers() {
               <p className="text-md mb-4 font-semibold">Support & Service</p>
               <ul className="list-disc list-inside">
                 <li>
-                  <a href="#" className="underline">
+                  <Link to="/wishlist" className="underline">
                     Wish list
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="underline">
@@ -246,9 +246,9 @@ function Footers() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="underline">
-                    Contact US
-                  </a>
+                  <Link to="/contactus" className="underline">
+                    Contact Us
+                  </Link>
                 </li>
               </ul>
             </div>

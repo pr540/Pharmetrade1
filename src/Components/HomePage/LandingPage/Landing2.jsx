@@ -184,7 +184,7 @@ function Landing2({wishList,addCart}) {
         navigate('/login');
         break;
       case 2:
-        navigate('/admin/market-product-list');
+        navigate('/seller/market-product-list');
         break;
       case 3:
         navigate('/bid');

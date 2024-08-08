@@ -18,32 +18,31 @@ import Checkout from "./Components/Checkout";
 import Order from "./Components/Order";
 import Wishlist from "./Components/Wishlist";
 import ScrollToTop from "./Components/ScrollToTop";
-import AdminNav from "./Components/Admin/Layout/AdminNav";
-import AdminPanel from "./Components/Admin/Layout/AdminPanel";
-import Sidebar from "./Components/Admin/Layout/SideBar";
-import Settings from "./Components/Admin/Settings/Settings";
-// import SellerInfo from "./Components/DashboardAdmin/SellerInfo";
-import Payouts from "./Components/Admin/Payouts/Payouts";
+import SellerNav from "./Components/Seller/Layout/SellerNav";
+import SellerPanel from "./Components/Seller/Layout/SellerPanel";
+import Sidebar from "./Components/Seller/Layout/SideBar";
+import Settings from "./Components/Seller/Settings/Settings";
+import Payouts from "./Components/Seller/Payouts/Payouts";
 import AccountPanel from "./Components/UserAccount/Layout/AccountPanel";
 import MyAccount from "./Components/UserAccount/MyAccount/MyAccount";
 import MyOrders from "./Components/UserAccount/MyOrders/MyOrders";
 import OrderHistory from "./Components/OrderHistory";
-import UpsShipping from "./Components/Admin/Settings/UpsShipping";
-import FedexShipping from "./Components/Admin/Settings/FedexShipping";
-import ShippingSetting from "./Components/Admin/Settings/ShippingSetting";
-import ManageShipping from "./Components/Admin/Settings/ManageShipping";
-import AddProducts from "./Components/Admin/Dashboard/AddProducts";
-import Orders from "./Components/Admin/Dashboard/Orders";
-import Dashboard from "./Components/Admin/Dashboard/Dashboard";
-import Customers from "./Components/Admin/Dashboard/Customers";
-import Earnings from "./Components/Admin/Earnings/Earnings";
-import Review from "./Components/Admin/Review/Review";
-import Return from "./Components/Admin/Returns/Return";
-import AssignProduct from "./Components/Admin/AssignProducts/AssignProduct";
-import AssignProductList from "./Components/Admin/AssignProductList/AssignProductList";
-import RequestQuote from "./Components/Admin/RequestQuote/RequestQuote";
-import QuotedProducts from "./Components/Admin/RequestQuote/QuotedProducts";
-import ProductFields from "./Components/Admin/Components/ProductFields";
+import UpsShipping from "./Components/Seller/Settings/UpsShipping";
+import FedexShipping from "./Components/Seller/Settings/FedexShipping";
+import ShippingSetting from "./Components/Seller/Settings/ShippingSetting";
+import ManageShipping from "./Components/Seller/Settings/ManageShipping";
+import AddProducts from "./Components/Seller/Dashboard/AddProducts";
+import Orders from "./Components/Seller/Dashboard/Orders";
+import Dashboard from "./Components/Seller/Dashboard/Dashboard";
+import Customers from "./Components/Seller/Dashboard/Customers";
+import Earnings from "./Components/Seller/Earnings/Earnings";
+import Review from "./Components/Seller/Review/Review";
+import Return from "./Components/Seller/Returns/Return";
+import AssignProduct from "./Components/Seller/AssignProducts/AssignProduct";
+import AssignProductList from "./Components/Seller/AssignProductList/AssignProductList";
+import RequestQuote from "./Components/Seller/RequestQuote/RequestQuote";
+import QuotedProducts from "./Components/Seller/RequestQuote/QuotedProducts";
+import ProductFields from "./Components/Seller/Components/ProductFields";
 import HomeLayout from "./Components/HomePage/Layout/HomeLayout";
 import DownloadProduct from "./Components/UserAccount/DownloadProduct/DownloadProduct";
 import Addressbook from "./Components/UserAccount/AddressBook/Addressbook";
@@ -63,7 +62,7 @@ import AboutUs from "./Components/HomePage/NavLinks/AboutUs";
 import Contactus from "./Components/HomePage/NavLinks/Contactus";
 import Offers from "./Components/HomePage/NavLinks/Offers";
 import TermsAndConditions from "./Components/TermsAndConditions";
-import AddXlSheet from "./Components/Admin/Dashboard/Products/AddXlSheet";
+import AddXlSheet from "./Components/Seller/Dashboard/Products/AddXlSheet";
 import RequestDemo from "./Components/HomePage/NavLinks/RequestDemo";
 
 function App() {
@@ -95,7 +94,7 @@ function App() {
   console.log(wishItems);
   const location = useLocation();
 
-  const excludePatterns = /\/(admin|user|login|signup|password|changepassword)/;
+  const excludePatterns = /\/(seller|user|login|signup|password|changepassword)/;
 
   return (
     <NavbarProvider>
@@ -196,7 +195,7 @@ function App() {
           />
         </Route>
 
-        <Route path="/admin" element={<AdminPanel />}>
+        <Route path="/seller" element={<SellerPanel />}>
           <Route path="" element={<Dashboard />} />
           <Route path="orders" element={<Orders />} />
           <Route path="market-product-list" element={<AddProducts />} />

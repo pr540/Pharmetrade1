@@ -16,7 +16,7 @@ function PLefts() {
     navigate("/products");
   }
   function handleAdmin() {
-    navigate("/admin");
+    navigate("/seller");
   }
   const [scrollY, setScrollY] = useState(0);
 
