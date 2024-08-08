@@ -65,7 +65,7 @@ const Signup = () => {
     event.preventDefault();
   };
   const userTypes = [
-    "Prescription Drug Seller",
+    "Retain Pharmacy",
     "General Merchandise Seller",
     "Vendor",
     "Normal Customer",
@@ -287,7 +287,7 @@ const Signup = () => {
       if (!accountType) newErrors.accountType = "Account Type is required";
 
       if (
-        (userType === "Prescription Drug Seller" ||
+        (userType === "Retain Pharmacy" ||
           userType === "Vendor" ||
           userType === "Normal Customer" ||
           userType !== "General Merchandise Seller") &&
