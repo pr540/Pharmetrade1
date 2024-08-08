@@ -64,6 +64,8 @@ import TermsAndConditions from "./Components/TermsAndConditions";
 import AddXlSheet from "./Components/Seller/Dashboard/Products/AddXlSheet";
 import RequestDemo from "./Components/HomePage/NavLinks/RequestDemo";
 import Offers from "./Components/Offers";
+import AdminPanel from "./Components/Admin/Layouts/AdminPanel";
+import AdminDasboard from "./Components/Admin/Dashboard/AdminDasboard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -94,7 +96,7 @@ function App() {
   console.log(wishItems);
   const location = useLocation();
 
-  const excludePatterns = /\/(seller|user|login|signup|password|changepassword)/;
+  const excludePatterns = /\/(seller|admin|user|login|signup|password|changepassword)/;
 
   return (
     <NavbarProvider>
@@ -199,10 +201,8 @@ function App() {
           <Route path="" element={<Dashboard />} />
           <Route path="orders" element={<Orders />} />
           <Route path="market-product-list" element={<AddProducts />} />
-          {/* <Route path="addproducts/Create" element={<ProductFields />} /> */}
           <Route path="add-single-product" element={<ProductFields />} />
           <Route path="add-xl-sheet" element={<AddXlSheet />} />
-
           <Route path="customers" element={<Customers />} />
           <Route path="payouts" element={<Payouts />} />
           <Route path="earnings" element={<Earnings />} />
@@ -217,6 +217,11 @@ function App() {
           <Route path="fedex-shipping" element={<FedexShipping />} />
           <Route path="shipping-settings" element={<ShippingSetting />} />
           <Route path="manage-shipping" element={<ManageShipping />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminPanel />}>
+          <Route path="" element={<AdminDasboard />} />
+          
         </Route>
 
         <Route element={<AccountPanel topMargin={topMargin} />}>

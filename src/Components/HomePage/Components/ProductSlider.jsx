@@ -135,7 +135,7 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                   src={item.img}
                   onClick={() => naviagte(`/detailspage/${index}`)}
                   alt={item.name}
-                  className="h-48 w-48 object-contain rounded-lg"
+                  className="h-48 w-48 object-contain rounded-lg hover:cursor-pointer"
                 />
               </div>
               <div className="p-2">

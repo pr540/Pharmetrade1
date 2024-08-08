@@ -71,7 +71,7 @@ const Settings = () => {
                 UserName: Sofiya Khan
               </button>
               <button className="bg-blue-900 text-white p-4  rounded">
-                Designation: Developer
+                Designation: Software Developer
               </button>
             </div>
           </div>
@@ -79,16 +79,39 @@ const Settings = () => {
             <TextField
               label="Contact Number"
               variant="outlined"
-              className="w-64"
+              className="w-full"
             />
-            <TextField label="Email" variant="outlined" className="w-64" />
+            <TextField label="Email" variant="outlined" className="w-full" />
+            <TextField label="Address" variant="outlined" className="w-full" />
           </div>
-          <div className="w-full">
-            <TextField label="Address" variant="outlined" className="w-96" />
-          </div>
+          {/* <div className="w-full">
+            <TextField label="Address" variant="outlined" className="w-64" />
+          </div> */}
         </div>
         <div className="w-full bg-white border-gray-400 rounded-lg border my-4 p-4 flex flex-col  ">
           <div className="flex gap-4">
+            <div className="flex flex-col  ">
+              <span className="mt-2 text-xl text-black">Company Banner</span>
+              <label className="cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleFileChange(e, "banner")}
+                />
+                <div className="w-64 h-32 bg-gray-200 flex items-center justify-center rounded-lg">
+                  {banner ? (
+                    <img
+                      src={banner}
+                      alt="Company Banner"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <span className="text-gray-500">Upload Banner</span>
+                  )}
+                </div>
+              </label>
+            </div>
             <div className="flex flex-col ">
               <span className="mt-2 text-xl text-black">Company Logo</span>
               <label className="cursor-pointer">
@@ -111,41 +134,114 @@ const Settings = () => {
                 </div>
               </label>
             </div>
-            <div className="flex flex-col  ">
-              <span className="mt-2 text-xl text-black">Company Banner</span>
-              <label className="cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => handleFileChange(e, "banner")}
-                />
-                <div className="w-64 h-16 bg-gray-200 flex items-center justify-center rounded-lg">
-                  {banner ? (
-                    <img
-                      src={banner}
-                      alt="Company Banner"
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  ) : (
-                    <span className="text-gray-500">Upload Banner</span>
-                  )}
-                </div>
-              </label>
-            </div>
           </div>
 
           <div className="flex w-full gap-6 my-4">
             <TextField
               label="Company Name"
               variant="outlined"
-              className="w-64"
+              className="w-full"
             />
-            <TextField label="Shop Title" variant="outlined" className="w-64" />
+            <TextField
+              label="Shop Title"
+              variant="outlined"
+              className="w-full"
+            />
+            <TextField label="Location" variant="outlined" className="w-full" />
           </div>
+          <div className="flex w-full gap-6 my-4">
+            <TextField label="Country" variant="outlined" className="w-full" />
+            <TextField
+              label="Return Policy"
+              variant="outlined"
+              className="w-full"
+            />
+            <TextField
+              label="Shipping Policy"
+              variant="outlined"
+              className="w-full"
+            />
+          </div>
+          <div className="flex w-full gap-6 my-4">
+            <TextField
+              label="Privacy Policy"
+              variant="outlined"
+              className="w-full"
+            />
+            <TextField
+              label="Store Pick Up"
+              variant="outlined"
+              className="w-full"
+            />
+            <TextField
+              label="Tax Number"
+              variant="outlined"
+              className="w-full"
+            />
+          </div>
+
+          <div className="flex w-full gap-6 my-4">
+            <TextField
+              label="Description"
+              variant="outlined"
+              className="w-full"
+            />
+            <TextField
+              label="Meta Keywords"
+              variant="outlined"
+              className="w-full"
+            />
+            <TextField
+              label="Meta Description"
+              variant="outlined"
+              className="w-full"
+            />
+          </div>
+          <div className="flex w-full gap-6 my-4">
+            <TextField
+              label="Company Website URL"
+              variant="outlined"
+              className="w-96"
+            />
+            <button className="text-white bg-blue-900 px-4 rounded-lg">
+              Save
+            </button>
+          </div>
+
+          <div className="flex w-full gap-6 my-4">
+            <TextField
+              label="Payment Information"
+              variant="outlined"
+              className="w-96"
+            />
+            <button className="text-white bg-blue-900 px-4 rounded-lg">
+              Save
+            </button>
+          </div>
+          <div className="flex w-full gap-6 my-4">
+            <TextField
+              label="Payment Details"
+              variant="outlined"
+              className="w-96"
+            />
+            
+          </div>
+
         </div>
-        <div className="text-white bg-blue-900 font-semibold w-32 p-4 rounded-lg ">
-          <button>Save Changes</button>
+        <div className="w-full flex justify-between gap-4">
+          <div className="flex w-full gap-4">
+            <button className="text-white bg-blue-900 font-semibold w-44 p-4 rounded-lg ">
+              View Profile
+            </button>
+            <button className="text-white bg-blue-900 font-semibold w-44 p-4 rounded-lg ">
+              View Collection
+            </button>
+          </div>
+          <div>
+          <button className="text-white bg-blue-900 font-semibold w-24 p-4 rounded-lg ">
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </div>

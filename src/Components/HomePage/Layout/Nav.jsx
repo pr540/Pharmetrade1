@@ -299,6 +299,11 @@ function Nav({ topDivRef, cartItems }) {
                               Wishlist
                             </a>
                           </li>
+                          <li>
+                            <Link to="/admin" className="text-lg text-blue-900">
+                              Admin 
+                            </Link>
+                          </li> 
                           <li
                             className={`${
                               FormData?.userType === "Normal Customer"
