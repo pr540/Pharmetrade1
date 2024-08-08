@@ -319,7 +319,7 @@ const Signup = () => {
         newErrors.Business_Fax = "Bussiness_Fax is required";
       if (!formData.Business_Email && userType != "Normal Customer")
         newErrors.Business_Email = " Bussiness_Email is required";
-      else if (!formData.Business_Email.match(regexp))
+      else if (!formData.Business_Email.match(regexp) && userType != "Normal Customer")
         newErrors.Business_Email = " Bussiness_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required";
