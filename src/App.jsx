@@ -60,10 +60,10 @@ import Buy from "./Components/Buy";
 import WhyPharma from "./Components/HomePage/NavLinks/WhyPharma";
 import AboutUs from "./Components/HomePage/NavLinks/AboutUs";
 import Contactus from "./Components/HomePage/NavLinks/Contactus";
-import Offers from "./Components/HomePage/NavLinks/Offers";
 import TermsAndConditions from "./Components/TermsAndConditions";
 import AddXlSheet from "./Components/Seller/Dashboard/Products/AddXlSheet";
 import RequestDemo from "./Components/HomePage/NavLinks/RequestDemo";
+import Offers from "./Components/Offers";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -182,7 +182,7 @@ function App() {
             element={<RequestDemo topMargin={topMargin} />}
           />
           
-          <Route path="/buy" element={<Offers topMargin={topMargin} />} />
+          <Route path="/offers" element={<Offers topMargin={topMargin} />} />
           <Route
             path="/wishlist"
             element={

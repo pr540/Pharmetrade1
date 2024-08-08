@@ -8,6 +8,7 @@
 import React, { useRef } from "react";
 import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
+import { Link } from 'react-router-dom';
 
 const OfferSlider = ({ images, Title }) => {
   const carouselContainer = useRef(null);
@@ -74,9 +75,9 @@ const OfferSlider = ({ images, Title }) => {
                 />
                 
               <div className="w-full mt-8 text-black flex font-semibold justify-end" >
-                <a href="#" className="hover:text-red-500">
+                <Link to="/offers" className="hover:text-red-500">
                   See all offers
-                </a>
+                </Link>
               </div>
             </div>
           ))}
