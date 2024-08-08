@@ -184,7 +184,7 @@ function App() {
             element={<RequestDemo topMargin={topMargin} />}
           />
           
-          <Route path="/offers" element={<Offers topMargin={topMargin} />} />
+          <Route path="/offers" element={<Offers topMargin={topMargin} addCart={addCart} wishList={wishList} />} />
           <Route
             path="/wishlist"
             element={

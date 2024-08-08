@@ -8,8 +8,11 @@ import cart from "../assets/cartw_icon.png";
 import image2 from "../assets/offers_1.png";
 import image3 from "../assets/offers_2.png";
 import image4 from "../assets/offers_3.png";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import emptyHeart from "../assets/Wishlist1_icon.png";
+import filledHeart from "../assets/wishlist2_icon.png";
+
 
 const offersData = [
   {
@@ -75,13 +78,14 @@ const offersData = [
   // Additional offers can be added here...
 ];
 
-const Offers = ({ topMargin }) => {
+const Offers = ({ topMargin, addCart, wishList }) => {
   const itemsPerPage = 10;
   // const images = Array(115).fill(image1);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const naviagte = useNavigate();
+  const [favoriteItems, setFavoriteItems] = useState([]);
 
+  const navigate = useNavigate();
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -95,6 +99,39 @@ const Offers = ({ topMargin }) => {
 
   const handlePreviousPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleCart = (index) => {
+    console.log("Adding to cart:", index);
+    const prolist = {
+      id: index,
+      // src: images[index],
+      // price: "$50.99",
+      src: offersData[index].image,
+      price: offersData[index].price,
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    addCart(prolist);
+  };
+
+  const handleClick = (index) => {
+    setFavoriteItems((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+    const prolist = {
+      id: index,
+      // src: images[index],
+      // price: "$50.99",
+      src: offersData[index].image,
+      price: offersData[index].price,
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    wishList(prolist);
   };
 
   return (
@@ -119,20 +156,29 @@ const Offers = ({ topMargin }) => {
                     </p>
                   </div>
                   <div className="m-3">
-                    <img src={wishlist}
-                     onClick={() => naviagte(`/detailspage/${index}`)}
-                    className="w-5 h-5" />
+                    <img
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent event from bubbling to parent
+                        handleClick(index);
+                      }}
+                      src={favoriteItems[index] ? filledHeart : emptyHeart}
+                      className=" h-5 w-5 cursor-pointer"
+                      alt="Favorite Icon"
+                    />
                   </div>
                 </div>
-                <Link to="" className="flex justify-center items-center -mt-5">
-                  <img src={offer.image} className="w-60 h-40" />
-                </Link>
+                <div  className="flex justify-center items-center -mt-5 ">
+                  <img src={offer.image} className="w-60 h-40 hover:cursor-pointer"  onClick={() => navigate(`/detailspage/${index}`)}/>
+                </div>
                 <div className="flex justify-center flex-col items-center mb-1">
                   <p className="font-semibold text-xl">{offer.title}</p>
                   <span className="">{offer.price}</span>
                 </div>
                 <div className="flex justify-between mx-2">
-                  <button className=" items-center justify-center px-2 flex gap-1 bg-blue-900 border text-sm font-medium rounded-md text-white p-1">
+                  <button
+                    onClick={() => handleCart(index)}
+                    className=" items-center justify-center px-2 flex gap-1 bg-blue-900 border text-sm font-medium rounded-md text-white p-1"
+                  >
                     <img src={cart} className="w-4 h-4" />
                     Add to cart
                   </button>
@@ -146,7 +192,7 @@ const Offers = ({ topMargin }) => {
         </div>
       </div>
 
-      {/* <div className="flex justify-end my-2">
+      <div className="flex justify-end my-2">
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
@@ -164,7 +210,7 @@ const Offers = ({ topMargin }) => {
         >
           <img src={next} className="w-2" />
         </button>
-      </div> */}
+      </div>
     </div>
   );
 };
