@@ -19,11 +19,11 @@ const AboutUs = ({ topMargin }) => {
       </div>
 
       <div className="w-full h-screen flex">
-        <div className="w-[54%] h-full  flex justify-end  ">
+        <div className="w-[50%] h-full  flex justify-end   ">
           <img src={whypharma} className="w-[450px] object-contain " />
         </div>
-        <div className="w-[42%] justify-center  min-h-full flex flex-col  ">
-          <div className="w-full pr-20 flex flex-col  gap-5 h-[350px]">
+        <div className="w-[50%] justify-center  min-h-full flex flex-col  ">
+          <div className="w-[80%] pr-20 flex flex-col  gap-5 h-[350px]">
             <h2 className="text-3xl text-blue-900 font-semibold">Why PharmEtrade</h2>
             <p className="w-full">
             Pharmetrade revolutionizes the pharmaceutical marketplace with an

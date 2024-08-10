@@ -22,9 +22,9 @@ const Contactus = ({ topMargin }) => {
             Contact Us
           </h2>
           <form className="flex flex-col gap-4">
-            <TextField label="Enter Name" variant="outlined" fullWidth />
-            <TextField label="Mobile Number" variant="outlined" fullWidth />
-            <TextField label="Email" variant="outlined" fullWidth />
+            <TextField label="Enter Name" variant="outlined" fullWidth size="small"/>
+            <TextField label="Mobile Number" variant="outlined" fullWidth size="small"/>
+            <TextField label="Email" variant="outlined" fullWidth  size="small"/>
             <TextField
               label="Message"
               variant="outlined"

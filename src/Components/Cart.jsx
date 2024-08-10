@@ -401,7 +401,7 @@ function Cart({ topMargin, cartItems, setCartItems }) {
                         {item.name}
                       </td>
                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
-                        ${item.price}
+                        {item.price}
                       </td>
                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
                         <input

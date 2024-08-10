@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { AiFillCamera } from "react-icons/ai"; // Importing camera icon from react-icons
 import { TextField, Grid } from "@mui/material";
+import camera from "../../../assets/Camera.png"
 
 const Settings = () => {
   const [profileImage, setProfileImage] = useState(null);
@@ -51,13 +52,13 @@ const Settings = () => {
                 alt="Profile"
                 className="w-full h-full object-cover  "
               />
-              <button
+              {/* <button
                 onClick={handleCameraClick}
-                className="absolute bottom-0 right-0 p-1 bg-blue-900 rounded-full text-white"
+                className="absolute bottom-0 right-0 p-1  rounded-full text-white"
               >
-                <AiFillCamera className="w-10 h-10" />
-              </button>
+              </button> */}
             </div>
+                <img src={camera} className="w-10 absolute z-10 top-64 left-30 h-10" />
 
             <input
               type="file"
@@ -66,12 +67,12 @@ const Settings = () => {
               ref={fileInputRef}
               className="hidden"
             />
-            <div className="ml-4 flex items-center space-x-2 text-[18px]">
-              <button className="bg-blue-900 text-white p-4 rounded">
-                UserName: Sofiya Khan
+            <div className="ml-4 flex items-center space-x-2 font-semibold text-[18px]">
+              <button className="bg-blue-900 text-white p-2 rounded">
+                UserName: <span className="font-medium"> Sofiya Khan </span>
               </button>
-              <button className="bg-blue-900 text-white p-4  rounded">
-                Designation: Software Developer
+              <button className="bg-blue-900 text-white p-2 font-semibold rounded">
+                Designation:<span className="font-medium">Software Developer</span> 
               </button>
             </div>
           </div>
@@ -80,9 +81,10 @@ const Settings = () => {
               label="Contact Number"
               variant="outlined"
               className="w-full"
+              size="small"
             />
-            <TextField label="Email" variant="outlined" className="w-full" />
-            <TextField label="Address" variant="outlined" className="w-full" />
+            <TextField label="Email" variant="outlined" className="w-full" size="small" />
+            <TextField label="Address" variant="outlined" className="w-full" size="small" />
           </div>
           {/* <div className="w-full">
             <TextField label="Address" variant="outlined" className="w-64" />
@@ -141,25 +143,29 @@ const Settings = () => {
               label="Company Name"
               variant="outlined"
               className="w-full"
+              size="small"
             />
             <TextField
               label="Shop Title"
               variant="outlined"
               className="w-full"
+              size="small"
             />
-            <TextField label="Location" variant="outlined" className="w-full" />
+            <TextField label="Location" variant="outlined" className="w-full" size="small" />
           </div>
           <div className="flex w-full gap-6 my-4">
-            <TextField label="Country" variant="outlined" className="w-full" />
+            <TextField label="Country" variant="outlined" className="w-full" size="small"/>
             <TextField
               label="Return Policy"
               variant="outlined"
               className="w-full"
+              size="small"
             />
             <TextField
               label="Shipping Policy"
               variant="outlined"
               className="w-full"
+              size="small"
             />
           </div>
           <div className="flex w-full gap-6 my-4">
@@ -167,16 +173,19 @@ const Settings = () => {
               label="Privacy Policy"
               variant="outlined"
               className="w-full"
+              size="small"
             />
             <TextField
               label="Store Pick Up"
               variant="outlined"
               className="w-full"
+              size="small"
             />
             <TextField
               label="Tax Number"
               variant="outlined"
               className="w-full"
+              size="small"
             />
           </div>
 
@@ -185,16 +194,19 @@ const Settings = () => {
               label="Description"
               variant="outlined"
               className="w-full"
+              size="small"
             />
             <TextField
               label="Meta Keywords"
               variant="outlined"
               className="w-full"
+              size="small"
             />
             <TextField
               label="Meta Description"
               variant="outlined"
               className="w-full"
+              size="small"
             />
           </div>
           <div className="flex w-full gap-6 my-4">
@@ -202,6 +214,7 @@ const Settings = () => {
               label="Company Website URL"
               variant="outlined"
               className="w-96"
+              size="small"
             />
             <button className="text-white bg-blue-900 px-4 rounded-lg">
               Save
@@ -213,6 +226,7 @@ const Settings = () => {
               label="Payment Information"
               variant="outlined"
               className="w-96"
+              size="small"
             />
             <button className="text-white bg-blue-900 px-4 rounded-lg">
               Save
@@ -223,6 +237,7 @@ const Settings = () => {
               label="Payment Details"
               variant="outlined"
               className="w-96"
+              size="small"
             />
             
           </div>

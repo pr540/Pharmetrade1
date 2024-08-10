@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for the API
-const BASE_URL = "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/";
+const BASE_URL = "http://100-29-38-82:5000/api/";
 
 // Create an Axios instance with default settings
 const apiClient = axios.create({

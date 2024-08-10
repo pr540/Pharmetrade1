@@ -401,7 +401,7 @@ function Nav({ topDivRef, cartItems }) {
               </li>
             ))}
           </div>
-          <div className="flex bg-white rounded-l-md items-center w-[40%] lg:gap-10">
+          <div className="flex bg-white rounded-md items-center w-[40%] lg:gap-10">
             <div
               ref={dropdownRef}
               className={`w-full relative flex items-center ${

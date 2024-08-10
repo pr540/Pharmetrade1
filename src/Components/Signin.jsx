@@ -491,13 +491,14 @@
 import React, { useState, useRef } from "react";
 import background_image from "../assets/homepharma.png";
 import logo from "../assets/Icons/logo2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 import refresh from "../assets/reload-arrow (1).png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { InputAdornment, IconButton } from "@mui/material";
 import { loginCustomer, setAuthToken } from "../Api/Api";
+import Password from "./Password";
 const OTPInput = ({ length, onChangeOTP }) => {
   const [otp, setOTP] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
@@ -550,6 +551,9 @@ const Signin = () => {
   const [formData, setFormData] = useState({ captcha: "" });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [token, setToken] = useState('')
+
+  const nav = useNavigate()
 
   const handleOTPChange = (otp) => {
     console.log("Current OTP:", otp);
@@ -616,12 +620,11 @@ const Signin = () => {
     };
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(url+`?UserName=${email}&Password=${password}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -630,10 +633,15 @@ const Signin = () => {
 
       const result = await response.json();
       console.log("Login successful:", result);
+      setToken(result)
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
+  if(token){
+    nav('/')
+  }
+
 
   return (
     <div className="h-screen w-screen ">

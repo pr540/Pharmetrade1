@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Cart from "./Components/Cart";
 import Landing from "./Components/HomePage/LandingPage/Landing";
-import Login from "./Components/Login";
+// import Login from "./Components/Login";
 import Nav from "./Components/HomePage/Layout/Nav";
 import { NavbarProvider } from "./Components/NavbarContext";
 import Product from "./Components/Product";
@@ -66,6 +66,7 @@ import RequestDemo from "./Components/HomePage/NavLinks/RequestDemo";
 import Offers from "./Components/Offers";
 import AdminPanel from "./Components/Admin/Layouts/AdminPanel";
 import AdminDasboard from "./Components/Admin/Dashboard/AdminDasboard";
+import Faqs from "./Components/Faqs";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -185,6 +186,10 @@ function App() {
           />
           
           <Route path="/offers" element={<Offers topMargin={topMargin} addCart={addCart} wishList={wishList} />} />
+          <Route
+            path="/faqs"
+            element={<Faqs topMargin={topMargin} />}
+          />
           <Route
             path="/wishlist"
             element={

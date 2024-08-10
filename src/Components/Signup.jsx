@@ -27,7 +27,7 @@ import {
 } from "@mui/material";
 
 function getSteps() {
-  return ["Personal-Info", "User-Info", "Bussiness-Info1", "Bussiness-Info-2"];
+  return ["Personal-Info", "User-Info", "Business-Info1", "Business-Info-2"];
 }
 
 const Signup = () => {
@@ -142,7 +142,7 @@ const Signup = () => {
     Pharmacy_License: "",
     Pharmacy_Expiration_Date: "",
     Pharmacy_License_Copy: "",
-    Bussiness_License: "",
+    Business_License: "",
     NPI: "",
     NCPDP: "",
     Federal_Tax_ID: "",
@@ -258,7 +258,7 @@ const Signup = () => {
         /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
       if (!formData.First_Name.match(regex))
         newErrors.First_Name = "First name is required.";
-      if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
+      if (!formData.Last_Name.match(regex)) newErrors.Last_Name = "Last name is required.";
 
 
       if (!formData.Email_id.match(regexp))
@@ -314,13 +314,13 @@ const Signup = () => {
       )
         newErrors.dbaName = "DBA name is required.";
       if (!formData.BusinessPhone && userType != "Normal Customer")
-        newErrors.BusinessPhone = "bussinessphone is required";
+        newErrors.BusinessPhone = "businessphone is required";
       if (!formData.Business_Fax && userType != "Normal Customer")
-        newErrors.Business_Fax = "Bussiness_Fax is required";
+        newErrors.Business_Fax = "Business_Fax is required";
       if (!formData.Business_Email && userType != "Normal Customer")
-        newErrors.Business_Email = " Bussiness_Email is required";
+        newErrors.Business_Email = " Business_Email is required";
       else if (!formData.Business_Email.match(regexp) && userType != "Normal Customer")
-        newErrors.Business_Email = " Bussiness_Email is required";
+        newErrors.Business_Email = " Business_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required";
       if (!formData.Address1) newErrors.Address1 = "Address is required";
@@ -813,7 +813,7 @@ const Signup = () => {
             >
               <div>
                 <TextField
-                  label="Legal Bussiness Name"
+                  label="Legal Business Name"
                   id="outlined-size-small"
                   name="legalBusinessName"
                   value={formData.legalBusinessName}
@@ -945,7 +945,7 @@ const Signup = () => {
             >
               <div>
                 <TextField
-                  label="Bussiness Fax"
+                  label="Business Fax"
                   id="outlined-size-small"
                   name="Business_Fax"
                   value={formData.Business_Fax}
@@ -962,7 +962,7 @@ const Signup = () => {
             >
               <div>
                 <TextField
-                  label="Bussiness Email"
+                  label="Business Email"
                   id="outlined-size-small"
                   name="Business_Email"
                   value={formData.Business_Email}

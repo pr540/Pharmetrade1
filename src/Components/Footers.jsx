@@ -146,7 +146,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 
 
-function Footers() {
+function Footers({ topMargin}) {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -159,6 +159,9 @@ function Footers() {
     <div
         className="bg-yellow-100  cursor-pointer text-blue-900 font-semibold p-3 flex justify-center items-center text-[17px]"
         onClick={scrollToTop}
+        style={{
+          marginTop: `${topMargin}px`,
+        }}
       >
         {" "}
         Back To Top
@@ -221,9 +224,9 @@ function Footers() {
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="underline">
+                  <Link to="/faqs" className="underline">
                     FAQ
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
