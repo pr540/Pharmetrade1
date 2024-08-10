@@ -316,9 +316,9 @@ function Nav({ topDivRef, cartItems }) {
                             </Link>
                           </li>
                           <li>
-                            <a href="#" className="text-lg text-blue-900">
+                            <Link href="#" className="text-lg text-blue-900">
                               Account Settings
-                            </a>
+                            </Link>
                           </li>
                           <li
                             className="cursor-pointer"
