@@ -463,7 +463,7 @@ function PRight({ topMargin, addCart, wishList }) {
   }));
 
   return (
-    <div className="w-full h-full overflow-y-scroll">
+    <div className="w-full h-full mt-6 overflow-y-scroll">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1>
         <div className="flex">
