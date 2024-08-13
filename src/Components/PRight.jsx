@@ -276,7 +276,7 @@ import image1 from "../assets/offers_1.png";
 import image2 from "../assets/offers_2.png";
 import image3 from "../assets/offers_3.png";
 import cart from "../assets/cartw_icon.png";
-import Expicon from "../assets/Expicon.png"
+import Expicon from "../assets/Expicon.png";
 
 function PRight({ topMargin, addCart, wishList }) {
   const { pop, setPop } = useNavbarContext();
@@ -485,9 +485,25 @@ function PRight({ topMargin, addCart, wishList }) {
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1>
         <div className="flex">
-          <div className="flex gap-1 bg-blue-900 w-16 h-9 px-2 p-2 rounded-md items-center justify-center">
-            <img src={filter} className="w-5 h-4" />
-            <p className="text-white">Filter</p>
+          <div className="flex gap-1 ">
+            {/* <img src={filter} className="w-5 h-4" />
+            <p className="text-white">Filter</p> */}
+
+            <select className="bg-white h-10 px-2 p-2 cursor-pointer text-black border rounded-md items-center justify-center">
+              <option>Discounted Price Low to High</option>
+              <option>Discounted Price High to Low</option>
+              <option>Posted date : Old to Latest</option>
+              <option>Show Prescription Products First</option>
+              <option>Show OTC Products First</option>
+              <option>Discount Percentage Low to High</option>
+              <option>Discounted Percentage High to Low</option>
+              <option>Expiry date : Short to Long</option>
+              <option>Expiry date : Long to Short</option>
+              <option>Name : Ascending (A-Z)</option>
+              <option>Name : Decending (Z-A)</option>
+              <option>Strength Low to High</option>
+              <option>Strength Hign to Low</option>
+            </select>
           </div>
           <div>
             <Search>
@@ -518,8 +534,7 @@ function PRight({ topMargin, addCart, wishList }) {
                       src={product.imageUrl}
                       className="w-36 p-2 hover:cursor-pointer rounded-lg h-28 bg-slate-200 "
                       alt="Product"
-                      onClick={()=> navigate("/detailspage/0")
-                      }
+                      onClick={() => navigate("/detailspage/0")}
                     />
                   </div>
 
@@ -527,12 +542,16 @@ function PRight({ topMargin, addCart, wishList }) {
                     <p className="font-semibold">Item Details</p>
                     <div className="mt-2">
                       <p className="font-semibold">{product.productName}</p>
-                      <p className="text-xs mt-1">{product.productDescription}</p>
+                      <p className="text-xs mt-1">
+                        {product.productDescription}
+                      </p>
                       <div className="flex mt-1 gap-1">
-                        <img src={Expicon} className="w-6 h-6"/>
+                        <img src={Expicon} className="w-6 h-6" />
                         <div className="flex gap-2">
                           <p>Exp.Date :</p>
-                          <p className="font-semibold">{product.expirationDate}</p>
+                          <p className="font-semibold">
+                            {product.expirationDate}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -587,8 +606,6 @@ function PRight({ topMargin, addCart, wishList }) {
                       </button>
                     </div>
                   </div>
-
-                  
                 </div>
               ))}
             </div>

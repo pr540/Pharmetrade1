@@ -57,7 +57,7 @@ import WhyPharma from "../NavLinks/WhyPharma";
 import search from "../../../assets/search-icon.png";
 import dropdown from "../../../assets/Down-arrow .png";
 
-function Nav({ topDivRef, cartItems }) {
+function Nav({ topDivRef, cartItems, userType }) {
   const [selectedIndex, setSelectedIndex] = useState();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
