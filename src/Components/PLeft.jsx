@@ -10,6 +10,9 @@ const categories = [
   "Brands",
   "Deals",
   "Packing",
+  "Generics",
+  "Top Selling Products",
+  "Whole saler",
   "Buy Again",
 ];
 

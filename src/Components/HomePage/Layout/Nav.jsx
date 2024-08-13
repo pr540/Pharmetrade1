@@ -60,6 +60,16 @@ import dropdown from "../../../assets/Down-arrow .png";
 function Nav({ topDivRef, cartItems, userType }) {
   const [selectedIndex, setSelectedIndex] = useState();
 
+  const [firstName, setFirstName] = useState("");
+
+  useEffect(() => {
+    // Check if the user's first name is stored in local storage
+    const storedFirstName = localStorage.getItem("firstname");
+    if (storedFirstName) {
+      setFirstName(storedFirstName);
+    }
+  }, []);
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [popUps, setPopUps] = useState(<Baby />);
   const dropdownRef = useRef(null);
@@ -238,8 +248,6 @@ function Nav({ topDivRef, cartItems, userType }) {
                 ))}
               </div>
 
-          
-
               <div className=" flex  flex-row gap-4 text-md  items-center font-thin">
                 <div
                   className="relative"
@@ -253,13 +261,34 @@ function Nav({ topDivRef, cartItems, userType }) {
                       alt="clickable"
                       onClick={handleredirect}
                     />
-                    <div className="text-blue-900 hover:cursor-pointer ">
+                    {/* <div className="text-blue-900 hover:cursor-pointer ">
                       <div className="text-sm font-medium -mb-2">
                         Hello, Sign in
                       </div>
                       <div className="text-base font-semibold">
                         Account & Lists
                       </div>
+                    </div> */}
+                    <div className="text-blue-900 hover:cursor-pointer">
+                      {firstName ? (
+                        <>
+                          <div className="text-sm font-medium -mb-2">
+                            Hello, {firstName}
+                          </div>
+                          <div className="text-base font-semibold">
+                            Account & Lists
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="text-sm font-medium -mb-2">
+                            Hello, Sign in
+                          </div>
+                          <div className="text-base font-semibold">
+                            Account & Lists
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                   {isPopupVisible && (
@@ -273,7 +302,12 @@ function Nav({ topDivRef, cartItems, userType }) {
                             Sign In
                           </a>
                         </div>
-                        <p className="mb-1 text-lg hover:cursor-pointer" onClick={handlesignup} >New customer? Start here</p>
+                        <p
+                          className="mb-1 text-lg hover:cursor-pointer"
+                          onClick={handlesignup}
+                        >
+                          New customer? Start here
+                        </p>
                         <h2
                           className="text-lg font-semibold cursor-pointer"
                           onClick={handleuser}
@@ -301,9 +335,9 @@ function Nav({ topDivRef, cartItems, userType }) {
                           </li>
                           <li>
                             <Link to="/admin" className="text-lg text-blue-900">
-                              Admin 
+                              Admin
                             </Link>
-                          </li> 
+                          </li>
                           <li
                             className={`${
                               FormData?.userType === "Normal Customer"
@@ -311,7 +345,10 @@ function Nav({ topDivRef, cartItems, userType }) {
                                 : ""
                             }`}
                           >
-                            <Link to="/seller" className="text-lg text-blue-900">
+                            <Link
+                              to="/seller"
+                              className="text-lg text-blue-900"
+                            >
                               Seller Dashboard
                             </Link>
                           </li>
@@ -322,7 +359,7 @@ function Nav({ topDivRef, cartItems, userType }) {
                           </li>
                           <li
                             className="cursor-pointer"
-                            onClick={() => localStorage.removeItem("formData")}
+                            onClick={() => localStorage.removeItem("firstname")}
                           >
                             <Link to="/login" className="text-lg text-blue-900">
                               Logout
@@ -378,7 +415,8 @@ function Nav({ topDivRef, cartItems, userType }) {
         {/* down div elemenet  */}
         <div
           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen  
-           items-center text-black  border-grey-500 shadow-lg ">
+           items-center text-black  border-grey-500 shadow-lg "
+        >
           <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
             {downDivItems.map((item, index) => (
               <li

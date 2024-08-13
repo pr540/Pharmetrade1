@@ -1293,9 +1293,9 @@ function ProductFields() {
     packType: "",
     packCondition: {
       tornLabel: false,
-      otherCondition: "",
+      otherCondition: ""
     },
-    imageUrl: "",
+    imageUrl: ""
   });
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -1397,29 +1397,57 @@ function ProductFields() {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
 
     // If the removed image is the first one, clear the imageUrl in formData
-    if (index === 0 && images.length > 0) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          imageUrl: reader.result || "", // Set the next image or clear the field
-        }));
-      };
-      if (images[1]) {
-        reader.readAsDataURL(images[1].file);
-      } else {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          imageUrl: "",
-        }));
-      }
-    }
+    // if (index === 0 && images.length > 0) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setFormData((prevFormData) => ({
+    //       ...prevFormData,
+    //       imageUrl: reader.result || "", // Set the next image or clear the field
+    //     }));
+    //   };
+    //   if (images[1]) {
+    //     reader.readAsDataURL(images[1].file);
+    //   } else {
+    //     setFormData((prevFormData) => ({
+    //       ...prevFormData,
+    //       imageUrl: "",
+    //     }));
+    //   }
+    // }
   };
 
+  // const { getRootProps, getInputProps } = useDropzone({
+  //   onDrop,
+  //   accept: "image/*",
+  //   multiple: true,
+  // });
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFormData((prevData) => ({
+        ...prevData,
+        imageUrl: file
+      }));
+    }
+  };
+  
+  // Assuming getRootProps and getInputProps are defined by react-dropzone or similar
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: "image/*",
-    multiple: true,
+    onDrop: (acceptedFiles) => {
+      // Set the first accepted file as the imageUrl in formData
+      setFormData((prevData) => ({
+        ...prevData,
+        imageUrl: acceptedFiles[0]
+      }));
+      // Update images state for previews or other uses
+      setImages((prevImages) => [...prevImages, ...acceptedFiles.map(file => ({
+        file,
+        preview: URL.createObjectURL(file)
+      }))]);
+    },
+    accept: 'image/*',
+    multiple: false
   });
 
   const handleEditProduct = () => {
@@ -1489,18 +1517,18 @@ function ProductFields() {
       });
     }
   };
+
+ 
   const handleSubmit = async () => {
     const data = new FormData();
-    const expirationDate = "2024-12-31"; // Static expiration date
+    const expirationDate = "2024-12-31";
     const caption = "Sample product caption";
     const metaKeywords = "sample, product, keywords";
     const metaTitle = "Sample Product Title";
     const metaDescription = "This is a sample description for the product.";
     const saltComposition = "Sample Salt Composition";
     const uriKey = "sample-product-uri";
-    const mockImageUrl =
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4J2wAAAABJRU5ErkJggg==";
-
+  
     data.append("AddproductID", 1);
     data.append("Productcategory_id", formData.productCategory);
     data.append("Sizeid", 1);
@@ -1511,7 +1539,7 @@ function ProductFields() {
     data.append("UPNmemberPrice", formData.upnMemberPrice);
     data.append("AmountInStock", formData.amountInStock);
     data.append("Taxable", formData.taxable == 1);
-
+  
     data.append("ExpirationDate", expirationDate);
     data.append("Caption", caption);
     data.append("MetaKeywords", metaKeywords);
@@ -1519,15 +1547,19 @@ function ProductFields() {
     data.append("MetaDescription", metaDescription);
     data.append("SaltComposition", saltComposition);
     data.append("UriKey", uriKey);
-    data.append("ImageUrl", formData.imageUrl);
+  
+    // Append file if it exists
+    if (formData.imageUrl) {
+      data.append("ImageUrl", formData.imageUrl); // File object
+    }
+  
     data.append("PackCondition", "Active");
     data.append("ProductDescription", "Product Description");
-
+  
     if (formData.salePrice) data.append("SalePrice", formData.salePrice);
     data.append("SalePriceFrom", expirationDate);
     data.append("SalePriceTo", expirationDate);
-    if (formData.manufacturer)
-      data.append("Manufacturer", formData.manufacturer);
+    if (formData.manufacturer) data.append("Manufacturer", formData.manufacturer);
     if (formData.strength) data.append("Strength", formData.strength);
     data.append("Fromdate", expirationDate);
     if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
@@ -1535,7 +1567,7 @@ function ProductFields() {
     if (formData.packType) data.append("PackType", formData.packType);
     if (formData.packCondition)
       data.append("PackCondition", formData.packCondition.otherCondition);
-    if (formData.productDescription)
+    if (formData.productDetails)
       data.append("ProductDescription", formData.productDetails);
     if (formData.aboutProduct)
       data.append("AboutTheProduct", formData.aboutProduct);
@@ -1543,9 +1575,8 @@ function ProductFields() {
       data.append("CategorySpecificationId", formData.categorySpecification);
     data.append("ProductTypeId", 1);
     data.append("SellerId", 1);
-    // if (formData.contentType) data.append("ContentType", formData.);
-    // if (formData.contentDisposition) data.append("ContentDisposition", formData.contentDisposition);
-    // Adding all formData fields to FormData object
+  
+    // Sending data with fetch
     try {
       const response = await fetch(
         "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
@@ -1554,10 +1585,8 @@ function ProductFields() {
           body: data,
         }
       );
-
-      // Check if the response is not ok
+  
       if (!response.ok) {
-        // Attempt to parse the error response
         const errorDetails = await response.json();
         throw new Error(
           `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
@@ -1565,16 +1594,99 @@ function ProductFields() {
           )}`
         );
       }
-
+  
       const result = await response.json();
       console.log(result);
-      return result; // Return the result for further handling
+      return result;
     } catch (error) {
-      // Log and throw the exact error details
       console.error("There was a problem with the fetch operation:", error);
-      throw error; // Re-throw the error for handling elsewhere if needed
+      throw error;
     }
   };
+  // const handleSubmit = async () => {
+  //   const data = new FormData();
+  //   const expirationDate = "2024-12-31"; // Static expiration date
+  //   const caption = "Sample product caption";
+  //   const metaKeywords = "sample, product, keywords";
+  //   const metaTitle = "Sample Product Title";
+  //   const metaDescription = "This is a sample description for the product.";
+  //   const saltComposition = "Sample Salt Composition";
+  //   const uriKey = "sample-product-uri";
+  //   // const imageUrl ="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4J2wAAAABJRU5ErkJggg==";
+  //   data.append("AddproductID", 1
+  //   data.append("Productcategory_id", formData.productCategory);
+  //   data.append("Sizeid", 1);
+  //   data.append("ProductName", formData.productName);
+  //   data.append("NDCorUPC", formData.ndcUdc);
+  //   data.append("BrandName", formData.brandName);
+  //   data.append("PriceName", formData.price);
+  //   data.append("UPNmemberPrice", formData.upnMemberPrice);
+  //   data.append("AmountInStock", formData.amountInStock);
+  //   data.append("Taxable", formData.taxable == 1);
+
+  //   data.append("ExpirationDate", expirationDate);
+  //   data.append("Caption", caption);
+  //   data.append("MetaKeywords", metaKeywords);
+  //   data.append("MetaTitle", metaTitle);
+  //   data.append("MetaDescription", metaDescription);
+  //   data.append("SaltComposition", saltComposition);
+  //   data.append("UriKey", uriKey);
+  //   // data.append("ImageUrl", formData.imageUrl);
+  //   data.append("PackCondition", "Active");
+  //   data.append("ProductDescription", "Product Description");
+
+  //   if (formData.salePrice) data.append("SalePrice", formData.salePrice);
+  //   data.append("SalePriceFrom", expirationDate);
+  //   data.append("SalePriceTo", expirationDate);
+  //   if (formData.manufacturer)
+  //     data.append("Manufacturer", formData.manufacturer);
+  //   if (formData.strength) data.append("Strength", formData.strength);
+  //   data.append("Fromdate", expirationDate);
+  //   if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
+  //   data.append("PackQuantity", 200);
+  //   if (formData.packType) data.append("PackType", formData.packType);
+  //   if (formData.packCondition)
+  //     data.append("PackCondition", formData.packCondition.otherCondition);
+  //   if (formData.productDescription)
+  //     data.append("ProductDescription", formData.productDetails);
+  //   if (formData.aboutProduct)
+  //     data.append("AboutTheProduct", formData.aboutProduct);
+  //   if (formData.categorySpecification)
+  //     data.append("CategorySpecificationId", formData.categorySpecification);
+  //   data.append("ProductTypeId", 1);
+  //   data.append("SellerId", 1);
+  //   // if (formData.contentType) data.append("ContentType", formData.);
+  //   // if (formData.contentDisposition) data.append("ContentDisposition", formData.contentDisposition);
+  //   // Adding all formData fields to FormData object
+  //   try {
+  //     const response = await fetch(
+  //       "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
+  //       {
+  //         method: "POST",
+  //         body: data,
+  //       }
+  //     );
+
+  //     // Check if the response is not ok
+  //     if (!response.ok) {
+  //       // Attempt to parse the error response
+  //       const errorDetails = await response.json();
+  //       throw new Error(
+  //         `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
+  //           errorDetails
+  //         )}`
+  //       );
+  //     }
+
+  //     const result = await response.json();
+  //     console.log(result);
+  //     return result; // Return the result for further handling
+  //   } catch (error) {
+  //     // Log and throw the exact error details
+  //     console.error("There was a problem with the fetch operation:", error);
+  //     throw error; // Re-throw the error for handling elsewhere if needed
+  //   }
+  // };
   console.log(formData);
   const renderTabContent = () => {
     switch (activeTab) {
@@ -1798,7 +1910,8 @@ function ProductFields() {
                     className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
                   >
                     <input {...getInputProps()} />
-                    <p className="text-gray-500 text-center">
+                    <p className="text-gray-500 text-center"  type="file" onChange={handleFileChange}
+                    >
                       Click here or drag and drop images
                     </p>
                   </div>
