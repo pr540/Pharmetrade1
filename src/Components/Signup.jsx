@@ -67,7 +67,7 @@ const Signup = () => {
     event.preventDefault();
   };
   const userTypes = [
-    "Retain Pharmacy",
+    "Retail Pharmacy",
     "General Merchandise Seller",
     "Vendor",
     "Normal Customer",
@@ -297,7 +297,7 @@ const Signup = () => {
       if (!accountType) newErrors.accountType = "Account Type is required";
 
       if (
-        (userType === "Retain Pharmacy" ||
+        (userType === "Retail Pharmacy" ||
           userType === "Vendor" ||
           userType === "Normal Customer" ||
           userType !== "General Merchandise Seller") &&
@@ -551,7 +551,7 @@ const Signup = () => {
       password: formData.password,
       mobile: formData.Phone_number,
       customerTypeId:
-        userType === "Retain Pharmacy"
+        userType === "Retail Pharmacy"
           ? 1
           : userType === "General Merchandise Seller"
           ? 2
@@ -1349,7 +1349,7 @@ const Signup = () => {
               <span className="font-bold text-green-500"> {userType} </span>,
               You are successfully registered.
               <p>
-                If you have any question contact us.{" "}
+                If you have any question please contact us.{" "}
                 <span className="hover:text-green-500 hover:font-semibold text-blue-900 underline">
                   help@pharmetrade.com{" "}
                 </span>
