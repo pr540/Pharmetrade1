@@ -364,7 +364,7 @@ function Cart({ topMargin, cartItems, setCartItems }) {
         {cartItems.length > 0 ? (
           <div className="flex flex-col lg:flex-row gap-2">
             <div className="w-full lg:w-2/3">
-              <table className="min-w-full border shadow-lg rounded-md">
+              <table className="min-w-full border shadow-lg  rounded-lg">
                 <thead className="" >
                   <tr className="border-b" >
                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
@@ -419,9 +419,9 @@ function Cart({ topMargin, cartItems, setCartItems }) {
                           ${calculateSubtotal(item.price, quantities[index])}
                         </strong>
                       </td>
-                      <td className="px-2 md:px-4 py-3 whitespace-nowrap">
+                      <td className="px-2 md:px-4 py-8 whitespace flex items-center justify-center">
                         <button
-                          className="text-red-600"
+                          className="text-red-600 w-4 h-3"
                           onClick={() => handleremove(index)}
                         >
                           <img src={deleteicon} className="w-6 "/>
@@ -448,7 +448,7 @@ function Cart({ topMargin, cartItems, setCartItems }) {
               </div>
             </div>
             <div className="w-full lg:w-1/3 mt-4 lg:mt-0">
-              <div className="bg-white rounded-lg shadow-lg p-5">
+              <div className="bg-white  border rounded-lg shadow-lg p-5">
                 <h2 className="text-xl md:text-2xl mb-4 text-center font-semibold">
                   Cart Totals
                 </h2>

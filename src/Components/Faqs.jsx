@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { GoPlus } from "react-icons/go";
-import { FiMinus } from "react-icons/fi";
+import plus from '../assets/Icons/plus.png'
+import minus from '../assets/Icons/minus.png'
+
 function Faqs() {
 
     const [Activequestion, SetActiveQuestion] = useState (null)
@@ -15,43 +16,43 @@ function Faqs() {
             id:1,
             Question:'Is the Pharmetrade site secure?',
             Answer:`Yes, RxWorld is a secure site. However, it is your sole responsibility to maintain your account. This includes the security of your email address and password for all activity that occurs.`,
-           icon: GoPlus,
-           minusicon:FiMinus
+           src: plus,
+           src1:minus
         },
         {
             id:2,
             Question:'Who are the users for the website?',
             Answer:'Independent Pharmacies and Wholesale Distributors',
-            icon: GoPlus,
-           minusicon:FiMinus
+            src: plus,
+           src1:minus
         },
         {
             id:3,
             Question:'How do i know buying and selling my overstock prescription drugs is legal?',
             Answer:`You will need to review and follow your state's rules and regulations. While RxWorld operates only in the states that allow such sales, it is your responsibility as a buyer and seller to be`,
-            icon: GoPlus,
-           minusicon:FiMinus
+            src: plus,
+           src1:minus
         },
         {
             id:4,
             Question:'How does pharmetrade charge me for selling on the website?',
             Answer:'RxWorld charges a fee of 8% of the total sale or $5.00, whichever is higher.',
-            icon: GoPlus,
-            minusicon:FiMinus
+            src: plus,
+           src1:minus
         },
         {
             id:5,
             Question:'Are transactions made through pharmetrade classified as wholesale transaction?',
             Answer:'No, transactions made through pharmetrade are intended for specific patient needs or declared',
-            icon: GoPlus,
-            minusicon:FiMinus
+            src: plus,
+           src1:minus
         },
         {
             id:6,
             Question:'Can a Buyer cancel an order after it hs been placed?',
             Answer:'Yes, but only if the order has not been confirmed by the seller.',
-            icon: GoPlus,
-            minusicon:FiMinus
+            src: plus,
+            src1:minus
 
        },
        {
@@ -63,8 +64,8 @@ function Faqs() {
          your business information. When your registration
           is complete, we will verify your business information.
            Once all of your information is verified, `,
-           icon: GoPlus,
-           minusicon:FiMinus
+           src: plus,
+           src1:minus
 
 
        },
@@ -72,30 +73,30 @@ function Faqs() {
             id:8,
             Question:'What if I want Refund',
             Answer:'pharmetrade.com does 100% refund if you are not satisfied',
-            icon: GoPlus,
-            minusicon:FiMinus
+            src: plus,
+           src1:minus
 
         },
         {
             id:9,
             Question:'How can I track my  order?',
             Answer:'You can go to your dashboard and view all of your orders',
-            icon: GoPlus,
-            minusicon:FiMinus
+            src: plus,
+           src1:minus
         },
         {
             id:10,
             Question:'How long is shipping?',
              Answer:'Shipping is between 5-10 business working days',
-             icon: GoPlus,
-             minusicon:FiMinus
+             src: plus,
+           src1:minus
         },
         {
             id:11,
             Question:'How long is shipping?',
              Answer:'Shipping is between 5-10 business working days',
-             icon: GoPlus,
-             minusicon:FiMinus
+             src: plus,
+           src1:minus
         },
        
     ]
@@ -116,9 +117,11 @@ function Faqs() {
                                 <p className='font-semibold'>{question.Question}</p>
                                 <div onClick={() => toggleQuestion(question.id)}>
                                     {Activequestion === question.id ? (
-                                        <question.minusicon className='text-xl cursor-pointer' />
+                                        <img src={question.src1} className='cursor-pointer w-7 h-5'/>
+                                        // <question.src1 className='text-xl cursor-pointer w-7 h-6' />
                                     ) : (
-                                        <question.icon className='text-xl cursor-pointer' />
+                                        <img src={question.src} className='cursor-pointer w-7 h-5'/>
+                                        // <question.src className='text-xl cursor-pointer w-7 h-6' />
                                     )}
                                 </div>
                             </div>
@@ -136,4 +139,4 @@ function Faqs() {
   )
 }
 
-export default Faqs;
+export default Faqs

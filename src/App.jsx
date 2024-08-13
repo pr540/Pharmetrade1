@@ -72,7 +72,7 @@ function App() {
   const [count, setCount] = useState(0);
   const location1 = useLocation();
   useEffect(() => {
-    console.log("Scrolling at top");
+    // console.log("Scrolling at top");
     window.scrollTo(0, 0);
   }, [location1.pathname]);
   console.log(window.location.href.includes("/products"));

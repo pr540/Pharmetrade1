@@ -129,7 +129,7 @@ function Sliders({wishList,addCart}) {
              addCart={addCart} wishList={wishList}
               products={newProducts.slice(0, 3)}
               heading="OTC Items"
-              path="/bid"
+              path="/products"
             />
           </div>
         </div>

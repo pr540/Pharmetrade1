@@ -1223,15 +1223,11 @@
 
 // export default ProductFields;
 
-
-
-
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import filter from "../../../assets/Icons/filter_icon.png";
-import deleteicon from '../../../assets/trash.png'
+import deleteicon from "../../../assets/trash.png";
 function ProductFields() {
-
   const products = [
     {
       serial: "",
@@ -1271,6 +1267,36 @@ function ProductFields() {
   const [activeTab, setActiveTab] = useState(0);
   const [images, setImages] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [formData, setFormData] = useState({
+    categorySpecification: "",
+    productType: "",
+    productCategory: "",
+    productName: "",
+    ndcUdc: "",
+    brandName: "",
+    price: 0,
+    amountInStock: 0,
+    taxable: "",
+    productDetails: "",
+    aboutProduct: "",
+    states: [],
+    upnMemberPrice: 0,
+    salePrice: 0,
+    salePriceForm: "",
+    salePriceTo: "",
+    manufacturer: "",
+    strength: "",
+    form: "",
+    lotNumber: "",
+    expirationDate: "",
+    packQuantity: "",
+    packType: "",
+    packCondition: {
+      tornLabel: false,
+      otherCondition: "",
+    },
+    imageUrl: "",
+  });
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -1280,7 +1306,6 @@ function ProductFields() {
   const handleremove = () => {
     setIsPopupVisible(false);
   };
-
 
   // Relate filter
   const [isvisible, setIsvisible] = useState(false);
@@ -1320,7 +1345,7 @@ function ProductFields() {
     setButtonClicked(false);
   };
 
-  // video 
+  // video
   const [selectedVideos, setSelectedVideos] = useState([]);
   const [videoPreviews, setVideoPreviews] = useState([]);
 
@@ -1337,19 +1362,58 @@ function ProductFields() {
     setVideoPreviews([]);
   };
 
-
-  const tabs = ["Product Info", "Price Details", " Key Details", "Related Products", " Products", " Images & Videos"];
+  const tabs = [
+    "Product Info",
+    "Price Details",
+    //  " Key Details",
+    "Related Products",
+    " Products",
+    " Images & Videos",
+  ];
 
   const onDrop = (acceptedFiles) => {
     const newImages = acceptedFiles.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
     }));
+
+    // Convert the first image file to a binary string
+    if (newImages.length > 0) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          imageUrl: reader.result, // Store the binary string in imageUrl
+        }));
+      };
+      reader.readAsDataURL(newImages[0].file); // Convert file to base64 string
+    }
+
+    // Update the images state to display the images
     setImages((prevImages) => [...prevImages, ...newImages]);
   };
 
   const removeImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+
+    // If the removed image is the first one, clear the imageUrl in formData
+    if (index === 0 && images.length > 0) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          imageUrl: reader.result || "", // Set the next image or clear the field
+        }));
+      };
+      if (images[1]) {
+        reader.readAsDataURL(images[1].file);
+      } else {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          imageUrl: "",
+        }));
+      }
+    }
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -1365,29 +1429,177 @@ function ProductFields() {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
+  const handleInputChange = (e) => {
+    const { name, value, type, options, id } = e.target;
 
+    if (type === "select-multiple") {
+      const selectedOptions = Array.from(options)
+        .filter((option) => option.selected)
+        .map((option) => option.value);
+      setFormData({
+        ...formData,
+        [name]: selectedOptions,
+      });
+    } else if (type === "select-one") {
+      setFormData({
+        ...formData,
+        [name]: Number(value),
+      });
+    } else if (type === "number") {
+      setFormData({
+        ...formData,
+        [name]: value === "" ? "" : Number(value),
+      });
+    } else if (type === "radio") {
+      // Handle radio buttons for packQuantity and packType
+      if (name === "option") {
+        setFormData({
+          ...formData,
+          packQuantity: value,
+        });
+      } else if (name === "product") {
+        setFormData({
+          ...formData,
+          packType: value,
+        });
+      }
+    } else if (type === "checkbox") {
+      // Handle checkboxes for packCondition
+      if (id === "tornLabel") {
+        setFormData({
+          ...formData,
+          packCondition: {
+            ...formData.packCondition,
+            tornLabel: e.target.checked,
+          },
+        });
+      } else if (id === "otherCondition") {
+        setFormData({
+          ...formData,
+          packCondition: {
+            ...formData.packCondition,
+            otherCondition: value,
+          },
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+  const handleSubmit = async () => {
+    const data = new FormData();
+    const expirationDate = "2024-12-31"; // Static expiration date
+    const caption = "Sample product caption";
+    const metaKeywords = "sample, product, keywords";
+    const metaTitle = "Sample Product Title";
+    const metaDescription = "This is a sample description for the product.";
+    const saltComposition = "Sample Salt Composition";
+    const uriKey = "sample-product-uri";
+    const mockImageUrl =
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4J2wAAAABJRU5ErkJggg==";
+
+    data.append("AddproductID", 1);
+    data.append("Productcategory_id", formData.productCategory);
+    data.append("Sizeid", 1);
+    data.append("ProductName", formData.productName);
+    data.append("NDCorUPC", formData.ndcUdc);
+    data.append("BrandName", formData.brandName);
+    data.append("PriceName", formData.price);
+    data.append("UPNmemberPrice", formData.upnMemberPrice);
+    data.append("AmountInStock", formData.amountInStock);
+    data.append("Taxable", formData.taxable == 1);
+
+    data.append("ExpirationDate", expirationDate);
+    data.append("Caption", caption);
+    data.append("MetaKeywords", metaKeywords);
+    data.append("MetaTitle", metaTitle);
+    data.append("MetaDescription", metaDescription);
+    data.append("SaltComposition", saltComposition);
+    data.append("UriKey", uriKey);
+    data.append("ImageUrl", formData.imageUrl);
+    data.append("PackCondition", "Active");
+    data.append("ProductDescription", "Product Description");
+
+    if (formData.salePrice) data.append("SalePrice", formData.salePrice);
+    data.append("SalePriceFrom", expirationDate);
+    data.append("SalePriceTo", expirationDate);
+    if (formData.manufacturer)
+      data.append("Manufacturer", formData.manufacturer);
+    if (formData.strength) data.append("Strength", formData.strength);
+    data.append("Fromdate", expirationDate);
+    if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
+    data.append("PackQuantity", 200);
+    if (formData.packType) data.append("PackType", formData.packType);
+    if (formData.packCondition)
+      data.append("PackCondition", formData.packCondition.otherCondition);
+    if (formData.productDescription)
+      data.append("ProductDescription", formData.productDetails);
+    if (formData.aboutProduct)
+      data.append("AboutTheProduct", formData.aboutProduct);
+    if (formData.categorySpecification)
+      data.append("CategorySpecificationId", formData.categorySpecification);
+    data.append("ProductTypeId", 1);
+    data.append("SellerId", 1);
+    // if (formData.contentType) data.append("ContentType", formData.);
+    // if (formData.contentDisposition) data.append("ContentDisposition", formData.contentDisposition);
+    // Adding all formData fields to FormData object
+    try {
+      const response = await fetch(
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+
+      // Check if the response is not ok
+      if (!response.ok) {
+        // Attempt to parse the error response
+        const errorDetails = await response.json();
+        throw new Error(
+          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
+            errorDetails
+          )}`
+        );
+      }
+
+      const result = await response.json();
+      console.log(result);
+      return result; // Return the result for further handling
+    } catch (error) {
+      // Log and throw the exact error details
+      console.error("There was a problem with the fetch operation:", error);
+      throw error; // Re-throw the error for handling elsewhere if needed
+    }
+  };
+  console.log(formData);
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
         return (
           // <div className="space-y-4 w-full flex">
           <div className="  h-full flex font-sans font-medium ">
-
-
             <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm">
               <div className="w-[80%] mx-4">
-                <div className="flex gap-4 my-4">
+                <div className="flex gap-4 ">
                   <div>
                     <label className="font-semibold">
                       Category Specification:
                       <span className="text-red-600">*</span>
                     </label>
-                    <select className="w-56 h-8 
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                    <select
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.categorySpecification}
+                      name="categorySpecification"
                     >
-                      <option>Merchandise</option>
-                      <option>OTC Product</option>
-                      <option>Rx Product</option>
+                      <option value="">Select a category</option>
+                      <option value="1">Merchandise</option>
+                      <option value="2">OTC Product</option>
+                      <option value="3">Rx Product</option>
                     </select>
                   </div>
                   <div>
@@ -1395,11 +1607,14 @@ function ProductFields() {
                       Product Type:<span className="text-red-600">*</span>
                     </label>
                     <select
-                      // style={{boxShadow:'5px 1px 18px blue'}}                      
+                      name="productType"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.productType}
                     >
-                      <option>General</option>
-                      <option>Customizable</option>
+                      <option value="">Select a product type</option>
+                      <option value="1">General</option>
+                      <option value="2">Customizable</option>
                     </select>
                   </div>
                   <div>
@@ -1407,9 +1622,18 @@ function ProductFields() {
                       Product Category:
                       <span className="text-red-600">*</span>
                     </label>
-                    <select className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                    <select
+                      name="productCategory"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.productCategory}
                     >
-                      <option>Default Category</option>
+                      <option value="">Select a product category</option>
+                      <option value="1">Default Category</option>
+                      <option value="2">Electronics</option>
+                      <option value="3">Apparel</option>
+                      <option value="4">Home Goods</option>
+                      <option value="5">Health & Beauty</option>
                     </select>
                   </div>
                 </div>
@@ -1419,10 +1643,11 @@ function ProductFields() {
                       Product Name:<span className="text-red-600">*</span>
                     </label>
                     <input
+                      name="productName"
                       type="text"
-                      // className="w-56 h-8 border border-gray-300 rounded p-2"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      onChange={handleInputChange}
+                      value={formData.productName}
                     />
                   </div>
                   <div className="font-semibold">
@@ -1430,9 +1655,11 @@ function ProductFields() {
                       NDC / UDC:<span className="text-red-600">*</span>
                     </label>
                     <input
+                      name="ndcUdc"
                       type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      onChange={handleInputChange}
+                      value={formData.ndcUdc}
                     />
                   </div>
                   <div className="font-semibold">
@@ -1440,9 +1667,11 @@ function ProductFields() {
                       Brand Name:<span className="text-red-600">*</span>
                     </label>
                     <input
+                      name="brandName"
                       type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      onChange={handleInputChange}
+                      value={formData.brandName}
                     />
                   </div>
                 </div>
@@ -1452,9 +1681,11 @@ function ProductFields() {
                       Price ($):<span className="text-red-600">*</span>
                     </label>
                     <input
-                      type="text"
+                      name="price"
+                      type="number"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      onChange={handleInputChange}
+                      value={formData.price === 0 ? "" : formData.price}
                     />
                   </div>
                   <div className="font-semibold">
@@ -1462,9 +1693,15 @@ function ProductFields() {
                       Amount in Stock:<span className="text-red-600">*</span>
                     </label>
                     <input
-                      type="text"
+                      name="amountInStock"
+                      type="number"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      onChange={handleInputChange}
+                      value={
+                        formData.amountInStock === 0
+                          ? ""
+                          : formData.amountInStock
+                      }
                     />
                   </div>
 
@@ -1472,27 +1709,78 @@ function ProductFields() {
                     <label className="font-semibold">
                       Taxable:<span className="text-red-600">*</span>
                     </label>
-                  
+
                     <select
-                      className="w-56 h-8 pl-3  pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      name="taxable"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.taxable}
                     >
-                      <option>No</option>
+                      <option value="">Select an option</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
                     </select>
                   </div>
                 </div>
-                <div >
+                <div>
+                  {/* <div className="my-2">
+                <span className="text-base font-semibold">
+                  States (Please select multiple states by clicking on Ctrl Button) :
+                </span>
+                <div>
+                  <select className="w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                  >
+                    <option>All Selected</option>
+                  </select>
+                </div>
+              </div> */}
+                </div>
+                <div>
                   <div className="flex flex-col ">
                     <div>
                       <label className="font-semibold">Product Details:</label>
                       <textarea
+                        name="productDetails"
                         className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      />
+                        onChange={handleInputChange}
+                        value={formData.productDetails}
+                      />{" "}
                     </div>
                     <div>
-                      <label className="font-semibold">About the Product:</label>
+                      <label className="font-semibold">
+                        About the Product:
+                      </label>
                       <textarea
+                        name="aboutProduct"
                         className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      />
+                        onChange={handleInputChange}
+                        value={formData.aboutProduct}
+                      />{" "}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="my-2">
+                    <span className="text-base font-semibold">
+                      States (Please select multiple states by clicking on Ctrl
+                      Button) :
+                    </span>
+                    <div>
+                      <select
+                        name="states"
+                        multiple
+                        className="w-48 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        onChange={handleInputChange}
+                        value={formData.states}
+                      >
+                        <option value="all">All Selected</option>
+                        <option value="CA">California</option>
+                        <option value="TX">Texas</option>
+                        <option value="NY">New York</option>
+                        <option value="FL">Florida</option>
+                        <option value="IL">Illinois</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -1501,7 +1789,9 @@ function ProductFields() {
 
             <div className="w-[20%]">
               <div className="my-3 ">
-                <p className="text-sm font-semibold w-24">Product Image: (JPEG, PNG)</p>
+                <p className="text-sm font-semibold">
+                  Product Image: ( JPEG, PNG)
+                </p>
                 <div className="flex flex-col items-center p-4 border rounded-lg shadow-md">
                   <div
                     {...getRootProps()}
@@ -1512,7 +1802,9 @@ function ProductFields() {
                       Click here or drag and drop images
                     </p>
                   </div>
-                  <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                
+
+                   <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                     {images.map((image, index) => (
                       <div key={index} className="">
                         <img
@@ -1526,116 +1818,123 @@ function ProductFields() {
                         >
                           <img src={deleteicon} className="w-24" />
 
-                          {/* <FaTrash className="w-4" /> */}
+                           {/* <FaTrash className="w-4" />  */}
                         </button>
                       </div>
                     ))}
-                  </div>
+                  </div> 
                 </div>
               </div>
             </div>
           </div>
-          // </div> 
+          // </div>
         );
       case 1:
         return (
-          <div className="flex flex-col w-full Largest:w-[80%] font-medium font-sans justify-between text-sm">
+          <div className="flex flex-col w-full   Largest:w-[80%] font-medium font-sans justify-between text-sm">
             <div className="flex ">
-              <div className='flex flex-col w-[80%]'>
-
-                <div className="flex items-center gap-8 my-3">
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">UPN Member Price ($):</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Sale Price ($):</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8 
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Sale Price Form ($):</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
-
-
-                </div>
-
-                <div className="flex items-center gap-8 my-3">
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Sale Price To($):</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Manufacturer:</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8 
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
+              <div className="flex flex-col w-[80%]  ">
+                <div className="flex items-center gap-8 ">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
-                      Strength:</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8 
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
-
-
-
-                </div>
-
-                <div className="flex items-center gap-8 my-3">
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">
-                      Form:</label>
-                    <input
-                      type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Lot Number:
+                      UPN Member Price ($):
                     </label>
                     <input
+                      name="upnMemberPrice"
+                      type="number"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={
+                        formData.upnMemberPrice === ""
+                          ? ""
+                          : formData.upnMemberPrice
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">
+                      Sale Price ($):
+                    </label>
+                    <input
+                      name="salePrice"
+                      type="number"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={
+                        formData.salePrice === "" ? "" : formData.salePrice
+                      }
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">
+                      Sale Price Form ($):
+                    </label>
+                    <input
+                      name="salePriceForm"
                       type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8 
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.salePriceForm}
+                    />
+                  </div>
+                </div>
 
+                <div className="flex items-center gap-8 my-3">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">
+                      Sale Price To($):
+                    </label>
+                    <input
+                      name="salePriceTo"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.salePriceTo}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">
+                      Manufacturer:
+                    </label>
+                    <input
+                      name="manufacturer"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.manufacturer}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">Strength:</label>
+                    <input
+                      name="strength"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.strength}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-8 ">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">Form:</label>
+                    <input
+                      name="form"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.form}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">Lot Number:</label>
+                    <input
+                      name="lotNumber"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.lotNumber}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -1643,11 +1942,11 @@ function ProductFields() {
                       Expiration Date:
                     </label>
                     <input
+                      name="expirationDate"
                       type="text"
-                      id="Upn_Mem"
-                      className="w-56 h-8
-                      pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.expirationDate}
                     />
                   </div>
                 </div>
@@ -1656,8 +1955,8 @@ function ProductFields() {
 
             {/* section 2 */}
             <div className="">
-              <div className=" my-4 flex items-center">
-                <span className="text-sm font-semibold">Pack Quantity : {" "}</span>
+              <div className=" my-2 flex items-center">
+                <span className="text-sm font-semibold">Pack Quantity : </span>
 
                 <div className=" flex items-center">
                   <div className="flex items-center">
@@ -1667,11 +1966,16 @@ function ProductFields() {
                       id="full"
                       name="option"
                       value="full"
-                      // checked={selectedOption === "full"}
-                      // onChange={handleOptionChange}
+                      checked={formData.packQuantity === "full"}
+                      onChange={handleInputChange}
                       className="mx-1"
-                    /> {" "}
-                    <label htmlFor="full" className='text-sm mx-1 font-semibold'>Full</label>
+                    />{" "}
+                    <label
+                      htmlFor="full"
+                      className="text-sm mx-1 font-semibold"
+                    >
+                      Full
+                    </label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -1679,21 +1983,27 @@ function ProductFields() {
                       id="partial"
                       name="option"
                       value="partial"
-                      // checked={selectedOption === "partial"}
-                      // onChange={handleOptionChange}
-                      className="ml-2
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-
+                      checked={formData.packQuantity === "partial"}
+                      onChange={handleInputChange}
+                      className="ml-2 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                     />
-                    <label htmlFor="partial" className='text-sm mx-1 font-semibold'>Partial</label>
+                    <label
+                      htmlFor="partial"
+                      className="text-sm mx-1 font-semibold"
+                    >
+                      Partial
+                    </label>
                   </div>
                 </div>
 
                 <input
                   type="text"
-                  className="w-[30%] Largest:w-[15%] mx-1 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none  focus:shadow focus:shadow-blue-400"
+                  name="packQuantityAmount"
+                  value={formData.packQuantityAmount || ""}
+                  onChange={handleInputChange}
+                  className="w-[30%] Largest:w-[15%] mx-1 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:shadow focus:shadow-blue-400"
                 />
-                <label className='text-sm mx-1 font-semibold'>EA</label>
+                <label className="text-sm mx-1 font-semibold">EA</label>
               </div>
             </div>
             {/* section 2 end */}
@@ -1701,10 +2011,8 @@ function ProductFields() {
             {/* section3 start */}
             <div>
               <div>
-                <div className=" my-4 flex items-center">
+                <div className=" my-2 flex items-center">
                   <span className="text-sm font-semibold">Pack Type :</span>
-
-
 
                   <div className="flex items-center">
                     <div className="flex items-center">
@@ -1713,11 +2021,17 @@ function ProductFields() {
                         id="original"
                         name="product"
                         value="original"
-                        // checked={selectedProductOption === "original"}
-                        // onChange={handleProductOptionChange}
+                        checked={formData.packType === "original"}
+                        onChange={handleInputChange}
                         className="ml-2"
                       />
-                      <label htmlFor="original" className='text-sm mx-1 font-semibold'> {" "} ORIGINAL PACKAGE</label>
+                      <label
+                        htmlFor="original"
+                        className="text-sm mx-1 font-semibold"
+                      >
+                        {" "}
+                        ORIGINAL PACKAGE
+                      </label>
                     </div>
                     <div className="flex items-center">
                       <input
@@ -1725,11 +2039,14 @@ function ProductFields() {
                         id="non-original"
                         name="product"
                         value="non-original"
-                        // checked={selectedProductOption === "non-original"}
-                        // onChange={handleProductOptionChange}
+                        checked={formData.packType === "non-original"}
+                        onChange={handleInputChange}
                         className="ml-2"
                       />
-                      <label htmlFor="non-original" className='text-sm mx-1 font-semibold'>
+                      <label
+                        htmlFor="non-original"
+                        className="text-sm mx-1 font-semibold"
+                      >
                         ORIGINAL PACKAGE - NON SEALED
                       </label>
                     </div>
@@ -1741,143 +2058,67 @@ function ProductFields() {
 
             {/* section4 start */}
             <div>
-              <div className=" my-4">
+              <div className=" my-2">
                 <div>
-                  <span className="text-sm font-semibold">Pack Condition :</span>
-                  <input type="checkbox" className="ml-[2%]" />
-                  <label className="text-sm ml-1 font-semibold">TORN PACKAGE LABEL</label>
-
-                  <input type="checkbox" className="ml-[2%]" />
+                  <span className="text-sm font-semibold">
+                    Pack Condition :
+                  </span>
+                  <input
+                    type="checkbox"
+                    id="tornLabel"
+                    name="tornLabel"
+                    checked={formData.packCondition.tornLabel}
+                    onChange={handleInputChange}
+                    className="ml-[2%]"
+                  />{" "}
+                  <label className="text-sm ml-1 font-semibold">
+                    TORN PACKAGE LABEL
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="otherCondition"
+                    name="otherCondition"
+                    checked={
+                      formData.packCondition.otherConditionChecked || false
+                    }
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        packCondition: {
+                          ...formData.packCondition,
+                          otherConditionChecked: e.target.checked,
+                          otherCondition: e.target.checked
+                            ? formData.packCondition.otherCondition
+                            : "",
+                        },
+                      })
+                    }
+                    className="ml-[2%]"
+                  />{" "}
                   <label className="text-sm ml-1 font-semibold">OTHER</label>
-
                   <input
                     type="text"
-                    className=" mx-1 w-[30%] Largest:w-[15%] h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none  focus:shadow focus:shadow-blue-400"
+                    name="otherConditionText"
+                    value={formData.packCondition.otherCondition || ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        packCondition: {
+                          ...formData.packCondition,
+                          otherCondition: e.target.value,
+                        },
+                      })
+                    }
+                    disabled={!formData.packCondition.otherConditionChecked}
+                    className="mx-1 w-[30%] Largest:w-[15%] h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:shadow focus:shadow-blue-400"
                   />
                 </div>
               </div>
             </div>
             {/* section4 end */}
 
-
-
-          </div>
-        );
-      case 2:
-        return (
-          <div className="flex flex-col font-sans w-full Largest:w-[80%] font-medium justify-between text-sm ">
-            <div className="font-medium ">
-              <div className="flex justify-between items-baseline w-full  Largest:w-[80%]  my-6 gap-6">
-                <div className="flex flex-col">
-                  <label className="text-sm font-semibold">
-                    Uri Key : (Related to google <br />
-                    search)
-                  </label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-                <div className="flex flex-col ml-4">
-                  <label className="text-sm font-semibold">
-                    Meta Title:(Related to google search)
-                  </label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-
-                <div className="flex flex-col mx-4">
-                  <label className="text-sm font-semibold">
-                    Meta Keywords:(Related to google search)
-                  </label>
-                  <textarea
-                    type=""
-                    id="product_name"
-                    className=" w-48 h-8
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-
-                <div className="flex flex-col mx-1">
-                  <label className="text-sm font-semibold">
-                    Meta Description:(Research to google search)
-                  </label>
-                  <textarea
-                    type="area"
-                    id="product_name"
-                    className=" w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-              </div>
-              {/* section2 start */}
-              <div className="flex justify-between w-full Largest:w-[80%] items-baseline  my-6 gap-6">
-                <div className="flex flex-col ">
-                  <label className="text-sm font-semibold">Salt Composition:</label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-                <div className="flex flex-col ">
-                  <label className="text-sm font-semibold">Height {""}(in):</label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-
-                <div className="flex flex-col ">
-                  <label className="text-sm font-semibold">Width{""}(in):</label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-
-                <div className="flex flex-col ">
-                  <label className="text-sm font-semibold">Length{""}(in):</label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-
-                {/* <div className="flex flex-col">
-            <label className="text-sm"> Weight{""}(in):</label>
-            <input
-              type="text"
-              id="product_name"
-              className=" w-44 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-blue-900 focus:shadow-sm focus:shadow-blue-400"
-            />
-          </div> */}
-              </div>
-
-              {/* section2 end */}
-
-              {/* section 3 start  */}
-              <div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-semibold"> Weight{""}(in):</label>
-                  <input
-                    type="text"
-                    id="product_name"
-                    className=" w-48 h-8
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
-                </div>
-              </div>
-              {/* section3 end */}
-
-
-            </div>
-            {/* section4 start */}
-            <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm my-4">
+            {/* section5 start */}
+            <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm ">
               <div className="flex flex-col  ">
                 <label className="text-base">Tier Price:</label>
                 <div className="border rounded-md  bg-white ">
@@ -1960,28 +2201,278 @@ function ProductFields() {
                 </div>
               </div>
             </div>
-            {/* section4 end */}
-            {/* section 5 start */}
-            <div>
-              <div className="my-6">
-                <span className="text-base">
-                  States (Please select multiple states by clicking on Ctrl Button) :
-                </span>
-                <div>
-                  <select className="w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                  >
-                    <option>All Selected</option>
-                  </select>
+            {/* section5 end */}
+          </div>
+        );
+        // case 2:
+        // return (
+        // <div className="flex flex-col font-sans w-full Largest:w-[80%] font-medium justify-between text-sm ">
+        {
+          /* <div className="font-medium "> */
+        }
+        {
+          /* <div className="flex justify-between items-baseline w-full  Largest:w-[80%]  my-6 gap-6"> */
+        }
+        {
+          /* <div className="flex flex-col">
+                  <label className="text-sm font-semibold">
+                    Uri Key : (Related to google <br />
+                    search)
+                  </label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+        {
+          /* <div className="flex flex-col ml-4">
+                  <label className="text-sm font-semibold">
+                    Meta Title:(Related to google search)
+                  </label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+
+        {
+          /* <div className="flex flex-col mx-4">
+                  <label className="text-sm font-semibold">
+                    Meta Keywords:(Related to google search)
+                  </label>
+                  <textarea
+                    type=""
+                    id="product_name"
+                    className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+
+        {
+          /* <div className="flex flex-col mx-1">
+                  <label className="text-sm font-semibold">
+                    Meta Description:(Research to google search)
+                  </label>
+                  <textarea
+                    type="area"
+                    id="product_name"
+                    className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+        {
+          /* </div> */
+        }
+        {
+          /* section2 start */
+        }
+        // <div className="flex justify-between w-full Largest:w-[80%] items-baseline  my-6 gap-6">
+        {
+          /* <div className="flex flex-col ">
+                  <label className="text-sm font-semibold">Salt Composition:</label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+        {
+          /* <div className="flex flex-col ">
+                  <label className="text-sm font-semibold">Height {""}(in):</label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+
+        {
+          /* <div className="flex flex-col ">
+                  <label className="text-sm font-semibold">Width{""}(in):</label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+
+        {
+          /* <div className="flex flex-col ">
+                  <label className="text-sm font-semibold">Length{""}(in):</label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div> */
+        }
+
+        {
+          /* <div className="flex flex-col">
+            <label className="text-sm"> Weight{""}(in):</label>
+            <input
+              type="text"
+              id="product_name"
+              className=" w-44 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-blue-900 focus:shadow-sm focus:shadow-blue-400"
+            />
+          </div> */
+        }
+        {
+          /* </div> */
+        }
+
+        {
+          /* section2 end */
+        }
+
+        {
+          /* section 3 start  */
+        }
+        {
+          /* <div>
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold"> Weight{""}(in):</label>
+                  <input
+                    type="text"
+                    id="product_name"
+                    className=" w-48 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"            />
+                </div>
+              </div> */
+        }
+        {
+          /* section3 end */
+        }
+
+        {
+          /* </div> */
+        }
+        {
+          /* section4 start */
+        }
+        {
+          /* <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm my-4">
+              <div className="flex flex-col  ">
+                <label className="text-base">Tier Price:</label>
+                <div className="border rounded-md  bg-white ">
+                  <table className="w-full Largest:w-[80%] ">
+                    <thead className="p-10">
+                      <tr className="text-xl border-b bg-blue-900 text-white">
+                        <th className=" font-normal text-center text-base h-10">
+                          Websites
+                        </th>
+                        <th className="  font-normal text-center text-base ">
+                          Customer Group
+                        </th>
+                        <th className="    font-normal text-base  text-center ">
+                          Qty
+                        </th>
+                        <th className="  font-normal  text-base  text-center ">
+                          ($) Price
+                        </th>
+                        <th className="  font-normal  text-base  text-center  ">
+                          Action
+                        </th>
+                        <th className="   font-normal   text-base  text-center  ">
+                          <button
+                            className="border border-gray-950 -ml-3 bg-white text-black w-14"
+                            onClick={handleClick}
+                          >
+                            Add
+                          </button>{" "}
+                        </th>
+                      </tr>
+                    </thead>
+                    {isPopupVisible && (
+                      // <div>
+                      <tbody className="w-full Largest:w-[80%]">
+                        <tr>
+                          <td className="border bg-slate-200">
+                            <select className=" py-1 text-left text-base h-9  w-40 m-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400">
+                              <option className=" py-2 text-left text-base h-9  ">
+                                All Websites
+                              </option>
+                              <option>Main Website</option>
+                            </select>
+                          </td>
+                          <td className="border bg-slate-200">
+                            <select className=" py-1 text-left text-base h-9 w-40 m-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400">
+                              <option className=" py-1 text-left text-base h-9 hover:bg-blue-900 ">
+                                All Groups
+                              </option>
+                              <option>Not Logged In</option>
+                              <option>General</option>
+                              <option>Prescription seller</option>
+                              <option>General Merchandise seller</option>
+                              <option>UPN Member</option>
+                            </select>
+                          </td>
+                          <td className="border bg-slate-200">
+                            <input
+                              type="text"
+                              className=" py-1  m-2  text-left text-base h-9 w-40  border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                            />
+                          </td>
+                          <td className="border bg-slate-200">
+                            <input
+                              type="text"
+                              className=" border m-2   py-1 text-left text-base h-9 w-40  border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                            />
+                          </td>
+                          <td className=" w-36">
+                            <button
+                              className=" m-2 border-slate-700 bg-blue-900 text-white w-20 flex justify-center p-2"
+                              onClick={handleremove}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    )}
+                  </table>
                 </div>
               </div>
-            </div>
+            </div> */
+        }
+        {
+          /* section4 end */
+        }
+        {
+          /* section 5 start */
+        }
+        // <div>
+        //   <div className="my-6">
+        //     <span className="text-base">
+        //       States (Please select multiple states by clicking on Ctrl Button) :
+        //     </span>
+        //     <div>
+        //       <select className="w-48 h-8
+        //        pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+        //       >
+        //         <option>All Selected</option>
+        //       </select>
+        //     </div>
+        //   </div>
+        // </div>
 
-            {/* section5 end */}
+        {
+          /* section5 end */
+        }
 
-            {/* section 6 start */}
-            <div>
-              {/* <div className="w-full Largest:w-[80%]">
+        {
+          /* section 6 start */
+        }
+        // <div>
+        {
+          /* <div className="w-full Largest:w-[80%]">
           <div className="flex justify-between my-6">
             <div className="flex flex-col">
               <p>
@@ -1997,16 +2488,25 @@ function ProductFields() {
               </button>
             </div>
           </div>
-        </div> */}
-            </div>
+        </div> */
+        }
+        {
+          /* </div> */
+        }
 
-            {/* section 6 end */}
-          </div>
-        );
-      case 3:
+        {
+          /* section 6 end */
+        }
+        {
+          /* </div> */
+        }
+        {
+          /* // ); */
+        }
+
+      case 2:
         return (
           <div className="font-medium font-sans">
-
             <div className="w-full Largest:w-[80%] ">
               <div className="flex justify-between my-6">
                 <div className="flex flex-col">
@@ -2028,31 +2528,35 @@ function ProductFields() {
             <div className="my-3 font-semibold">
               <div className="flex flex-row w-[80%] gap-4">
                 <div className="flex flex-col">
-                  <label className='text-sm'>Height {""} in</label>
-                  <input type="text"
+                  <label className="text-sm">Height {""} in</label>
+                  <input
+                    type="text"
                     className="w-56 h-8
                    pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                   />
                 </div>
                 <div className="flex flex-col mx-6 ">
-                  <label className='text-sm'>Width {""} in</label>
-                  <input type="text" className="w-56 h-8
+                  <label className="text-sm">Width {""} in</label>
+                  <input
+                    type="text"
+                    className="w-56 h-8
                    pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                   />
                 </div>
                 <div className="flex flex-col  ">
-                  <label className='text-sm'>Length {""} in</label>
-                  <input type="text" className="w-56 h-8 
+                  <label className="text-sm">Length {""} in</label>
+                  <input
+                    type="text"
+                    className="w-56 h-8 
                    pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                   />
                 </div>
-                <div className='flex my-5 justify-end mx-7'>
+                <div className="flex my-5 justify-end mx-7">
                   <button className="border rounded-lg border-gray-400  bg-blue-900 text-white text-base  font-semibold  w-20 h-8  ">
                     SAVE
                   </button>
                 </div>
               </div>
-
             </div>
 
             {/* section start */}
@@ -2060,15 +2564,18 @@ function ProductFields() {
             <h1 className="text-2xl font-semibold">Related Products </h1>
             <div className="flex  justify-between w-full Largest:w-[80%]">
               <p>
-                Related products are shown to customers in addition to the item the
-                customer is looking at.{" "}
+                Related products are shown to customers in addition to the item
+                the customer is looking at.{" "}
               </p>
               <button
-                className={`  text-base font-medium p-2 rounded-md  h-8 flex items-center  ${buttonClick ? "bg-white text-blue-900" : "bg-blue-900 text-white"
-                  }`}
+                className={`  text-base font-medium p-2 rounded-md  h-8 flex items-center  ${
+                  buttonClick
+                    ? "bg-white text-blue-900"
+                    : "bg-blue-900 text-white"
+                }`}
                 onClick={handleRelateclick}
               >
-                <img src={filter} className='w-6 h-3 px-1' />
+                <img src={filter} className="w-6 h-3 px-1" />
                 Filter
               </button>
             </div>
@@ -2172,24 +2679,14 @@ function ProductFields() {
                       <th className=" p-2  text-left text-sm w-40">
                         Thumbnail
                       </th>
-                      <th className=" p-2  text-left text-sm  w-80">
-                        Name
-                      </th>
+                      <th className=" p-2  text-left text-sm  w-80">Name</th>
                       <th className=" p-2  text-left text-sm w-48">
                         Attribute Set
                       </th>
-                      <th className=" p-2  text-left text-sm w-32">
-                        Status
-                      </th>
-                      <th className=" p-2  text-left text-sm bw-44">
-                        Type
-                      </th>
-                      <th className=" p-2  text-left text-sm  w-44">
-                        SKU
-                      </th>
-                      <th className=" p-2  text-left text-sm  w-44">
-                        Price
-                      </th>
+                      <th className=" p-2  text-left text-sm w-32">Status</th>
+                      <th className=" p-2  text-left text-sm bw-44">Type</th>
+                      <th className=" p-2  text-left text-sm  w-44">SKU</th>
+                      <th className=" p-2  text-left text-sm  w-44">Price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -2215,21 +2712,22 @@ function ProductFields() {
             {/* section end */}
           </div>
         );
-      case 4:
+      case 3:
         return (
           <div className="font-sans font-medium">
             <h1 className="text-2xl font-semibold">Up-Sell Products </h1>
             <div className="flex  justify-between w-full Largest:w-[80%]">
               <p>
                 An up-sell item is offered to the customer as a pricier or
-                higher-quality alternative to the product the customer is looking
-                at.
+                higher-quality alternative to the product the customer is
+                looking at.
               </p>
               <button
-                className={` text-base font-medium p-2 rounded-md  h-8 flex items-center ${ButtonUpClick
-                  ? "bg-white text-blue-900"
-                  : "bg-blue-900 text-white"
-                  }`}
+                className={` text-base font-medium p-2 rounded-md  h-8 flex items-center ${
+                  ButtonUpClick
+                    ? "bg-white text-blue-900"
+                    : "bg-blue-900 text-white"
+                }`}
                 onClick={click}
               >
                 {" "}
@@ -2331,27 +2829,15 @@ function ProductFields() {
                       </select>
                     </th>
                     <th className=" p-2  text-left text-sm w-32">ID</th>
-                    <th className=" p-2  text-left text-sm w-40">
-                      Thumbnail
-                    </th>
-                    <th className=" p-2  text-left text-sm  w-80">
-                      Name
-                    </th>
+                    <th className=" p-2  text-left text-sm w-40">Thumbnail</th>
+                    <th className=" p-2  text-left text-sm  w-80">Name</th>
                     <th className=" p-2  text-left text-sm w-48">
                       Attribute Set
                     </th>
-                    <th className=" p-2  text-left text-sm w-32">
-                      Status
-                    </th>
-                    <th className=" p-2 text-left text-sm bw-44">
-                      Type
-                    </th>
-                    <th className=" p-2  text-left text-sm  w-44">
-                      SKU
-                    </th>
-                    <th className=" p-2  text-left text-sm  w-44">
-                      Price
-                    </th>
+                    <th className=" p-2  text-left text-sm w-32">Status</th>
+                    <th className=" p-2 text-left text-sm bw-44">Type</th>
+                    <th className=" p-2  text-left text-sm  w-44">SKU</th>
+                    <th className=" p-2  text-left text-sm  w-44">Price</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2381,10 +2867,11 @@ function ProductFields() {
                 cross-sells to the items already in the shopping cart.
               </p>
               <button
-                className={` text-base font-medium  p-2 rounded-md  h-8 flex items-center ${isButtonClicked
-                  ? "bg-white text-blue-900"
-                  : "bg-blue-900 text-white"
-                  }`}
+                className={` text-base font-medium  p-2 rounded-md  h-8 flex items-center ${
+                  isButtonClicked
+                    ? "bg-white text-blue-900"
+                    : "bg-blue-900 text-white"
+                }`}
                 onClick={handleCrossClick}
               >
                 <img src={filter} className="w-6 h-3 px-1" />
@@ -2485,25 +2972,15 @@ function ProductFields() {
                       </select>
                     </th>
                     <th className=" p-2  text-left text-sm w-32">ID</th>
-                    <th className="p-2  text-left text-sm  w-40">
-                      Thumbnail
-                    </th>
-                    <th className=" p-2  text-left text-sm w-80">
-                      Name
-                    </th>
+                    <th className="p-2  text-left text-sm  w-40">Thumbnail</th>
+                    <th className=" p-2  text-left text-sm w-80">Name</th>
                     <th className=" p-2  text-left text-sm w-48 ">
                       Attribute Set
                     </th>
-                    <th className=" p-2  text-left text-sm w-32">
-                      Status
-                    </th>
-                    <th className=" p-2 text-left text-sm w-44">
-                      Type
-                    </th>
+                    <th className=" p-2  text-left text-sm w-32">Status</th>
+                    <th className=" p-2 text-left text-sm w-44">Type</th>
                     <th className=" p-2  text-left text-sm w-44">SKU</th>
-                    <th className=" p-2 text-left text-sm w-32">
-                      Price
-                    </th>
+                    <th className=" p-2 text-left text-sm w-32">Price</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2528,12 +3005,16 @@ function ProductFields() {
             {/* section end */}
           </div>
         );
-      case 5:
+      case 4:
         return (
           <div className="space-y-4 font-sans font-medium">
-            <p className="font-semibold">Product Image: (Accepted Formats: JPEG, PNG)</p>
+            <p className="font-semibold">
+              Product Image: (Accepted Formats: JPEG, PNG)
+            </p>
             <div className="flex flex-col  p-4 border rounded-lg shadow-md">
-              <h1 className="text-xl font-bold mb-4 text-justify">Upload Images</h1>
+              <h1 className="text-xl font-bold mb-4 text-justify">
+                Upload Images
+              </h1>
 
               <div
                 {...getRootProps()}
@@ -2564,9 +3045,10 @@ function ProductFields() {
               </div>
             </div>
 
-            <h1 className="font-semibold">Product Video :(Accepted Format :MP4,MPEG)  </h1>
+            <h1 className="font-semibold">
+              Product Video :(Accepted Format :MP4,MPEG){" "}
+            </h1>
             <div className="border shadow-md flex w-full rounded-md  mb-4">
-
               <div className="w-[50%]">
                 <div className="p-3">
                   <h1 className="text-xl font-bold mb-4">Upload Videos</h1>
@@ -2597,11 +3079,9 @@ function ProductFields() {
                     </button>
                   )}
                 </div>
-
               </div>
 
               <div className="flex flex-col w-[50%] p-4 font-semibold">
-
                 <div className="flex flex-col">
                   <span>Url :</span>
                   <input className="w-96 h-8 border  focus:outline-none  rounded-md focus:shadow focus:shadow-blue-400" />
@@ -2611,14 +3091,10 @@ function ProductFields() {
                   <input className="w-96 h-8 border focus:outline-none rounded-md focus:shadow focus:shadow-blue-400" />
                 </div>
                 <div className="flex flex-col">
-                  <span >Description :</span>
+                  <span>Description :</span>
                   <textarea className="w-96 h-10 border focus:outline-none rounded-md focus:shadow focus:shadow-blue-400" />
                 </div>
-
               </div>
-
-
-
             </div>
           </div>
         );
@@ -2629,27 +3105,34 @@ function ProductFields() {
 
   return (
     <div className="w-full max-w-4xl mx-auto mt-10">
-      {/* <div className="flex flex-col justify-start ">
-        <h1 className="text-2xl font-bold text-blue-900 -mt-5">ADD PRODUCT</h1>
-        <p className="border-b border-blue-900 w-40  "></p>
-      </div> */}
-      <div className="flex  justify-between items-baseline">
-        <div>
-        <h1 className="text-2xl font-bold text-blue-900 -mt-5">ADD PRODUCT</h1>
-        <p className="border-b border-blue-900 w-40  "></p>
+      <div className="flex flex-col justify-start ">
+        <div className="flex  justify-between ">
+          <div>
+            <h1 className="text-2xl font-bold text-blue-900 -mt-5">
+              ADD PRODUCT
+            </h1>
+            <p className="border-b border-blue-900 w-40  "></p>
+          </div>
+          <div>
+            <button
+              onClick={handleSubmit}
+              className="border bg-blue-900 text-white -mt-5 h-8 p-2 w-16 rounded-md font-semibold  flex items-center justify-center"
+            >
+              Save
+            </button>
+          </div>
         </div>
-        <div >
-          <button className="border bg-blue-900 text-white -mt-5 h-8 p-2 w-16 rounded-md font-semibold  flex items-center justify-center">Save</button></div>
-      </div>
+      </div>
       <div className=" mb-6   ">
-        <ul className="flex  border-b border-white  w-[76%] opacity-1">
+        <ul className="flex  border-b border-white  gap-2 w-[69%] opacity-1">
           {tabs.map((tab, index) => (
-            <li key={index} className=" mr-2 ">
+            <li key={index} className=" mr-2 gap-4 ">
               <button
-                className={`w-full  flex justify-center items-center px-2  p-3 py-1 mt-7   shadow-md  ${activeTab === index
-                  ? "text-white  bg-blue-900 rounded-t-xl font-semibold "
-                  : "text-blue-900  shadow-none rounded-t-xl bg-white "
-                  }`}
+                className={`w-full  flex justify-center items-center px-2   p-3 py-1 mt-7   shadow-md  ${
+                  activeTab === index
+                    ? "text-white  bg-blue-900 rounded-t-xl font-semibold "
+                    : "text-blue-900  shadow-none rounded-t-xl bg-white "
+                }`}
                 onClick={() => setActiveTab(index)}
               >
                 {tab}
@@ -2659,27 +3142,6 @@ function ProductFields() {
         </ul>
       </div>
       <div>{renderTabContent()}</div>
-      {/* <div className="flex justify-end mt-4">
-        <button
-          onClick={handleEditProduct}
-          className="bg-blue-900 p-3 rounded-md text-white font-medium"
-        >
-          More Option
-        </button>
-      </div> */}
-      {/* {showPopup && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75">
-          <div className="bg-white p-8 rounded shadow-lg">
-            <button
-              onClick={handleClosePopup}
-              className="absolute top-0 right-0 mt-4 mr-4 text-gray-500"
-            >
-              Close
-            </button>
-            <OtherProductFields />
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }

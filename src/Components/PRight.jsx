@@ -211,7 +211,7 @@
 //                   onClick={() => handleCart(index + indexOfFirstItem)}
 //                 />
 //               </li>
-            
+
 //                <li>
 //                 <img
 //                   src={fav}
@@ -222,7 +222,7 @@
 //               </li>
 //               <li>
 //                 <img src={other} alt="Other" className="h-8 p-[6px]" />
-//               </li> 
+//               </li>
 //             </ul>*/}
 //               {pop && <Items topMargin={topMargin} onClose={handleClose} />}
 //             </div>
@@ -255,7 +255,7 @@
 
 // export default PRight;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import other from "../assets/compare1_Icon.png";
 import addcart from "../assets/cartw_icon.png";
@@ -276,6 +276,7 @@ import image1 from "../assets/offers_1.png";
 import image2 from "../assets/offers_2.png";
 import image3 from "../assets/offers_3.png";
 import cart from "../assets/cartw_icon.png";
+import Expicon from "../assets/Expicon.png"
 
 function PRight({ topMargin, addCart, wishList }) {
   const { pop, setPop } = useNavbarContext();
@@ -284,82 +285,100 @@ function PRight({ topMargin, addCart, wishList }) {
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const [favoriteItems, setFavoriteItems] = useState({});
-  const [quantities, setQuantities] = useState(
-    Array(images.length).fill(1)
-  );
+  const [quantities, setQuantities] = useState(Array(images.length).fill(1));
+  const [ProductsList, setProductsList] = useState(null);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/ProductFilter/GetAllProducts"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProductsList(data.productfilter);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+  console.log(ProductsList);
 
   const products = [
     {
       src: image2,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image1,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image2,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image3,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image1,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image2,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image3,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'3/2040',
+      Date: "3/2040",
     },
     {
       src: image1,
       Details: "STANGEL-BARRQ NH MCR CVD 4 1/2 Others",
-      Details1:'STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments',
+      Details1: "STANGEL-BARRQ NH MCR CVD 4 1/2 Sklar Instruments",
       package: "( EA)",
-      package1:'Original Package-Sealed',
+      package1: "Original Package-Sealed",
       price: "$50.99",
-      Date:'2/2044',
+      Date: "2/2044",
     },
     // Add more products here if needed
   ];
@@ -433,7 +452,6 @@ function PRight({ topMargin, addCart, wishList }) {
     },
   }));
 
-
   const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
@@ -463,7 +481,7 @@ function PRight({ topMargin, addCart, wishList }) {
   }));
 
   return (
-    <div className="w-full h-full mt-6 overflow-y-scroll">
+    <div className="w-full mt-4 h-full overflow-y-scroll">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1>
         <div className="flex">
@@ -488,58 +506,59 @@ function PRight({ topMargin, addCart, wishList }) {
       <div className="w-[95%] mt-5">
         <div className="">
           <div className="flex flex-col">
-            
-
             <div className="flex flex-col  justify-between">
-              {products.map((product, index) => (
+              {ProductsList?.map((product, index) => (
                 <div
                   key={index}
                   className="flex p-4 border shadow-lg rounded-md  mb-4"
                 >
                   <div className="flex flex-col mx-2">
-                  <p></p>
-                  <img
-                        src={product.src}
-                        className="w-36 p-2 hover:cursor-pointer rounded-lg h-28 bg-slate-200 "
-                        alt="Product"
-                      />
-                    </div>
+                    <p></p>
+                    <img
+                      src={product.imageUrl}
+                      className="w-36 p-2 hover:cursor-pointer rounded-lg h-28 bg-slate-200 "
+                      alt="Product"
+                      onClick={()=> navigate("/detailspage/0")
+                      }
+                    />
+                  </div>
 
-                    <div className="flex flex-col mx-3">
+                  <div className="flex flex-col mx-3">
                     <p className="font-semibold">Item Details</p>
                     <div className="mt-2">
-                    <p className="font-semibold">{product.Details}</p>
-                    <p className="text-xs mt-1">{product.Details1}</p>
-                    <div className="flex mt-1">
-                    <p>icon</p>
-                    <div className="flex gap-2">
-                      <p>Exp.Date :</p>
-                      <p className="font-semibold">{product.Date}</p>
+                      <p className="font-semibold">{product.productName}</p>
+                      <p className="text-xs mt-1">{product.productDescription}</p>
+                      <div className="flex mt-1 gap-1">
+                        <img src={Expicon} className="w-6 h-6"/>
+                        <div className="flex gap-2">
+                          <p>Exp.Date :</p>
+                          <p className="font-semibold">{product.expirationDate}</p>
+                        </div>
                       </div>
-                      </div>
-                    
                     </div>
-                      </div>
+                  </div>
 
-                      <div className="flex flex-col mx-3">
-                      <p className="font-semibold">Package Details</p>
-                      <div className="mt-2">
-                      <p className=" text-red-500 font-semibold">{product.package}</p>
+                  <div className="flex flex-col mx-3">
+                    <p className="font-semibold">Package Details</p>
+                    <div className="mt-2">
+                      <p className=" text-red-500 font-semibold">
+                        {product.package}
+                      </p>
                       <p className="text-xs mt-1">{product.package1}</p>
-                      </div>
-                        </div>
+                    </div>
+                  </div>
 
-                        <div className="flex flex-col mx-3">
-                        <p className="font-semibold">Unit Price</p>
-                        <div className="mt-2">
-                        <p className="font-semibold ">{product.price}</p>
-                        </div>
-                          </div>
+                  <div className="flex flex-col mx-3">
+                    <p className="font-semibold">Unit Price</p>
+                    <div className="mt-2">
+                      <p className="font-semibold ">{product.priceName}</p>
+                    </div>
+                  </div>
 
-                          <div className="flex flex-col mx-3">
-                          <p className="font-semibold">Quantity</p>
-                          <div className="my-2">
-                          <input
+                  <div className="flex flex-col mx-3">
+                    <p className="font-semibold">Quantity</p>
+                    <div className="my-2">
+                      <input
                         type="number"
                         value={quantities[index]}
                         onChange={(e) =>
@@ -548,77 +567,28 @@ function PRight({ topMargin, addCart, wishList }) {
                         className="text-xl border rounded-lg p-1 w-10 h-8"
                         min="1"
                       />
-                      </div>
-                            </div>
-
-                            <div className="flex  flex-col mx-3 items-center gap-2 justify-between">
-                        <img
-                          src={favoriteItems[index] ? filledHeart : emptyHeart}
-                          alt="Wishlist"
-                          className="w-6 h-6 cursor-pointer"
-                          onClick={() => handleClick(index)}
-                        />
-                        <div className="flex h-8 w-16 cursor-pointer bg-blue-900 text-white items-center justify-center gap-1 rounded-md p-2">
-                          <img src={cart} className="w-5 h-5" alt="Cart" />
-                          <button
-                            className="font-semibold"
-                            onClick={() => handleCart(index)}
-                          >
-                            ADD
-                          </button>
-                        </div>
-                      </div>
-
-
-                  {/* <div className="flex flex-col ">
-                    <div className="flex justify-between items-center">
-                      <p></p>
-                      <p className="font-semibold">Item Details</p>
-                      <p className="font-semibold">Package Details</p>
-                      <p className="font-semibold">Unit Price</p>
-                      <p className="font-semibold">Quantity</p>
-                      <p></p>
                     </div>
+                  </div>
 
-                    <div className="flex justify-between p-2 mt-2">
-                      <img
-                        src={product.src}
-                        className="w-28 h-20"
-                        alt="Product"
-                      />
-                      <div className="w-72 ">
-                        <p>{product.Details}</p>
-                      </div>
-                      <p className="w-60">{product.package}</p>
-                      <p className="w-36 ">{product.price}</p>
-                      <input
-                        type="number"
-                        value={quantities[index]}
-                        onChange={(e) =>
-                          handleQuantityChange(index, Number(e.target.value))
-                        }
-                        className="text-xl border rounded-lg p-1 w-9 h-7"
-                        min="1"
-                      />
-                      <div className="flex  flex-col items-center gap-2">
-                        <img
-                          src={favoriteItems[index] ? filledHeart : emptyHeart}
-                          alt="Wishlist"
-                          className="w-6 h-6 cursor-pointer"
-                          onClick={() => handleClick(index)}
-                        />
-                        <div className="flex h-8 w-16 bg-blue-900 text-white items-center justify-center gap-1 rounded-md p-2">
-                          <img src={cart} className="w-5 h-5" alt="Cart" />
-                          <button
-                            className="font-semibold"
-                            onClick={() => handleCart(index)}
-                          >
-                            ADD
-                          </button>
-                        </div>
-                      </div>
+                  <div className="flex  flex-col mx-3 items-center gap-2 justify-between">
+                    <img
+                      src={favoriteItems[index] ? filledHeart : emptyHeart}
+                      alt="Wishlist"
+                      className="w-6 h-6 cursor-pointer"
+                      onClick={() => handleClick(index)}
+                    />
+                    <div className="flex h-8 w-16 cursor-pointer bg-blue-900 text-white items-center justify-center gap-1 rounded-md p-2">
+                      <img src={cart} className="w-5 h-5" alt="Cart" />
+                      <button
+                        className="font-semibold"
+                        onClick={() => handleCart(index)}
+                      >
+                        ADD
+                      </button>
                     </div>
-                  </div> */}
+                  </div>
+
+                  
                 </div>
               ))}
             </div>

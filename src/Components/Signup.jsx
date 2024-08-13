@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import logoImage from "../assets/logo2.png";
+import logo from "../assets/Icons/logo2.png";
 import back from "../assets/Previous1_icon.png";
 import next from "../assets/Next1_icon.png";
 import background_image from "../assets/homepharma.png";
@@ -25,6 +26,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
+import TermsAndConditions from "./TermsAndConditions";
 
 function getSteps() {
   return ["Personal-Info", "User-Info", "Business-Info1", "Business-Info-2"];
@@ -121,7 +123,6 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
     upnMember: "",
-
     shopName: "",
     legalBusinessName: "",
     dbaName: "",
@@ -149,14 +150,43 @@ const Signup = () => {
     Address1: "",
     Address: "",
     userType: "",
+    // customerId: "",
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
   const [uploadedFile, setUploadedFile] = useState("");
   const [file1, setfile1] = useState(null);
   const [file2, setfile2] = useState(null);
-  console.log(formData);
-  const handleInputChange = (e) => {
+  // console.log(formData);
+  const uploadFile = async (file, name) => {
+    const formData1 = new FormData();
+    formData1.append("image", file); // Assuming the field name is "image"
+
+    try {
+      const response = await fetch(
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Upload",
+        {
+          method: "POST",
+          body: formData1,
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      if (response.status === 200) {
+        console.log(data.message); // "Image Uploaded Successfully."
+        setFormData({
+          ...formData,
+          [name]: data.imageUrl,
+        });
+      } else {
+        console.error("Failed to upload image:", data.message);
+      }
+    } catch (error) {
+      console.error("Error occurred during the upload:", error);
+    }
+  };
+  const handleInputChange = async (e) => {
     const { name, value, type, files, checked } = e.target;
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -184,30 +214,10 @@ const Signup = () => {
             [name]: "",
           }));
       }
-      if (allowedTypes.includes(file.type)) {
-        setFormData({
-          ...formData,
-          [name]: file,
-        });
-        setUploadedFile(URL.createObjectURL(files[0]));
-        if (name === "DEA_License_Copy") setfile1(file ? file.name : "");
-        else setfile2(file ? file.name : "");
-      } else {
-        if (name === "Pharmacy_License_Copy") {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "upload only jpg, jpeg, or png file",
-          }));
-        }
-        if (name === "DEA_License_Copy") {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "upload only jpg, jpeg, or png file",
-          }));
-        }
-      }
+
+      await uploadFile(file, name);
     }
-    console.log(formData);
+    // console.log(formData);
     if (name === "password") validatePassword(value);
 
     if (activeStep === 1) {
@@ -258,8 +268,8 @@ const Signup = () => {
         /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
       if (!formData.First_Name.match(regex))
         newErrors.First_Name = "First name is required.";
-      if (!formData.Last_Name.match(regex)) newErrors.Last_Name = "Last name is required.";
-
+      if (!formData.Last_Name.match(regex))
+        newErrors.Last_Name = "Last name is required.";
 
       if (!formData.Email_id.match(regexp))
         newErrors.Email_id = "Email_id is required";
@@ -319,7 +329,10 @@ const Signup = () => {
         newErrors.Business_Fax = "Business_Fax is required";
       if (!formData.Business_Email && userType != "Normal Customer")
         newErrors.Business_Email = " Business_Email is required";
-      else if (!formData.Business_Email.match(regexp) && userType != "Normal Customer")
+      else if (
+        !formData.Business_Email.match(regexp) &&
+        userType != "Normal Customer"
+      )
         newErrors.Business_Email = " Business_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required";
@@ -414,27 +427,56 @@ const Signup = () => {
 
   const navigate = useNavigate();
   const [isSubmit, setisSubmit] = useState(true);
-  console.log("hh",activeStep,usertype)
+  // console.log("hh", activeStep, usertype);
 
-  const handleNext = () => {
-    if (activeStep === 0) validatePassword(formData.password);
+  const handleNext = async () => {
+    if (activeStep === 0) {
+      validatePassword(formData.password);
+    }
+
     if (validateStep(activeStep)) {
       setisSubmit(true);
+
       if (activeStep === 2 && userType === "Normal Customer") {
-
         setActiveStep(4);
-        return;
-      }
-      if (activeStep === 0 && validatePassword(formData.password) == false) {
+        try {
+          const isRegistered = await RegisterBusinessInfo(formData, userType);
+          if (isRegistered) setActiveStep(4); // Move to the next step if API call is successful
+        } catch (error) {
+          setisSubmit(false);
+          return; // Exit the function if there is an error
+        }
         return;
       }
 
-      if (activeStep === 1 && usertype === "buyer") {
+      if (activeStep === 0 && !validatePassword(formData.password)) {
+        return;
+      }
+
+      if (activeStep === 1) {
+        try {
+          const isRegistered = await registerUser(formData, userType);
+          if (formData.customerId != "") setActiveStep(2); // Move to the next step if API call is successful
+        } catch (error) {
+          setisSubmit(false);
+          return; // Exit the function if there is an error
+        }
+        return;
+      }
+      if (activeStep === 3 ) {
+        try {
+          const isRegistered = await RegisterBusinessInfo(formData, userType);
+          if (isRegistered) setActiveStep(4); // Move to the next step if API call is successful
+        } catch (error) {
+          setisSubmit(false);
+          return; // Exit the function if there is an error
+        }
+        return;
+      }
+
+      if (activeStep === 1 && userType === "buyer") {
         setActiveStep(3);
-      } else if (
-        activeStep === steps.length
-        // || (activeStep == 1 && userType === "Normal Customer")
-      ) {
+      } else if (activeStep === steps.length) {
         localStorage.removeItem("formData");
         formData.userType = userType;
         localStorage.setItem("formData", JSON.stringify(formData));
@@ -448,6 +490,107 @@ const Signup = () => {
       }
     } else {
       setisSubmit(false);
+    }
+  };
+  const RegisterBusinessInfo = async (formData, userType) => {
+    const requestBody = {
+      customerBusinessInfoId: 0,
+      customerId: formData.customerId,
+      shopName: formData.shopName,
+      dba: formData.dba,
+      legalBusinessName: formData.legalBusinessName,
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      zip: formData.zip,
+      businessPhone: formData.businessPhone,
+      businessFax: formData.businessFax,
+      businessEmail: formData.businessEmail,
+      federalTaxId: formData.federalTaxId,
+      dea: formData.dea,
+      pharmacyLicence: formData.pharmacyLicence,
+      deaExpirationDate: formData.deaExpirationDate,
+      pharmacyLicenseExpirationDate: formData.pharmacyLicenseExpirationDate,
+      deaLicenseCopy: formData.deaLicenseCopy,
+      pharmacyLicenseCopy: formData.pharmacyLicenseCopy,
+      npi: formData.npi,
+      ncpdp: formData.ncpdp,
+    };
+    console.log(requestBody, "h,");
+    try {
+      const response = await fetch(
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/BusinessInfo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        console.log(response, "Error Response:");
+        return false;
+      }
+
+      const data = await response.json();
+      console.log("API response:", data);
+      return true;
+    } catch (error) {
+      console.error("Error during API request:", error);
+      throw error;
+    }
+  };
+  const registerUser = async (formData, userType) => {
+    const requestBody = {
+      customerId: "string",
+      firstName: formData.First_Name,
+      lastName: formData.Last_Name,
+      email: formData.Email_id,
+      password: formData.password,
+      mobile: formData.Phone_number,
+      customerTypeId:
+        userType === "Retain Pharmacy"
+          ? 1
+          : userType === "General Merchandise Seller"
+          ? 2
+          : userType === "Vendor"
+          ? 3
+          : 4,
+      accountTypeId:
+        accountType === "Buyer" ? 1 : accountType === "Seller" ? 2 : 3,
+      isUPNMember: formData.upnMember === "true" ? 1 : 0, // Convert to boolean if needed
+      loginOTP: "string",
+      otpExpiryDate: "2024-08-12T13:32:54.749Z",
+    };
+    console.log(requestBody, "h");
+    try {
+      const response = await fetch(
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        console.log(response, "h,");
+
+        return false;
+      }
+
+      const data = await response.json();
+      console.log("API response:", data);
+      setFormData({ ...formData, customerId: data.customerId });
+      // return data; // Return data for further use if needed
+      return true;
+    } catch (error) {
+      console.error("Error during API request:", error);
+      throw error; // Re-throw the error to be handled in the caller function
     }
   };
 
@@ -483,16 +626,13 @@ const Signup = () => {
     return formattedPhoneNumber;
   };
 
-
   const handleusertypechange = (value) => {
-    console.log("value",value)
+    console.log("value", value);
     setusertype(value);
     if (activeStep === 1) {
       validateStep(activeStep);
     }
   };
-  console.log(usertype);
-  console.log(errors);
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -1024,8 +1164,9 @@ const Signup = () => {
                   tabIndex={2}
                   className="w-full"
                   helperText={
-                    formData.DEA_Expiration_Date!=null ?
-                    errors.DEA_Expiration_Date : ""
+                    formData.DEA_Expiration_Date != null
+                      ? errors.DEA_Expiration_Date
+                      : ""
                   }
                 />
               </div>
@@ -1045,10 +1186,10 @@ const Signup = () => {
                   tabIndex={5}
                   className="w-full"
                   helperText={
-                    formData.Pharmacy_Expiration_Date!=null ?
-                    errors.Pharmacy_Expiration_Date : ""
+                    formData.Pharmacy_Expiration_Date != null
+                      ? errors.Pharmacy_Expiration_Date
+                      : ""
                   }
-
                 />
               </div>
             </div>
@@ -1174,7 +1315,10 @@ const Signup = () => {
                 />
                 <label className="text-gray-700 ml-1 ">
                   Please Accepts for PharmEtrade{" "}
-                  <Link to="/termsandconditions" className="text-red-500">
+                  <Link
+                    onClick={() => setActiveStep(5)}
+                    className="text-red-500"
+                  >
                     Terms& Conditions{" "}
                   </Link>
                 </label>
@@ -1217,20 +1361,26 @@ const Signup = () => {
   };
 
   return (
-    <div className="">
+    <div className="relative">
       <div className=" h-screen w-screen">
         <img
           src={background_image}
           alt="Background"
           className="w-[100%] h-[100%] absolute top-0 left-0 z-[-1]"
         />
+        {activeStep == 5 && (
+          <div className="w-full absolute bg-black overflow-scroll flex justify-center">
+            <TermsAndConditions setActiveStep={setActiveStep} />
+          </div>
+        )}
 
         <div className="w-full h-full ">
           <Link to="/">
             <img
-              src={logoImage}
+              // src={logoImage}
+              src={logo}
               alt="Logo"
-              style={{ width: "220px", margin: "5px" }}
+              style={{ width: "220px" }}
             />
           </Link>
           <div className="h-[80%]  flex justify-center items-center">
