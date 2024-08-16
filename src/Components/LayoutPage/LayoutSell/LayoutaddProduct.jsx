@@ -4,10 +4,7 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import filter from "../../../assets/Icons/filter_icon.png";
 import deleteicon from "../../../assets/trash.png";
-function ProductFields() {
-  const userData = (() => { try { return JSON.parse(localStorage.getItem('login')); } catch { return localStorage.getItem('login'); } })();
-  console.log(userData);
-
+function LayoutaddProduct() {
   const products = [
     {
       serial: "",
@@ -71,11 +68,9 @@ function ProductFields() {
     expirationDate: "",
     packQuantity: "",
     packType: "",
-    packQuantityAmount:"",
     packCondition: {
       tornLabel: false,
-      otherCondition: "",
-      otherConditionChecked:false,
+      otherCondition: ""
     },
     imageUrl: ""
   });
@@ -322,7 +317,7 @@ function ProductFields() {
     data.append("AmountInStock", formData.amountInStock);
     data.append("Taxable", formData.taxable == 1);
   
-    data.append("ExpirationDate", formData.expirationDate);
+    data.append("ExpirationDate", expirationDate);
     data.append("Caption", caption);
     data.append("MetaKeywords", metaKeywords);
     data.append("MetaTitle", metaTitle);
@@ -335,17 +330,17 @@ function ProductFields() {
       data.append("ImageUrl", formData.imageUrl); // File object
     }
   
-    data.append("PackCondition", formData.packCondition.tornLabel===true? "Torn":formData.packCondition.otherConditionChecked==true? formData.packCondition.otherCondition:"Nill");
-    data.append("ProductDescription", formData.productDetails);
+    data.append("PackCondition", "Active");
+    data.append("ProductDescription", "Product Description");
   
     if (formData.salePrice) data.append("SalePrice", formData.salePrice);
-    data.append("SalePriceFrom", formData.salePriceForm);
-    data.append("SalePriceTo", formData.salePriceTo);
+    data.append("SalePriceFrom", expirationDate);
+    data.append("SalePriceTo", expirationDate);
     if (formData.manufacturer) data.append("Manufacturer", formData.manufacturer);
     if (formData.strength) data.append("Strength", formData.strength);
-    data.append("Fromdate", formData.form);
+    data.append("Fromdate", expirationDate);
     if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
-    data.append("PackQuantity", formData.packQuantityAmount);
+    data.append("PackQuantity", 200);
     if (formData.packType) data.append("PackType", formData.packType);
     if (formData.packCondition)
       data.append("PackCondition", formData.packCondition.otherCondition);
@@ -356,7 +351,7 @@ function ProductFields() {
     if (formData.categorySpecification)
       data.append("CategorySpecificationId", formData.categorySpecification);
     data.append("ProductTypeId", 1);
-    data.append("SellerId", userData.userId);
+    data.append("SellerId", 1);
   
     // Sending data with fetch
     try {
@@ -386,90 +381,8 @@ function ProductFields() {
       throw error;
     }
   };
-  // const handleSubmit = async () => {
-  //   const data = new FormData();
-  //   const expirationDate = "2024-12-31"; // Static expiration date
-  //   const caption = "Sample product caption";
-  //   const metaKeywords = "sample, product, keywords";
-  //   const metaTitle = "Sample Product Title";
-  //   const metaDescription = "This is a sample description for the product.";
-  //   const saltComposition = "Sample Salt Composition";
-  //   const uriKey = "sample-product-uri";
-  //   // const imageUrl ="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4J2wAAAABJRU5ErkJggg==";
-  //   data.append("AddproductID", 1
-  //   data.append("Productcategory_id", formData.productCategory);
-  //   data.append("Sizeid", 1);
-  //   data.append("ProductName", formData.productName);
-  //   data.append("NDCorUPC", formData.ndcUdc);
-  //   data.append("BrandName", formData.brandName);
-  //   data.append("PriceName", formData.price);
-  //   data.append("UPNmemberPrice", formData.upnMemberPrice);
-  //   data.append("AmountInStock", formData.amountInStock);
-  //   data.append("Taxable", formData.taxable == 1);
 
-  //   data.append("ExpirationDate", expirationDate);
-  //   data.append("Caption", caption);
-  //   data.append("MetaKeywords", metaKeywords);
-  //   data.append("MetaTitle", metaTitle);
-  //   data.append("MetaDescription", metaDescription);
-  //   data.append("SaltComposition", saltComposition);
-  //   data.append("UriKey", uriKey);
-  //   // data.append("ImageUrl", formData.imageUrl);
-  //   data.append("PackCondition", "Active");
-  //   data.append("ProductDescription", "Product Description");
-
-  //   if (formData.salePrice) data.append("SalePrice", formData.salePrice);
-  //   data.append("SalePriceFrom", expirationDate);
-  //   data.append("SalePriceTo", expirationDate);
-  //   if (formData.manufacturer)
-  //     data.append("Manufacturer", formData.manufacturer);
-  //   if (formData.strength) data.append("Strength", formData.strength);
-  //   data.append("Fromdate", expirationDate);
-  //   if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
-  //   data.append("PackQuantity", 200);
-  //   if (formData.packType) data.append("PackType", formData.packType);
-  //   if (formData.packCondition)
-  //     data.append("PackCondition", formData.packCondition.otherCondition);
-  //   if (formData.productDescription)
-  //     data.append("ProductDescription", formData.productDetails);
-  //   if (formData.aboutProduct)
-  //     data.append("AboutTheProduct", formData.aboutProduct);
-  //   if (formData.categorySpecification)
-  //     data.append("CategorySpecificationId", formData.categorySpecification);
-  //   data.append("ProductTypeId", 1);
-  //   data.append("SellerId", 1);
-  //   // if (formData.contentType) data.append("ContentType", formData.);
-  //   // if (formData.contentDisposition) data.append("ContentDisposition", formData.contentDisposition);
-  //   // Adding all formData fields to FormData object
-  //   try {
-  //     const response = await fetch(
-  //       "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
-  //       {
-  //         method: "POST",
-  //         body: data,
-  //       }
-  //     );
-
-  //     // Check if the response is not ok
-  //     if (!response.ok) {
-  //       // Attempt to parse the error response
-  //       const errorDetails = await response.json();
-  //       throw new Error(
-  //         `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
-  //           errorDetails
-  //         )}`
-  //       );
-  //     }
-
-  //     const result = await response.json();
-  //     console.log(result);
-  //     return result; // Return the result for further handling
-  //   } catch (error) {
-  //     // Log and throw the exact error details
-  //     console.error("There was a problem with the fetch operation:", error);
-  //     throw error; // Re-throw the error for handling elsewhere if needed
-  //   }
-  // };
+ 
   console.log(formData);
   const renderTabContent = () => {
     switch (activeTab) {
@@ -478,7 +391,7 @@ function ProductFields() {
           // <div className="space-y-4 w-full flex">
           <div className="  h-full flex font-sans font-medium ">
             <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm">
-              <div className="w-[80%] mx-4">
+              <div className=" mx-4">
                 <div className="flex gap-4 ">
                   <div>
                     <label className="font-semibold">
@@ -727,9 +640,9 @@ function ProductFields() {
         );
       case 1:
         return (
-          <div className="flex flex-col w-full   Largest:w-[80%] font-medium font-sans justify-between text-sm">
+          <div className="flex flex-col w-full   font-medium font-sans justify-between text-sm">
             <div className="flex ">
-              <div className="flex flex-col w-[80%]  ">
+              <div className="flex flex-col   ">
                 <div className="flex items-center gap-8 ">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
@@ -767,7 +680,7 @@ function ProductFields() {
                     </label>
                     <input
                       name="salePriceForm"
-                      type="date"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
                       value={formData.salePriceForm}
@@ -782,7 +695,7 @@ function ProductFields() {
                     </label>
                     <input
                       name="salePriceTo"
-                      type="date"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
                       value={formData.salePriceTo}
@@ -817,7 +730,7 @@ function ProductFields() {
                     <label className="text-sm font-semibold">Form:</label>
                     <input
                       name="form"
-                      type="date"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
                       value={formData.form}
@@ -839,7 +752,7 @@ function ProductFields() {
                     </label>
                     <input
                       name="expirationDate"
-                      type="date"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
                       value={formData.expirationDate}
@@ -893,7 +806,7 @@ function ProductFields() {
                 </div>
 
                 <input
-                  type="number"
+                  type="text"
                   name="packQuantityAmount"
                   value={formData.packQuantityAmount || ""}
                   onChange={handleInputChange}
@@ -1099,7 +1012,7 @@ function ProductFields() {
             </div>
             {/* section5 end */}
           </div>
-        );
+        ); 
         // case 2:
         // return (
         // <div className="flex flex-col font-sans w-full Largest:w-[80%] font-medium justify-between text-sm ">
@@ -2000,8 +1913,8 @@ function ProductFields() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-10">
-      <div className="flex flex-col justify-start ">
+    <div className="w-full max-w-4xl h-full mx-auto mt-10 ml-10">
+      <div className="flex flex-col justify-center ">
         <div className="flex  justify-between ">
           <div>
             <h1 className="text-2xl font-bold text-blue-900 -mt-5">
@@ -2042,4 +1955,4 @@ function ProductFields() {
   );
 }
 
-export default ProductFields;
+export default LayoutaddProduct;

@@ -338,6 +338,11 @@ function Nav({ topDivRef, cartItems, userType }) {
                               Admin
                             </Link>
                           </li>
+                          <li>
+                            <Link to="/layout" className="text-lg text-blue-900">
+                              Demo
+                            </Link>
+                          </li>
                           <li
                             className={`${
                               FormData?.userType === "Normal Customer"

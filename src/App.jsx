@@ -67,6 +67,25 @@ import Offers from "./Components/Offers";
 import AdminPanel from "./Components/Admin/Layouts/AdminPanel";
 import AdminDasboard from "./Components/Admin/Dashboard/AdminDasboard";
 import Faqs from "./Components/Faqs";
+import LayoutPanel from "./Components/LayoutPage/LayoutStatic/LayoutPanel";
+import LayoutDashboard from "./Components/LayoutPage/LayoutDashboard/LayoutDashboard";
+import LayoutBuy from "./Components/LayoutPage/LayoutBuy/LayoutBuyProducts";
+import LayoutBid from "./Components/LayoutPage/LayoutBid/LayoutBid";
+import LayoutJoin from "./Components/LayoutPage/LayoutJoin/LayoutJoin";
+import LayoutSell from "./Components/LayoutPage/LayoutSell/LayoutSell";
+import LayoutWishlist from "./Components/LayoutPage/LayoutBuy/LayoutWishlist";
+import LayoutOrderlist from "./Components/LayoutPage/LayoutBuy/LayoutOrderlist";
+import LayoutReturn from "./Components/LayoutPage/LayoutBuy/LayoutReturn";
+import LayoutSidebar from "./Components/LayoutPage/LayoutStatic/LayoutSidebar";
+import LayoutaddProduct from "./Components/LayoutPage/LayoutSell/LayoutaddProduct";
+import LayoutSellOrders from "./Components/LayoutPage/LayoutSell/LayoutSellOrders";
+import LayoutCustomers from "./Components/LayoutPage/LayoutSell/LayoutCustomers";
+import EditFields from "./Components/Seller/Components/EditFields";
+import LayoutPayouts from "./Components/LayoutPage/LayoutSell/LayoutPayouts";
+import LayoutEarnings from "./Components/LayoutPage/LayoutSell/LayoutEarnings";
+import LayoutReview from "./Components/LayoutPage/LayoutSell/LayoutReview";
+import LayoutAssignProduct from "./Components/LayoutPage/LayoutSell/LayoutAssignProducts";
+import LayoutAssignProductList from "./Components/LayoutPage/LayoutSell/LayoutAssignProductList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -207,6 +226,7 @@ function App() {
           <Route path="orders" element={<Orders />} />
           <Route path="market-product-list" element={<AddProducts />} />
           <Route path="add-single-product" element={<ProductFields />} />
+          <Route path="edit-single-product/:addproductID" element={<EditFields />} />
           <Route path="add-xl-sheet" element={<AddXlSheet />} />
           <Route path="customers" element={<Customers />} />
           <Route path="payouts" element={<Payouts />} />
@@ -222,6 +242,29 @@ function App() {
           <Route path="fedex-shipping" element={<FedexShipping />} />
           <Route path="shipping-settings" element={<ShippingSetting />} />
           <Route path="manage-shipping" element={<ManageShipping />} />
+        </Route>
+
+        
+
+        <Route path='/layout' element={<LayoutPanel />}>
+          <Route path='/layout' element={<LayoutDashboard />} />
+          <Route path='/layoutsell' element={<LayoutSell />} />
+          <Route path='/layout/addproduct' element={<LayoutaddProduct />} />
+          <Route path='/layout/sellorders' element={<LayoutSellOrders />} />
+          <Route path='/layout/sellcustomers' element={<LayoutCustomers />} />
+          <Route path='/layout/sellpayouts' element={<LayoutPayouts />} />
+          <Route path='/layout/sellearnings' element={<LayoutEarnings />} />
+          <Route path='/layout/sellreview' element={<LayoutReview />} />
+          <Route path='/layout/sellreturn' element={<LayoutReturn />} />
+          <Route path='/layout/sellassignproducts' element={<LayoutAssignProduct />} />
+          <Route path='/layout/sellassignproductlist' element={<LayoutAssignProductList />} />
+          <Route path='/layout/layoutbuy' element={<LayoutBuy />} />
+          <Route path='/layoutJoin' element={<LayoutJoin />} />
+          <Route path='/layout/layoutbid' element={<LayoutBid />} />
+          <Route path='/layout/layoutwishlist' element={<LayoutWishlist />} />
+          <Route path='/layout/layoutorderlist' element={<LayoutOrderlist/>} />
+          <Route path='/layout/layoutreturn' element={<LayoutReturn />} />
+          <Route path="/layoutsidebar" element={<LayoutSidebar/>}/>
         </Route>
 
         <Route path="/admin" element={<AdminPanel />}>

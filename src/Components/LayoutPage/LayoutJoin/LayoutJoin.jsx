@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import "../App.css";
-import logoImage from "../assets/logo2.png";
-import logo from "../assets/Icons/logo2.png";
-import back from "../assets/Previous1_icon.png";
-import next from "../assets/Next1_icon.png";
-import background_image from "../assets/homepharma.png";
+// import "../App.css";
+import logoImage from "../../../assets/logo_04.png";
+import back from "../../../assets/Previous1_icon.png";
+import next from "../../../assets/Next1_icon.png";
+import background_image from "../../../assets/homepharma.png";
 // import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useNavigate } from "react-router-dom";
 
 // import DatePicker from 'react-datepicker';
 import FormControl from "@mui/material/FormControl";
-import refresh from "../assets/reload-arrow (1).png";
+import refresh from "../../../assets/reload-arrow (1).png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useStates } from "react-us-states";
@@ -26,13 +25,12 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import TermsAndConditions from "./TermsAndConditions";
 
 function getSteps() {
   return ["Personal-Info", "User-Info", "Business-Info1", "Business-Info-2"];
 }
 
-const Signup = () => {
+const LayoutJoin = () => {
   const [userType, setUserType] = useState("");
   const [accountType, setAccountType] = useState("");
 
@@ -67,7 +65,7 @@ const Signup = () => {
     event.preventDefault();
   };
   const userTypes = [
-    "Retail Pharmacy",
+    "Prescription Drug Seller",
     "General Merchandise Seller",
     "Vendor",
     "Normal Customer",
@@ -143,50 +141,21 @@ const Signup = () => {
     Pharmacy_License: "",
     Pharmacy_Expiration_Date: "",
     Pharmacy_License_Copy: "",
-    Business_License: "",
+    Bussiness_License: "",
     NPI: "",
     NCPDP: "",
     Federal_Tax_ID: "",
     Address1: "",
     Address: "",
     userType: "",
-    // customerId: "",
   });
   const [errors, setErrors] = useState({});
   const steps = getSteps();
   const [uploadedFile, setUploadedFile] = useState("");
   const [file1, setfile1] = useState(null);
   const [file2, setfile2] = useState(null);
-  // console.log(formData);
-  const uploadFile = async (file, name) => {
-    const formData1 = new FormData();
-    formData1.append("image", file); // Assuming the field name is "image"
-
-    try {
-      const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Upload",
-        {
-          method: "POST",
-          body: formData1,
-        }
-      );
-
-      const data = await response.json();
-      console.log(data);
-      if (response.status === 200) {
-        console.log(data.message); // "Image Uploaded Successfully."
-        setFormData({
-          ...formData,
-          [name]: data.imageUrl,
-        });
-      } else {
-        console.error("Failed to upload image:", data.message);
-      }
-    } catch (error) {
-      console.error("Error occurred during the upload:", error);
-    }
-  };
-  const handleInputChange = async (e) => {
+  console.log(formData);
+  const handleInputChange = (e) => {
     const { name, value, type, files, checked } = e.target;
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -214,10 +183,30 @@ const Signup = () => {
             [name]: "",
           }));
       }
-
-      await uploadFile(file, name);
+      if (allowedTypes.includes(file.type)) {
+        setFormData({
+          ...formData,
+          [name]: file,
+        });
+        setUploadedFile(URL.createObjectURL(files[0]));
+        if (name === "DEA_License_Copy") setfile1(file ? file.name : "");
+        else setfile2(file ? file.name : "");
+      } else {
+        if (name === "Pharmacy_License_Copy") {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: "upload only jpg, jpeg, or png file",
+          }));
+        }
+        if (name === "DEA_License_Copy") {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: "upload only jpg, jpeg, or png file",
+          }));
+        }
+      }
     }
-    // console.log(formData);
+    console.log(formData);
     if (name === "password") validatePassword(value);
 
     if (activeStep === 1) {
@@ -260,21 +249,19 @@ const Signup = () => {
 
   const validateStep = (step) => {
     let newErrors = {};
-    const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
-
-
     if (step === 0) {
       const regex = /^[a-zA-Z\s']+$/;
       const passwordRegex =
         /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
       if (!formData.First_Name.match(regex))
         newErrors.First_Name = "First name is required.";
-      if (!formData.Last_Name.match(regex))
-        newErrors.Last_Name = "Last name is required.";
+      if (!formData.Last_Name) newErrors.Last_Name = "Last name is required.";
+
+      const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!formData.Email_id.match(regexp))
         newErrors.Email_id = "Email_id is required";
+      const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
 
       if (!formData.Phone_number.match(regphn)) {
         console.log(formData.Phone_number.length, "hmmmm");
@@ -298,7 +285,7 @@ const Signup = () => {
       if (!accountType) newErrors.accountType = "Account Type is required";
 
       if (
-        (userType === "Retail Pharmacy" ||
+        (userType === "Prescription Drug Seller" ||
           userType === "Vendor" ||
           userType === "Normal Customer" ||
           userType !== "General Merchandise Seller") &&
@@ -324,26 +311,14 @@ const Signup = () => {
         userType != "Normal Customer"
       )
         newErrors.dbaName = "DBA name is required.";
-
-      // if (!formData.BusinessPhone && userType != "Normal Customer")
-      //   newErrors.BusinessPhone = "businessphone is required";
-
-      if (!formData.BusinessPhone.match(regphn) && userType != "Normal Customer") {
-        if (formData.BusinessPhone.length === 0) {
-          newErrors.BusinessPhone = "Business PhoneNumber is required";
-        } else if (formData.BusinessPhone.length !== 12)
-          newErrors.BusinessPhone = "Business PhoneNumber must be 10 digits";
-      }
-
+      if (!formData.BusinessPhone && userType != "Normal Customer")
+        newErrors.BusinessPhone = "bussinessphone is required";
       if (!formData.Business_Fax && userType != "Normal Customer")
-        newErrors.Business_Fax = "Business_Fax is required";
-      if (!formData.Business_Email && userType != "Normal Customer")
-        newErrors.Business_Email = " Business_Email is required";
-      else if (
-        !formData.Business_Email.match(regexp) &&
-        userType != "Normal Customer"
-      )
-        newErrors.Business_Email = " Business_Email is required";
+        newErrors.Business_Fax = "Bussiness_Fax is required";
+
+      const regexpns = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!formData.Business_Email.match(regexpns) && userType != "Normal Customer")
+        newErrors.Business_Email = " Bussiness_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required";
       if (!formData.Address1) newErrors.Address1 = "Address is required";
@@ -429,7 +404,6 @@ const Signup = () => {
     }
 
     setErrors(newErrors);
-    console.log(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   const isStepOptional = (step) => step === 1 || step === 2 || step === 3;
@@ -438,56 +412,27 @@ const Signup = () => {
 
   const navigate = useNavigate();
   const [isSubmit, setisSubmit] = useState(true);
-  // console.log("hh", activeStep, usertype);
+  console.log("hh", activeStep, usertype)
 
-  const handleNext = async () => {
-    if (activeStep === 0) {
-      validatePassword(formData.password);
-    }
-
+  const handleNext = () => {
+    if (activeStep === 0) validatePassword(formData.password);
     if (validateStep(activeStep)) {
       setisSubmit(true);
-
       if (activeStep === 2 && userType === "Normal Customer") {
+
         setActiveStep(4);
-        try {
-          const isRegistered = await RegisterBusinessInfo(formData, userType);
-          if (isRegistered) setActiveStep(4); // Move to the next step if API call is successful
-        } catch (error) {
-          setisSubmit(false);
-          return; // Exit the function if there is an error
-        }
+        return;
+      }
+      if (activeStep === 0 && validatePassword(formData.password) == false) {
         return;
       }
 
-      if (activeStep === 0 && !validatePassword(formData.password)) {
-        return;
-      }
-
-      if (activeStep === 1) {
-        try {
-          const isRegistered = await registerUser(formData, userType);
-          if (formData.customerId != "") setActiveStep(2); // Move to the next step if API call is successful
-        } catch (error) {
-          setisSubmit(false);
-          return; // Exit the function if there is an error
-        }
-        return;
-      }
-      if (activeStep === 3 ) {
-        try {
-          const isRegistered = await RegisterBusinessInfo(formData, userType);
-          if (isRegistered) setActiveStep(4); // Move to the next step if API call is successful
-        } catch (error) {
-          setisSubmit(false);
-          return; // Exit the function if there is an error
-        }
-        return;
-      }
-
-      if (activeStep === 1 && userType === "buyer") {
+      if (activeStep === 1 && usertype === "buyer") {
         setActiveStep(3);
-      } else if (activeStep === steps.length) {
+      } else if (
+        activeStep === steps.length
+        // || (activeStep == 1 && userType === "Normal Customer")
+      ) {
         localStorage.removeItem("formData");
         formData.userType = userType;
         localStorage.setItem("formData", JSON.stringify(formData));
@@ -501,107 +446,6 @@ const Signup = () => {
       }
     } else {
       setisSubmit(false);
-    }
-  };
-  const RegisterBusinessInfo = async (formData, userType) => {
-    const requestBody = {
-      customerBusinessInfoId: 0,
-      customerId: formData.customerId,
-      shopName: formData.shopName,
-      dba: formData.dba,
-      legalBusinessName: formData.legalBusinessName,
-      address: formData.address,
-      city: formData.city,
-      state: formData.state,
-      zip: formData.zip,
-      businessPhone: formData.businessPhone,
-      businessFax: formData.businessFax,
-      businessEmail: formData.businessEmail,
-      federalTaxId: formData.federalTaxId,
-      dea: formData.dea,
-      pharmacyLicence: formData.pharmacyLicence,
-      deaExpirationDate: formData.deaExpirationDate,
-      pharmacyLicenseExpirationDate: formData.pharmacyLicenseExpirationDate,
-      deaLicenseCopy: formData.deaLicenseCopy,
-      pharmacyLicenseCopy: formData.pharmacyLicenseCopy,
-      npi: formData.npi,
-      ncpdp: formData.ncpdp,
-    };
-    console.log(requestBody, "h,");
-    try {
-      const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/BusinessInfo",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-
-      if (!response.ok) {
-        console.log(response, "Error Response:");
-        return false;
-      }
-
-      const data = await response.json();
-      console.log("API response:", data);
-      return true;
-    } catch (error) {
-      console.error("Error during API request:", error);
-      throw error;
-    }
-  };
-  const registerUser = async (formData, userType) => {
-    const requestBody = {
-      customerId: "string",
-      firstName: formData.First_Name,
-      lastName: formData.Last_Name,
-      email: formData.Email_id,
-      password: formData.password,
-      mobile: formData.Phone_number,
-      customerTypeId:
-        userType === "Retail Pharmacy"
-          ? 1
-          : userType === "General Merchandise Seller"
-          ? 2
-          : userType === "Vendor"
-          ? 3
-          : 4,
-      accountTypeId:
-        accountType === "Buyer" ? 1 : accountType === "Seller" ? 2 : 3,
-      isUPNMember: formData.upnMember === "true" ? 1 : 0, // Convert to boolean if needed
-      loginOTP: "string",
-      otpExpiryDate: "2024-08-12T13:32:54.749Z",
-    };
-    console.log(requestBody, "h");
-    try {
-      const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-
-      if (!response.ok) {
-        console.log(response, "h,");
-
-        return false;
-      }
-
-      const data = await response.json();
-      console.log("API response:", data);
-      setFormData({ ...formData, customerId: data.customerId });
-      // return data; // Return data for further use if needed
-      return true;
-    } catch (error) {
-      console.error("Error during API request:", error);
-      throw error; // Re-throw the error to be handled in the caller function
     }
   };
 
@@ -637,13 +481,16 @@ const Signup = () => {
     return formattedPhoneNumber;
   };
 
+
   const handleusertypechange = (value) => {
-    console.log("value", value);
+    console.log("value", value)
     setusertype(value);
     if (activeStep === 1) {
       validateStep(activeStep);
     }
   };
+  console.log(usertype);
+  console.log(errors);
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -668,6 +515,7 @@ const Signup = () => {
                   label="Last Name"
                   id="outlined-size-small"
                   name="Last_Name"
+                  type="text"
                   value={formData.Last_Name}
                   onChange={handleInputChange}
                   error={!!errors.Last_Name}
@@ -680,7 +528,7 @@ const Signup = () => {
             <div className="flex flex-row  w-full my-4 justify-evenly">
               <div className="w-[45%] ">
                 <TextField
-                  label="Email ID/User ID"
+                  label="Email ID"
                   id="outlined-size-small"
                   name="Email_id"
                   value={formData.Email_id}
@@ -703,7 +551,7 @@ const Signup = () => {
                   helperText={
                     errors?.Phone_number !== null && formData.Phone_number != 0
                       ? errors.Phone_number
-                      : ""
+                      : "phone number"
                   }
                   className="w-full"
                 />
@@ -722,7 +570,7 @@ const Signup = () => {
                   error={Object.keys(PasswordErros).length > 0}
                   helperText={
                     formData.password.length > 0 &&
-                    Object.keys(PasswordErros).length > 0
+                      Object.keys(PasswordErros).length > 0
                       ? Object.values(PasswordErros).join(", ")
                       : ""
                   }
@@ -762,8 +610,8 @@ const Signup = () => {
                     !formData.confirmPassword
                       ? ""
                       : errors.confirmPassword
-                      ? errors.confirmPassword
-                      : ""
+                        ? errors.confirmPassword
+                        : ""
                   }
                   className="w-full"
                   InputProps={{
@@ -887,11 +735,10 @@ const Signup = () => {
             </div> */}
 
               <div
-                className={`${
-                  userType === "General Merchandise Seller"
+                className={`${userType === "General Merchandise Seller"
                     ? " opacity-50 pointer-events-none"
                     : ""
-                } flex items-center`}
+                  } flex items-center`}
               >
                 <label className="text-gray-700">
                   <span className="text-red-500">*</span>Are you a UPN Member
@@ -924,9 +771,8 @@ const Signup = () => {
               <span>
                 {errors.upnMember && (
                   <span
-                    className={`${
-                      userType === "General Merchandise Seller" ? " hidden" : ""
-                    } text-red-500`}
+                    className={`${userType === "General Merchandise Seller" ? " hidden" : ""
+                      } text-red-500`}
                   >
                     {errors.upnMember}
                   </span>
@@ -939,13 +785,12 @@ const Signup = () => {
         return (
           <div className="grid grid-cols-2 gap-4 align-middle">
             <div
-              className={`${
-                userType === "Vendor" ||
-                userType === "Normal Customer" ||
-                userType === "General Merchandise Seller"
+              className={`${userType === "Vendor" ||
+                  userType === "Normal Customer" ||
+                  userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
-              } w-full`}
+                } w-full`}
             >
               <TextField
                 label="Shop Name"
@@ -964,7 +809,7 @@ const Signup = () => {
             >
               <div>
                 <TextField
-                  label="Legal Business Name"
+                  label="Legal Bussiness Name"
                   id="outlined-size-small"
                   name="legalBusinessName"
                   value={formData.legalBusinessName}
@@ -976,13 +821,12 @@ const Signup = () => {
               </div>
             </div>
             <div
-              className={`${
-                userType === "Vendor" ||
-                userType === "Normal Customer" ||
-                userType === "General Merchandise Seller"
+              className={`${userType === "Vendor" ||
+                  userType === "Normal Customer" ||
+                  userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
-              } `}
+                } `}
             >
               <TextField
                 label="DBA"
@@ -1081,17 +925,13 @@ const Signup = () => {
                   label="Business Phone"
                   id="outlined-size-small"
                   name="BusinessPhone"
-                  value={formatPhoneNumber(formData.BusinessPhone)}
+                  type="phone_number"
+                  value={formData.BusinessPhone}
                   onChange={handleInputChange}
                   error={!!errors.BusinessPhone}
                   placeholder="Enter your business phone"
                   size="small"
                   className="w-[92%]"
-                  helperText={
-                    errors?.BusinessPhone !== null && formData.BusinessPhone != 0
-                      ? errors.BusinessPhone
-                      : ""
-                  }
                 />
               </div>
             </div>
@@ -1101,7 +941,7 @@ const Signup = () => {
             >
               <div>
                 <TextField
-                  label="Business Fax"
+                  label="Bussiness Fax"
                   id="outlined-size-small"
                   name="Business_Fax"
                   value={formData.Business_Fax}
@@ -1118,8 +958,9 @@ const Signup = () => {
             >
               <div>
                 <TextField
-                  label="Business Email"
+                  label="Bussiness Email"
                   id="outlined-size-small"
+                  type="email"
                   name="Business_Email"
                   value={formData.Business_Email}
                   onChange={handleInputChange}
@@ -1180,9 +1021,8 @@ const Signup = () => {
                   tabIndex={2}
                   className="w-full"
                   helperText={
-                    formData.DEA_Expiration_Date != null
-                      ? errors.DEA_Expiration_Date
-                      : ""
+                    formData.DEA_Expiration_Date != null ?
+                      errors.DEA_Expiration_Date : ""
                   }
                 />
               </div>
@@ -1202,10 +1042,10 @@ const Signup = () => {
                   tabIndex={5}
                   className="w-full"
                   helperText={
-                    formData.Pharmacy_Expiration_Date != null
-                      ? errors.Pharmacy_Expiration_Date
-                      : ""
+                    formData.Pharmacy_Expiration_Date != null ?
+                      errors.Pharmacy_Expiration_Date : ""
                   }
+
                 />
               </div>
             </div>
@@ -1287,7 +1127,7 @@ const Signup = () => {
                   tabIndex={8}
                   className="w-full"
 
-                  // style={{ width: "101%" }}
+                // style={{ width: "101%" }}
                 />
               </div>
             </div>
@@ -1331,10 +1171,7 @@ const Signup = () => {
                 />
                 <label className="text-gray-700 ml-1 ">
                   Please Accepts for PharmEtrade{" "}
-                  <Link
-                    onClick={() => setActiveStep(5)}
-                    className="text-red-500"
-                  >
+                  <Link to="/termsandconditions" className="text-red-500">
                     Terms& Conditions{" "}
                   </Link>
                 </label>
@@ -1365,7 +1202,7 @@ const Signup = () => {
               <span className="font-bold text-green-500"> {userType} </span>,
               You are successfully registered.
               <p>
-                If you have any question please contact us.{" "}
+                If you have any question contact us.{" "}
                 <span className="hover:text-green-500 hover:font-semibold text-blue-900 underline">
                   help@pharmetrade.com{" "}
                 </span>
@@ -1377,34 +1214,27 @@ const Signup = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="">
       <div className=" h-screen w-screen">
         <img
           src={background_image}
           alt="Background"
           className="w-[100%] h-[100%] absolute top-0 left-0 z-[-1]"
         />
-        {activeStep == 5 && (
-          <div className="w-full absolute bg-black overflow-scroll flex justify-center">
-            <TermsAndConditions setActiveStep={setActiveStep} />
-          </div>
-        )}
 
         <div className="w-full h-full ">
           <Link to="/">
             <img
-              // src={logoImage}
-              src={logo}
+              src={logoImage}
               alt="Logo"
-              style={{ width: "220px" }}
+              style={{ width: "220px", margin: "5px" }}
             />
           </Link>
           <div className="h-[80%]  flex justify-center items-center">
             <div className="bg-white w-[600px] px-12 py-6 rounded-lg shadow-lg">
               <span
-                className={`text-blue-900 ${
-                  activeStep == 4 ? "hidden" : ""
-                } text-[25px]  text-center font-bold     flex justify-center items-center  `}
+                className={`text-blue-900 ${activeStep == 4 ? "hidden" : ""
+                  } text-[25px]  text-center font-bold     flex justify-center items-center  `}
               >
                 SignUp
               </span>
@@ -1431,9 +1261,8 @@ const Signup = () => {
               <div className="flex justify-around m-2">
                 <button
                   onClick={handleBack}
-                  className={`${activeStep === 0 ? "opacity-50 " : ""} ${
-                    activeStep === 4 ? "hidden" : ""
-                  } bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4 `}
+                  className={`${activeStep === 0 ? "opacity-50 " : ""} ${activeStep === 4 ? "hidden" : ""
+                    } bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4 `}
                 >
                   <img src={back} className="w-6" />
                 </button>
@@ -1460,4 +1289,4 @@ const activeCircleStyle = {
   backgroundColor: "#037d50",
 };
 
-export default Signup;
+export default LayoutJoin;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 
@@ -9,65 +9,87 @@ import filter from "../../../assets/Filter_icon.png";
 
 const AddProducts = () => {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState({
+    editProduct: false,
+  });
+  const [editProduct,seteditProduct] = useState(null);
   const stats = [
     { label: "Total Product", value: 150, percentage: 75 },
     { label: "Total Approved Product", value: 120, percentage: 60 },
     { label: "Total Enabled Product", value: 90, percentage: -11 },
     { label: "Price", value: "$2000", percentage: 50 },
   ];
-
-  const products = [
-    // Sample data
-    {
-      id: 1,
-      thumbnail: "DO62D23",
-      name: "Product 1",
-      attributeSet: "Set 1",
-      productStatus: "Available",
-      status: "Active",
-      type: "Type A",
-      sku: "54447743",
-      qty: "1",
-      qtySold: "0",
-      qtyconfirm: "0",
-      qtyPending: "0",
-      price: "$76.2",
-      created: "Sep 2021",
-      visibility: "Catalog",
-      websites: "Main Website",
-      Action: "Edit",
-    },
-    {
-      id: 2,
-      thumbnail: "DO62D23",
-      name: "Product 2",
-      attributeSet: "Set 2",
-      productStatus: "Out of Stock",
-      status: "Inactive",
-      type: "Type B",
-      sku: "54447743",
-      qty: "2",
-      qtySold: "1",
-      qtyconfirm: "0",
-      qtyPending: "1",
-      price: "$62.99",
-      created: "Sep 8 2021",
-      visibility: "Catalog",
-      websites: "Main Website",
-      Action: "Edit",
-    },
-  ];
-
-  const [showPopup, setShowPopup] = useState({
-    editProduct: false,
-  });
+  useEffect(() => {
+    fetch(
+      "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/ProductFilter/GetAllProducts"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setProducts(data.productfilter);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+  // console.log(products);
+  // const products = [
+  //   // Sample data
+  //   {
+  //     id: 1,
+  //     thumbnail: "DO62D23",
+  //     name: "Product 1",
+  //     attributeSet: "Set 1",
+  //     productStatus: "Available",
+  //     status: "Active",
+  //     type: "Type A",
+  //     sku: "54447743",
+  //     qty: "1",
+  //     qtySold: "0",
+  //     qtyconfirm: "0",
+  //     qtyPending: "0",
+  //     price: "$76.2",
+  //     created: "Sep 2021",
+  //     visibility: "Catalog",
+  //     websites: "Main Website",
+  //     Action: "Edit",
+  //   },
+  //   {
+  //     id: 2,
+  //     thumbnail: "DO62D23",
+  //     name: "Product 2",
+  //     attributeSet: "Set 2",
+  //     productStatus: "Out of Stock",
+  //     status: "Inactive",
+  //     type: "Type B",
+  //     sku: "54447743",
+  //     qty: "2",
+  //     qtySold: "1",
+  //     qtyconfirm: "0",
+  //     qtyPending: "1",
+  //     price: "$62.99",
+  //     created: "Sep 8 2021",
+  //     visibility: "Catalog",
+  //     websites: "Main Website",
+  //     Action: "Edit",
+  //   },
+  // ];
 
   const handleAddNewProductClick = () => {
     navigate("/seller/add-single-product");
   };
 
-  const handleEditProduct = () => {
-    setShowPopup({ ...showPopup, editProduct: true });
+  const handleEditProduct = (product) => {
+    navigate(`/seller/edit-single-product/${product.addproductID}`)
   };
 
   const handleClosePopup = () => {
@@ -75,7 +97,7 @@ const AddProducts = () => {
   };
 
   return (
-    <div className="relative bg-gray-100 w-full h-full flex justify-center items-center">
+    <div className="relative  bg-gray-100 w-full h-full flex justify-center items-center">
       <div className="w-[95%] h-full mt-4">
         <div className="flex justify-between">
           <h2 className="text-[22px] text-blue-900 font-semibold">
@@ -137,54 +159,58 @@ const AddProducts = () => {
             </select>
           </div>
 
-          <div className="border rounded-md bg-white text-[15px]  mt-4">
-            <table className="w-full">
-              <thead className="bg-blue-900 text-white">
-                <tr className="border-b-2">
-                  <th className=" px-4 py-2 text-left">Product ID</th>
-                  <th className="px-4 py-2 text-left">Thumbnail</th>
-                  <th className="px-4 py-2 text-left">Name</th>
-                  <th className="px-4 py-2 text-left">Attribute Set</th>
-                  <th className="px-4 py-2 text-left">Product Status</th>
-                  <th className="px-4 py-2 text-left">Status</th>
-                  <th className="px-4 py-2 text-left">Type</th>
-                  <th className="px-4 py-2 text-left">SKU</th>
-                  <th className="px-4 py-2 text-left">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product) => (
-                  <tr key={product.id} className="border-b">
-                    <td className="px-4 py-2">{product.id}</td>
-                    <td className="px-4 py-2">{product.thumbnail}</td>
-                    <td className="px-4 py-2">{product.name}</td>
-                    <td className="px-4 py-2">{product.attributeSet}</td>
-                    <td className="px-4 py-2">{product.productStatus}</td>
-                    <td className="px-4 py-2">{product.status}</td>
-                    <td className="px-4 py-2">{product.type}</td>
-                    <td className="px-4 py-2">{product.sku}</td>
-                    <td
-                      className="px-4 py-2 cursor-pointer"
-                      onClick={handleEditProduct}
-                    >
-                      {product.Action}
-                    </td>
+          <div className="border rounded-md bg-white text-[15px] mt-4">
+            {loading && <div>Loading...</div>}
+            {error && <div>Error: {error.message}</div>}
+            {!loading && !error && (
+              <table className="w-full">
+                <thead className="bg-blue-900 text-white">
+                  <tr className="border-b-2">
+                    <th className=" px-4 py-2 text-left">Product ID</th>
+                    <th className="px-4 py-2 text-left">Category Specification</th>
+                    <th className="px-4 py-2 text-left">Product Name</th>
+                    <th className="px-4 py-2 text-left">Product Type</th>
+                    <th className="px-4 py-2 text-left">Product Status</th>
+                    <th className="px-4 py-2 text-left">Manufacturer</th>
+                    <th className="px-4 py-2 text-left">Type</th>
+                    <th className="px-4 py-2 text-left">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {products.map((product) => (
+                    <tr key={product.id} className="border-b">
+                      <td className="px-4 py-2">{product.addproductID}</td>
+                      <td className="px-4 py-2">{product.productCategory}</td>
+                      <td className="px-4 py-2">{product.productName}</td>
+                      <td className="px-4 py-2">{product.attributeSet}</td>
+                      <td className="px-4 py-2">{product.packCondition}</td>
+                      <td className="px-4 py-2">{product.status}</td>
+                      <td className="px-4 py-2">{product.packType}</td>
+                      <td
+                        className="px-4 py-2 cursor-pointer"
+
+                        onClick={()=>handleEditProduct(product)}
+                      >
+                        
+                        Edit
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>
-      {showPopup.editProduct && (
+      {/* {showPopup.editProduct && (
         <div className="absolute inset-0 flex  flex-col bg-gray-100">
           <button onClick={handleClosePopup} className=" flex justify-end mr-4">
             Close
           </button>
 
-          <EditFields />
+          <EditFields product={editProduct} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
