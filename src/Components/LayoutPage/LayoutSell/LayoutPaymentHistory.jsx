@@ -4,7 +4,7 @@ import filter from "../../../assets/Filter_icon.png";
 import share from '../../../assets/upload1.png'
 
 
-function LayoutPayouts() {
+function LayoutPaymentHistory() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("all");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -205,4 +205,4 @@ function LayoutPayouts() {
   );
 }
 
-export default LayoutPayouts;
+export default LayoutPaymentHistory;

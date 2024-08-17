@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LayoutAssignProductList = () => {
+const LayoutSalesHistory = () => {
   return (
     <div className=" w-full h-full flex justify-center items-center">
     <div className='w-[95%] h-full mt-8'>
@@ -12,4 +12,4 @@ const LayoutAssignProductList = () => {
 </div>
   )
 }
-export default LayoutAssignProductList;
+export default LayoutSalesHistory;

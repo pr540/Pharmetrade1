@@ -75,17 +75,24 @@ import LayoutJoin from "./Components/LayoutPage/LayoutJoin/LayoutJoin";
 import LayoutSell from "./Components/LayoutPage/LayoutSell/LayoutSell";
 import LayoutWishlist from "./Components/LayoutPage/LayoutBuy/LayoutWishlist";
 import LayoutOrderlist from "./Components/LayoutPage/LayoutBuy/LayoutOrderlist";
-import LayoutReturn from "./Components/LayoutPage/LayoutBuy/LayoutReturn";
+// import LayoutReturn from "./Components/LayoutPage/LayoutBuy/LayoutReturn";
 import LayoutSidebar from "./Components/LayoutPage/LayoutStatic/LayoutSidebar";
 import LayoutaddProduct from "./Components/LayoutPage/LayoutSell/LayoutaddProduct";
 import LayoutSellOrders from "./Components/LayoutPage/LayoutSell/LayoutSellOrders";
 import LayoutCustomers from "./Components/LayoutPage/LayoutSell/LayoutCustomers";
 import EditFields from "./Components/Seller/Components/EditFields";
-import LayoutPayouts from "./Components/LayoutPage/LayoutSell/LayoutPayouts";
+import LayoutPayouts from "./Components/LayoutPage/LayoutSell/LayoutPaymentHistory";
 import LayoutEarnings from "./Components/LayoutPage/LayoutSell/LayoutEarnings";
-import LayoutReview from "./Components/LayoutPage/LayoutSell/LayoutReview";
-import LayoutAssignProduct from "./Components/LayoutPage/LayoutSell/LayoutAssignProducts";
-import LayoutAssignProductList from "./Components/LayoutPage/LayoutSell/LayoutAssignProductList";
+import LayoutReview from "./Components/LayoutPage/LayoutSell/LayoutShippingDetails";
+import LayoutAssignProduct from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
+import LayoutAssignProductList from "./Components/LayoutPage/LayoutSell/LayoutSalesHistory";
+import LayoutAddBulkProduct from "./Components/LayoutPage/LayoutSell/LayoutAddBulkProduct";
+import LayoutPostingProducts from "./Components/LayoutPage/LayoutSell/LayoutPostingProducts";
+import LayoutSalesHistory from "./Components/LayoutPage/LayoutSell/LayoutSalesHistory";
+import LayoutPaymentHistory from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
+import LayoutShippingDetails from "./Components/LayoutPage/LayoutSell/LayoutShippingDetails";
+import LayoutRequestForQuote from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
+import LayoutSellReturn from "./Components/LayoutPage/LayoutSell/LayoutSellReturn";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -250,20 +257,24 @@ function App() {
           <Route path='/layout' element={<LayoutDashboard />} />
           <Route path='/layoutsell' element={<LayoutSell />} />
           <Route path='/layout/addproduct' element={<LayoutaddProduct />} />
+          <Route path='/layout/addbulkproduct' element={<LayoutAddBulkProduct />} />
+          <Route path='/layout/postingproducts' element={<LayoutPostingProducts/>}/>
           <Route path='/layout/sellorders' element={<LayoutSellOrders />} />
           <Route path='/layout/sellcustomers' element={<LayoutCustomers />} />
-          <Route path='/layout/sellpayouts' element={<LayoutPayouts />} />
+          <Route path='/layout/sellpayouts' element={<LayoutPaymentHistory />} />
           <Route path='/layout/sellearnings' element={<LayoutEarnings />} />
-          <Route path='/layout/sellreview' element={<LayoutReview />} />
-          <Route path='/layout/sellreturn' element={<LayoutReturn />} />
-          <Route path='/layout/sellassignproducts' element={<LayoutAssignProduct />} />
-          <Route path='/layout/sellassignproductlist' element={<LayoutAssignProductList />} />
+          <Route path='/layout/sellreview' element={<LayoutShippingDetails/>} />
+          <Route path='/layout/sellreturn' element={<LayoutSellReturn />} />
+          <Route path='/layout/sellassignproducts' element={<LayoutRequestForQuote/>} />
+          <Route path='/layout/sellassignproductlist' element={<LayoutSalesHistory />} />
           <Route path='/layout/layoutbuy' element={<LayoutBuy />} />
           <Route path='/layoutJoin' element={<LayoutJoin />} />
           <Route path='/layout/layoutbid' element={<LayoutBid />} />
-          <Route path='/layout/layoutwishlist' element={<LayoutWishlist />} />
+          <Route path='/layout/layoutwishlist' element={<LayoutWishlist 
+                wishItems={wishItems}
+                setWishItems={setWishItems} />} />
           <Route path='/layout/layoutorderlist' element={<LayoutOrderlist/>} />
-          <Route path='/layout/layoutreturn' element={<LayoutReturn />} />
+          {/* <Route path='/layout/layoutreturn' element={<LayoutReturn />} /> */}
           <Route path="/layoutsidebar" element={<LayoutSidebar/>}/>
         </Route>
 

@@ -5,12 +5,12 @@ import { FiPlus } from "react-icons/fi";
 import filter from "../../../assets/Filter_icon.png";
 
 
-const LayoutReview = () => {
+const LayoutSellReturn = () => {
   const stats = [
-    { label: "Review Trends", value: 150, percentage: 75 },
-    { label: "Positive Review", value: 120, percentage: 60 },
-    { label: "Negative Review", value: 90, percentage: -11 },
-    { label: "Neutral", value: 20, percentage: 50 },
+    { label: "Return Requested", value: 150, percentage: 75 },
+    { label: "Return Approved", value: 120, percentage: 60 },
+    { label: "Return PickedUp", value: 90, percentage: -11 },
+    { label: "Refund Processed", value: 20, percentage: 50 },
   ];
 
   const [showPopup, setShowPopup] = useState(false);
@@ -32,20 +32,20 @@ const LayoutReview = () => {
   const records = [];
 
   return (
-    <div className="relative bg-gray-100 w-full h-full flex justify-center items-center ">
+    <div className="relative w-full h-full flex justify-center items-center ">
       <div className=" w-[95%] h-full mt-4">
         <div className=" flex justify-between">
           <p className="text-[22px] text-blue-900 font-semibold">
             {" "}
-            Marketplace Review{" "}
+            Returns{" "}
           </p>
-          <div
-            className="flex items-center bg-blue-900 p-2 rounded-lg text-white text-[15px] cursor-pointer"
+          {/* <div
+            className="flex items-center bg-blue-900 p-2 rounded-lg text-white text-[20px] cursor-pointer"
             onClick={handleAddNewProductClick}
           >
             <FiPlus />
             <button className="ml-1"> Add Review</button>
-          </div>
+          </div> */}
 
           {showDetailPopup && (
             <div className="absolute inset-0 flex items-center justify-center overflow-scroll bg-gray-100 ">
@@ -54,7 +54,7 @@ const LayoutReview = () => {
           )}
         </div>
 
-        <div className="flex my-4 gap-2 flex-wrap justify-normal items-center p-4">
+        <div className="flex my-4 flex-wrap gap-2 justify-normal items-center p-4">
           {stats.map((stat, index) => (
             <div
               key={index}
@@ -62,7 +62,7 @@ const LayoutReview = () => {
             >
               <div className="w-full">
                 <div className="flex justify-between items-center">
-                  <div className="text-[15px] text-gray-700 font-normal">
+                  <div className="text-[17px] text-gray-700 font-normal">
                     {stat.label}
                   </div>
                   <div className="menu-icon">
@@ -76,8 +76,7 @@ const LayoutReview = () => {
                       stat.percentage > 0 ? "bg-green-400" : "bg-red-400"
                     }`}
                   >
-                    {stat.percentage > 0 ? "↑" : "↓"}{" "}
-                    {Math.abs(stat.percentage)}%
+                    {stat.percentage > 0 ? "↑" : "↓"} {Math.abs(stat.percentage)}%
                   </div>
                 </div>
               </div>
@@ -86,11 +85,10 @@ const LayoutReview = () => {
         </div>
         <div className="w-full">
           <div className="flex justify-end">
-            <button className="bg-green-300 p-2 h-7 rounded-md flex items-center">
+          <button className="bg-green-300 p-2 h-7 rounded-md flex items-center">
               <img src={filter} className="w-6 h-6" />
               Filter
-            </button>{" "}
-            <select className="ml-2">
+            </button>            <select className="ml-2">
               <option>Columns</option>
             </select>
           </div>
@@ -99,24 +97,12 @@ const LayoutReview = () => {
             <table className="rounded-lg bg-white w-full">
               <thead className="bg-blue-900 text-white">
                 <tr>
-                  <th className="border-b-2 py-4 min-w-36 pl-4 text-left">
-                    ID
-                  </th>
-                  <th className="border-b-2 min-w-36 text-left">
-                    Price Rating
-                  </th>
-                  <th className="border-b-2 min-w-36 text-left">
-                    Value Rating
-                  </th>
-                  <th className="border-b-2 min-w-36 text-left">
-                    Quality Rating
-                  </th>
-                  <th className="border-b-2 min-w-36 text-left">Feed Review</th>
-                  <th className="border-b-2 min-w-36 text-left">
-                    Customer Name
-                  </th>
-                  <th className="border-b-2 min-w-36 text-left">Status</th>
-                  <th className="border-b-2 min-w-36 text-left">Created</th>
+                  <th className="border-b-2 py-4 min-w-36 pl-4 text-left">Created At</th>
+                  <th className="border-b-2 min-w-36 text-left">RMA Id</th>
+                  <th className="border-b-2 min-w-36 text-left">Order Ref</th>
+                  <th className="border-b-2 min-w-36 text-left">Customer Name</th>
+                  <th className="border-b-2 min-w-36 text-left">RMA Status</th>
+                  <th className="border-b-2 min-w-36 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,33 +116,15 @@ const LayoutReview = () => {
                   records.map((record, index) => (
                     <tr key={index}>
                       {/* Replace these with actual record fields */}
-                      <td className="border-b-2 py-4 min-w-36 pl-4 text-left">
-                        {record.id}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.priceRating}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.valueRating}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.qualityRating}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.feedReview}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.customerName}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.status}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.created}
-                      </td>
-                      <td className="border-b-2 min-w-36 text-left">
-                        {record.action}
-                      </td>
+                      <td className="border-b-2 py-4 min-w-36 pl-4 text-left">{record.id}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.priceRating}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.valueRating}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.qualityRating}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.feedReview}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.customerName}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.status}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.created}</td>
+                      <td className="border-b-2 min-w-36 text-left">{record.action}</td>
                     </tr>
                   ))
                 )}
@@ -169,4 +137,4 @@ const LayoutReview = () => {
   );
 };
 
-export default LayoutReview;
+export default LayoutSellReturn;

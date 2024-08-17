@@ -1,6 +1,6 @@
 import React from "react";
 
-const LayoutAssignProduct = () => {
+const LayoutRequestForQuote = () => {
   return (
     <div className=" w-full h-full flex justify-center items-center">
       <div className="w-[95%] h-full mt-4">
@@ -29,4 +29,4 @@ const LayoutAssignProduct = () => {
   );
 };
 
-export default LayoutAssignProduct;
+export default LayoutRequestForQuote;
