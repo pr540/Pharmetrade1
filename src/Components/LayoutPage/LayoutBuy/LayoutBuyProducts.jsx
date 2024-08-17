@@ -550,6 +550,94 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 
   return (
     <div className="w-[98%] mt-4 ml-4 h-full overflow-y-scroll">
+            <div className=" bg-blue-900 mt-2 ">
+        {/* <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1> */}
+        <div className="flex justify-between m-2 cursor-pointer h-20 items-center ">
+
+          <div className="flex gap-4 ">
+            <div >
+            <select className="h-9 p-1 border rounded-lg  ">
+              <option>Categories</option>
+              <option>
+                <input type=" checkbox"/>
+                Prescription Categories
+              </option>
+            </select>
+            </div>
+
+            <div>
+            <select className="h-9 p-1 border rounded-lg  ">
+              <option>Brands</option>
+              <option>
+                <input type=" checkbox"/>
+                Prescription Brand
+              </option>
+            </select>
+            </div>
+
+            <div>
+            <select className="h-9 p-1 border rounded-lg  ">
+              <option>Packing</option>
+              <option>
+                <input type=" checkbox"/>
+                (EA)
+              </option>
+            </select>
+            </div>
+
+            <div>
+            <select className="h-9 p-1 border rounded-lg  ">
+              <option>Form</option>
+              <option>
+                <input type=" checkbox"/>
+                
+              </option>
+            </select>
+            </div>
+
+            <div>
+            <select className="h-9  p-1 border rounded-lg ">
+              <option>Size</option>
+              <option>
+                <input type=" checkbox"/>
+                Others
+              </option>
+            </select>
+            </div>
+            <div>
+            <select className="h-9 p-1 border rounded-lg  ">
+              <option>Price</option>
+              <option>
+                <div>
+                <input type=" checkbox"/>
+                
+                </div>
+              </option>
+            </select>
+            </div>
+          </div>
+          <div className="flex gap-1 ">
+            {/* <img src={filter} className="w-5 h-4" />
+            <p className="text-white">Filter</p> */}
+            <select className="bg-white h-9 px-2 p-1 cursor-pointer text-black border rounded-lg items-center justify-center">
+              <option>Discounted Price Low to High</option>
+              <option>Discounted Price High to Low</option>
+              <option>Posted date : Old to Latest</option>
+              <option>Show Prescription Products First</option>
+              <option>Show OTC Products First</option>
+              <option>Discount Percentage Low to High</option>
+              <option>Discounted Percentage High to Low</option>
+              <option>Expiry date : Short to Long</option>
+              <option>Expiry date : Long to Short</option>
+              <option>Name : Ascending (A-Z)</option>
+              <option>Name : Decending (Z-A)</option>
+              <option>Strength Low to High</option>
+              <option>Strength Hign to Low</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
       <div className=" flex justify-between bg-blue-900 p-1 rounded-lg">
         <div className="text-2xl text-white"> Rx Drug</div>
 

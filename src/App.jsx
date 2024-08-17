@@ -87,12 +87,13 @@ import LayoutReview from "./Components/LayoutPage/LayoutSell/LayoutShippingDetai
 import LayoutAssignProduct from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
 import LayoutAssignProductList from "./Components/LayoutPage/LayoutSell/LayoutSalesHistory";
 import LayoutAddBulkProduct from "./Components/LayoutPage/LayoutSell/LayoutAddBulkProduct";
-import LayoutPostingProducts from "./Components/LayoutPage/LayoutSell/LayoutPostingProducts";
+import LayoutPostingProducts from "./Components/LayoutPage/LayoutSell/LayoutProducts/LayoutPostingProducts";
 import LayoutSalesHistory from "./Components/LayoutPage/LayoutSell/LayoutSalesHistory";
 import LayoutPaymentHistory from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
 import LayoutShippingDetails from "./Components/LayoutPage/LayoutSell/LayoutShippingDetails";
 import LayoutRequestForQuote from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
 import LayoutSellReturn from "./Components/LayoutPage/LayoutSell/LayoutSellReturn";
+import LayoutEditProduct from "./Components/LayoutPage/LayoutSell/LayoutProducts/LayouEditProduct";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -253,22 +254,23 @@ function App() {
 
         
 
-        <Route path='/layout' element={<LayoutPanel />}>
+        <Route path='/layout' element={<LayoutPanel cartItems={cartItems}/>}>
           <Route path='/layout' element={<LayoutDashboard />} />
           <Route path='/layoutsell' element={<LayoutSell />} />
           <Route path='/layout/addproduct' element={<LayoutaddProduct />} />
           <Route path='/layout/addbulkproduct' element={<LayoutAddBulkProduct />} />
           <Route path='/layout/postingproducts' element={<LayoutPostingProducts/>}/>
+          <Route path="/layout/layout-edit-single-product/:addproductID" element={<LayoutEditProduct />} />
           <Route path='/layout/sellorders' element={<LayoutSellOrders />} />
           <Route path='/layout/sellcustomers' element={<LayoutCustomers />} />
-          <Route path='/layout/sellpayouts' element={<LayoutPaymentHistory />} />
+          <Route path='/layout/sellpaymenthistory' element={<LayoutPaymentHistory/>} />
           <Route path='/layout/sellearnings' element={<LayoutEarnings />} />
           <Route path='/layout/sellreview' element={<LayoutShippingDetails/>} />
           <Route path='/layout/sellreturn' element={<LayoutSellReturn />} />
           <Route path='/layout/sellassignproducts' element={<LayoutRequestForQuote/>} />
           <Route path='/layout/sellassignproductlist' element={<LayoutSalesHistory />} />
           <Route path='/layout/layoutbuy' element={<LayoutBuy />} />
-          <Route path='/layoutJoin' element={<LayoutJoin />} />
+          <Route path='/layout/layoutjoin' element={<Signup />} />
           <Route path='/layout/layoutbid' element={<LayoutBid />} />
           <Route path='/layout/layoutwishlist' element={<LayoutWishlist 
                 wishItems={wishItems}
