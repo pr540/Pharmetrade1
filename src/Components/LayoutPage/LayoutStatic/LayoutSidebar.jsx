@@ -145,6 +145,16 @@ function LayoutSidebar() {
             icon: Dashboard,
             to: '/layout/layoutbid',
         },
+        {
+            label: 'Setting',
+            icon: Dashboard,
+            to: '/layout/layoutbid',
+        },
+        {
+            label: 'FAQs',
+            icon: Dashboard,
+            to: '/faqs',
+        },
     ];
 
     return (
