@@ -285,7 +285,7 @@ const LayoutNav = ({ cartItems }) => {
   ];
 
   const iconItems = [
-    { icon: bid, text: "OTC Products" },
+    { icon: OTCProd, text: "OTC Products" },
     { icon: deals, text: "DEALS" },
     { icon: buyagain, text: "Buy Again" },
     { icon: OTCProd, text: "Notification" },
