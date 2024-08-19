@@ -36,6 +36,7 @@ function LayoutSidebar() {
   const localData = JSON.parse(localStorage.getItem("login"));
   const customerId = localData?.userId;
   const [userDetails, setUserDetails] = useState(null);
+  const [navItems,setnavItems]=useState([]);
   useEffect(() => {
     if (customerId) {
       if (customerId.length > 1) fetchUserDetails(customerId);
@@ -48,12 +49,26 @@ function LayoutSidebar() {
         `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Get?customerId=${customerId}`
       );
       const data = await response.json();
+      if(data)
+      {
+        setUserDetails(data);
+        const menuResponse = await fetch(
+            `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?accountTypeId=${data.customerDetails.accountTypeId}`
+          );
+          const menuData = await menuResponse.json();
+          if(menuData)
+          {
+            const navItems = buildNavItems(menuData.result);
+            setnavItems(navItems);
+
+          }
+
+      }
       // if (data.statusCode === 200 && data.loginStatus === 'Success') {
       //     console.log(userDetails);
       // } else {
       //     console.error('Failed to fetch user details:', data.message);
       // }
-      setUserDetails(data);
 
       console.log(userDetails);
     } catch (error) {
@@ -84,110 +99,143 @@ function LayoutSidebar() {
       Shop_name: "Valley Pharmacy",
     }
   ;
-
-  const navItems = [
-    {
-      label: "Dashboard",
-      icon: Dashboard,
-      to: "/layout",
-    },
-    {
-      label: "Buy",
-      icon: Buy,
-      to: null, // no direct link, used for dropdown
-      children: [
-        { label: "Buy Products", to: "/layout/layoutbuy", icon: Dashboard },
-        { label: "Wishlist", to: "/layout/layoutwishlist", icon: Wishlist },
-        { label: "OrderList", to: "/layout/layoutorderlist", icon: OrderList },
-      ],
-    },
-    {
-      label: "Sell",
-      icon: Sell,
-      to: null, // no direct link, used for dropdown
-      children: [
-        { label: "Add Product", to: "/layout/addproduct", icon: AddProduct },
-        {
-          label: "Add Bulk Product",
-          to: "/layout/addbulkproduct",
-          icon: BulkProducts,
-        },
-        {
-          label: "Posting Products",
-          to: "/layout/postingproducts",
-          icon: PostingProduct,
-        },
-        { label: "Orders", to: "/layout/sellorders", icon: Orders },
-        { label: "Customers", to: "/layout/sellcustomers", icon: Customers },
-        {
-          label: "Payment History",
-          to: "/layout/sellpaymenthistory",
-          icon: PaymentHistory,
-        },
-        { label: "Earnings", to: "/layout/sellearnings", icon: Earnings },
-        { label: "Returns", to: "/layout/sellreturn", icon: Returns },
-        {
-          label: "Sales History",
-          to: "/layout/sellassignproductlist",
-          icon: SalesHistory,
-        },
-        {
-          label: "Shipping Details",
-          icon: ShippingDetails,
-          to: null, // no direct link, used for sub-dropdown
-          children: [
-            {
-              label: "UPS Shipping",
-              to: "/layout/ups-shipping",
-              icon: UpsShipping,
-            },
-            {
-              label: "FedEx Shipping",
-              to: "/layout/fedex-shipping",
-              icon: FedExShipping,
-            },
-          ],
-        },
-        {
-          label: "Request for Quote",
-          icon: RequestForQuote,
-          to: null, // no direct link, used for sub-dropdown
-          children: [
-            {
-              label: "All Requested Quotes",
-              to: "/layout/requestedquote",
-              icon: AllRequestedQuotes,
-            },
-            {
-              label: "All Quoted Products",
-              to: "/layout/quotedproducts",
-              icon: AllQuotedProducts,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Join",
-      icon: Dashboard,
-      to: "/signup",
-    },
-    {
-      label: "Bid",
-      icon: Bid,
-      to: "/layout/layoutbid",
-    },
-    {
-      label: "Setting",
-      icon: Setting,
-      to: "/layout/layoutbid",
-    },
-    {
-      label: "FAQs",
-      icon: Faqs,
-      to: "/faqs",
-    },
-  ];
+  const buildNavItems = (menuItems) => {
+    // Step 1: Organize menu items by their parent property
+    const menuMap = {};
+    menuItems.forEach(item => {
+      const { parent } = item;
+      if (!menuMap[parent]) {
+        menuMap[parent] = [];
+      }
+      menuMap[parent].push(item);
+    });
+  
+    // Step 2: Function to recursively build the navigation structure
+    const createNavItem = (menuItem) => {
+      const children = menuMap[menuItem.menuId] || [];
+  
+      return {
+        label: menuItem.menuName,
+        icon: Dashboard, // Replace with appropriate icons or map menuName to icons
+        to: menuItem.navigateUrl || null,
+        ...(children.length > 0 && { children: children.map(createNavItem) }),
+      };
+    };
+  
+    // Step 3: Build navItems from top-level menu items
+    const navItems = menuMap[0].map(createNavItem);
+    
+    return navItems;
+  };
+  
+//   const menuItems = [ /* Your menu items array */ ];
+//   const navItems = buildNavItems(menuItems);
+  
+//   console.log(navItems);
+  
+//   const navItems = [
+//     {
+//       label: "Dashboard",
+//       icon: Dashboard,
+//       to: "/layout",
+//     },
+//     {
+//       label: "Buy",
+//       icon: Buy,
+//       to: null, // no direct link, used for dropdown
+//       children: [
+//         { label: "Buy Products", to: "/layout/layoutbuy", icon: Dashboard },
+//         { label: "Wishlist", to: "/layout/layoutwishlist", icon: Wishlist },
+//         { label: "OrderList", to: "/layout/layoutorderlist", icon: OrderList },
+//       ],
+//     },
+//     {
+//       label: "Sell",
+//       icon: Sell,
+//       to: null, // no direct link, used for dropdown
+//       children: [
+//         { label: "Add Product", to: "/layout/addproduct", icon: AddProduct },
+//         {
+//           label: "Add Bulk Product",
+//           to: "/layout/addbulkproduct",
+//           icon: BulkProducts,
+//         },
+//         {
+//           label: "Posting Products",
+//           to: "/layout/postingproducts",
+//           icon: PostingProduct,
+//         },
+//         { label: "Orders", to: "/layout/sellorders", icon: Orders },
+//         { label: "Customers", to: "/layout/sellcustomers", icon: Customers },
+//         {
+//           label: "Payment History",
+//           to: "/layout/sellpaymenthistory",
+//           icon: PaymentHistory,
+//         },
+//         { label: "Earnings", to: "/layout/sellearnings", icon: Earnings },
+//         { label: "Returns", to: "/layout/sellreturn", icon: Returns },
+//         {
+//           label: "Sales History",
+//           to: "/layout/sellassignproductlist",
+//           icon: SalesHistory,
+//         },
+//         {
+//           label: "Shipping Details",
+//           icon: ShippingDetails,
+//           to: null, // no direct link, used for sub-dropdown
+//           children: [
+//             {
+//               label: "UPS Shipping",
+//               to: "/layout/ups-shipping",
+//               icon: UpsShipping,
+//             },
+//             {
+//               label: "FedEx Shipping",
+//               to: "/layout/fedex-shipping",
+//               icon: FedExShipping,
+//             },
+//           ],
+//         },
+//         {
+//           label: "Request for Quote",
+//           icon: RequestForQuote,
+//           to: null, // no direct link, used for sub-dropdown
+//           children: [
+//             {
+//               label: "All Requested Quotes",
+//               to: "/layout/requestedquote",
+//               icon: AllRequestedQuotes,
+//             },
+//             {
+//               label: "All Quoted Products",
+//               to: "/layout/quotedproducts",
+//               icon: AllQuotedProducts,
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       label: "Join",
+//       icon: Dashboard,
+//       to: "/signup",
+//     },
+//     {
+//       label: "Bid",
+//       icon: Bid,
+//       to: "/layout/layoutbid",
+//     },
+//     {
+//       label: "Setting",
+//       icon: Setting,
+//       to: "/layout/layoutbid",
+//     },
+//     {
+//       label: "FAQs",
+//       icon: Faqs,
+//       to: "/faqs",
+//     },
+//   ];
 
   return (
     <div

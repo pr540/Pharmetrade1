@@ -45,7 +45,7 @@ const LayoutPostingProducts= () => {
         return response.json();
       })
       .then((data) => {
-        setProducts(data.productfilter);
+        setProducts(data);
         setLoading(false);
       })
       .catch((error) => {
