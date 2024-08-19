@@ -94,6 +94,11 @@ import LayoutShippingDetails from "./Components/LayoutPage/LayoutSell/LayoutShip
 import LayoutRequestForQuote from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
 import LayoutSellReturn from "./Components/LayoutPage/LayoutSell/LayoutSellReturn";
 import LayoutEditProduct from "./Components/LayoutPage/LayoutSell/LayoutProducts/LayouEditProduct";
+import LayoutUpsShipping from "./Components/LayoutPage/LayoutSell/LayoutUpsShipping";
+import LayoutFedexshipping from "./Components/LayoutPage/LayoutSell/LayoutFedexshipping";
+import LayoutAllQuotesProducts from "./Components/LayoutPage/LayoutSell/LayoutAllQuotesProducts";
+import LayoutAllrequestedQuote from "./Components/LayoutPage/LayoutSell/LayoutAllrequestedQuote";
+import LayoutSetting from "./Components/LayoutPage/LayoutSetting/LayoutSetting";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -267,12 +272,17 @@ function App() {
           <Route path="/layout/layout-edit-single-product/:addproductID" element={<LayoutEditProduct />} />
           <Route path='/layout/sellorders' element={<LayoutSellOrders />} />
           <Route path='/layout/sellcustomers' element={<LayoutCustomers />} />
+          <Route path='/layout/ups-shipping' element={<LayoutUpsShipping/>} />
+          <Route path='/layout/fedex-shipping' element={<LayoutFedexshipping />} />
+          <Route path='/layout/requestedquote' element={<LayoutAllrequestedQuote/>} />
+          <Route path='/layout/quotedproducts' element={<LayoutAllQuotesProducts />} />
           <Route path='/layout/sellpaymenthistory' element={<LayoutPaymentHistory/>} />
           <Route path='/layout/sellearnings' element={<LayoutEarnings />} />
           <Route path='/layout/sellreview' element={<LayoutShippingDetails/>} />
           <Route path='/layout/sellreturn' element={<LayoutSellReturn />} />
           <Route path='/layout/sellassignproducts' element={<LayoutRequestForQuote/>} />
-          <Route path='/layout/sellassignproductlist' element={<LayoutSalesHistory />} />
+          <Route path='/layout/saleshistory' element={<LayoutSalesHistory />} />
+          <Route path='/layout/layoutsetting' element={<LayoutSetting />} />
           <Route path='/layout/layoutbuy' element={<LayoutBuy />} />
           <Route path='/layout/layoutjoin' element={<Signup />} />
           <Route path='/layout/layoutbid' element={<LayoutBid />} />

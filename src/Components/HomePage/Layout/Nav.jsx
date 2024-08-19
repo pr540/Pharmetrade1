@@ -397,14 +397,15 @@ function Nav({ topDivRef, cartItems, userType }) {
                               Account Settings
                             </Link>
                           </li>
-                          <li
+                          {userDetails && <li
                             className="cursor-pointer"
                             onClick={() => localStorage.removeItem("firstname")}
                           >
                             <Link to="/login" className="text-lg text-blue-900">
                               Logout
                             </Link>
-                          </li>
+                          </li>}
+                          
                         </ul>
                       </div>
                     </div>
