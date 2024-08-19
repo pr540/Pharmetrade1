@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import background_image from "../assets/homepharma.png";
 import logo from "../assets/Icons/logo2.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,6 +62,11 @@ const Signin = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [token, setToken] = useState("");
+  useEffect(() => {
+    localStorage.clear();
+
+  }, [])
+  
 
   const nav = useNavigate();
 

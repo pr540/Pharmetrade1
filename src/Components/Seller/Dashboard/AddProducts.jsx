@@ -33,7 +33,7 @@ const AddProducts = () => {
         return response.json();
       })
       .then((data) => {
-        setProducts(data.productfilter);
+        setProducts(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -169,7 +169,7 @@ const AddProducts = () => {
                     <th className=" px-4 py-2 text-left">Product ID</th>
                     <th className="px-4 py-2 text-left">Category Specification</th>
                     <th className="px-4 py-2 text-left">Product Name</th>
-                    <th className="px-4 py-2 text-left">Product Type</th>
+                    {/* <th className="px-4 py-2 text-left">Product Type</th> */}
                     <th className="px-4 py-2 text-left">Product Status</th>
                     <th className="px-4 py-2 text-left">Manufacturer</th>
                     <th className="px-4 py-2 text-left">Type</th>
@@ -180,11 +180,11 @@ const AddProducts = () => {
                   {products.map((product) => (
                     <tr key={product.id} className="border-b">
                       <td className="px-4 py-2">{product.addproductID}</td>
-                      <td className="px-4 py-2">{product.productCategory}</td>
+                      <td className="px-4 py-2">{product.categorySpecificationId}</td>
                       <td className="px-4 py-2">{product.productName}</td>
-                      <td className="px-4 py-2">{product.attributeSet}</td>
+                      {/* <td className="px-4 py-2">{product.attributeSet}</td> */}
                       <td className="px-4 py-2">{product.packCondition}</td>
-                      <td className="px-4 py-2">{product.status}</td>
+                      <td className="px-4 py-2">{product.manufacturer}</td>
                       <td className="px-4 py-2">{product.packType}</td>
                       <td
                         className="px-4 py-2 cursor-pointer"

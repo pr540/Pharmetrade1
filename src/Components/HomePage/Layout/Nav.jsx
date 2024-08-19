@@ -58,9 +58,42 @@ import search from "../../../assets/search-icon.png";
 import dropdown from "../../../assets/Down-arrow .png";
 
 function Nav({ topDivRef, cartItems, userType }) {
+  let navigate = useNavigate();
+
   const [selectedIndex, setSelectedIndex] = useState();
 
   const [firstName, setFirstName] = useState("");
+  const [userDetails, setUserDetails] = useState(null);
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem("login"));
+    if (localData?.userId) {
+      if (localData.userId.length > 1) fetchUserDetails(localData.userId);
+    }
+  }, []);
+
+  const fetchUserDetails = async (customerId) => {
+    try {
+      const response = await fetch(
+        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Get?customerId=${customerId}`
+      );
+      const data = await response.json();
+      // if (data.statusCode === 200 && data.loginStatus === 'Success') {
+      //     console.log(userDetails);
+      // } else {
+      //     console.error('Failed to fetch user details:', data.message);
+      // }
+      setUserDetails(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+//   useEffect(() => {
+//     console.log(userDetails.customerDetails
+// .      firstName);
+
+//   }, [userDetails])
+  
 
   useEffect(() => {
     // Check if the user's first name is stored in local storage
@@ -153,7 +186,6 @@ function Nav({ topDivRef, cartItems, userType }) {
     else if (MenuItems[index] === "Request Demo") navigate("/requestdemo");
   };
 
-  let navigate = useNavigate();
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isCategory, setIsCategory] = useState(false);
@@ -270,10 +302,10 @@ function Nav({ topDivRef, cartItems, userType }) {
                       </div>
                     </div> */}
                     <div className="text-blue-900 hover:cursor-pointer">
-                      {firstName ? (
+                      {userDetails ? (
                         <>
                           <div className="text-sm font-medium -mb-2">
-                            Hello, {firstName}
+                            Hello, {userDetails?.customerDetails?.firstName}
                           </div>
                           <div className="text-base font-semibold">
                             Account & Lists
@@ -339,7 +371,10 @@ function Nav({ topDivRef, cartItems, userType }) {
                             </Link>
                           </li>
                           <li>
-                            <Link to="/layout" className="text-lg text-blue-900">
+                            <Link
+                              to="/layout"
+                              className="text-lg text-blue-900"
+                            >
                               Demo
                             </Link>
                           </li>

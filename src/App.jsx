@@ -113,6 +113,10 @@ function App() {
     }
   }, []);
   const [cartItems, setCartItems] = useState([]);
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems])
+  
   function addCart(prolist) {
     setCartItems([...cartItems, prolist]);
   }
@@ -255,7 +259,7 @@ function App() {
         
 
         <Route path='/layout' element={<LayoutPanel cartItems={cartItems}/>}>
-          <Route path='/layout' element={<LayoutDashboard />} />
+          <Route path='/layout' element={<LayoutDashboard addCart={addCart} wishList={wishList} />} />
           <Route path='/layoutsell' element={<LayoutSell />} />
           <Route path='/layout/addproduct' element={<LayoutaddProduct />} />
           <Route path='/layout/addbulkproduct' element={<LayoutAddBulkProduct />} />

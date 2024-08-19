@@ -212,7 +212,7 @@ function LayoutDashboard ({ topMargin, addCart, wishList }) {
   }));
 
   return (
-    <div className="w-[95%]  ml-4 h-full overflow-y-scroll">
+    <div className="w-[95%] overflow-scroll  ml-4 h-full ">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1>
         <div className="flex">
