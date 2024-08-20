@@ -706,6 +706,7 @@ function LayoutSidebar() {
           </div>
         ))}
       </nav>
+      <button className="text-white bg-red-600 p-2 rounded-lg font-semibold">Logout</button>
     </div>
   );
 }

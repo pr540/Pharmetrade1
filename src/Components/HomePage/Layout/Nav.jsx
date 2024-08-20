@@ -141,7 +141,7 @@ function Nav({ topDivRef, cartItems, userType }) {
   const downDivItems = [
     { label: "BUY", icon: Buy, path: "/layout" },
     { label: "JOIN", icon: join, path: "/login" },
-    { label: "SELL", icon: sell, path: "/layout/addproduct" },
+    { label: "SELL", icon: sell, path: userDetails? "/layout/addproduct" :"/login"},
     { label: "BID", icon: bid, path: "/bid" },
     // { label: "LinkedIn", icon: linkedin, path: "#" },
     // { label: "Facebook", icon: facebook, path: "#" },
