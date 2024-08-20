@@ -57,13 +57,13 @@ function LayoutOrderList() {
         <h2 className="text-3xl font-semibold"> Your Orders</h2>
 
         <div className="flex   text-end justify-end items-center">
-          <div className="flex bg-white border rounded-xl  h-12 w-64   p-2 m-5 ">
+          <div className="flex  m-5 ">
             <input
               type="text"
               placeholder="search product"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-left relative"
+              className="text-left relative h-12 w-64 bg-white border rounded-xl    p-2 "
             />
           </div>
           <button className="border rounded-full w-52 text-xl p-2 bg-blue-900 text-white">

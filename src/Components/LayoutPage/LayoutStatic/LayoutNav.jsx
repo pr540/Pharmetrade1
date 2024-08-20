@@ -211,7 +211,6 @@
 
 // export default LayoutNav;
 
-
 import React, { useState, useRef, useEffect } from "react";
 import bid from "../../../assets/Bid3d.png";
 import buy from "../../../assets/buy3d.png";
@@ -223,7 +222,8 @@ import search from "../../../assets/search-icon.png";
 import wishlist from "../../../assets/Wishlist1_icon.png";
 import cartNav from "../../../assets/cartNav2.png";
 import { useNavigate } from "react-router-dom";
-import OTCProd from "../../../assets/OtcProduct.png"
+import OTCProd from "../../../assets/OtcProduct.png";
+import notification from "../../../assets/Notification.png";
 
 const LayoutNav = ({ cartItems }) => {
   const [isContainerFocused, setIsContainerFocused] = useState(false);
@@ -288,24 +288,26 @@ const LayoutNav = ({ cartItems }) => {
     { icon: OTCProd, text: "OTC Products" },
     { icon: deals, text: "DEALS" },
     { icon: buyagain, text: "Buy Again" },
-    { icon: OTCProd, text: "Notification" },
+    // { icon: notification, text: "" },
   ];
 
   return (
     <div className="my-3 pb-2 cursor-pointer border-b-2 ">
-      <div className="flex justify-between">
+      <div className="flex justify-around items-center">
         {/* Navigation items with images */}
-        <div className="flex mr-4">
+        <div className="flex">
           {navItems.map((item, index) => (
-            <div key={index} className="flex items-center gap-2 ml-2">
+            <div key={index} className="flex items-center  ml-2">
               <img src={item.image} className="w-8 h-8" alt={item.text} />
-              <span className="text-base font-semibold my-1 mr-2 ">{item.text}</span>
+              <span className="text-base font-semibold my-1  ">
+                {item.text}
+              </span>
             </div>
           ))}
         </div>
 
         {/* Search and dropdown */}
-        <div className="flex rounded-l-md items-center w-[40%]">
+        <div className="flex rounded-lg w-[40%]">
           <div
             ref={dropdownRef}
             className={`w-full relative flex items-center ${
@@ -334,21 +336,56 @@ const LayoutNav = ({ cartItems }) => {
                     { name: "Deals", component: "Component for deals" },
                     { name: "Brands", component: "Component for brands" },
                     { name: "Generics", component: "Component for generics" },
-                    { name: "Discount >75%", component: "Component for discount >75%" },
-                    { name: "Discount >50%", component: "Component for discount >50%" },
-                    { name: "Discount >25%", component: "Component for discount >25%" },
-                    { name: "Expiring within 3 months", component: "Component for Expiring within 3 months" },
-                    { name: "Expiring within 6 months", component: "Component for Expiring within 6 months" },
-                    { name: "Expiring within 12 months", component: "Component for Expiring within 12 months" },
-                    { name: "Whole saler item", component: "Component for Whole saler item" },
-                    { name: "Pharmacy item", component: "Component for Pharmacy item" }, 
-                    { name: "Prescription Drugs", component: "Component for Prescription Drugs" }, 
-                    { name: "OTC Products", component: "Component for OTC Products" },
-                     { name: "VAWD Sellers", component: "Component for VAWD Sellers" },
-                      { name: "Top Selling Products", component: "Component for Top Selling Products" }, 
-                      { name: "But Again", component: "Component for But Again" },
-                  ]
-                  .map((item, index) => (
+                    {
+                      name: "Discount >75%",
+                      component: "Component for discount >75%",
+                    },
+                    {
+                      name: "Discount >50%",
+                      component: "Component for discount >50%",
+                    },
+                    {
+                      name: "Discount >25%",
+                      component: "Component for discount >25%",
+                    },
+                    {
+                      name: "Expiring within 3 months",
+                      component: "Component for Expiring within 3 months",
+                    },
+                    {
+                      name: "Expiring within 6 months",
+                      component: "Component for Expiring within 6 months",
+                    },
+                    {
+                      name: "Expiring within 12 months",
+                      component: "Component for Expiring within 12 months",
+                    },
+                    {
+                      name: "Whole saler item",
+                      component: "Component for Whole saler item",
+                    },
+                    {
+                      name: "Pharmacy item",
+                      component: "Component for Pharmacy item",
+                    },
+                    {
+                      name: "Prescription Drugs",
+                      component: "Component for Prescription Drugs",
+                    },
+                    {
+                      name: "OTC Products",
+                      component: "Component for OTC Products",
+                    },
+                    {
+                      name: "VAWD Sellers",
+                      component: "Component for VAWD Sellers",
+                    },
+                    {
+                      name: "Top Selling Products",
+                      component: "Component for Top Selling Products",
+                    },
+                    { name: "But Again", component: "Component for But Again" },
+                  ].map((item, index) => (
                     <ul key={index}>
                       <li>
                         <a
@@ -371,8 +408,7 @@ const LayoutNav = ({ cartItems }) => {
                         )}
                       </li>
                     </ul>
-                  ))
-                  }
+                  ))}
                 </div>
               </div>
             )}
@@ -391,16 +427,28 @@ const LayoutNav = ({ cartItems }) => {
         </div>
 
         {/* Icons with text */}
-        <div className="flex items-center gap-3 ml-1">
+        <div className="flex items-center">
           {iconItems.map((item, index) => (
-            <div key={index} className="flex items-center">
+            <div key={index} className="flex items-center ">
               <img src={item.icon} className="w-8 h-8" />
-              <span className="text-base font-semibold mx-2 ">{item.text}</span>
+              <span className="text-base font-semibold mr-2">{item.text}</span>
             </div>
           ))}
-          <img onClick={() => navigate('/wishlist')} src={wishlist} className="w-6 h-6 ml-1" alt="wishlist icon" />
-          <div onClick={() => navigate('/cart')} className="relative">
-            <div className="absolute text-white rounded-full bg-blue-900 bottom-1/2 left-1.5 px-1 font-medium text-xs">{cartItems.length}</div>
+          <img
+            src={notification}
+            className="w-10 h-10 "
+            alt="Notification icon"
+          />
+          <img
+            onClick={() => navigate("/wishlist")}
+            src={wishlist}
+            className="w-6 h-6 mr-2"
+            alt="wishlist icon"
+          />
+          <div onClick={() => navigate("/cart")} className="relative">
+            <div className="absolute text-white rounded-full bg-blue-900 bottom-1/2 left-1.5 px-1 font-medium text-xs">
+              {cartItems.length}
+            </div>
             <img src={cartNav} className="w-6 h-6 mr-2" alt="cart icon" />
           </div>
         </div>
@@ -410,4 +458,3 @@ const LayoutNav = ({ cartItems }) => {
 };
 
 export default LayoutNav;
-
