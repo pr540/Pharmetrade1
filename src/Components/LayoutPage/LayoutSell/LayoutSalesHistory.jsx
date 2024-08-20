@@ -19,7 +19,7 @@ import React from 'react'
 const LayoutSalesHistory = () => {
   return (
     <div>
-      
+      LayoutSalesHistory
     </div>
   )
 }

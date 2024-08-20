@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import img from "../../../assets/img1.png";
+import { styled, alpha } from "@mui/material/styles";
+import searchimg from "../../../assets/search1.png";
+import InputBase from "@mui/material/InputBase";
+
+
 function LayoutOrderList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [orders, setOrders] = useState([]);
@@ -48,6 +53,55 @@ function LayoutOrderList() {
     );
   };
 
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  }));
+
+  const SearchIconWrapper = styled("div")(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor:'red',
+    color: "black",
+    zIndex: "1",
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    // backgroundColor:'beige',
+    border: "1px solid gray",
+    // boxShadow:'1px 1px',
+    borderRadius: "5px",
+    color: "black",
+    width: "100%",
+    "& .MuiInputBase-input": {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: ` calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create("width"),
+      [theme.breakpoints.up("sm")]: {
+        width: "12ch",
+        "&:focus": {
+          width: "20ch",
+        },
+      },
+    },
+  }));
+
   return (
     <div
       className="max-w-5xl overflow-scroll  m-auto"
@@ -57,7 +111,7 @@ function LayoutOrderList() {
         <h2 className="text-3xl font-semibold"> Your Orders</h2>
 
         <div className="flex   text-end justify-end items-center">
-          <div className="flex  m-5 ">
+          {/* <div className="flex  m-5 ">
             <input
               type="text"
               placeholder="search product"
@@ -65,6 +119,18 @@ function LayoutOrderList() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="text-left relative h-12 w-64 bg-white border rounded-xl    p-2 "
             />
+          </div> */}
+          <div className="flex m-5">
+            <Search className="">
+              <SearchIconWrapper>
+                <img src={searchimg} className="w-6 absolute " />
+                {/* <SearchIcon /> */}
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search..."
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
           </div>
           <button className="border rounded-full w-52 text-xl p-2 bg-blue-900 text-white">
             Search order
@@ -80,7 +146,7 @@ function LayoutOrderList() {
         <button className="  border-b hover:border-red-500 hover:text-blue-900 text-black w-60   h-9 text-xl">
           {" "}
           {""}
-          <Link to="/products"> Buy Again</Link>
+          <Link to="/layout"> Buy Again</Link>
         </button>
         <button className="  border-b hover:border-red-500 hover:text-blue-900 text-black w-60   h-9 text-xl">
           {" "}

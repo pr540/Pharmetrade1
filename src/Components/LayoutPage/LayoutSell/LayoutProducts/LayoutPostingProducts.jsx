@@ -109,7 +109,7 @@ const LayoutPostingProducts= () => {
   };
 
   return (
-    <div className="relative  bg-gray-100 w-full h-full flex justify-center items-center">
+    <div className="relative  bg-gray-100 w-full h-full flex justify-center overflow-scroll items-center">
       <div className="w-[95%] h-full mt-4">
         <div className="flex justify-between">
           <h2 className="text-[22px] text-blue-900 font-semibold">
@@ -130,7 +130,7 @@ const LayoutPostingProducts= () => {
           )} */}
         </div>
 
-        <div className="flex flex-wrap gap-2 w-full justify-normal items-center p-4">
+        <div className="flex flex-wrap gap-2 w-full justify-normal items-center  p-4">
           {stats.map((stat, index) => (
             <div
               key={index}
@@ -181,7 +181,7 @@ const LayoutPostingProducts= () => {
                     <th className=" px-4 py-2 text-left">Product ID</th>
                     <th className="px-4 py-2 text-left">Category Specification</th>
                     <th className="px-4 py-2 text-left">Product Name</th>
-                    <th className="px-4 py-2 text-left">Product Type</th>
+                    {/* <th className="px-4 py-2 text-left">Product Type</th> */}
                     <th className="px-4 py-2 text-left">Product Status</th>
                     <th className="px-4 py-2 text-left">Manufacturer</th>
                     <th className="px-4 py-2 text-left">Type</th>
@@ -192,11 +192,11 @@ const LayoutPostingProducts= () => {
                   {products.map((product) => (
                     <tr key={product.id} className="border-b">
                       <td className="px-4 py-2">{product.addproductID}</td>
-                      <td className="px-4 py-2">{product.productCategory}</td>
+                      <td className="px-4 py-2">{product.productcategory_id}</td>
                       <td className="px-4 py-2">{product.productName}</td>
-                      <td className="px-4 py-2">{product.attributeSet}</td>
+                      {/* <td className="px-4 py-2">{product.attributeSet}</td> */}
                       <td className="px-4 py-2">{product.packCondition}</td>
-                      <td className="px-4 py-2">{product.status}</td>
+                      <td className="px-4 py-2">{product.manufacturer}</td>
                       <td className="px-4 py-2">{product.packType}</td>
                       <td
                         className="px-4 py-2 cursor-pointer"

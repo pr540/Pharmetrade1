@@ -296,70 +296,139 @@ function LayoutaddProduct() {
   };
 
  
+  // const handleSubmit = async () => {
+  //   const data = new FormData();
+  //   const expirationDate = "2024-12-31";
+  //   const caption = "Sample product caption";
+  //   const metaKeywords = "sample, product, keywords";
+  //   const metaTitle = "Sample Product Title";
+  //   const metaDescription = "This is a sample description for the product.";
+  //   const saltComposition = "Sample Salt Composition";
+  //   const uriKey = "sample-product-uri";
+  
+  //   data.append("AddproductID", 1);
+  //   data.append("Productcategory_id", formData.productCategory);
+  //   data.append("Sizeid", 1);
+  //   data.append("ProductName", formData.productName);
+  //   data.append("NDCorUPC", formData.ndcUdc);
+  //   data.append("BrandName", formData.brandName);
+  //   data.append("PriceName", formData.price);
+  //   data.append("UPNmemberPrice", formData.upnMemberPrice);
+  //   data.append("AmountInStock", formData.amountInStock);
+  //   data.append("Taxable", formData.taxable == 1);
+  
+  //   data.append("ExpirationDate", expirationDate);
+  //   data.append("Caption", caption);
+  //   data.append("MetaKeywords", metaKeywords);
+  //   data.append("MetaTitle", metaTitle);
+  //   data.append("MetaDescription", metaDescription);
+  //   data.append("SaltComposition", saltComposition);
+  //   data.append("UriKey", uriKey);
+  
+  //   // Append file if it exists
+  //   if (formData.imageUrl) {
+  //     data.append("ImageUrl", formData.imageUrl); // File object
+  //   }
+  
+  //   data.append("PackCondition", "Active");
+  //   data.append("ProductDescription", "Product Description");
+  
+  //   if (formData.salePrice) data.append("SalePrice", formData.salePrice);
+  //   data.append("SalePriceFrom", expirationDate);
+  //   data.append("SalePriceTo", expirationDate);
+  //   if (formData.manufacturer) data.append("Manufacturer", formData.manufacturer);
+  //   if (formData.strength) data.append("Strength", formData.strength);
+  //   data.append("Fromdate", expirationDate);
+  //   if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
+  //   data.append("PackQuantity", 200);
+  //   if (formData.packType) data.append("PackType", formData.packType);
+  //   if (formData.packCondition)
+  //     data.append("PackCondition", formData.packCondition.otherCondition);
+  //   if (formData.productDetails)
+  //     data.append("ProductDescription", formData.productDetails);
+  //   if (formData.aboutProduct)
+  //     data.append("AboutTheProduct", formData.aboutProduct);
+  //   if (formData.categorySpecification)
+  //     data.append("CategorySpecificationId", formData.categorySpecification);
+  //   data.append("ProductTypeId", 1);
+  //   data.append("SellerId", 1);
+  
+  //   // Sending data with fetch
+  //   try {
+  //     const response = await fetch(
+  //       "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
+  //       {
+  //         method: "POST",
+  //         body: data,
+  //       }
+  //     );
+  
+  //     if (!response.ok) {
+  //       const errorDetails = await response.json();
+  //       throw new Error(
+  //         `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
+  //           errorDetails
+  //         )}`
+  //       );
+  //     }
+  
+  //     const result = await response.json();
+  //     console.log("Product Data", result);
+  //     console.log(result);
+  //     return result;
+  //   } catch (error) {
+  //     console.error("There was a problem with the fetch operation:", error);
+  //     throw error;
+  //   }
+  // };
+
   const handleSubmit = async () => {
-    const data = new FormData();
-    const expirationDate = "2024-12-31";
-    const caption = "Sample product caption";
-    const metaKeywords = "sample, product, keywords";
-    const metaTitle = "Sample Product Title";
-    const metaDescription = "This is a sample description for the product.";
-    const saltComposition = "Sample Salt Composition";
-    const uriKey = "sample-product-uri";
+    const data = {
+      AddproductID: 1,
+      Productcategory_id: formData.productCategory,
+      Sizeid: 1,
+      ProductName: formData.productName,
+      NDCorUPC: formData.ndcUdc,
+      BrandName: formData.brandName,
+      PriceName: formData.price,
+      UPNmemberPrice: formData.upnMemberPrice,
+      AmountInStock: formData.amountInStock,
+      Taxable: formData.taxable == 1,
+      ExpirationDate: "2024-12-31",
+      Caption: "Sample product caption",
+      MetaKeywords: "sample, product, keywords",
+      MetaTitle: "Sample Product Title",
+      MetaDescription: "This is a sample description for the product.",
+      SaltComposition: "Sample Salt Composition",
+      UriKey: "sample-product-uri",
+      PackCondition: "Active",
+      ProductDescription: "Product Description",
+      SalePrice: formData.salePrice,
+      SalePriceFrom: "2024-12-31",
+      SalePriceTo: "2024-12-31",
+      Manufacturer: formData.manufacturer,
+      Strength: formData.strength,
+      Fromdate: "2024-12-31",
+      LotNumber: formData.lotNumber,
+      PackQuantity: 200,
+      PackType: formData.packType,
+      PackCondition: formData.packCondition?.otherCondition,
+      ProductDescription: formData.productDetails,
+      AboutTheProduct: formData.aboutProduct,
+      CategorySpecificationId: formData.categorySpecification,
+      ProductTypeId: 1,
+      SellerId: 1,
+    };
   
-    data.append("AddproductID", 1);
-    data.append("Productcategory_id", formData.productCategory);
-    data.append("Sizeid", 1);
-    data.append("ProductName", formData.productName);
-    data.append("NDCorUPC", formData.ndcUdc);
-    data.append("BrandName", formData.brandName);
-    data.append("PriceName", formData.price);
-    data.append("UPNmemberPrice", formData.upnMemberPrice);
-    data.append("AmountInStock", formData.amountInStock);
-    data.append("Taxable", formData.taxable == 1);
-  
-    data.append("ExpirationDate", expirationDate);
-    data.append("Caption", caption);
-    data.append("MetaKeywords", metaKeywords);
-    data.append("MetaTitle", metaTitle);
-    data.append("MetaDescription", metaDescription);
-    data.append("SaltComposition", saltComposition);
-    data.append("UriKey", uriKey);
-  
-    // Append file if it exists
-    if (formData.imageUrl) {
-      data.append("ImageUrl", formData.imageUrl); // File object
-    }
-  
-    data.append("PackCondition", "Active");
-    data.append("ProductDescription", "Product Description");
-  
-    if (formData.salePrice) data.append("SalePrice", formData.salePrice);
-    data.append("SalePriceFrom", expirationDate);
-    data.append("SalePriceTo", expirationDate);
-    if (formData.manufacturer) data.append("Manufacturer", formData.manufacturer);
-    if (formData.strength) data.append("Strength", formData.strength);
-    data.append("Fromdate", expirationDate);
-    if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
-    data.append("PackQuantity", 200);
-    if (formData.packType) data.append("PackType", formData.packType);
-    if (formData.packCondition)
-      data.append("PackCondition", formData.packCondition.otherCondition);
-    if (formData.productDetails)
-      data.append("ProductDescription", formData.productDetails);
-    if (formData.aboutProduct)
-      data.append("AboutTheProduct", formData.aboutProduct);
-    if (formData.categorySpecification)
-      data.append("CategorySpecificationId", formData.categorySpecification);
-    data.append("ProductTypeId", 1);
-    data.append("SellerId", 1);
-  
-    // Sending data with fetch
     try {
       const response = await fetch(
         "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
         {
           method: "POST",
-          body: data,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         }
       );
   
@@ -374,13 +443,13 @@ function LayoutaddProduct() {
   
       const result = await response.json();
       console.log("Product Data", result);
-      console.log(result);
       return result;
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       throw error;
     }
   };
+  
 
  
   console.log(formData);
@@ -1913,7 +1982,7 @@ function LayoutaddProduct() {
   };
 
   return (
-    <div className="w-full max-w-4xl h-full mx-auto mt-10 ml-10">
+    <div className="w-full max-w-4xl h-full mx-auto pt-8  ml-10 overflow-scroll">
       <div className="flex flex-col justify-center ">
         <div className="flex  justify-between ">
           <div>

@@ -235,7 +235,7 @@ function LayoutDashboard ({ topMargin, addCart, wishList }) {
               <option>Strength Hign to Low</option>
             </select>
           </div>
-          <div>
+          {/* <div>
             <Search>
               <SearchIconWrapper>
                 <img src={search} className="w-6" />
@@ -245,7 +245,7 @@ function LayoutDashboard ({ topMargin, addCart, wishList }) {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-          </div>
+          </div> */}
         </div>
       </div>
 

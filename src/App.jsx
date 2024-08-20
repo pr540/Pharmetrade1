@@ -89,7 +89,6 @@ import LayoutAssignProductList from "./Components/LayoutPage/LayoutSell/LayoutSa
 import LayoutAddBulkProduct from "./Components/LayoutPage/LayoutSell/LayoutAddBulkProduct";
 import LayoutPostingProducts from "./Components/LayoutPage/LayoutSell/LayoutProducts/LayoutPostingProducts";
 import LayoutSalesHistory from "./Components/LayoutPage/LayoutSell/LayoutSalesHistory";
-import LayoutPaymentHistory from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
 import LayoutShippingDetails from "./Components/LayoutPage/LayoutSell/LayoutShippingDetails";
 import LayoutRequestForQuote from "./Components/LayoutPage/LayoutSell/LayoutRequestForQuote";
 import LayoutSellReturn from "./Components/LayoutPage/LayoutSell/LayoutSellReturn";
@@ -99,6 +98,7 @@ import LayoutFedexshipping from "./Components/LayoutPage/LayoutSell/LayoutFedexs
 import LayoutAllQuotesProducts from "./Components/LayoutPage/LayoutSell/LayoutAllQuotesProducts";
 import LayoutAllrequestedQuote from "./Components/LayoutPage/LayoutSell/LayoutAllrequestedQuote";
 import LayoutSetting from "./Components/LayoutPage/LayoutSetting/LayoutSetting";
+import LayoutPaymentHistory from "./Components/LayoutPage/LayoutSell/LayoutPaymentHistory";
 
 function App() {
   const [count, setCount] = useState(0);

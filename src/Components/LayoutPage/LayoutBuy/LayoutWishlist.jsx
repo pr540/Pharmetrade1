@@ -10,31 +10,27 @@
 
 // export default LayoutWishlist
 
-
-
-
-
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import { RiShare2Fill } from "react-icons/ri";
 // import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPinterest, FaFacebook } from "react-icons/fa";
-import wrong from '../../../assets/wrong.png'
+import wrong from "../../../assets/wrong.png";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import searchimg from '../../../assets/search1.png'
-import deleteicon from '../../../assets/trash.png'
-import Facebook from '../../../assets/facebook1.png'
-import Pintrist from '../../../assets/pinterest.png'
-import email from '../../../assets/envelope.png'
-import twitter from '../../../assets/twitter.png'
-import share from '../../../assets/upload1.png'
-import cross from '../../../assets/letter-x[1].png'
-function LayoutWishlist({ wishItems, setWishItems,addCart }) {
-  const [searchQuery, setSearchQuery] = useState('');
+import searchimg from "../../../assets/search1.png";
+import deleteicon from "../../../assets/trash.png";
+import Facebook from "../../../assets/facebook1.png";
+import Pintrist from "../../../assets/pinterest.png";
+import email from "../../../assets/envelope.png";
+import twitter from "../../../assets/twitter.png";
+import share from "../../../assets/upload1.png";
+import cross from "../../../assets/letter-x[1].png";
+function LayoutWishlist({ wishItems, setWishItems, addCart }) {
+  const [searchQuery, setSearchQuery] = useState("");
   const [quantities, setQuantities] = useState(wishItems.map(() => 1));
   const navigate = useNavigate();
 
@@ -65,8 +61,16 @@ function LayoutWishlist({ wishItems, setWishItems,addCart }) {
   }
 
   const Star = ({ filled, onClick }) => (
-    <span onClick={onClick} style={{ cursor: 'pointer', fontSize: '25px',color:'orange', marginLeft:"8px" }}>
-      {filled ? '★' : '☆'}
+    <span
+      onClick={onClick}
+      style={{
+        cursor: "pointer",
+        fontSize: "25px",
+        color: "orange",
+        marginLeft: "8px",
+      }}
+    >
+      {filled ? "★" : "☆"}
     </span>
   );
 
@@ -101,16 +105,15 @@ function LayoutWishlist({ wishItems, setWishItems,addCart }) {
     alignItems: "center",
     justifyContent: "center",
     // backgroundColor:'red',
-    color:'black',
-  zIndex:"1"
-   
+    color: "black",
+    zIndex: "1",
   }));
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // backgroundColor:'beige',
-    border:'1px solid gray',
+    border: "1px solid gray",
     // boxShadow:'1px 1px',
-    borderRadius:'5px',
+    borderRadius: "5px",
     color: "black",
     width: "100%",
     "& .MuiInputBase-input": {
@@ -128,36 +131,50 @@ function LayoutWishlist({ wishItems, setWishItems,addCart }) {
   }));
 
   return (
-    <div className="bg-gray-200 p-8" 
-    // style={{ marginTop: `${topMargin}px `}}
+    <div
+      className="bg-gray-200  p-8 overflow-scroll"
+      // style={{ marginTop: `${topMargin}px `}}
     >
-      <h1 className="text-2xl mb-2 text-blue-900 font-semibold">PharmEtrade {">"} Wishlist</h1>
-      <div className="w-full h-full bg-white rounded-lg shadow-lg p-4">
+      <h1 className="text-2xl mb-2 text-blue-900 font-semibold">
+        PharmEtrade {">"} Wishlist
+      </h1>
+      <div className="w-full min-h-full bg-white rounded-lg shadow-lg p-4">
         <div className="flex justify-between">
           <h1 className="text-2xl m-5 font-semibold">Wishlist</h1>
-          <div className='flex bg-white  m-5'>
-            
-             <Search className="">
-          <SearchIconWrapper>
-            <img src={searchimg} className="w-6 absolute " />
-            {/* <SearchIcon /> */}
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search..."
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+          <div className="flex bg-white m-5">
+            <Search className="">
+              <SearchIconWrapper>
+                <img src={searchimg} className="w-6 absolute " />
+                {/* <SearchIcon /> */}
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search..."
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
           </div>
         </div>
 
         {wishItems.length > 0 ? (
           <div className="flex flex-col gap-6">
             {wishItems.map((item, index) => (
-              <div key={index} className="border rounded-lg flex justify-evenly h-56 p-4 max-w-6xl bg-white shadow-md">
-                <img className="h-48 w-40 rounded-lg" src={item.src} alt={item.id} />
+              <div
+                key={index}
+                className="border rounded-lg flex justify-evenly h-56 p-4 max-w-6xl bg-white shadow-md"
+              >
+                <img
+                  className="h-48 w-40 rounded-lg"
+                  src={item.src}
+                  alt={item.id}
+                />
                 <div className="flex flex-col font-medium">
-                  <Link to={`/detailspage/${item.id}`} className="hover:text-red-600">
-                    <h3 className="text-xl font-semibold">Vitamin C(1000IU) Cap X Syrup 1000mg Nature Made</h3>
+                  <Link
+                    to={`/detailspage/${item.id}`}
+                    className="hover:text-red-600"
+                  >
+                    <h3 className="text-xl font-semibold">
+                      Vitamin C(1000IU) Cap X Syrup 1000mg Nature Made
+                    </h3>
                     <p className="text-xl">Cough Syrup 1000mg</p>
                     <p className="text-xl">{item.price}</p>
                   </Link>
@@ -169,56 +186,91 @@ function LayoutWishlist({ wishItems, setWishItems,addCart }) {
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                  <button className="text-lg font-semibold text-white bg-blue-900 w-56 p-1 rounded-full" onClick={() => handleCart(index)}>
+                  <button
+                    className="text-lg font-semibold text-white bg-blue-900 w-56 p-1 rounded-full"
+                    onClick={() => handleCart(index)}
+                  >
                     Add to cart
                   </button>
                   <div className="flex items-center justify-between my-4">
-                    <img src={share} className="w-6 mx-3 " onClick={handleSharePopupToggle}/>
+                    <img
+                      src={share}
+                      className="w-6 mx-3 "
+                      onClick={handleSharePopupToggle}
+                    />
                     {/* <RiShare2Fill className="border rounded-md text-2xl w-8 hover:bg-sky-200"  /> */}
                     {isShowPopup && (
                       <div className="flex flex-col justify-center items-center h-full absolute inset-0 bg-transparent z-auto">
                         <div className="border w-[13%] rounded-lg bg-gray-100">
                           <div className="flex border-b justify-between p-2">
                             <div className="flex items-center">
-                            <img src={email} className="text-blue-400 w-6"/>
-                            <p className="ml-3">Email</p>
+                              <img src={email} className="text-blue-400 w-6" />
+                              <p className="ml-3">Email</p>
                             </div>
-                            <img src={wrong} onClick={handleSharePopupToggle} className="w-3 h-3" />
+                            <img
+                              src={wrong}
+                              onClick={handleSharePopupToggle}
+                              className="w-3 h-3"
+                            />
                           </div>
                           <div className="flex border-b p-2">
-                          <img src={Pintrist} className="text-blue-400 w-6"/>
+                            <img src={Pintrist} className="text-blue-400 w-6" />
 
                             {/* <FaPinterest className="text-red-500 text-2xl" /> */}
                             <p className="ml-3">Pinterest</p>
                           </div>
                           <div className="flex border-b p-2">
-                            <img src={Facebook} className="text-blue-400 w-6"/>
+                            <img src={Facebook} className="text-blue-400 w-6" />
                             {/* <FaFacebook  /> */}
                             <p className="ml-3">Facebook</p>
                           </div>
                           <div className="flex border-b p-2">
-                          <img src={twitter} className="text-blue-400 w-6"/>
+                            <img src={twitter} className="text-blue-400 w-6" />
                             <p className="ml-3">Twitter</p>
                           </div>
                         </div>
                       </div>
                     )}
-                    <img src={deleteicon}  onClick={() => handleremove(index)} className=" w-5 " />
+                    <img
+                      src={deleteicon}
+                      onClick={() => handleremove(index)}
+                      className=" w-5 "
+                    />
                     {/* <MdDeleteOutline className="border rounded-md text-2xl hover:bg-sky-200" /> */}
                   </div>
-                  <p onClick={handlePopupToggle} className="hover:text-red-400 hover:underline font-semibold text-blue-900">Add comment, quantity & priority</p>
+                  <p
+                    onClick={handlePopupToggle}
+                    className="hover:text-red-400 hover:underline font-semibold text-blue-900"
+                  >
+                    Add comment, quantity & priority
+                  </p>
                   {showPopup && (
                     <div className="flex flex-col justify-center items-center h-full absolute inset-0 bg-transparent z-auto">
                       <div className="border w-[30%] rounded-lg bg-gray-100">
                         <div className="flex justify-between items-center bg-blue-900 border-b p-2">
-                          <p className="font-bold text-xl text-white">Add comment, quantity, priority</p>
-                          < img src={cross} className="hover:text-red-500  w-3" onClick={handlePopupToggle} />
+                          <p className="font-bold text-xl text-white">
+                            Add comment, quantity, priority
+                          </p>
+                          <img
+                            src={cross}
+                            className="hover:text-red-500  w-3"
+                            onClick={handlePopupToggle}
+                          />
                         </div>
                         <div className="flex justify-evenly my-2">
-                          <img className="h-32 w-24 rounded-lg" src={item.src} alt={item.id} />
+                          <img
+                            className="h-32 w-24 rounded-lg"
+                            src={item.src}
+                            alt={item.id}
+                          />
                           <div className="flex flex-col justify-end">
-                            <label className="flex flex-col font-semibold">Comment</label>
-                            <textarea placeholder="Enter comments" className="border text-center h-32 w-60 rounded-md flex justify-start items-start" />
+                            <label className="flex flex-col font-semibold">
+                              Comment
+                            </label>
+                            <textarea
+                              placeholder="Enter comments"
+                              className="border text-center h-32 w-60 rounded-md flex justify-start items-start"
+                            />
                           </div>
                         </div>
                         <div className="flex justify-end">
@@ -242,19 +294,31 @@ function LayoutWishlist({ wishItems, setWishItems,addCart }) {
                           </div>
                         </div>
                         <div className="flex justify-end my-6">
-                          <button className="border p-2 rounded-md hover:bg-red-500 hover:text-white " onClick={handlePopupToggle}>
+                          <button
+                            className="border p-2 rounded-md hover:bg-red-500 hover:text-white "
+                            onClick={handlePopupToggle}
+                          >
                             Cancel
                           </button>
-                          <button className="border p-2 rounded-md mx-4 w-16 bg-blue-900 text-white">Save</button>
+                          <button className="border p-2 rounded-md mx-4 w-16 bg-blue-900 text-white">
+                            Save
+                          </button>
                         </div>
                       </div>
                     </div>
                   )}
                   <div>
                     {Array.from({ length: totalStars }, (v, i) => (
-                      <Star key={i} filled={i < rating} onClick={() => setRating(i + 1)}  className='text-orange-400'/>
+                      <Star
+                        key={i}
+                        filled={i < rating}
+                        onClick={() => setRating(i + 1)}
+                        className="text-orange-400"
+                      />
                     ))}
-                    <p>The rating is {rating} out of {totalStars}.</p>
+                    <p>
+                      The rating is {rating} out of {totalStars}.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -265,7 +329,10 @@ function LayoutWishlist({ wishItems, setWishItems,addCart }) {
             <h2 className="text-2xl font-semibold text-gray-700">
               Your wishlist is currently empty.
             </h2>
-            <Link to="/products" className="mt-5 px-8 py-3 font-bold text-white text-xl bg-blue-900 border-2 rounded-full">
+            <Link
+              to="/layout"
+              className="mt-5 px-8 py-3 font-bold text-white text-xl bg-blue-900 border-2 rounded-full"
+            >
               RETURN TO SHOP
             </Link>
           </div>
