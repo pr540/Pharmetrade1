@@ -286,20 +286,21 @@ const LayoutNav = ({ cartItems }) => {
 
   const iconItems = [
     { icon: OTCProd, text: "OTC Products" },
-    { icon: deals, text: "DEALS" },
     { icon: buyagain, text: "Buy Again" },
+    { icon: deals, text: "Deals" },
+    
     // { icon: notification, text: "" },
   ];
 
   return (
-    <div className="my-3 pb-2 cursor-pointer border-b-2 ">
+    <div className="my-3 pb-2 cursor-pointer border-b-2 border-gray-300 shadow-lg">
       <div className="flex justify-around items-center">
         {/* Navigation items with images */}
         <div className="flex">
           {navItems.map((item, index) => (
             <div key={index} className="flex items-center  ml-2">
-              <img src={item.image} className="w-8 h-8" alt={item.text} />
-              <span className="text-base font-semibold my-1  ">
+              <img src={item.image} className="w-8 h-8 mr-[2px]" alt={item.text} />
+              <span className="text-sm font-semibold my-1  ">
                 {item.text}
               </span>
             </div>
@@ -430,8 +431,8 @@ const LayoutNav = ({ cartItems }) => {
         <div className="flex items-center">
           {iconItems.map((item, index) => (
             <div key={index} className="flex items-center ">
-              <img src={item.icon} className="w-8 h-8" />
-              <span className="text-base font-semibold mr-2">{item.text}</span>
+              <img src={item.icon} className="w-8 h-8 mr-[2px]" />
+              <span className="text-base font-semibold mr-4">{item.text}</span>
             </div>
           ))}
           <img
@@ -440,13 +441,13 @@ const LayoutNav = ({ cartItems }) => {
             alt="Notification icon"
           />
           <img
-            onClick={() => navigate("/wishlist")}
+            onClick={() => navigate("/layout/layoutwishlist")}
             src={wishlist}
             className="w-6 h-6 mr-2"
             alt="wishlist icon"
           />
           <div onClick={() => navigate("/cart")} className="relative">
-            <div className="absolute text-white rounded-full bg-blue-900 bottom-1/2 left-1.5 px-1 font-medium text-xs">
+            <div className="absolute text-white rounded-full bg-blue-900 bottom-1/2 left-1.5 px-1 font-medium text-[10px]">
               {cartItems.length}
             </div>
             <img src={cartNav} className="w-6 h-6 mr-2" alt="cart icon" />

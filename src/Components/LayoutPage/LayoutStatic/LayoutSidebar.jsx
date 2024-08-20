@@ -26,6 +26,7 @@
 // import Sell from "../../../assets/SellSideIcon.png";
 // import Bid from "../../../assets/BidSideIcon.png";
 // import Faqs from "../../../assets/Faqs.png";
+// import Join from "../../../assets/JoinSideIcon.png";
 
 // function LayoutSidebar() {
 //   const navigate = useNavigate();
@@ -96,7 +97,7 @@
 //       icon: Buy,
 //       to: null, // no direct link, used for dropdown
 //       children: [
-//         { label: "Buy Products", to: "/layout/layoutbuy", icon: Dashboard },
+//         { label: "Buy Products", to: "/layout/layoutbuy", icon: AddProduct },
 //         { label: "Wishlist", to: "/layout/layoutwishlist", icon: Wishlist },
 //         { label: "OrderList", to: "/layout/layoutorderlist", icon: OrderList },
 //       ],
@@ -169,7 +170,7 @@
 //     },
 //     {
 //       label: "Join",
-//       icon: Dashboard,
+//       icon: Join,
 //       to: "/signup",
 //     },
 //     {

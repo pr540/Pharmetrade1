@@ -139,9 +139,9 @@ function Nav({ topDivRef, cartItems, userType }) {
   ];
 
   const downDivItems = [
-    { label: "BUY", icon: Buy, path: "/products" },
+    { label: "BUY", icon: Buy, path: "/layout" },
     { label: "JOIN", icon: join, path: "/login" },
-    { label: "SELL", icon: sell, path: "/seller/market-product-list" },
+    { label: "SELL", icon: sell, path: "/layout/addproduct" },
     { label: "BID", icon: bid, path: "/bid" },
     // { label: "LinkedIn", icon: linkedin, path: "#" },
     // { label: "Facebook", icon: facebook, path: "#" },
@@ -335,10 +335,10 @@ function Nav({ topDivRef, cartItems, userType }) {
                           </a>
                         </div>
                         <p
-                          className="mb-1 text-lg hover:cursor-pointer"
+                          className=" text-base hover:cursor-pointer"
                           onClick={handlesignup}
                         >
-                          New customer? Start here
+                          New customer? <span className="text-blue-900 hover:text-red-500 hover:underline">Start here</span>
                         </p>
                         <h2
                           className="text-lg font-semibold cursor-pointer"
@@ -365,11 +365,11 @@ function Nav({ topDivRef, cartItems, userType }) {
                               Wishlist
                             </a>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link to="/admin" className="text-lg text-blue-900">
                               Admin
                             </Link>
-                          </li>
+                          </li> */}
                           <li>
                             <Link
                               to="/layout"
@@ -378,7 +378,7 @@ function Nav({ topDivRef, cartItems, userType }) {
                               Demo
                             </Link>
                           </li>
-                          <li
+                          {/* <li
                             className={`${
                               FormData?.userType === "Normal Customer"
                                 ? "hidden"
@@ -391,7 +391,7 @@ function Nav({ topDivRef, cartItems, userType }) {
                             >
                               Seller Dashboard
                             </Link>
-                          </li>
+                          </li> */}
                           <li>
                             <Link href="#" className="text-lg text-blue-900">
                               Account Settings
