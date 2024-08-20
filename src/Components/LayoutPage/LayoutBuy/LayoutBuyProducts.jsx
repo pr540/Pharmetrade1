@@ -1263,7 +1263,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
     <div className="w-[100%]  h-full overflow-y-scroll">
 
       <div className="flex justify-between  cursor-pointer h-20 items-center">
-        <div className="flex gap-2 mx-2 ">
+        <div className="flex gap-2 mx-2 font-semibold">
           {renderDropdown('Categories', 'categories', ['Prescription Categories', 'Non-prescription Categories'])}
           {renderDropdown('Brands', 'brands', ['Brand A', 'Brand B', 'Brand C'])}
           {renderDropdown('Packing', 'packing', ['EA', 'Box', 'Pack'])}
