@@ -706,17 +706,9 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  // const handleItemclick = (item) => {
-  //   if (userDetails?.accountTypeId == 1) {
-  //     setErrorMessage("you have login as buyer contact us help@pharmetrade");
-  //   } else {
-  //     navigate(item.path);
-  //   }
-  // };
-
   const handleItemclick = (item) => {
     if (userDetails?.accountTypeId==1 && item.label === "SELL") {
-      setErrorMessage("you have login as buyer contact us help@pharmetrade");
+      setErrorMessage("you have login as buyer contact us help@pharmetrade.com");
     } else {
       navigate(item.path );
     }
@@ -750,22 +742,22 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
   ];
 
   const components = [
-    { name: "Allergies", component: <Baby /> },
-    { name: "Bath & Body ", component: <Beauty /> },
-    { name: "Cough Cold & flu", component: <HealthTopics /> },
-    { name: "Digestive", component: <Home /> },
-    { name: "Drug", component: <Medicines /> },
-    { name: "Eye Care", component: <PersonalCare /> },
-    { name: "Ear Nose", component: <Pets /> },
-    { name: "First Aid", component: <SportsNutrition /> },
-    { name: "Foot Care", component: <Suppliments /> },
-    { name: "Home  Test Monitoring ", component: <Suppliments /> },
-    { name: "Incontinence ", component: <Suppliments /> },
-    { name: "Pain Relief & Management ", component: <Suppliments /> },
-    { name: "Pediatric Care ", component: <Suppliments /> },
-    { name: "Personal Care ", component: <Suppliments /> },
-    // { name: "Pet  ", component: <Suppliments /> },
-    { name: "Prescription & Packaging  ", component: <Suppliments /> },
+    { name: "Deals", component: <Baby /> },
+    { name: "Brands ", component: <Beauty /> },
+    { name: "Generic", component: <HealthTopics /> },
+    { name: "Discount > 75%", component: <Home /> },
+    { name: "Discount > 50%", component: <Medicines /> },
+    { name: "Discount > 25%", component: <PersonalCare /> },
+    { name: "Expiring within 3 months", component: <Pets /> },
+    { name: "Expiring within 6 months", component: <SportsNutrition /> },
+    { name: "Expiring within 12 months", component: <Suppliments /> },
+    { name: "Whole saler item ", component: <Suppliments /> },
+    { name: "Pharmacy item ", component: <Suppliments /> },
+    { name: "Prescription Drugs ", component: <Suppliments /> },
+    { name: "OTC Products ", component: <Suppliments /> },
+    { name: "VAWD Sellers", component: <Suppliments /> },
+    { name: "Top Selling Products ", component: <Suppliments /> },
+    { name: "Buy Again  ", component: <Suppliments /> },
   ];
 
   const handleSelect = (index) => {

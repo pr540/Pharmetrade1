@@ -184,7 +184,7 @@ function Landing2({wishList,addCart}) {
         navigate('/login');
         break;
       case 2:
-        navigate('/seller/market-product-list');
+        navigate('/layout/addproduct');
         break;
       case 3:
         navigate('/bid');
@@ -247,7 +247,7 @@ function Landing2({wishList,addCart}) {
         {slides.map((item, key) => (
           <div
             key={key}
-            className="hover:scale-110 w-fit h-fit rounded-xl transition duration-300 ease-in-out max-w-sm p-1"
+            className="hover:scale-110 w-fit h-fit  rounded-xl transition duration-300 ease-in-out max-w-sm p-1"
             onClick={() => handleClick(key)}
           >
             <img

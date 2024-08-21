@@ -385,7 +385,7 @@ const LayoutNav = ({ cartItems }) => {
                       name: "Top Selling Products",
                       component: "Component for Top Selling Products",
                     },
-                    { name: "But Again", component: "Component for But Again" },
+                    { name: "Buy Again", component: "Component for But Again" },
                   ].map((item, index) => (
                     <ul key={index}>
                       <li>
