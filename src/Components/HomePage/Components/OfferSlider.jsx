@@ -54,7 +54,7 @@ const OfferSlider = ({ images, Title }) => {
             className="bg-white rounded-sm p-2 "
             onClick={() => navigation("right")}
           >
-            <img src={right} className="w-4 h-4" alt="Right" />
+            <img src={right} className="w-4 h-4 " alt="Right" />
           </button>
         </div>
       </div>
@@ -66,11 +66,11 @@ const OfferSlider = ({ images, Title }) => {
           {images.map((img, index) => (
             <div key={index} className="border bg-white shadow-2xl min-w-[300px] Laptop:min-w-[320px] p-4 relative flex flex-col gap-3 items-center justify-center">
               {index < overlayTexts.length && (
-                <p className=" w-full text-[17px] font-semibold">
+                <p className=" w-full text-[17px] font-semibold cursor-pointer">
                   {overlayTexts[index]}
                 </p>
               )}
-              <img src={img} className="w-[250px] Laptop:w-[320px] shadow-sm shadow-slate-100 Laptop:h-[200px] h-[180px] rounded-sm"
+              <img src={img} className="w-[250px] cursor-pointer Laptop:w-[320px] shadow-sm shadow-slate-100 Laptop:h-[200px] h-[180px] rounded-sm"
                 alt={`Offer ${index + 1}`}
                 />
                 

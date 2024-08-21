@@ -571,6 +571,13 @@ function LayoutSidebar() {
 //     },
 //   ];
 
+function handleLogout() {
+  localStorage.removeItem("login"); // Remove login data
+  localStorage.removeItem("firstname"); // Remove first name or other user data
+  navigate("/"); // Redirect to the login page
+}
+
+
   return (
     <div
       className={`p-2 overflow-scroll h-full w-full z-[100] font-normal font-sans flex flex-col shadow-lg ${
@@ -706,7 +713,14 @@ function LayoutSidebar() {
           </div>
         ))}
       </nav>
-      <button className="text-white bg-red-600 p-2 rounded-lg font-semibold">Logout</button>
+      {/* <button className="text-white bg-red-600 p-2 rounded-lg font-semibold">Logout</button> */}
+      <button
+  className="text-white bg-red-600 p-2 rounded-lg font-semibold"
+  onClick={handleLogout}
+>
+  Logout
+</button>
+
     </div>
   );
 }

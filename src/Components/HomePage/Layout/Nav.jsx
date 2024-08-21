@@ -74,7 +74,7 @@
 //   const fetchUserDetails = async (customerId) => {
 //     try {
 //       const response = await fetch(
-//         `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Get?customerId=${customerId}`
+//         `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/GetCustomers?customerId=${customerId}`
 //       );
 //       const data = await response.json();
 //       // if (data.statusCode === 200 && data.loginStatus === 'Success') {
@@ -82,8 +82,8 @@
 //       // } else {
 //       //     console.error('Failed to fetch user details:', data.message);
 //       // }
-//       setUserDetails(data);
-//       console.log(data);
+//       setUserDetails(data.result[0]);
+//       console.log(data.result[0]);
 //     } catch (error) {
 //       console.error("Error fetching user details:", error);
 //     }
@@ -93,7 +93,6 @@
 // // .      firstName);
 
 // //   }, [userDetails])
-  
 
 //   useEffect(() => {
 //     // Check if the user's first name is stored in local storage
@@ -139,14 +138,16 @@
 //   ];
 
 //   const downDivItems = [
-//     { label: "BUY", icon: Buy, path: "/layout" },
+//     { label: "BUY", icon: Buy, path: userDetails? "/layout":"login" },
 //     { label: "JOIN", icon: join, path: "/login" },
-//     { label: "SELL", icon: sell, path: "/seller/market-product-list" },
-//     { label: "BID", icon: bid, path: "/bid" },
-//     // { label: "BUY", icon: Buy, path:userDetails? "/layout" :"/login"},
+//     { label: "SELL", icon: sell, path: userDetails? "/layout/addproduct" :"/login"},
+//     { label: "BID", icon: bid, path: userDetails? "/bid":"login" },
+
+//     // { label: "BUY", icon: Buy, path: "/layout" },
 //     // { label: "JOIN", icon: join, path: "/login" },
-//     // { label: "SELL", icon: sell, path: userDetails? "/layout/addproduct" :"/login"},
-//     // { label: "BID", icon: bid, path:userDetails? "/bid":"/login" },
+//     // { label: "SELL", icon: sell, path:"/layout/addproduct" },
+//     // { label: "BID", icon: bid, path: "/bid" },
+
 //   ];
 
 //   const downSocialItems = [
@@ -185,7 +186,6 @@
 //     else if (MenuItems[index] === "Contact Us") navigate("/contactus");
 //     else if (MenuItems[index] === "Request Demo") navigate("/requestdemo");
 //   };
-
 
 //   const [isPopupVisible, setIsPopupVisible] = useState(false);
 //   const [isCategory, setIsCategory] = useState(false);
@@ -305,7 +305,7 @@
 //                       {userDetails ? (
 //                         <>
 //                           <div className="text-sm font-medium -mb-2">
-//                             Hello, {userDetails?.customerDetails?.firstName}
+//                             Hello, {userDetails?.firstName}
 //                           </div>
 //                           <div className="text-base font-semibold">
 //                             Account & Lists
@@ -397,7 +397,18 @@
 //                               Account Settings
 //                             </Link>
 //                           </li>
-//                           {userDetails && <li
+
+//                           {/* <li
+//                             className="cursor-pointer"
+//                             onClick={() => localStorage.removeItem("firstname")}
+//                           >
+//                             <Link to="/login" className="text-lg text-blue-900">
+//                               Logout
+//                             </Link>
+//                           </li> */}
+
+//                           {userDetails &&
+//                           <li
 //                             className="cursor-pointer"
 //                             onClick={() => localStorage.removeItem("firstname")}
 //                           >
@@ -405,7 +416,7 @@
 //                               Logout
 //                             </Link>
 //                           </li>}
-                          
+
 //                         </ul>
 //                       </div>
 //                     </div>
@@ -455,7 +466,7 @@
 //         </ul>
 //         {/* down div elemenet  */}
 //         <div
-//           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen  
+//           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen
 //            items-center text-black  border-grey-500 shadow-lg "
 //         >
 //           <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
@@ -575,26 +586,15 @@
 // export default Nav;
 
 import React from "react";
-// import Logo from "../assets/Icons/Etrade.png";
-// import Logo from "../assets/Icons/logo.png";
+
 import Logo from "../../../assets/logo_04.png";
 import Search from "../../../assets/search.png";
-// import cart from "../../../assets/CartNav_icon.png";
 import cart from "../../../assets/cartNav2.png";
-// import like from "../assets/Icons/Favorate.png";
 import like from "../../../assets/wishlistnav_icon.png";
-// import compare from "../../../assets/CompareNav_icon.png";
 import compare from "../../../assets/CompareNav2.png";
 
 import note from "../../../assets/Icons/Compare.png";
-// import Buy from "../../../assets/Buy.png";
-// import sale from "../../../assets/Sell.png";
-// import join from "../../../assets/Join.png";
-// import bid from "../../../assets/Bid.png";
-// import Buy from "../../../assets/Buy1.png";
-// import join from "../../../assets/Join1.png";
-// import sell from "../../../assets/Sell1.png";
-// import bid from "../../../assets/Bid1.png";
+
 import join from "../../../assets/Join3d.png";
 import Buy from "../../../assets/buy3d.png";
 import sell from "../../../assets/sell3d.png";
@@ -633,7 +633,7 @@ import WhyPharma from "../NavLinks/WhyPharma";
 import search from "../../../assets/search-icon.png";
 import dropdown from "../../../assets/Down-arrow .png";
 
-function Nav({ topDivRef, cartItems, userType }) {
+function Nav({ topDivRef, cartItems, userType, Form_Data }) {
   let navigate = useNavigate();
 
   const [selectedIndex, setSelectedIndex] = useState();
@@ -653,23 +653,13 @@ function Nav({ topDivRef, cartItems, userType }) {
         `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/GetCustomers?customerId=${customerId}`
       );
       const data = await response.json();
-      // if (data.statusCode === 200 && data.loginStatus === 'Success') {
-      //     console.log(userDetails);
-      // } else {
-      //     console.error('Failed to fetch user details:', data.message);
-      // }
+
       setUserDetails(data.result[0]);
       console.log(data.result[0]);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
   };
-//   useEffect(() => {
-//     console.log(userDetails.customerDetails
-// .      firstName);
-
-//   }, [userDetails])
-  
 
   useEffect(() => {
     // Check if the user's first name is stored in local storage
@@ -714,17 +704,42 @@ function Nav({ topDivRef, cartItems, userType }) {
     "Request Demo",
   ];
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // const handleItemclick = (item) => {
+  //   if (userDetails?.accountTypeId == 1) {
+  //     setErrorMessage("you have login as buyer contact us help@pharmetrade");
+  //   } else {
+  //     navigate(item.path);
+  //   }
+  // };
+
+  const handleItemclick = (item) => {
+    if (userDetails?.accountTypeId==1 && item.label === "SELL") {
+      setErrorMessage("you have login as buyer contact us help@pharmetrade");
+    } else {
+      navigate(item.path );
+    }
+  };
+
+  // Clear error message after 3 seconds
+  if (errorMessage) {
+    setTimeout(() => setErrorMessage(""), 3000);
+  }
+
   const downDivItems = [
     // { label: "BUY", icon: Buy, path: "/layout" },
     // { label: "JOIN", icon: join, path: "/login" },
-    // { label: "SELL", icon: sell, path: userDetails? "/layout/addproduct" :"/login"},
+    // { label: "SELL", icon: sell, path:"/layout/addproduct" },
     // { label: "BID", icon: bid, path: "/bid" },
-
-    { label: "BUY", icon: Buy, path: "/layout" },
+    { label: "BUY", icon: Buy, path: userDetails ? "/layout" : "login" },
     { label: "JOIN", icon: join, path: "/login" },
-    { label: "SELL", icon: sell, path:"/layout/addproduct" },
-    { label: "BID", icon: bid, path: "/bid" },
-    
+    {
+      label: "SELL",
+      icon: sell,
+      path: userDetails ? "/layout/addproduct" : "/login",
+    },
+    { label: "BID", icon: bid, path: userDetails ? "/bid" : "login" },
   ];
 
   const downSocialItems = [
@@ -763,7 +778,6 @@ function Nav({ topDivRef, cartItems, userType }) {
     else if (MenuItems[index] === "Contact Us") navigate("/contactus");
     else if (MenuItems[index] === "Request Demo") navigate("/requestdemo");
   };
-
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isCategory, setIsCategory] = useState(false);
@@ -916,7 +930,10 @@ function Nav({ topDivRef, cartItems, userType }) {
                           className=" text-base hover:cursor-pointer"
                           onClick={handlesignup}
                         >
-                          New customer? <span className="text-blue-900 hover:text-red-500 hover:underline">Start here</span>
+                          New customer?{" "}
+                          <span className="text-blue-900 hover:text-red-500 hover:underline">
+                            Start here
+                          </span>
                         </p>
                         <h2
                           className="text-lg font-semibold cursor-pointer"
@@ -976,25 +993,21 @@ function Nav({ topDivRef, cartItems, userType }) {
                             </Link>
                           </li>
 
-                          {/* <li
-                            className="cursor-pointer"
-                            onClick={() => localStorage.removeItem("firstname")}
-                          >
-                            <Link to="/login" className="text-lg text-blue-900">
-                              Logout
-                            </Link>
-                          </li> */}
-
-                          {userDetails && 
-                          <li
-                            className="cursor-pointer"
-                            onClick={() => localStorage.removeItem("firstname")}
-                          >
-                            <Link to="/login" className="text-lg text-blue-900">
-                              Logout
-                            </Link>
-                          </li>}
-                          
+                          {userDetails && (
+                            <li
+                              className="cursor-pointer"
+                              onClick={() =>
+                                localStorage.removeItem("firstname")
+                              }
+                            >
+                              <Link
+                                to="/login"
+                                className="text-lg text-blue-900"
+                              >
+                                Logout
+                              </Link>
+                            </li>
+                          )}
                         </ul>
                       </div>
                     </div>
@@ -1047,16 +1060,15 @@ function Nav({ topDivRef, cartItems, userType }) {
           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen  
            items-center text-black  border-grey-500 shadow-lg "
         >
-          <div className="flex gap-5  items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
+          <div className="flex gap-5 items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
             {downDivItems.map((item, index) => (
               <li
                 key={index}
-                onClick={() => navigate(item.path)}
+                onClick={() => handleItemclick(item)}
                 className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-black ${
-                  item.label == "Sell"
-                    ? FormData?.userType === "Normal Customer"
-                      ? "hidden"
-                      : ""
+                  item.label === "SELL" &&
+                  Form_Data?.userType === "Normal Customer"
+                    ? "hidden"
                     : ""
                 }`}
               >
@@ -1069,6 +1081,12 @@ function Nav({ topDivRef, cartItems, userType }) {
               </li>
             ))}
           </div>
+          {errorMessage && (
+            <div className="absolute top-0 left-0 w-full bg-red-500 text-white p-2 text-center">
+              {errorMessage}
+            </div>
+          )}
+
           <div className="flex bg-white rounded-md items-center w-[40%] lg:gap-10">
             <div
               ref={dropdownRef}

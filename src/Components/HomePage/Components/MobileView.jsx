@@ -89,10 +89,14 @@ import BuyImg from "../../../assets/Buy_icon.png";
 import JoinImg from "../../../assets/Join-icon.png";
 import SellImg from "../../../assets/Sell-icon.png";
 import BidImg from "../../../assets/Bid-icon.png";
-import mobileBuy from "../../../assets/mobileBuy.png"; // Default mobile image for Buy
-import mobileJoin from "../../../assets/mobileJoin.jpg"; // Mobile image for Join
-import mobileSell from "../../../assets/mobileSell.jpg"; // Mobile image for Sell
-import mobileBid from "../../../assets/mobileBid.jpg"; // Mobile image for Bid
+// import mobileBuy from "../../../assets/mobileBuy.png"; 
+// import mobileJoin from "../../../assets/mobileJoin.jpg"; 
+// import mobileSell from "../../../assets/mobileSell.jpg"; 
+// import mobileBid from "../../../assets/mobileBid.jpg"; 
+import mobileBuy from "../../../assets/mobileBuy.png"; 
+import mobileJoin from "../../../assets/mobileJoin1.png"; 
+import mobileSell from "../../../assets/mobileSell1.png"; 
+import mobileBid from "../../../assets/mobileBid1.png"; 
 
 const MobileView = () => {
   const [selectedStepIndex, setSelectedStepIndex] = useState(0);
