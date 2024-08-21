@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import filter from "../../../assets/Icons/filter_icon.png";
@@ -70,9 +68,9 @@ function LayoutaddProduct() {
     packType: "",
     packCondition: {
       tornLabel: false,
-      otherCondition: ""
+      otherCondition: "",
     },
-    imageUrl: ""
+    imageUrl: "",
   });
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -204,27 +202,30 @@ function LayoutaddProduct() {
     if (file) {
       setFormData((prevData) => ({
         ...prevData,
-        imageUrl: file
+        imageUrl: file,
       }));
     }
   };
-  
+
   // Assuming getRootProps and getInputProps are defined by react-dropzone or similar
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       // Set the first accepted file as the imageUrl in formData
       setFormData((prevData) => ({
         ...prevData,
-        imageUrl: acceptedFiles[0]
+        imageUrl: acceptedFiles[0],
       }));
       // Update images state for previews or other uses
-      setImages((prevImages) => [...prevImages, ...acceptedFiles.map(file => ({
-        file,
-        preview: URL.createObjectURL(file)
-      }))]);
+      setImages((prevImages) => [
+        ...prevImages,
+        ...acceptedFiles.map((file) => ({
+          file,
+          preview: URL.createObjectURL(file),
+        })),
+      ]);
     },
-    accept: 'image/*',
-    multiple: false
+    accept: "image/*",
+    multiple: false,
   });
 
   const handleEditProduct = () => {
@@ -295,7 +296,6 @@ function LayoutaddProduct() {
     }
   };
 
- 
   // const handleSubmit = async () => {
   //   const data = new FormData();
   //   const expirationDate = "2024-12-31";
@@ -305,7 +305,7 @@ function LayoutaddProduct() {
   //   const metaDescription = "This is a sample description for the product.";
   //   const saltComposition = "Sample Salt Composition";
   //   const uriKey = "sample-product-uri";
-  
+
   //   data.append("AddproductID", 1);
   //   data.append("Productcategory_id", formData.productCategory);
   //   data.append("Sizeid", 1);
@@ -316,7 +316,7 @@ function LayoutaddProduct() {
   //   data.append("UPNmemberPrice", formData.upnMemberPrice);
   //   data.append("AmountInStock", formData.amountInStock);
   //   data.append("Taxable", formData.taxable == 1);
-  
+
   //   data.append("ExpirationDate", expirationDate);
   //   data.append("Caption", caption);
   //   data.append("MetaKeywords", metaKeywords);
@@ -324,15 +324,15 @@ function LayoutaddProduct() {
   //   data.append("MetaDescription", metaDescription);
   //   data.append("SaltComposition", saltComposition);
   //   data.append("UriKey", uriKey);
-  
+
   //   // Append file if it exists
   //   if (formData.imageUrl) {
   //     data.append("ImageUrl", formData.imageUrl); // File object
   //   }
-  
+
   //   data.append("PackCondition", "Active");
   //   data.append("ProductDescription", "Product Description");
-  
+
   //   if (formData.salePrice) data.append("SalePrice", formData.salePrice);
   //   data.append("SalePriceFrom", expirationDate);
   //   data.append("SalePriceTo", expirationDate);
@@ -352,7 +352,7 @@ function LayoutaddProduct() {
   //     data.append("CategorySpecificationId", formData.categorySpecification);
   //   data.append("ProductTypeId", 1);
   //   data.append("SellerId", 1);
-  
+
   //   // Sending data with fetch
   //   try {
   //     const response = await fetch(
@@ -362,7 +362,7 @@ function LayoutaddProduct() {
   //         body: data,
   //       }
   //     );
-  
+
   //     if (!response.ok) {
   //       const errorDetails = await response.json();
   //       throw new Error(
@@ -371,7 +371,7 @@ function LayoutaddProduct() {
   //         )}`
   //       );
   //     }
-  
+
   //     const result = await response.json();
   //     console.log("Product Data", result);
   //     console.log(result);
@@ -419,7 +419,7 @@ function LayoutaddProduct() {
       ProductTypeId: 1,
       SellerId: 1,
     };
-  
+
     try {
       const response = await fetch(
         "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
@@ -431,7 +431,7 @@ function LayoutaddProduct() {
           body: JSON.stringify(data),
         }
       );
-  
+
       if (!response.ok) {
         const errorDetails = await response.json();
         throw new Error(
@@ -440,7 +440,7 @@ function LayoutaddProduct() {
           )}`
         );
       }
-  
+
       const result = await response.json();
       console.log("Product Data", result);
       return result;
@@ -449,9 +449,7 @@ function LayoutaddProduct() {
       throw error;
     }
   };
-  
 
- 
   console.log(formData);
   const renderTabContent = () => {
     switch (activeTab) {
@@ -614,8 +612,8 @@ function LayoutaddProduct() {
               </div> */}
                 </div>
                 <div>
-                  <div className="flex ">
-                    <div className="mr-4">
+                  <div className="flex w-full justify-between">
+                    <div className="mr-4 flex flex-col w-[50%] ">
                       <label className="font-semibold">Product Details:</label>
                       <textarea
                         name="productDetails"
@@ -624,7 +622,7 @@ function LayoutaddProduct() {
                         value={formData.productDetails}
                       />{" "}
                     </div>
-                    <div>
+                    <div className="flex flex-col w-[50%]">
                       <label className="font-semibold">
                         About the Product:
                       </label>
@@ -647,7 +645,7 @@ function LayoutaddProduct() {
                       <select
                         name="states"
                         multiple
-                        className="w-48 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        className="w-48 h-24 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                         onChange={handleInputChange}
                         value={formData.states}
                       >
@@ -675,14 +673,16 @@ function LayoutaddProduct() {
                     className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
                   >
                     <input {...getInputProps()} />
-                    <p className="text-gray-500 text-center"  type="file" onChange={handleFileChange}
+                    <p
+                      className="text-gray-500 text-center"
+                      type="file"
+                      onChange={handleFileChange}
                     >
                       Click here or drag and drop images
                     </p>
                   </div>
-                
 
-                   <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                     {images.map((image, index) => (
                       <div key={index} className="">
                         <img
@@ -696,11 +696,11 @@ function LayoutaddProduct() {
                         >
                           <img src={deleteicon} className="w-24" />
 
-                           {/* <FaTrash className="w-4" />  */}
+                          {/* <FaTrash className="w-4" />  */}
                         </button>
                       </div>
                     ))}
-                  </div> 
+                  </div>
                 </div>
               </div>
             </div>
@@ -1081,7 +1081,7 @@ function LayoutaddProduct() {
             </div>
             {/* section5 end */}
           </div>
-        ); 
+        );
         // case 2:
         // return (
         // <div className="flex flex-col font-sans w-full Largest:w-[80%] font-medium justify-between text-sm ">
