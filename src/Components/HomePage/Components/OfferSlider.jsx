@@ -1,14 +1,8 @@
-
-
-
-
-
-
 // OfferSlider.js
 import React, { useRef } from "react";
 import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const OfferSlider = ({ images, Title }) => {
   const carouselContainer = useRef(null);
@@ -64,17 +58,27 @@ const OfferSlider = ({ images, Title }) => {
           className="flex w-full   gap-2 overflow-x-scroll "
         >
           {images.map((img, index) => (
-            <div key={index} className="border bg-white shadow-2xl min-w-[300px] Laptop:min-w-[320px] p-4 relative flex flex-col gap-3 items-center justify-center">
+            <div
+              key={index}
+              className="border bg-white shadow-2xl min-w-[300px] Laptop:min-w-[320px] p-4 relative flex flex-col gap-3 items-center justify-center"
+            >
               {index < overlayTexts.length && (
                 <p className=" w-full text-[17px] font-semibold cursor-pointer">
                   {overlayTexts[index]}
                 </p>
               )}
-              <img src={img} className="w-[250px] cursor-pointer Laptop:w-[320px] shadow-sm shadow-slate-100 Laptop:h-[200px] h-[180px] rounded-sm"
-                alt={`Offer ${index + 1}`}
-                />
-                
-              <div className="w-full mt-8 text-black flex font-semibold justify-end" >
+              <div>
+                {" "}
+                <Link to="/offers">
+                  <img
+                    src={img}
+                    className="w-[250px] cursor-pointer Laptop:w-[320px] shadow-sm shadow-slate-100 Laptop:h-[200px] h-[180px] rounded-sm"
+                    alt={`Offer ${index + 1}`}
+                  />
+                </Link>
+              </div>
+
+              <div className="w-full mt-8 text-black flex font-semibold justify-end">
                 <Link to="/offers" className="hover:text-red-500">
                   See all offers
                 </Link>
