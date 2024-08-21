@@ -286,6 +286,10 @@ function Cart({ topMargin, cartItems, setCartItems }) {
     navigate("/checkout");
   };
 
+  const handlemove =()=>{
+    navigate("/detailspage/0")
+  }
+
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -393,6 +397,7 @@ function Cart({ topMargin, cartItems, setCartItems }) {
                       <td className="px-2 md:px-3 py-2 whitespace-nowrap">
                         <img
                           className="h-16 w-16 rounded-lg"
+                          onClick={handlemove}
                           src={item.src}
                           alt={item.id}
                         />

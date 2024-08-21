@@ -258,7 +258,7 @@ const Signup = () => {
   };
   const [usertype, setusertype] = useState("");
 
-  const validateStep = (step) => {
+  const validateStep =async (step) => {
     let newErrors = {};
     const regexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
@@ -292,6 +292,7 @@ const Signup = () => {
       if (!formData.captcha) newErrors.captcha = "captcha is required";
       if (formData.captcha != captcha)
         newErrors.captcha = "captcha not matched";
+      
     } else if (step === 1) {
       if (!userType) newErrors.userType = "User Type is required";
 

@@ -614,12 +614,12 @@ function LayoutaddProduct() {
               </div> */}
                 </div>
                 <div>
-                  <div className="flex flex-col ">
-                    <div>
+                  <div className="flex ">
+                    <div className="mr-4">
                       <label className="font-semibold">Product Details:</label>
                       <textarea
                         name="productDetails"
-                        className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        className="w-full min-h-12  border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                         onChange={handleInputChange}
                         value={formData.productDetails}
                       />{" "}
@@ -630,7 +630,7 @@ function LayoutaddProduct() {
                       </label>
                       <textarea
                         name="aboutProduct"
-                        className="w-full border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        className="w-full min-h-12 border border-gray-300 rounded p-2 focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                         onChange={handleInputChange}
                         value={formData.aboutProduct}
                       />{" "}
