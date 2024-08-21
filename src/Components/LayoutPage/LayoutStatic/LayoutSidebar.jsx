@@ -380,14 +380,14 @@ function LayoutSidebar() {
   const fetchUserDetails = async (customerId) => {
     try {
       const response = await fetch(
-        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/Get?customerId=${customerId}`
+        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/GetByCustomerId?customerId=${customerId}`
       );
       const data = await response.json();
       if(data)
       {
-        setUserDetails(data);
+        setUserDetails(data.result[0]);
         const menuResponse = await fetch(
-            `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?accountTypeId=${data.customerDetails.accountTypeId}`
+            `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?accountTypeId=${data.result[0].customerDetails.accountTypeId}`
           );
           const menuData = await menuResponse.json();
           if(menuData)
@@ -429,7 +429,7 @@ function LayoutSidebar() {
   const logos = 
     {
       src: profile,
-      name :  userDetails?.customerDetails?.firstName+ " "+ userDetails?.customerDetails.lastName,
+      name :  userDetails?.customerDetails?.firstName+ " "+ userDetails?.customerDetails?.lastName,
       Shop_name: "Valley Pharmacy",
     }
   ;
@@ -450,7 +450,7 @@ function LayoutSidebar() {
   
       return {
         label: menuItem.menuName,
-        icon: Dashboard, // Replace with appropriate icons or map menuName to icons
+        icon: menuItem.iconPath, // Replace with appropriate icons or map menuName to icons
         to: menuItem.navigateUrl || null,
         ...(children.length > 0 && { children: children.map(createNavItem) }),
       };
