@@ -21,7 +21,7 @@ import emptyHeart from "../assets/Wishlist1_icon.png";
 import filledHeart from "../assets/wishlist2_icon.png";
 import other from "../assets/CompareNav2.png";
 
-function PRight({ topMargin, addCart, wishList }) {
+function PRight({Title, topMargin, addCart, wishList }) {
   const { pop, setPop } = useNavbarContext();
   const navigate = useNavigate();
   const images = Array(115).fill(nature);
@@ -134,7 +134,7 @@ function PRight({ topMargin, addCart, wishList }) {
   return (
     <div className="w-full mt-4 h-full overflow-y-scroll">
       <div className=" flex justify-between bg-blue-900 p-1 rounded-lg">
-        <div className="text-2xl text-white"> Rx Drug</div>
+        <div className="text-2xl text-white">{Title?Title:"All Products"}</div>
 
         <Search>
           <SearchIconWrapper>

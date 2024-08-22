@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import PLeft from "./PLeft";
 import PRight from "./PRight";
+import { useSearchParams } from "react-router-dom";
 
 function Products({ addCart, wishList, topMargin }) {
+  const [searchParams] = useSearchParams();
 
+  const Header = searchParams.get("header"); // Replace "someParam" with the actual query parameter you want to access.
 
   return (
     <div
@@ -13,10 +16,10 @@ function Products({ addCart, wishList, topMargin }) {
       }}
     >
       <div  className="h-screen flex justify-center w-72 overflow-y-scroll">
-        <PLeft />
+        <PLeft  />
       </div>
       <div  className="w-[calc(100%-288px)] h-screen overflow-y-scroll">
-        <PRight addCart={addCart} wishList={wishList} topMargin={topMargin} />
+        <PRight Title={Header} addCart={addCart} wishList={wishList} topMargin={topMargin} />
       </div>
     </div>
   );

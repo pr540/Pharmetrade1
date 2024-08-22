@@ -49,7 +49,7 @@ function LayoutaddProduct() {
     productName: "",
     ndcUdc: "",
     brandName: "",
-    price: 0,
+    price: "",
     amountInStock: 0,
     taxable: "",
     productDetails: "",
@@ -296,133 +296,50 @@ function LayoutaddProduct() {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   const data = new FormData();
-  //   const expirationDate = "2024-12-31";
-  //   const caption = "Sample product caption";
-  //   const metaKeywords = "sample, product, keywords";
-  //   const metaTitle = "Sample Product Title";
-  //   const metaDescription = "This is a sample description for the product.";
-  //   const saltComposition = "Sample Salt Composition";
-  //   const uriKey = "sample-product-uri";
-
-  //   data.append("AddproductID", 1);
-  //   data.append("Productcategory_id", formData.productCategory);
-  //   data.append("Sizeid", 1);
-  //   data.append("ProductName", formData.productName);
-  //   data.append("NDCorUPC", formData.ndcUdc);
-  //   data.append("BrandName", formData.brandName);
-  //   data.append("PriceName", formData.price);
-  //   data.append("UPNmemberPrice", formData.upnMemberPrice);
-  //   data.append("AmountInStock", formData.amountInStock);
-  //   data.append("Taxable", formData.taxable == 1);
-
-  //   data.append("ExpirationDate", expirationDate);
-  //   data.append("Caption", caption);
-  //   data.append("MetaKeywords", metaKeywords);
-  //   data.append("MetaTitle", metaTitle);
-  //   data.append("MetaDescription", metaDescription);
-  //   data.append("SaltComposition", saltComposition);
-  //   data.append("UriKey", uriKey);
-
-  //   // Append file if it exists
-  //   if (formData.imageUrl) {
-  //     data.append("ImageUrl", formData.imageUrl); // File object
-  //   }
-
-  //   data.append("PackCondition", "Active");
-  //   data.append("ProductDescription", "Product Description");
-
-  //   if (formData.salePrice) data.append("SalePrice", formData.salePrice);
-  //   data.append("SalePriceFrom", expirationDate);
-  //   data.append("SalePriceTo", expirationDate);
-  //   if (formData.manufacturer) data.append("Manufacturer", formData.manufacturer);
-  //   if (formData.strength) data.append("Strength", formData.strength);
-  //   data.append("Fromdate", expirationDate);
-  //   if (formData.lotNumber) data.append("LotNumber", formData.lotNumber);
-  //   data.append("PackQuantity", 200);
-  //   if (formData.packType) data.append("PackType", formData.packType);
-  //   if (formData.packCondition)
-  //     data.append("PackCondition", formData.packCondition.otherCondition);
-  //   if (formData.productDetails)
-  //     data.append("ProductDescription", formData.productDetails);
-  //   if (formData.aboutProduct)
-  //     data.append("AboutTheProduct", formData.aboutProduct);
-  //   if (formData.categorySpecification)
-  //     data.append("CategorySpecificationId", formData.categorySpecification);
-  //   data.append("ProductTypeId", 1);
-  //   data.append("SellerId", 1);
-
-  //   // Sending data with fetch
-  //   try {
-  //     const response = await fetch(
-  //       "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
-  //       {
-  //         method: "POST",
-  //         body: data,
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       const errorDetails = await response.json();
-  //       throw new Error(
-  //         `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
-  //           errorDetails
-  //         )}`
-  //       );
-  //     }
-
-  //     const result = await response.json();
-  //     console.log("Product Data", result);
-  //     console.log(result);
-  //     return result;
-  //   } catch (error) {
-  //     console.error("There was a problem with the fetch operation:", error);
-  //     throw error;
-  //   }
-  // };
+  
 
   const handleSubmit = async () => {
     const data = {
-      AddproductID: 1,
-      Productcategory_id: formData.productCategory,
-      Sizeid: 1,
-      ProductName: formData.productName,
-      NDCorUPC: formData.ndcUdc,
-      BrandName: formData.brandName,
-      PriceName: formData.price,
-      UPNmemberPrice: formData.upnMemberPrice,
-      AmountInStock: formData.amountInStock,
-      Taxable: formData.taxable == 1,
-      ExpirationDate: "2024-12-31",
-      Caption: "Sample product caption",
-      MetaKeywords: "sample, product, keywords",
-      MetaTitle: "Sample Product Title",
-      MetaDescription: "This is a sample description for the product.",
-      SaltComposition: "Sample Salt Composition",
-      UriKey: "sample-product-uri",
+      productID: "0",
+      productCategoryId: formData.productCategory,  // Correct field name
+      productGalleryId: 0,  // Adding missing field
+      productSizeId: 1,  // Correct field name
+      productName: formData.productName,  // Correct field name
+      ndCorUPC: formData.ndcUdc,  // Correct field name
+      brandName: formData.brandName,  // Correct field name
+      priceName: formData.price.toString(),  // Ensure this field is a string
+      upnMemberPrice: formData.upnMemberPrice,
+      amountInStock: formData.amountInStock,
+      taxable: formData.taxable == 1,
+      salePrice: formData.salePrice,
+      salePriceValidFrom: "2024-12-31",  // Placeholder date, adjust if needed
+      salePriceValidTo: "2024-12-31",  // Placeholder date, adjust if needed
+      manufacturer: formData.manufacturer,
+      strength: formData.strength,
+      availableFromDate: "2024-12-31",  // Placeholder date, adjust if needed
+      lotNumber: formData.lotNumber,
+      expiryDate: "2024-12-31",  // Placeholder date, adjust if needed
+      packQuantity: 200,
+      packType: formData.packType,
+      // packCondition: formData.packCondition || "Active",  // Added fallback for missing value
       PackCondition: "Active",
-      ProductDescription: "Product Description",
-      SalePrice: formData.salePrice,
-      SalePriceFrom: "2024-12-31",
-      SalePriceTo: "2024-12-31",
-      Manufacturer: formData.manufacturer,
-      Strength: formData.strength,
-      Fromdate: "2024-12-31",
-      LotNumber: formData.lotNumber,
-      PackQuantity: 200,
-      PackType: formData.packType,
-      PackCondition: formData.packCondition?.otherCondition,
-      ProductDescription: formData.productDetails,
-      AboutTheProduct: formData.aboutProduct,
-      CategorySpecificationId: formData.categorySpecification,
-      ProductTypeId: 1,
-      SellerId: 1,
+      productDescription: formData.productDetails,  // Correct field name
+      metaKeywords: "sample, product, keywords",  // Static value
+      metaTitle: "Sample Product Title",  // Static value
+      metaDescription: "This is a sample description for the product.",  // Static value
+      saltComposition: "Sample Salt Composition",  // Static value
+      uriKey: "sample-product-uri",  // Static value
+      aboutTheProduct: formData.aboutProduct,  // Correct field name
+      categorySpecificationId: formData.categorySpecification,  // Correct field name
+      productTypeId: 1,  // Static value
+      sellerId: "510b1b0a-596d-11ef-8a1f-0affd374995f",  // Static value
+      imageUrl: "string",  // Added missing field, placeholder value
+      caption: "Sample product caption",  // Added missing field, placeholder value
     };
-
+  
     try {
       const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/InsertProduct",
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/Add",
         {
           method: "POST",
           headers: {
@@ -431,17 +348,23 @@ function LayoutaddProduct() {
           body: JSON.stringify(data),
         }
       );
-
+  
       if (!response.ok) {
-        const errorDetails = await response.json();
+        const errorDetails = await response.text(); // Get response text instead of json
         throw new Error(
-          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
-            errorDetails
-          )}`
+          `Error: ${response.status} ${response.statusText} - ${errorDetails}`
         );
       }
-
-      const result = await response.json();
+  
+      const contentType = response.headers.get("Content-Type");
+      let result;
+  
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        result = await response.text(); // Handle non-JSON responses
+      }
+  
       console.log("Product Data", result);
       return result;
     } catch (error) {
@@ -449,6 +372,10 @@ function LayoutaddProduct() {
       throw error;
     }
   };
+  
+
+
+  
 
   console.log(formData);
   const renderTabContent = () => {

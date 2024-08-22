@@ -121,7 +121,7 @@ function Sliders({wishList,addCart}) {
              addCart={addCart} wishList={wishList}
               products={newProducts.slice(0, 3)}
               heading="Rx Items"
-              path="/products"
+              path={`/products?header=${"Rx Items"}`}
             />
           </div>
           <div className="w-[48%]">
@@ -129,7 +129,7 @@ function Sliders({wishList,addCart}) {
              addCart={addCart} wishList={wishList}
               products={newProducts.slice(0, 3)}
               heading="OTC Items"
-              path="/products"
+              path={`/products?header=${"OTC Items"}`}
             />
           </div>
         </div>
