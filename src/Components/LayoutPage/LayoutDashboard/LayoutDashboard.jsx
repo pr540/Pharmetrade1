@@ -333,7 +333,7 @@ function LayoutDashboard ({ topMargin, addCart, wishList }) {
                       <img src={cart} className="w-5 h-5 cursor-pointer" alt="Cart" />
                       <button
                         className="font-semibold"
-                        onClick={() => handleSubmit(product, quantities[index])}
+                        onClick={() => handleCart(index)}
                       >
                         ADD
                       </button>
