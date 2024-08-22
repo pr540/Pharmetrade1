@@ -753,10 +753,6 @@
 
 // export default LayoutBuy;
 
-
-
-
-
 // import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 
@@ -777,7 +773,6 @@
 // //  import filter from "../assets/Icons/filter_icon.png";
 // // import filter from '../../../assets/Icons/filter_icon.png'
 // import filter from "../../../assets/Filter_icon.png";
-
 
 // function LayoutBuy({ topMargin, addCart, wishList }) {
 //   const { pop, setPop } = useNavbarContext();
@@ -838,8 +833,6 @@
 //     setCurrentPage((prev) => Math.max(prev - 1, 1));
 //   };
 
-
-
 //   const Star = ({ filled, onClick }) => (
 //     <span
 //       onClick={onClick}
@@ -848,7 +841,6 @@
 //       {filled ? "★" : "☆"}
 //     </span>
 //   );
-
 
 //   // const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 //   // const [selectedCategories, setSelectedCategories] = useState([]);
@@ -862,8 +854,6 @@
 //   //     setSelectedCategories([...selectedCategories, category]);
 //   //   }
 //   // };
-
-
 
 //   const [isOpen, setIsOpen] = useState({
 //     categories: false,
@@ -963,7 +953,7 @@
 //         {/* <Search>
 //           <SearchIconWrapper>
 //             <img src={search} className="w-4" />
-            
+
 //           </SearchIconWrapper>
 //           <StyledInputBase
 //             placeholder="Search…"
@@ -1079,7 +1069,6 @@
 
 // export default LayoutBuy;
 
-
 // import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 
@@ -1100,7 +1089,6 @@
 // //  import filter from "../assets/Icons/filter_icon.png";
 // // import filter from '../../../assets/Icons/filter_icon.png'
 // import filter from "../../../assets/Filter_icon.png";
-
 
 // function LayoutBuy({ topMargin, addCart, wishList }) {
 //   const { pop, setPop } = useNavbarContext();
@@ -1161,8 +1149,6 @@
 //     setCurrentPage((prev) => Math.max(prev - 1, 1));
 //   };
 
-
-
 //   const Star = ({ filled, onClick }) => (
 //     <span
 //       onClick={onClick}
@@ -1171,7 +1157,6 @@
 //       {filled ? "★" : "☆"}
 //     </span>
 //   );
-
 
 //   // const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 //   // const [selectedCategories, setSelectedCategories] = useState([]);
@@ -1185,8 +1170,6 @@
 //   //     setSelectedCategories([...selectedCategories, category]);
 //   //   }
 //   // };
-
-
 
 //   const [isOpen, setIsOpen] = useState({
 //     categories: false,
@@ -1286,7 +1269,7 @@
 //         {/* <Search>
 //           <SearchIconWrapper>
 //             <img src={search} className="w-4" />
-            
+
 //           </SearchIconWrapper>
 //           <StyledInputBase
 //             placeholder="Search…"
@@ -1401,8 +1384,6 @@
 // }
 
 // export default LayoutBuy;
-
-
 
 // import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -1688,7 +1669,7 @@
 //                           />
 //                         </div>
 //                          <p className="font-semibold ">Add </p>
-                        
+
 //                       </div>
 //                     </div>
 //                   </div>
@@ -1747,7 +1728,6 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
   const [quantities, setQuantities] = useState([]);
   const [ProductsList, setProductsList] = useState([]);
   const [showMore, setShowMore] = useState({}); // State for "More" content visibility
-
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -1914,7 +1894,8 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                 ProductsList.map((product, index) => (
                   <div
                     key={index}
-                    className="flex p-4 border w-full justify-around shadow-lg rounded-md mb-4">
+                    className="flex p-4 border w-full justify-around shadow-lg rounded-md mb-4"
+                  >
                     <div className="flex flex-col mx-2">
                       <img
                         src={product.imageUrl}
@@ -1928,7 +1909,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                       <p className="font-semibold">Item Details</p>
                       <div className="mt-2">
                         <p className="font-semibold">{product.productName}</p>
-                        <p className="text-xs mt-1 w-60">
+                        {/* <p className="text-xs mt-1 w-60">
                           {showMore[index]
                             ? product.productDescription
                             : `${product.productDescription.slice(0, 50)}...`}
@@ -1938,6 +1919,20 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                           >
                             {showMore[index] ? "See Less" : "See More"}
                           </button>
+                        </p> */}
+
+                        <p className="text-xs mt-1 w-60">
+                          {showMore[index]
+                            ? product.productDescription
+                            : `${product.productDescription.slice(0, 50)}...`}
+                          {product.productDescription.length > 50 && (
+                            <button
+                              className="text-blue-500 ml-1"
+                              onClick={() => toggleShowMore(index)}
+                            >
+                              {showMore[index] ? "See Less" : "See More"}
+                            </button>
+                          )}
                         </p>
                         <div className="flex w-full mt-1 gap-1">
                           <img src={Expicon} className="w-6 h-6" />
@@ -1957,7 +1952,9 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                         <p className=" text-red-500 font-semibold">
                           {product.package}
                         </p>
-                        <p className="text-base mt-1">{product.packCondition}</p>
+                        <p className="text-base mt-1">
+                          {product.packCondition}
+                        </p>
                       </div>
                     </div>
 
@@ -1973,9 +1970,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                     <div className="flex flex-col mx-3">
                       <p className="font-semibold">Unit Price</p>
                       <div className="mt-2">
-                        <p className=" font-semibold">
-                          ${product.salePrice}
-                        </p>
+                        <p className=" font-semibold">${product.salePrice}</p>
                       </div>
                     </div>
 
@@ -2003,9 +1998,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                       {/* <p className="font-semibold">Wishlist</p> */}
                       <div className="mt-2">
                         <img
-                          src={
-                            favoriteItems[index] ? filledHeart : emptyHeart
-                          }
+                          src={favoriteItems[index] ? filledHeart : emptyHeart}
                           className="w-6 h-6 cursor-pointer"
                           onClick={() => handleClick(index)}
                           alt="Wishlist Icon"
@@ -2024,7 +2017,6 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                           />
                         </div>
                         <p className="font-semibold ">Add </p>
-
                       </div>
                     </div>
                   </div>
@@ -2058,6 +2050,3 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 }
 
 export default LayoutBuy;
-
-
-

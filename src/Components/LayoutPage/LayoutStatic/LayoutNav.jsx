@@ -279,16 +279,21 @@ const LayoutNav = ({ cartItems }) => {
     navigate("/cart");
   }
 
+  // const navItems = [
+  //   { image: buy, text: "BUY" },
+  //   { image: sell, text: "SELL" },
+  // ];
+
   const navItems = [
-    { image: buy, text: "BUY" },
-    { image: sell, text: "SELL" },
+    { image: buy, text: "BUY", path: "/layout/layoutbuy" },
+    { image: sell, text: "SELL", path: "/layout/addproduct" },
   ];
 
   const iconItems = [
     { icon: OTCProd, text: "OTC Products" },
     { icon: buyagain, text: "Buy Again" },
     { icon: deals, text: "Deals" },
-    
+
     // { icon: notification, text: "" },
   ];
 
@@ -296,13 +301,31 @@ const LayoutNav = ({ cartItems }) => {
     <div className="my-3 pb-2 cursor-pointer border-b-2 border-gray-300 shadow-lg">
       <div className="flex justify-around items-center">
         {/* Navigation items with images */}
-        <div className="flex">
+        {/* <div className="flex">
           {navItems.map((item, index) => (
             <div key={index} className="flex items-center  ml-2">
+
               <img src={item.image} className="w-8 h-8 mr-[2px]" alt={item.text} />
               <span className="text-sm font-semibold my-1  ">
                 {item.text}
               </span>
+            </div>
+          ))}
+        </div> */}
+
+        <div className="flex">
+          {navItems.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center ml-2 cursor-pointer"
+              onClick={() => navigate(item.path)}
+            >
+              <img
+                src={item.image}
+                className="w-8 h-8 mr-[2px]"
+                alt={item.text}
+              />
+              <span className="text-sm font-semibold my-1">{item.text}</span>
             </div>
           ))}
         </div>
