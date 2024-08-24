@@ -100,11 +100,11 @@ const ProductDetails = () => {
   const images = Array(4).fill(nature);
 
   return (
-    <div className="w-[92%] h-full flex justify-center ">
+    <div className="w-[95%] h-full flex justify-center ">
       <div className="h-full w-[95%] ">
-        <h2 className="text-xl font-bold text-blue-900">PRODUCT DETAILS</h2>
+        <h2 className="text-xl font-bold text-black">PRODUCT DETAILS</h2>
         <div>
-          <h4 className="text-xl font-semibold my-5">Description</h4>
+          <h4 className="text-xl font-semibold text-blue-900 my-5">Description</h4>
           <div className="h-full w-[95%]  font-medium space-y-2">
             <p className="font-normal text-[16px] font-sans">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet.
@@ -128,19 +128,19 @@ const ProductDetails = () => {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mt-3">Product Form</h2>
+            <h2 className="text-xl font-semibold text-blue-900 mt-3">Product Form</h2>
             <span className="font-normal text-[16px]">Tablet</span>
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mt-4">Directions for Use:</h2>
+            <h2 className="text-xl font-semibold text-blue-900 mt-4">Directions for Use:</h2>
             <span className="font-normal text-[16px]">
               Take one tablet daily or as directed by your physician.
             </span>
           </div>
 
           <div className="">
-            <h2 className="text-xl font-semibold mt-4">Safety Information:</h2>
+            <h2 className="text-xl font-semibold text-blue-900 mt-4">Safety Information:</h2>
             <div className="p-6">
               <ul className="font-normal list-disc font-sans text-[16px] pl-5 space-y-2">
                 <li>Keep out of reach of children</li>

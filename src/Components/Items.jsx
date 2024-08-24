@@ -683,7 +683,7 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
         </div>
 
         <div className="w-[60%] overflow-scroll h-[500px] flex">
-          <div className="w-[60%] ">
+          <div className="w-[50%] ">
             <div>
               <h1 className="text-2xl font-semibold text-box">
                 Vitamin C(1000IU) Cap X
@@ -809,18 +809,18 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-100 p-2 w-[360px] border rounded-lg my-2 flex text-sky-400">
+            <div className="bg-gray-100 p-2 w-full border rounded-lg my-2 flex text-sky-400">
               <p>
                 <CiDiscount1 className=" text-2xl" />
               </p>{" "}
               {""} {""}
-              <p className=" text-[17px]  font-semibold">
+              <p className=" text-[15px]  font-semibold">
                 Add 15 products to cart and get 10$ discount
               </p>
             </div>
 
             <div className=" w-full flex justify-center flex-col ">
-              <div className="w-[80%] flex items-center justify-between p-2  bg-gray-100 rounded-lg">
+              <div className="w-full flex items-center justify-between p-2  bg-gray-100 rounded-lg">
                 <span className="text-base font-semibold">Ship to</span>
                 <button
                   onClick={() => setIsFormVisible(!isFormVisible)}
@@ -988,103 +988,13 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
         </div>
       </div>
 
-      {/* <div className="h-full w-full my-8">
-        <div className="w-[80%] ml-10 text-blue-900 border-y-2 font-semibold text-xl p-4 flex justify-between  cursor-pointer">
-          <h1 onClick={() => setshow(1)}>PRODUCT DETAILS </h1>
-          <span>|</span>
-          <h1 onClick={() => setshow(2)}>RATINGS & REVIEWS</h1>
-          <span>|</span>
-          <h1 onClick={() => setshow(3)}>ALTERNATIVES</h1>
-          <span>|</span>
-          <h1 onClick={() => setshow(4)}>CUSTOMERS ALSO BOUGHT</h1>
-          <span>|</span>
-          <h1 onClick={() => setshow(5)}>SIMILAR PRODUCTS</h1>
-        </div>
-      </div>
-
-      <div className="h-full w-full ">
-        {show == 1 && <ProductDetails />}
-        {show == 2 && (
-          <div className="flex  justify-center items-center flex-col ml-10">
-            <h2 className="text-xl font-bold text-blue-900">
-              RATINGS & REVIEWS
-            </h2>
-          </div>
-        )}
-        {show == 3 && (
-          <div>
-            <h2 className="text-xl font-bold text-blue-900">ALTERNATIVES</h2>
-            <div className="flex justify-center w-full h-full">
-              <div className="w-[90%]">
-                <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-12">
-                  {images.map((img, index) => (
-                    <div
-                      key={index}
-                      className="w-full max-w-lg border p-2 rounded-xl"
-                      // onClick={handleClick}
-                    >
-                      <Link to="/detailspage">
-                        <div className="flex justify-center">
-                          <img
-                            src={img}
-                            alt={nature - `${index}`}
-                            className="h-48 w-36 pl-3 bg-foots rounded-lg"
-                          />
-                        </div>
-                      </Link>
-                      <div className="w-full py-2">
-                        <h2 className="text-fonts">SKU 6545555</h2>
-                        <h1 className="text-fonts">$50.99</h1>
-                      </div>
-                      <div className="flex flex-row items-center justify-between w-full px-1">
-                        <div className="text-foot text-xs">
-                          UPN member price:
-                        </div>
-                        <div className="text-lg font-semibold">$45.00</div>
-                      </div>
-                      <ul className="flex flex-row justify-around gap-5 py-4">
-                        <li>
-                          <img
-                            src={addcart}
-                            alt="Add to cart"
-                            className="size-8"
-                          />
-                        </li>
-                        <li>
-                          <img src={fav} alt="Favorite" className="size-8" />
-                        </li>
-                        <li>
-                          <img src={other} alt="Other" className="size-8" />
-                        </li>
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {show == 4 && (
-          <div>
-            <h2 className="text-xl font-bold text-blue-900">
-              CUSTOMERS ALSO BOUGHT
-            </h2>
-          </div>
-        )}
-        {show == 5 && (
-          <div>
-            <h2 className="text-xl  font-bold text-blue-900">
-              SIMILAR PRODUCTS
-            </h2>
-          </div>
-        )}
-      </div> */}
+   
 
       <div className="h-full w-full flex flex-col justify-center items-center">
         <ProductDetails />
 
         <div className="w-[92%] ">
-          <ProductSlider
+          <ProductSlider 
             addCart={addCart}
             Title={"Alterntives"}
             data={newProducts}
@@ -1093,7 +1003,7 @@ function Items({ onClose, topMargin, addCart, cartItems, setCartItems }) {
 
         <div className="w-[92%] flex flex-col md:flex-row justify-start gap-8 p-4">
           <div className="w-full md:w-1/3">
-            <h2 className="text-xl font-bold text-blue-900 mb-4">
+            <h2 className="text-xl font-bold text-black mb-4">
               RATINGS & REVIEWS
             </h2>
             {[5, 4, 3, 2, 1].map((rating) => (
