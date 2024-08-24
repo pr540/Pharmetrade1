@@ -1704,6 +1704,7 @@
 
 // export default LayoutBuy;
 
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
@@ -1909,17 +1910,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                       <p className="font-semibold">Item Details</p>
                       <div className="mt-2">
                         <p className="font-semibold">{product.productName}</p>
-                        {/* <p className="text-xs mt-1 w-60">
-                          {showMore[index]
-                            ? product.productDescription
-                            : `${product.productDescription.slice(0, 50)}...`}
-                          <button
-                            className="text-blue-500 ml-1"
-                            onClick={() => toggleShowMore(index)}
-                          >
-                            {showMore[index] ? "See Less" : "See More"}
-                          </button>
-                        </p> */}
+                       
 
                         <p className="text-xs mt-1 w-60">
                           {showMore[index]
@@ -1930,7 +1921,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                               className="text-blue-500 ml-1"
                               onClick={() => toggleShowMore(index)}
                             >
-                              {showMore[index] ? "See Less" : "See More"}
+                              {showMore[index] ? "See Less" : " More details"}
                             </button>
                           )}
                         </p>
@@ -1958,14 +1949,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
                       </div>
                     </div>
 
-                    {/* <div className="flex flex-col mx-3">
-                      <p className="font-semibold">Price</p>
-                      <div className="mt-2">
-                        <p className="text-red-500 font-semibold">
-                          ${product.price}
-                        </p>
-                      </div>
-                    </div> */}
+                   
 
                     <div className="flex flex-col mx-3">
                       <p className="font-semibold">Unit Price</p>

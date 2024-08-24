@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import addcart from "../assets/cartw_icon.png";
 import fav from "../assets/Wishlist1_icon.png";
 import nature from "../assets/img1.png";
-import Items from "./Items";
+import Items from "../Components/Items";
 import next from "../assets/Next_icon.png";
 // import next from "../assets/Icons/Next_icon.png"
 // import previous from "../assets/Icons/Previous_icon.png"

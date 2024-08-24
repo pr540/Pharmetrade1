@@ -78,7 +78,7 @@
 //     setIsCollapsed(!isCollapsed);
 //   };
 
-//   const logos = 
+//   const logos =
 //     {
 //       src: profile,
 //       name :  userDetails?.customerDetails?.firstName+ " "+ userDetails?.customerDetails.lastName,
@@ -331,7 +331,6 @@
 
 // export default LayoutSidebar;
 
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -370,7 +369,7 @@ function LayoutSidebar() {
   const localData = JSON.parse(localStorage.getItem("login"));
   const customerId = localData?.userId;
   const [userDetails, setUserDetails] = useState(null);
-  const [navItems,setnavItems]=useState([]);
+  const [navItems, setnavItems] = useState([]);
   useEffect(() => {
     if (customerId) {
       if (customerId.length > 1) fetchUserDetails(customerId);
@@ -383,20 +382,16 @@ function LayoutSidebar() {
         `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/GetByCustomerId?customerId=${customerId}`
       );
       const data = await response.json();
-      if(data)
-      {
+      if (data) {
         setUserDetails(data.result[0]);
         const menuResponse = await fetch(
-            `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?accountTypeId=${data.result[0].customerDetails.accountTypeId}`
-          );
-          const menuData = await menuResponse.json();
-          if(menuData)
-          {
-            const navItems = buildNavItems(menuData.result);
-            setnavItems(navItems);
-
-          }
-
+          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?accountTypeId=${data.result[0].customerDetails.accountTypeId}`
+        );
+        const menuData = await menuResponse.json();
+        if (menuData) {
+          const navItems = buildNavItems(menuData.result);
+          setnavItems(navItems);
+        }
       }
       // if (data.statusCode === 200 && data.loginStatus === 'Success') {
       //     console.log(userDetails);
@@ -426,28 +421,29 @@ function LayoutSidebar() {
     setIsCollapsed(!isCollapsed);
   };
 
-  const logos = 
-    {
-      src: profile,
-      name :  userDetails?.customerDetails?.firstName+ " "+ userDetails?.customerDetails?.lastName,
-      Shop_name: "Valley Pharmacy",
-    }
-  ;
+  const logos = {
+    src: profile,
+    name:
+      userDetails?.customerDetails?.firstName +
+      " " +
+      userDetails?.customerDetails?.lastName,
+    Shop_name: "Valley Pharmacy",
+  };
   const buildNavItems = (menuItems) => {
     // Step 1: Organize menu items by their parent property
     const menuMap = {};
-    menuItems.forEach(item => {
+    menuItems.forEach((item) => {
       const { parent } = item;
       if (!menuMap[parent]) {
         menuMap[parent] = [];
       }
       menuMap[parent].push(item);
     });
-  
+
     // Step 2: Function to recursively build the navigation structure
     const createNavItem = (menuItem) => {
       const children = menuMap[menuItem.menuId] || [];
-  
+
       return {
         label: menuItem.menuName,
         icon: menuItem.iconPath, // Replace with appropriate icons or map menuName to icons
@@ -455,128 +451,18 @@ function LayoutSidebar() {
         ...(children.length > 0 && { children: children.map(createNavItem) }),
       };
     };
-  
+
     // Step 3: Build navItems from top-level menu items
     const navItems = menuMap[0].map(createNavItem);
-    
+
     return navItems;
   };
-  
-//   const menuItems = [ /* Your menu items array */ ];
-//   const navItems = buildNavItems(menuItems);
-  
-//   console.log(navItems);
-  
-//   const navItems = [
-//     {
-//       label: "Dashboard",
-//       icon: Dashboard,
-//       to: "/layout",
-//     },
-//     {
-//       label: "Buy",
-//       icon: Buy,
-//       to: null, // no direct link, used for dropdown
-//       children: [
-//         { label: "Buy Products", to: "/layout/layoutbuy", icon: Dashboard },
-//         { label: "Wishlist", to: "/layout/layoutwishlist", icon: Wishlist },
-//         { label: "OrderList", to: "/layout/layoutorderlist", icon: OrderList },
-//       ],
-//     },
-//     {
-//       label: "Sell",
-//       icon: Sell,
-//       to: null, // no direct link, used for dropdown
-//       children: [
-//         { label: "Add Product", to: "/layout/addproduct", icon: AddProduct },
-//         {
-//           label: "Add Bulk Product",
-//           to: "/layout/addbulkproduct",
-//           icon: BulkProducts,
-//         },
-//         {
-//           label: "Posting Products",
-//           to: "/layout/postingproducts",
-//           icon: PostingProduct,
-//         },
-//         { label: "Orders", to: "/layout/sellorders", icon: Orders },
-//         { label: "Customers", to: "/layout/sellcustomers", icon: Customers },
-//         {
-//           label: "Payment History",
-//           to: "/layout/sellpaymenthistory",
-//           icon: PaymentHistory,
-//         },
-//         { label: "Earnings", to: "/layout/sellearnings", icon: Earnings },
-//         { label: "Returns", to: "/layout/sellreturn", icon: Returns },
-//         {
-//           label: "Sales History",
-//           to: "/layout/sellassignproductlist",
-//           icon: SalesHistory,
-//         },
-//         {
-//           label: "Shipping Details",
-//           icon: ShippingDetails,
-//           to: null, // no direct link, used for sub-dropdown
-//           children: [
-//             {
-//               label: "UPS Shipping",
-//               to: "/layout/ups-shipping",
-//               icon: UpsShipping,
-//             },
-//             {
-//               label: "FedEx Shipping",
-//               to: "/layout/fedex-shipping",
-//               icon: FedExShipping,
-//             },
-//           ],
-//         },
-//         {
-//           label: "Request for Quote",
-//           icon: RequestForQuote,
-//           to: null, // no direct link, used for sub-dropdown
-//           children: [
-//             {
-//               label: "All Requested Quotes",
-//               to: "/layout/requestedquote",
-//               icon: AllRequestedQuotes,
-//             },
-//             {
-//               label: "All Quoted Products",
-//               to: "/layout/quotedproducts",
-//               icon: AllQuotedProducts,
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//     {
-//       label: "Join",
-//       icon: Dashboard,
-//       to: "/signup",
-//     },
-//     {
-//       label: "Bid",
-//       icon: Bid,
-//       to: "/layout/layoutbid",
-//     },
-//     {
-//       label: "Setting",
-//       icon: Setting,
-//       to: "/layout/layoutbid",
-//     },
-//     {
-//       label: "FAQs",
-//       icon: Faqs,
-//       to: "/faqs",
-//     },
-//   ];
 
-function handleLogout() {
-  localStorage.removeItem("login"); // Remove login data
-  localStorage.removeItem("firstname"); // Remove first name or other user data
-  navigate("/"); // Redirect to the login page
-}
-
+  function handleLogout() {
+    localStorage.removeItem("login"); // Remove login data
+    localStorage.removeItem("firstname"); // Remove first name or other user data
+    navigate("/"); // Redirect to the login page
+  }
 
   return (
     <div
@@ -590,9 +476,7 @@ function handleLogout() {
           <img src={logo} className="w-44 mb-2" alt="Logo" />
         </Link>
         <div className="flex w-40 h-28 justify-center items-center border rounded-md bg-white">
-          <div
-            className="flex justify-center flex-col items-center"
-          >
+          <div className="flex justify-center flex-col items-center">
             <img
               src={logos.src}
               className="w-10 h-10 rounded-full "
@@ -614,7 +498,7 @@ function handleLogout() {
                 className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
                 onClick={() => toggleDropdown(item.label)}
               >
-                <div className="flex items-center">
+                <div className="flex font-semibold text-lg items-center">
                   <img src={item.icon} className="w-6 h-6" alt={item.label} />
                   {!isCollapsed && <span className="ml-3">{item.label}</span>}
                 </div>
@@ -629,7 +513,7 @@ function handleLogout() {
               <Link
                 to={item.to}
                 onClick={() => handleClick(item.to)}
-                className={`flex items-center p-2 ${
+                className={`flex items-center font-semibold text-lg p-2 ${
                   activeLink === item.to
                     ? "text-white bg-gray-400"
                     : "text-white"
@@ -649,7 +533,7 @@ function handleLogout() {
                           className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
                           onClick={() => toggleDropdown(child.label)}
                         >
-                          <div className="flex items-center">
+                          <div className="flex font-semibold text-lg items-center">
                             <img
                               src={child.icon}
                               className="w-4 h-4"
@@ -670,7 +554,7 @@ function handleLogout() {
                                 <Link
                                   to={subChild.to}
                                   onClick={() => handleClick(subChild.to)}
-                                  className={`flex items-center p-2 ${
+                                  className={`flex items-center font-semibold text-lg p-2 ${
                                     activeLink === subChild.to
                                       ? "text-white bg-gray-400"
                                       : "text-white"
@@ -692,7 +576,7 @@ function handleLogout() {
                       <Link
                         to={child.to}
                         onClick={() => handleClick(child.to)}
-                        className={`flex items-center p-2 ${
+                        className={`flex items-center font-semibold text-lg p-2 ${
                           activeLink === child.to
                             ? "text-white bg-gray-400"
                             : "text-white"
@@ -715,42 +599,13 @@ function handleLogout() {
       </nav>
       {/* <button className="text-white bg-red-600 p-2 rounded-lg font-semibold">Logout</button> */}
       <button
-  className="text-white bg-red-600 p-2 rounded-lg font-semibold"
-  onClick={handleLogout}
->
-  Logout
-</button>
-
+        className="text-white bg-red-600 p-2 rounded-lg font-semibold"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
     </div>
   );
 }
 
 export default LayoutSidebar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
