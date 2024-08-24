@@ -7,6 +7,8 @@ const LayoutAddBulkProduct = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
+  
+
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
     const fileType = selectedFile.type;

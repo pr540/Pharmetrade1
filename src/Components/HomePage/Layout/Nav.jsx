@@ -1049,7 +1049,7 @@
 //         </ul>
 //         {/* down div elemenet  */}
 //         <div
-//           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen  
+//           className="flex justify-evenly bg-gray-200 w-full h-fit flex-row  md:w-screen
 //            items-center text-black  border-grey-500 shadow-lg "
 //         >
 //           <div className="flex gap-5 items-center justify-around text-blue-900 text-xs p-4 w-full md:w-fit">
@@ -1173,7 +1173,6 @@
 
 // export default Nav;
 
-
 import React from "react";
 
 import Logo from "../../../assets/logo_04.png";
@@ -1194,7 +1193,7 @@ import menu from "../../../assets/menu.png";
 import { useState, useEffect, useRef } from "react";
 import add from "../../../assets/add.png";
 // import linkedin from "../assets/linkedin.png";
-import warning from '../../../assets/Icons/warning2.png'
+import warning from "../../../assets/Icons/warning2.png";
 import linkedin from "../../../assets/linkedin_icon.png";
 import facebook from "../../../assets/facebook_icon.png";
 import insta from "../../../assets/instagram_icon.png";
@@ -1284,6 +1283,17 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
     setPopUps(null);
   };
 
+  const handleRedirect = () => {
+    navigate("/login");
+  };
+
+  // Handler for logging out
+  const handleLogout = () => {
+    localStorage.removeItem("firstname");
+    setUserDetails(null);
+    navigate("/login");
+  };
+
   const MenuItems = [
     "Home",
     "Products",
@@ -1296,12 +1306,14 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleItemclick = (item) => {
-    if (userDetails?.accountTypeId==1 && item.label === "SELL") {
-      setErrorMessage("You have login as buyer contact us help@pharmetrade.com");
+    if (userDetails?.accountTypeId == 1 && item.label === "SELL") {
+      setErrorMessage(
+        "You have login as buyer contact us help@pharmetrade.com"
+      );
     } else {
-      navigate(item.path );
-    }
-  };
+      navigate(item.path);
+    }
+  };
 
   // Clear error message after 3 seconds
   // if (errorMessage) {
@@ -1499,19 +1511,41 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                   {isPopupVisible && (
                     <div className="fixed flex z-10">
                       <div className="bg-white p-4 rounded shadow-lg w-64">
-                        <div className="w-full justify-center items-center">
+                        {/* <div className="w-full justify-center items-center">
                           <a
                             className="bg-blue-900 text-white py-1 hover:cursor-pointer px-2 rounded "
                             onClick={handleredirect}
                           >
                             Sign In
                           </a>
+                        </div> */}
+                        <div className="w-full flex ">
+                          {userDetails ? (
+                            <li
+                              className="cursor-pointer"
+                              onClick={handleLogout}
+                            >
+                              <Link
+                                to="/login"
+                                className="bg-blue-900 text-white rounded px-2 py-1"
+                              >
+                                Logout
+                              </Link>
+                            </li>
+                          ) : (
+                            <a
+                              className="bg-blue-900 text-white py-1 hover:cursor-pointer px-2 rounded"
+                              onClick={handleRedirect}
+                            >
+                              Sign In
+                            </a>
+                          )}
                         </div>
                         <p
                           className=" text-base hover:cursor-pointer"
                           onClick={handlesignup}
                         >
-                          New customer?{" "}
+                          New User?{" "}
                           <span className="text-blue-900 hover:text-red-500 hover:underline">
                             Start here
                           </span>
@@ -1541,40 +1575,14 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                               Wishlist
                             </a>
                           </li>
-                          {/* <li>
-                            <Link to="/admin" className="text-lg text-blue-900">
-                              Admin
-                            </Link>
-                          </li> */}
-                          {/* <li>
-                            <Link
-                              to="/layout"
-                              className="text-lg text-blue-900"
-                            >
-                              Demo
-                            </Link>
-                          </li> */}
-                          {/* <li
-                            className={`${
-                              FormData?.userType === "Normal Customer"
-                                ? "hidden"
-                                : ""
-                            }`}
-                          >
-                            <Link
-                              to="/seller"
-                              className="text-lg text-blue-900"
-                            >
-                              Seller Dashboard
-                            </Link>
-                          </li> */}
+
                           <li>
                             <Link href="#" className="text-lg text-blue-900">
                               Account Settings
                             </Link>
                           </li>
 
-                          {userDetails && (
+                          {/* {userDetails && (
                             <li
                               className="cursor-pointer"
                               onClick={() =>
@@ -1588,7 +1596,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                                 Logout
                               </Link>
                             </li>
-                          )}
+                          )} */}
                         </ul>
                       </div>
                     </div>
@@ -1662,27 +1670,28 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
               </li>
             ))}
           </div>
-         
 
-
-{errorMessage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-100 p-4 rounded-md shadow-md text-center">
-            <div className="flex justify-start items-center border-b border-black">
-              <img src={warning} className=" w-12 h-12"/>
-              <p className="text-red-600 text-xl font-semibold mt-2">Warning !</p>
+          {errorMessage && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-gray-100 p-4 rounded-md shadow-md text-center">
+                <div className="flex justify-start items-center border-b border-black">
+                  <img src={warning} className=" w-12 h-12" />
+                  <p className="text-red-600 text-xl font-semibold mt-2">
+                    Warning !
+                  </p>
+                </div>
+                <div className="mt-4">
+                  <p className="text-black mb-4">{errorMessage}</p>
+                  <button
+                    onClick={() => setErrorMessage("")}
+                    className="bg-red-500 text-white px-4 py-2 rounded mb-2"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
-              <div className="mt-4">
-            <p className="text-black mb-4">{errorMessage}</p>
-            <button
-              onClick={() => setErrorMessage("")}
-              className="bg-red-500 text-white px-4 py-2 rounded mb-2">
-              Close
-            </button>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
           <div className="flex bg-white rounded-md items-center w-[40%] lg:gap-10">
             <div
@@ -1773,8 +1782,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
         </div>
       </div>
     </div>
-      );
+  );
 }
 
 export default Nav;
-  

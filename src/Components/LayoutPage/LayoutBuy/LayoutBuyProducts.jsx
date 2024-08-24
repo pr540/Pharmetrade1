@@ -1752,7 +1752,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 
     fetchProducts();
   }, []);
-
+  console.log(ProductsList);
   const handleCart = (index) => {
     const product = ProductsList[index];
     const prolist = {
