@@ -100,10 +100,10 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
                 alt="Favorite Icon"
               />
               <img
-                src={item.img} // Assuming item.img contains image URL
+                src={item.imageUrl} // Assuming item.img contains image URL
                 className="h-40 cursor-pointer w-40 object-contain rounded-lg"
                 onClick={() => navigate(`/detailspage/${index}`)}
-                alt={item.name}
+                alt={item.productName}
               />
               <img
                 src={other}
@@ -113,11 +113,11 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
             </div>
             <div className="p-2 rounded-b-lg">
               <div className="flex justify-between flex-col font-medium">
-                <h2 className="text-black font-bold">{item.name}</h2>
+                <h2 className="text-black font-bold">{item.productName}</h2>
                 <div className="flex justify-between items-center">
                   <div className="flex gap-1 items-center">
-                    <h3 className="text-black font-semibold">{item.price}</h3>
-                    <span className="text-[10px] line-through">($99.69)</span>
+                    <h3 className="text-black font-semibold">${item.salePrice}</h3>
+                    <span className="text-[10px] line-through">(${item.priceName})</span>
                   </div>
                 </div>
               </div>

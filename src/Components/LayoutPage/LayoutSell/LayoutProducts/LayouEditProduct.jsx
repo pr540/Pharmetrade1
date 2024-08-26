@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const LayoutEditProduct = () => {
-  const { addproductID } = useParams();
+  const { productID } = useParams();
   const [ProductData, setProductData] = useState(null);
   useEffect(() => {
     const GetProductById = async () => {
       try {
         const response = await fetch(
-          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/ProductFilter/GetProductsById?AddproductID=${addproductID}`,
+          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetById?productId=${productID}`,
           {
             method: "GET",
           }
@@ -24,7 +24,7 @@ const LayoutEditProduct = () => {
         }
 
         const result = await response.json();
-        setProductData(result.productfilter[0]);
+        setProductData(result.result[0]);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         throw error;
@@ -48,7 +48,8 @@ const LayoutEditProduct = () => {
               <label className="text-base">Category Specification</label>
               <input
                 type="text"
-                value={ProductData?.productcategory_id}
+                value={ProductData?.
+                  categorySpecificationId}
                 id="product_name"
                 className=" w-44 h-8 border-slate-300 border"
               />
@@ -107,6 +108,8 @@ const LayoutEditProduct = () => {
               <input
                 type="text"
                 id="product_name"
+                value={ProductData?.
+                  productTypeId}
                 className=" w-44 h-8 border-slate-300 border"
               />
             </div>
@@ -128,7 +131,8 @@ const LayoutEditProduct = () => {
               <input
                 type="text"
                 id="product_name"
-                value={ProductData?.upNmemberPrice}
+                value={ProductData?.
+                  upnMemberPrice}
                 className=" w-44 h-8 border-slate-300 border"
               />
             </div>
@@ -193,7 +197,9 @@ const LayoutEditProduct = () => {
               <label className="text-base">From</label>
               <input
                 type="text"
-                value={ProductData?.fromdate}
+                value={ProductData?.
+                  availableFromDate
+                  }
                 id="product_name"
                 className=" w-44 h-8 border-slate-300 border"
               />
@@ -236,10 +242,12 @@ const LayoutEditProduct = () => {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-base">Sale Price Form($)</label>
+              <label className="text-base">Sale Price From($)</label>
               <input
                 type="text"
-                value={ProductData?.salePriceFrom}
+                value={ProductData?.
+                  salePriceValidFrom
+                  }
                 id="product_name"
                 className=" w-44 h-8 border-slate-300 border"
               />
@@ -284,7 +292,9 @@ const LayoutEditProduct = () => {
               <label className="text-base">Sale Price To($)</label>
               <input
                 type="text"
-                value={ProductData?.salePriceTo}
+                value={ProductData?.
+                  salePriceValidTo
+                  }
                 id="product_name"
                 className=" w-44 h-8 border-slate-300 border"
               />
@@ -293,7 +303,8 @@ const LayoutEditProduct = () => {
               <label className="text-base">Expiration Date</label>
               <input
                 type="text"
-                value={ProductData?.expirationDate}
+                value={ProductData?.
+                  expiryDate}
                 id="product_name"
                 className=" w-44 h-8 border-slate-300 border"
               />

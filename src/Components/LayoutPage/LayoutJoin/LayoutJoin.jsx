@@ -68,7 +68,7 @@ const LayoutJoin = () => {
     "Prescription Drug Seller",
     "General Merchandise Seller",
     "Vendor",
-    "Normal Customer",
+    "Retail Customer",
   ];
 
   const accountTypes = {
@@ -81,13 +81,13 @@ const LayoutJoin = () => {
     setAccountType("");
   };
   useEffect(() => {
-    if (userType === "Normal Customer") {
+    if (userType === "Retail Customer") {
       setAccountType("Buyer");
     }
   }, [userType]);
 
   const getAccountTypes = () => {
-    return userType === "Normal Customer"
+    return userType === "Retail Customer"
       ? accountTypes.normalCustomer
       : accountTypes.default;
   };
@@ -287,7 +287,7 @@ const LayoutJoin = () => {
       if (
         (userType === "Prescription Drug Seller" ||
           userType === "Vendor" ||
-          userType === "Normal Customer" ||
+          userType === "Retail Customer" ||
           userType !== "General Merchandise Seller") &&
         !selectedValue &&
         !formData.upnMember
@@ -298,26 +298,26 @@ const LayoutJoin = () => {
         !formData.shopName &&
         userType != "Vendor" &&
         userType != "General Merchandise Seller" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.shopName = "Shop name is required.";
-      if (!formData.legalBusinessName && userType != "Normal Customer")
+      if (!formData.legalBusinessName && userType != "Retail Customer")
         newErrors.legalBusinessName = "Legal business name is required.";
 
       if (
         !formData.dbaName &&
         userType != "Vendor" &&
         userType != "General Merchandise Seller" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.dbaName = "DBA name is required.";
-      if (!formData.BusinessPhone && userType != "Normal Customer")
+      if (!formData.BusinessPhone && userType != "Retail Customer")
         newErrors.BusinessPhone = "bussinessphone is required";
-      if (!formData.Business_Fax && userType != "Normal Customer")
+      if (!formData.Business_Fax && userType != "Retail Customer")
         newErrors.Business_Fax = "Bussiness_Fax is required";
 
       const regexpns = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!formData.Business_Email.match(regexpns) && userType != "Normal Customer")
+      if (!formData.Business_Email.match(regexpns) && userType != "Retail Customer")
         newErrors.Business_Email = " Bussiness_Email is required";
 
       if (!formData.zip) newErrors.zip = "Zip is required";
@@ -329,14 +329,14 @@ const LayoutJoin = () => {
         !formData.DEA &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.DEA = "DEA is required";
 
       if (
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       ) {
         if (!formData.DEA_Expiration_Date) {
           newErrors.DEA_Expiration_Date = "DEA Expiration Date is required";
@@ -349,14 +349,14 @@ const LayoutJoin = () => {
         !formData.DEA_License_Copy &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.DEA_License_Copy = "DEA_License_Copy is required";
 
       if (
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       ) {
         if (!formData.Pharmacy_Expiration_Date) {
           newErrors.Pharmacy_Expiration_Date =
@@ -370,7 +370,7 @@ const LayoutJoin = () => {
         !formData.Pharmacy_License_Copy &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
 
@@ -378,27 +378,27 @@ const LayoutJoin = () => {
         !formData.Pharmacy_License &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.Pharmacy_License = "Pharmacy_License is required";
       if (
         !formData.NCPDP &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.NCPDP = "NCPDP is required";
       if (
         !formData.Federal_Tax_ID &&
         userType != "General Merchandise Seller" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.Federal_Tax_ID = "Federal is required";
       if (
         !formData.NPI &&
         userType != "General Merchandise Seller" &&
         userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.NPI = "NPI is required";
     }
@@ -418,7 +418,7 @@ const LayoutJoin = () => {
     if (activeStep === 0) validatePassword(formData.password);
     if (validateStep(activeStep)) {
       setisSubmit(true);
-      if (activeStep === 2 && userType === "Normal Customer") {
+      if (activeStep === 2 && userType === "Retail Customer") {
 
         setActiveStep(4);
         return;
@@ -431,7 +431,7 @@ const LayoutJoin = () => {
         setActiveStep(3);
       } else if (
         activeStep === steps.length
-        // || (activeStep == 1 && userType === "Normal Customer")
+        // || (activeStep == 1 && userType === "Retail Customer")
       ) {
         localStorage.removeItem("formData");
         formData.userType = userType;
@@ -786,7 +786,7 @@ const LayoutJoin = () => {
           <div className="grid grid-cols-2 gap-4 align-middle">
             <div
               className={`${userType === "Vendor" ||
-                  userType === "Normal Customer" ||
+                  userType === "Retail Customer" ||
                   userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
@@ -805,7 +805,7 @@ const LayoutJoin = () => {
             </div>
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField
@@ -822,7 +822,7 @@ const LayoutJoin = () => {
             </div>
             <div
               className={`${userType === "Vendor" ||
-                  userType === "Normal Customer" ||
+                  userType === "Retail Customer" ||
                   userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
@@ -918,7 +918,7 @@ const LayoutJoin = () => {
             {/* Address */}
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField
@@ -937,7 +937,7 @@ const LayoutJoin = () => {
             </div>
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField
@@ -954,7 +954,7 @@ const LayoutJoin = () => {
             </div>
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField

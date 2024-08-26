@@ -34,9 +34,10 @@ const LayoutPostingProducts= () => {
     { label: "Total Enabled Product", value: 90, percentage: -11 },
     { label: "Price", value: "$2000", percentage: 50 },
   ];
+  
   useEffect(() => {
     fetch(
-      "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/ProductFilter/GetAllProducts"
+      "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetAll"
     )
       .then((response) => {
         if (!response.ok) {
@@ -45,7 +46,7 @@ const LayoutPostingProducts= () => {
         return response.json();
       })
       .then((data) => {
-        setProducts(data);
+        setProducts(data.result);
         setLoading(false);
       })
       .catch((error) => {
@@ -53,55 +54,14 @@ const LayoutPostingProducts= () => {
         setLoading(false);
       });
   }, []);
-  // console.log(products);
-  // const products = [
-  //   // Sample data
-  //   {
-  //     id: 1,
-  //     thumbnail: "DO62D23",
-  //     name: "Product 1",
-  //     attributeSet: "Set 1",
-  //     productStatus: "Available",
-  //     status: "Active",
-  //     type: "Type A",
-  //     sku: "54447743",
-  //     qty: "1",
-  //     qtySold: "0",
-  //     qtyconfirm: "0",
-  //     qtyPending: "0",
-  //     price: "$76.2",
-  //     created: "Sep 2021",
-  //     visibility: "Catalog",
-  //     websites: "Main Website",
-  //     Action: "Edit",
-  //   },
-  //   {
-  //     id: 2,
-  //     thumbnail: "DO62D23",
-  //     name: "Product 2",
-  //     attributeSet: "Set 2",
-  //     productStatus: "Out of Stock",
-  //     status: "Inactive",
-  //     type: "Type B",
-  //     sku: "54447743",
-  //     qty: "2",
-  //     qtySold: "1",
-  //     qtyconfirm: "0",
-  //     qtyPending: "1",
-  //     price: "$62.99",
-  //     created: "Sep 8 2021",
-  //     visibility: "Catalog",
-  //     websites: "Main Website",
-  //     Action: "Edit",
-  //   },
-  // ];
+
 
   const handleAddNewProductClick = () => {
     navigate("/seller/add-single-product");
   };
 
   const handleEditProduct = (product) => {
-    navigate(`/layout/layout-edit-single-product/${product.addproductID}`)
+    navigate(`/layout/layout-edit-single-product/${product.productID}`)
   };
 
   const handleClosePopup = () => {
@@ -178,26 +138,26 @@ const LayoutPostingProducts= () => {
               <table className="w-full">
                 <thead className="bg-blue-900 text-white">
                   <tr className="border-b-2">
-                    <th className=" px-4 py-2 text-left">Product ID</th>
+                    <th className=" px-4 py-2 text-left">Product Name</th>
                     <th className="px-4 py-2 text-left">Category Specification</th>
-                    <th className="px-4 py-2 text-left">Product Name</th>
+                    <th className="px-4 py-2 text-left">Brand Name</th>
                     {/* <th className="px-4 py-2 text-left">Product Type</th> */}
                     <th className="px-4 py-2 text-left">Product Status</th>
                     <th className="px-4 py-2 text-left">Manufacturer</th>
-                    <th className="px-4 py-2 text-left">Type</th>
+                    <th className="px-4 py-2 text-left">Strength</th>
                     <th className="px-4 py-2 text-left">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((product) => (
                     <tr key={product.id} className="border-b">
-                      <td className="px-4 py-2">{product.addproductID}</td>
-                      <td className="px-4 py-2">{product.productcategory_id}</td>
-                      <td className="px-4 py-2">{product.productName}</td>
+                      <td className="px-4 py-2 ">{product.productName}</td>
+                      <td className="px-4 py-2">{product.categorySpecificationId}</td>
+                      <td className="px-4 py-2">{product.brandName}</td>
                       {/* <td className="px-4 py-2">{product.attributeSet}</td> */}
                       <td className="px-4 py-2">{product.packCondition}</td>
                       <td className="px-4 py-2">{product.manufacturer}</td>
-                      <td className="px-4 py-2">{product.packType}</td>
+                      <td className="px-4 py-2">{product.strength}</td>
                       <td
                         className="px-4 py-2 cursor-pointer"
 

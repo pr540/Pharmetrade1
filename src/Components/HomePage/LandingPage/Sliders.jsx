@@ -42,6 +42,30 @@ import OffersSlider from "../Components/OfferBannerSlider";
 
 function Sliders({wishList,addCart}) {
   const searchBarRef = useRef(null);
+  const [OTCProducts,setOTCProducts] = useState([]);
+  const [RXProducts,setRXProducts] = useState([]);
+
+  useEffect(() => {
+    const API =async ()=>{
+      try {
+        const OTCresponse = await fetch(
+          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetOTCProducts`
+      );
+      const RXresponse = await fetch(
+        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetRxProducts`
+    );
+      const data1 = await OTCresponse.json();
+      const data2 = await RXresponse.json();
+
+      setOTCProducts(data1.result);
+      setRXProducts(data2.result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    API();
+    
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,18 +92,18 @@ function Sliders({wishList,addCart}) {
     };
   }, []);
   const images = [img1, img2, img3, img4];
-  const newProducts = [
-    { id: 1, img: img1, name: "Nature Made", price: "$99.00" },
-    { id: 2, img: img2, name: "Aspirin Syrup", price: "$89.00" },
-    { id: 3, img: img3, name: "Allegra Allergy", price: "$79.00" },
-    { id: 4, img: img4, name: "Zinc Tablets", price: "$69.00" },
-    { id: 5, img: img5, name: "NyQuil Tablets", price: "$59.00" },
-    { id: 6, img: img1, name: "Nature Made", price: "$49.00" },
-    { id: 7, img: img2, name: "Stylish Mask", price: "$39.00" },
-    { id: 8, img: img3, name: "Daily Mask", price: "$29.00" },
-    { id: 9, img: img4, name: "Night Mask", price: "$19.00" },
-    { id: 10, img: img5, name: "Morning Mask", price: "$9.00" },
-  ];
+  // const newProducts = [
+  //   { id: 1, img: img1, name: "Nature Made", price: "$99.00" },
+  //   { id: 2, img: img2, name: "Aspirin Syrup", price: "$89.00" },
+  //   { id: 3, img: img3, name: "Allegra Allergy", price: "$79.00" },
+  //   { id: 4, img: img4, name: "Zinc Tablets", price: "$69.00" },
+  //   { id: 5, img: img5, name: "NyQuil Tablets", price: "$59.00" },
+  //   { id: 6, img: img1, name: "Nature Made", price: "$49.00" },
+  //   { id: 7, img: img2, name: "Stylish Mask", price: "$39.00" },
+  //   { id: 8, img: img3, name: "Daily Mask", price: "$29.00" },
+  //   { id: 9, img: img4, name: "Night Mask", price: "$19.00" },
+  //   { id: 10, img: img5, name: "Morning Mask", price: "$9.00" },
+  // ];
 
   const mobiles = [mobile, mobile, mobile, mobile, mobile];
   const screens = [mask, covid, covid1, mask1];
@@ -119,7 +143,7 @@ function Sliders({wishList,addCart}) {
           <div className="w-[48%]">
             <ProductSection
              addCart={addCart} wishList={wishList}
-              products={newProducts.slice(0, 3)}
+              products={RXProducts.slice(0, 3)}
               heading="Rx Items"
               path={`/products?header=${"Rx Items"}`}
             />
@@ -127,7 +151,7 @@ function Sliders({wishList,addCart}) {
           <div className="w-[48%]">
             <ProductSection
              addCart={addCart} wishList={wishList}
-              products={newProducts.slice(0, 3)}
+              products={OTCProducts.slice(0, 3)}
               heading="OTC Items"
               path={`/products?header=${"OTC Items"}`}
             />

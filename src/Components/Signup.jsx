@@ -1536,8 +1536,8 @@ const Signup = () => {
   const userTypes = [
     "Retail Pharmacy",
     "General Merchandise Seller",
-    "Vendor",
-    "Normal Customer",
+    "Pharmacy Distributor",
+    "Retail Customer",
   ];
 
   const accountTypes = {
@@ -1550,13 +1550,13 @@ const Signup = () => {
     setAccountType("");
   };
   useEffect(() => {
-    if (userType === "Normal Customer") {
+    if (userType === "Retail Customer") {
       setAccountType("Buyer");
     }
   }, [userType]);
 
   const getAccountTypes = () => {
-    return userType === "Normal Customer"
+    return userType === "Retail Customer"
       ? accountTypes.normalCustomer
       : accountTypes.default;
   };
@@ -1803,8 +1803,8 @@ const Signup = () => {
 
       if (
         (userType === "Retail Pharmacy" ||
-          userType === "Vendor" ||
-          userType === "Normal Customer" ||
+          userType === "Pharmacy Distributor" ||
+          userType === "Retail Customer" ||
           userType !== "General Merchandise Seller") &&
         !selectedValue &&
         !formData.upnMember
@@ -1813,28 +1813,28 @@ const Signup = () => {
     } else if (step === 2) {
       if (
         !formData.shopName &&
-        userType != "Vendor" &&
+        userType != "Pharmacy Distributor" &&
         userType != "General Merchandise Seller" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.shopName = "Shop name is required.";
-      if (!formData.legalBusinessName && userType != "Normal Customer")
+      if (!formData.legalBusinessName && userType != "Retail Customer")
         newErrors.legalBusinessName = "Legal business name is required.";
 
       if (
         !formData.dbaName &&
-        userType != "Vendor" &&
+        userType != "Pharmacy Distributor" &&
         userType != "General Merchandise Seller" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.dbaName = "DBA name is required.";
 
-      // if (!formData.BusinessPhone && userType != "Normal Customer")
+      // if (!formData.BusinessPhone && userType != "Retail Customer")
       //   newErrors.BusinessPhone = "businessphone is required";
 
       if (
         !formData.BusinessPhone.match(regphn) &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       ) {
         if (formData.BusinessPhone.length === 0) {
           newErrors.BusinessPhone = "Business PhoneNumber is required";
@@ -1842,13 +1842,13 @@ const Signup = () => {
           newErrors.BusinessPhone = "Business PhoneNumber must be 10 digits";
       }
 
-      if (!formData.Business_Fax && userType != "Normal Customer")
+      if (!formData.Business_Fax && userType != "Retail Customer")
         newErrors.Business_Fax = "Business_Fax is required";
-      if (!formData.Business_Email && userType != "Normal Customer")
+      if (!formData.Business_Email && userType != "Retail Customer")
         newErrors.Business_Email = " Business_Email is required";
       else if (
         !formData.Business_Email.match(regexp) &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.Business_Email = " Business_Email is required";
 
@@ -1860,15 +1860,15 @@ const Signup = () => {
       if (
         !formData.DEA &&
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       )
         newErrors.DEA = "DEA is required";
 
       if (
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       ) {
         if (!formData.DEA_Expiration_Date) {
           newErrors.DEA_Expiration_Date = "DEA Expiration Date is required";
@@ -1880,15 +1880,15 @@ const Signup = () => {
       if (
         !formData.DEA_License_Copy &&
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       )
         newErrors.DEA_License_Copy = "DEA_License_Copy is required";
 
       if (
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       ) {
         if (!formData.Pharmacy_Expiration_Date) {
           newErrors.Pharmacy_Expiration_Date =
@@ -1901,36 +1901,36 @@ const Signup = () => {
       if (
         !formData.Pharmacy_License_Copy &&
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       )
         newErrors.Pharmacy_License_Copy = "Pharmacy_License_Copy is required";
 
       if (
         !formData.Pharmacy_License &&
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       )
         newErrors.Pharmacy_License = "Pharmacy_License is required";
       if (
         !formData.NCPDP &&
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       )
         newErrors.NCPDP = "NCPDP is required";
       if (
         !formData.Federal_Tax_ID &&
         userType != "General Merchandise Seller" &&
-        userType != "Normal Customer"
+        userType != "Retail Customer"
       )
         newErrors.Federal_Tax_ID = "Federal is required";
       if (
         !formData.NPI &&
         userType != "General Merchandise Seller" &&
-        userType != "Vendor" &&
-        userType != "Normal Customer"
+        userType != "Pharmacy Distributor" &&
+        userType != "Retail Customer"
       )
         newErrors.NPI = "NPI is required";
     }
@@ -1955,7 +1955,7 @@ const Signup = () => {
     if (await validateStep(activeStep)) {
       setisSubmit(true);
 
-      if (activeStep === 2 && userType === "Normal Customer") {
+      if (activeStep === 2 && userType === "Retail Customer") {
         setActiveStep(4);
         try {
           const isRegistered = await RegisterBusinessInfo(formData, userType);
@@ -2073,7 +2073,7 @@ const Signup = () => {
           ? 1
           : userType === "General Merchandise Seller"
           ? 2
-          : userType === "Vendor"
+          : userType === "Pharmacy Distributor"
           ? 3
           : 4,
       accountTypeId:
@@ -2393,7 +2393,7 @@ const Signup = () => {
                 ))}
               </div>
 
-              {/* <div className={${userType === "Vendor" ? "" :""}}>
+              {/* <div className={${userType === "Pharmacy Distributor" ? "" :""}}>
               <input type="checkbox" className="mr-2 leading-tight ml-4" />
               <label className= "text-gray-700 "> Are you a UPN Member</label>
             </div> */}
@@ -2452,8 +2452,8 @@ const Signup = () => {
           <div className="grid grid-cols-2 gap-4 align-middle">
             <div
               className={`${
-                userType === "Vendor" ||
-                userType === "Normal Customer" ||
+                userType === "Pharmacy Distributor" ||
+                userType === "Retail Customer" ||
                 userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
@@ -2472,7 +2472,7 @@ const Signup = () => {
             </div>
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField
@@ -2489,8 +2489,8 @@ const Signup = () => {
             </div>
             <div
               className={`${
-                userType === "Vendor" ||
-                userType === "Normal Customer" ||
+                userType === "Pharmacy Distributor" ||
+                userType === "Retail Customer" ||
                 userType === "General Merchandise Seller"
                   ? "hidden"
                   : ""
@@ -2586,7 +2586,7 @@ const Signup = () => {
             {/* Address */}
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField
@@ -2610,7 +2610,7 @@ const Signup = () => {
             </div>
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField
@@ -2627,7 +2627,7 @@ const Signup = () => {
             </div>
 
             <div
-              className={`${userType === "Normal Customer" ? "hidden" : ""}`}
+              className={`${userType === "Retail Customer" ? "hidden" : ""}`}
             >
               <div>
                 <TextField

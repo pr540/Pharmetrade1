@@ -380,7 +380,7 @@
 //                           </li>
 //                           {/* <li
 //                             className={`${
-//                               FormData?.userType === "Normal Customer"
+//                               FormData?.userType === "Retail Customer"
 //                                 ? "hidden"
 //                                 : ""
 //                             }`}
@@ -476,7 +476,7 @@
 //                 onClick={() => navigate(item.path)}
 //                 className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-black ${
 //                   item.label == "Sell"
-//                     ? FormData?.userType === "Normal Customer"
+//                     ? FormData?.userType === "Retail Customer"
 //                       ? "hidden"
 //                       : ""
 //                     : ""
@@ -967,7 +967,7 @@
 //                           </li> */}
 //                           {/* <li
 //                             className={`${
-//                               FormData?.userType === "Normal Customer"
+//                               FormData?.userType === "Retail Customer"
 //                                 ? "hidden"
 //                                 : ""
 //                             }`}
@@ -1059,7 +1059,7 @@
 //                 onClick={() => handleItemclick(item)}
 //                 className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-black ${
 //                   item.label === "SELL" &&
-//                   Form_Data?.userType === "Normal Customer"
+//                   Form_Data?.userType === "Retail Customer"
 //                     ? "hidden"
 //                     : ""
 //                 }`}
@@ -1175,7 +1175,8 @@
 
 import React from "react";
 
-import Logo from "../../../assets/logo_04.png";
+// import Logo from "../../../assets/logo_04.png";
+import Logo from "../../../assets/logo2.png"
 import Search from "../../../assets/search.png";
 import cart from "../../../assets/cartNav2.png";
 import like from "../../../assets/wishlistnav_icon.png";
@@ -1612,7 +1613,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                     /> */}
                     <img
                       src={cart}
-                      className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9 text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"
+                      className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9 cursor-pointer text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"
                       onClick={handleCart}
                     />
                   </a>
@@ -1627,7 +1628,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                     <img
                       src={like}
                       onClick={handleclick}
-                      className="w-1 md:w-3 lg:w-5 xl:w-7 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 hover:scale-110 transition duration-300"
+                      className="w-1 md:w-3 lg:w-5 xl:w-7 pt-2 h-2 md:h-4 lg:h-6 xl:h-8 cursor-pointer hover:scale-110 transition duration-300"
                     />{" "}
                   </a>
                 </li>
@@ -1656,7 +1657,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                 onClick={() => handleItemclick(item)}
                 className={`flex gap-1 items-center justify-center cursor-pointer font-semibold hover:text-black ${
                   item.label === "SELL" &&
-                  Form_Data?.userType === "Normal Customer"
+                  Form_Data?.userType === "Retail Customer"
                     ? "hidden"
                     : ""
                 }`}

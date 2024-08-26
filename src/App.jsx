@@ -269,7 +269,7 @@ function App() {
           <Route path='/layout/addproduct' element={<LayoutaddProduct />} />
           <Route path='/layout/addbulkproduct' element={<LayoutAddBulkProduct />} />
           <Route path='/layout/postingproducts' element={<LayoutPostingProducts/>}/>
-          <Route path="/layout/layout-edit-single-product/:addproductID" element={<LayoutEditProduct />} />
+          <Route path="/layout/layout-edit-single-product/:productID" element={<LayoutEditProduct />} />
           <Route path='/layout/sellorders' element={<LayoutSellOrders />} />
           <Route path='/layout/sellcustomers' element={<LayoutCustomers />} />
           <Route path='/layout/ups-shipping' element={<LayoutUpsShipping/>} />
@@ -283,7 +283,7 @@ function App() {
           <Route path='/layout/sellassignproducts' element={<LayoutRequestForQuote/>} />
           <Route path='/layout/saleshistory' element={<LayoutSalesHistory />} />
           <Route path='/layout/layoutsetting' element={<LayoutSetting />} />
-          <Route path='/layout/layoutbuy' element={<LayoutBuy />} />
+          <Route path='/layout/layoutbuy' element={<LayoutBuy addCart={addCart}/>} />
           <Route path='/layout/layoutjoin' element={<Signup />} />
           <Route path='/layout/layoutbid' element={<LayoutBid />} />
           <Route path='/layout/layoutwishlist' element={<LayoutWishlist 

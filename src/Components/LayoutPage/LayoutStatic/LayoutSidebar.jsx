@@ -427,7 +427,9 @@ function LayoutSidebar() {
       userDetails?.customerDetails?.firstName +
       " " +
       userDetails?.customerDetails?.lastName,
-    Shop_name: "Valley Pharmacy",
+    // Shop_name: "Valley Pharmacy",
+    Shop_name: userDetails?.businessInfo?.shopName,
+
   };
   const buildNavItems = (menuItems) => {
     // Step 1: Organize menu items by their parent property
@@ -466,7 +468,7 @@ function LayoutSidebar() {
 
   return (
     <div
-      className={`p-2 overflow-scroll h-full w-full z-[100] font-normal font-sans flex flex-col shadow-lg ${
+      className={`p-2 overflow-scroll h-full w-full z-[100] font-normal font-sans flex flex-col  shadow-lg ${
         isCollapsed ? "min-w-16 items-center" : "min-w-64"
       }`}
       style={{ backgroundColor: "rgba(14, 81, 140, 1)" }}
@@ -482,7 +484,7 @@ function LayoutSidebar() {
               className="w-10 h-10 rounded-full "
               alt="Profile"
             />
-            <p className="text-base text-red-500 font-semibold my-1">
+            <p className="text-xs text-red-500 font-semibold my-1">
               {logos.Shop_name}
             </p>
             <p className=" text-sm font-semibold">{logos.name}</p>
@@ -495,10 +497,10 @@ function LayoutSidebar() {
           <div key={index}>
             {item.children ? (
               <div
-                className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
+                className="flex items-center justify-between p-2 text-white  hover:bg-gray-400 cursor-pointer"
                 onClick={() => toggleDropdown(item.label)}
               >
-                <div className="flex font-semibold text-lg items-center">
+                <div className="flex font-normal text-[15px] items-center">
                   <img src={item.icon} className="w-6 h-6" alt={item.label} />
                   {!isCollapsed && <span className="ml-3">{item.label}</span>}
                 </div>
@@ -513,7 +515,7 @@ function LayoutSidebar() {
               <Link
                 to={item.to}
                 onClick={() => handleClick(item.to)}
-                className={`flex items-center font-semibold text-lg p-2 ${
+                className={`flex items-center font-normal text-[15px] p-2 ${
                   activeLink === item.to
                     ? "text-white bg-gray-400"
                     : "text-white"
@@ -533,7 +535,7 @@ function LayoutSidebar() {
                           className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
                           onClick={() => toggleDropdown(child.label)}
                         >
-                          <div className="flex font-semibold text-lg items-center">
+                          <div className="flex font-normal text-[15px] items-center">
                             <img
                               src={child.icon}
                               className="w-4 h-4"
@@ -554,7 +556,7 @@ function LayoutSidebar() {
                                 <Link
                                   to={subChild.to}
                                   onClick={() => handleClick(subChild.to)}
-                                  className={`flex items-center font-semibold text-lg p-2 ${
+                                  className={`flex items-center font-semibold text-[15px] p-2 ${
                                     activeLink === subChild.to
                                       ? "text-white bg-gray-400"
                                       : "text-white"
@@ -576,7 +578,7 @@ function LayoutSidebar() {
                       <Link
                         to={child.to}
                         onClick={() => handleClick(child.to)}
-                        className={`flex items-center font-semibold text-lg p-2 ${
+                        className={`flex items-center font-semibold text-[15px] p-2 ${
                           activeLink === child.to
                             ? "text-white bg-gray-400"
                             : "text-white"
