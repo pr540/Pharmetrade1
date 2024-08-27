@@ -72,16 +72,16 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
   // };
 
   const handleCart = (index) => {
-    console.log("Adding to cart:", index);
-    const prolist = {
-      id: index,
-      src: images[index],
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    addCart(prolist);
+    // console.log("Adding to cart:", index);
+    // const prolist = {
+    //   id: index,
+    //   src: images[index],
+    //   price: "$50.99",
+    //   rate: "SKU 6545555",
+    //   rates: "UPN member price:",
+    //   ratesupn: "$45.00",
+    // };
+    // addCart(prolist);
   };
 
   const handleQuantityChange = (index, delta) => {

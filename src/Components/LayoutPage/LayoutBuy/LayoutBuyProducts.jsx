@@ -375,6 +375,8 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
+
+
         if (Array.isArray(data.result)) {
           setProductsList(data.result);
           setQuantities(data.result.map(() => 1)); // Set initial quantity to 1 for all products
@@ -392,6 +394,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 
   const localData = JSON.parse(localStorage.getItem("login"));
   const customerId = localData?.userId;
+
 
   const handleCart = async (index) => {
     // const product = ProductsList[index];
@@ -430,7 +433,9 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
       const responseData = await response.json();
       console.log("Product added to cart:", responseData);
       setProductData(response)
+    
       fetchCartData()
+      window.location.reload()
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }

@@ -662,6 +662,7 @@ function Items({
   const [img, setimg] = useState(nature);
   const [show, setshow] = useState(1);
   const { id } = useParams();
+  console.log(id);
   const images = Array(8).fill(nature);
 
   const [selectedMl, setSelectedMl] = useState(null);
@@ -685,7 +686,7 @@ function Items({
       setnewProducts(data.result);
       console.log(data.result)
       console.log("getbyid",prod.result)
-      setprod(data.result[0])
+      setprod(prod.result[0])
       } catch (error) { 
         console.log(error);
       }
@@ -836,7 +837,7 @@ function Items({
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
-
+  console.log(prod)
   return (
     <div
       className="Largest:w-[1550px] mt-2  Laptop:w-full  w-full  flex flex-col font-sans overflow-hidden"
@@ -851,7 +852,7 @@ function Items({
               <img
                 onMouseEnter={() => setimg(prod?.imageUrl)}
                 src={prod?.imageUrl}
-                className="w-16 my-2 bg-gray-200 border rounded-lg object-fit hover:border-sky-500 hover:border-2 h-20"
+                className="w-16 object-cover my-2 bg-gray-200 border rounded-lg object-fit hover:border-sky-500 hover:border-2 h-20"
               />
               <img
                 onMouseEnter={() => setimg(prod?.imageUrl)}
@@ -882,11 +883,11 @@ function Items({
             </div>
             <div className="bg-gray-200 border rounded-lg w-68 h-[400px] flex justify-center items-center">
               {img === videoSample ? (
-                <video className="object-contain h-72 " controls>
+                <video className="object-contain w-96 h-72 " controls>
                   <source src={videoSample} type="video/mp4" className="" />
                 </video>
               ) : (
-                <img src={prod?.imageUrl} className="object-contain h-72" alt="Product" />
+                <img src={prod?.imageUrl} className="object-contain w-96 h-72" alt="Product" />
               )}
             </div>
          
@@ -1298,7 +1299,7 @@ function Items({
         <div className="w-[92%] border-t-2 shadow-inner ">
           <ProductSlider
             addCart={addCart}
-            Title={"More Products By Seller"}
+            Title={"More Products By Same Seller(Manda)"}
             data={newProducts}
           />
         </div>

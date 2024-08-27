@@ -214,11 +214,8 @@ function LayoutaddProduct() {
     }
   };
 
-
-
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
-     
       setImages((prevImages) => [
         ...prevImages,
         ...acceptedFiles.map((file) => ({
@@ -611,8 +608,6 @@ function LayoutaddProduct() {
                   </div>
                 </div>
 
-             
-                
                 <div>
                   <div className="flex w-full justify-between">
                     <div className="mr-4 flex flex-col w-[50%] ">
@@ -637,7 +632,6 @@ function LayoutaddProduct() {
                     </div>
                   </div>
                 </div>
-               
               </div>
             </div>
 
@@ -683,14 +677,14 @@ function LayoutaddProduct() {
                 </div>
               </div>
               <div className="w-full">
-                  <div className=" my-2">
-                    <span className="text-base font-semibold">
-                      States 
-                      (Please select multiple states by clicking on CtrlButton) :
-                    </span>
-                    <div className="w-40 h-24 pl-3 pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
-                      <label className="flex items-center">
-                        {/* <input
+                <div className=" my-2">
+                  <span className="text-base font-semibold">
+                    States :
+                    {/* (Please select multiple states by clicking on CtrlButton) : */}
+                  </span>
+                  <div className="w-40 h-32 pl-3 pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
+                    <label className="flex items-center">
+                      {/* <input
                        type="checkbox"
                           value="all"
                            name="states"
@@ -699,66 +693,66 @@ function LayoutaddProduct() {
                           checked={formData.states.includes("all")}
                             className="mr-2"
                           /> */}
-                        All Selected
-                      </label>
-                      <label className="flex items-center mt-2">
-                        <input
-                          type="checkbox"
-                          value="CA"
-                          name="states"
-                          onChange={handleInputChange}
-                          checked={formData.states.includes("CA")}
-                          className="mr-2"
-                        />
-                        California
-                      </label>
-                      <label className="flex items-center mt-2">
-                        <input
-                          type="checkbox"
-                          name="states"
-                          value="TX"
-                          onChange={handleInputChange}
-                          checked={formData.states.includes("TX")}
-                          className="mr-2"
-                        />
-                        Texas
-                      </label>
-                      <label className="flex items-center mt-2">
-                        <input
-                          type="checkbox"
-                          value="NY"
-                          name="states"
-                          onChange={handleInputChange}
-                          checked={formData.states.includes("NY")}
-                          className="mr-2"
-                        />
-                        New York
-                      </label>
-                      <label className="flex items-center mt-2">
-                        <input
-                          type="checkbox"
-                          name="states"
-                          value="FL"
-                          onChange={handleInputChange}
-                          checked={formData.states.includes("FL")}
-                          className="mr-2"
-                        />
-                        Florida
-                      </label>
-                      <label className="flex items-center mt-2">
-                        <input
-                          type="checkbox"
-                          name="states"
-                          value="IL"
-                          onChange={handleInputChange}
-                          checked={formData.states.includes("IL")}
-                          className="mr-2"
-                        />
-                        Illinois
-                      </label>
-                    </div>
+                      All Selected
+                    </label>
+                    <label className="flex items-center mt-2">
+                      <input
+                        type="checkbox"
+                        value="CA"
+                        name="states"
+                        onChange={handleInputChange}
+                        checked={formData.states.includes("CA")}
+                        className="mr-2"
+                      />
+                      California
+                    </label>
+                    <label className="flex items-center mt-2">
+                      <input
+                        type="checkbox"
+                        name="states"
+                        value="TX"
+                        onChange={handleInputChange}
+                        checked={formData.states.includes("TX")}
+                        className="mr-2"
+                      />
+                      Texas
+                    </label>
+                    <label className="flex items-center mt-2">
+                      <input
+                        type="checkbox"
+                        value="NY"
+                        name="states"
+                        onChange={handleInputChange}
+                        checked={formData.states.includes("NY")}
+                        className="mr-2"
+                      />
+                      New York
+                    </label>
+                    <label className="flex items-center mt-2">
+                      <input
+                        type="checkbox"
+                        name="states"
+                        value="FL"
+                        onChange={handleInputChange}
+                        checked={formData.states.includes("FL")}
+                        className="mr-2"
+                      />
+                      Florida
+                    </label>
+                    <label className="flex items-center mt-2">
+                      <input
+                        type="checkbox"
+                        name="states"
+                        value="IL"
+                        onChange={handleInputChange}
+                        checked={formData.states.includes("IL")}
+                        className="mr-2"
+                      />
+                      Illinois
+                    </label>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
           // </div>
@@ -768,7 +762,7 @@ function LayoutaddProduct() {
           <div className="flex flex-col w-full   font-medium font-sans justify-between text-sm">
             <div className="flex ">
               <div className="flex flex-col   ">
-                <div className="flex gap-8 my-3 items-center font-semibold">
+                <div className="flex gap-8 my-2 items-center font-semibold">
                   <div className="flex flex-col">
                     <label>
                       Price ($):<span className="text-red-600">*</span>
@@ -814,7 +808,7 @@ function LayoutaddProduct() {
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-8 ">
+                <div className="flex items-center gap-8 my-2">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
                       Sale Price ($):
@@ -1984,8 +1978,6 @@ function LayoutaddProduct() {
               Product Image: (Accepted Formats: JPEG, PNG)
             </p>
 
-           
-
             <div className="flex w-full gap-4 justify-between">
               <div className="flex flex-col w-full  p-4 border rounded-lg shadow-md">
                 <h1 className="text-xl font-bold mb-4 text-justify">
@@ -2121,14 +2113,6 @@ function LayoutaddProduct() {
             </h1>
             <p className="border-b border-blue-900 w-40  "></p>
           </div>
-          <div>
-            <button
-              onClick={handleSubmit}
-              className="border bg-blue-900 text-white -mt-5 h-8 p-2 w-16 rounded-md font-semibold  flex items-center justify-center"
-            >
-              Save
-            </button>
-          </div>
         </div>
       </div>
       <div className=" mb-6   ">
@@ -2150,6 +2134,14 @@ function LayoutaddProduct() {
         </ul>
       </div>
       <div>{renderTabContent()}</div>
+      <div className="flex justify-end">
+        <button
+          onClick={handleSubmit}
+          className="border bg-blue-900 text-white  h-8 w-16 rounded-md font-semibold  "
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 }
