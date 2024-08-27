@@ -211,7 +211,7 @@
 
 // export default LayoutNav;
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import bid from "../../../assets/Bid3d.png";
 import buy from "../../../assets/buy3d.png";
 import sell from "../../../assets/sell3d.png";
@@ -224,12 +224,15 @@ import cartNav from "../../../assets/cartNav2.png";
 import { useNavigate } from "react-router-dom";
 import OTCProd from "../../../assets/OtcProduct.png";
 import notification from "../../../assets/Notification.png";
+import { AppContext } from "../../../context";
 
-const LayoutNav = ({ cartItems }) => {
+const LayoutNav = ({  }) => {
   const [isContainerFocused, setIsContainerFocused] = useState(false);
   const [isButtonFocused, setIsButtonFocused] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [activePopUp, setActivePopUp] = useState(null); // State for active popup
+  const {cartItems} = useContext(AppContext)
+
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 

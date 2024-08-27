@@ -10,7 +10,7 @@
 
 // export default LayoutWishlist
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,8 +29,10 @@ import email from "../../../assets/envelope.png";
 import twitter from "../../../assets/twitter.png";
 import share from "../../../assets/upload1.png";
 import cross from "../../../assets/letter-x[1].png";
-function LayoutWishlist({ wishItems, setWishItems, addCart }) {
+import { AppContext } from "../../../context";
+function LayoutWishlist({ addCart }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const { wishItems, setWishItems } = useContext(AppContext)
   const [quantities, setQuantities] = useState(wishItems.map(() => 1));
   const navigate = useNavigate();
 
@@ -48,15 +50,15 @@ function LayoutWishlist({ wishItems, setWishItems, addCart }) {
   }
 
   function handleCart(index) {
-    const prolist = {
-      id: index,
-      src: wishItems[index].src,
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    addCart(prolist);
+    // const prolist = {
+    //   id: index,
+    //   src: wishItems[index].src,
+    //   price: "$50.99",
+    //   rate: "SKU 6545555",
+    //   rates: "UPN member price:",
+    //   ratesupn: "$45.00",
+    // };
+    // addCart(prolist);
     navigate("/cart");
   }
 
@@ -164,21 +166,22 @@ function LayoutWishlist({ wishItems, setWishItems, addCart }) {
               >
                 <img
                   className="h-48 w-40 rounded-lg"
-                  src={item.src}
-                  alt={item.id}
+                  src={item.product.imageUrl}
+                  alt={item.product.productName}
                 />
                 <div className="flex flex-col font-medium">
                   <Link
-                    to={`/detailspage/${item.id}`}
+                    to={`/detailspage/${item.product.productID}`}
                     className="hover:text-red-600"
                   >
                     <h3 className="text-xl font-semibold">
-                      Vitamin C(1000IU) Cap X Syrup 1000mg Nature Made
+                      {/* Vitamin C(1000IU) Cap X Syrup 1000mg Nature Made */}
+                      {item.product.productName}
                     </h3>
-                    <p className="text-xl">Cough Syrup 1000mg</p>
-                    <p className="text-xl">{item.price}</p>
+                    {/* <p className="text-xl">Cough Syrup 1000mg</p> */}
+                    <p className="text-xl font-semibold">${item.product.salePrice}</p>
                   </Link>
-                  <p className="pt-2 text-xl">Mfr. PharmaEtrade Pvt.Ltd</p>
+                  <p className="pt-2 text-xl font-semibold">Manufacturer: <span className="font-normal">{item.product.manufacturer}</span> </p>
                   <p>Quantity: 1</p>
                   <div className="flex flex-col">
                     <span className="text-lg">Expires on or after :</span>

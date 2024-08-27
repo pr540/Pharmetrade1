@@ -1173,7 +1173,7 @@
 
 // export default Nav;
 
-import React from "react";
+import React, { useContext } from "react";
 
 // import Logo from "../../../assets/logo_04.png";
 import Logo from "../../../assets/logo2.png"
@@ -1221,8 +1221,10 @@ import Suppliments from "../../All Category/Suppliments";
 import WhyPharma from "../NavLinks/WhyPharma";
 import search from "../../../assets/search-icon.png";
 import dropdown from "../../../assets/Down-arrow .png";
+import { AppContext } from "../../../context";
 
-function Nav({ topDivRef, cartItems, userType, Form_Data }) {
+function Nav({ topDivRef, userType, Form_Data }) {
+  const {cartItems} = useContext(AppContext)
   let navigate = useNavigate();
 
   const [selectedIndex, setSelectedIndex] = useState();
@@ -1604,7 +1606,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                   )}
                 </div>
 
-                <li className="relative ">
+                <li className="relative cursor-pointer ">
                   <a>
                     {/* <img
                       src={Cart}
@@ -1613,7 +1615,7 @@ function Nav({ topDivRef, cartItems, userType, Form_Data }) {
                     /> */}
                     <img
                       src={cart}
-                      className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9 cursor-pointer text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"
+                      className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9  text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"
                       onClick={handleCart}
                     />
                   </a>

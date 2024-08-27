@@ -100,11 +100,11 @@ const ProductDetails = () => {
   const images = Array(4).fill(nature);
 
   return (
-    <div className="w-[95%] h-full flex justify-center ">
+    <div className="w-[95%] h-full flex justify-center border-t-2 shadow-inner pt-4 ">
       <div className="h-full w-[95%] ">
         <h2 className="text-xl font-bold text-black">PRODUCT DETAILS</h2>
         <div>
-          <h4 className="text-xl font-semibold text-blue-900 my-5">Description</h4>
+          <h4 className="text-xl font-semibold text-blue-900 mt-2">Description</h4>
           <div className="h-full w-[95%]  font-medium space-y-2">
             <p className="font-normal text-[16px] font-sans">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet.

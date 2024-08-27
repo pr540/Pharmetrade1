@@ -669,16 +669,24 @@ function Items({
   // const [showViewCart, setShowViewCart] = useState(false);
   const [isItemAdded, setIsItemAdded] = useState(false);
   const [newProducts,setnewProducts] = useState([]);
+  const [prod, setprod] = useState(null);
+
   useEffect(() => {
     const NewProductsAPI =async ()=>{
       try {
         const response = await fetch(
           `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetRecentSoldProducts?numberOfProducts=10`
       );
+      const getbyid = await fetch(
+        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetById?productId=${id}`
+    );
       const data = await response.json();
+      const prod = await getbyid.json();
       setnewProducts(data.result);
       console.log(data.result)
-      } catch (error) {
+      console.log("getbyid",prod.result)
+      setprod(data.result[0])
+      } catch (error) { 
         console.log(error);
       }
     }
@@ -831,41 +839,32 @@ function Items({
 
   return (
     <div
-      className="Largest:w-[1550px]  Laptop:w-full  w-full  flex flex-col font-sans overflow-hidden"
+      className="Largest:w-[1550px] mt-2  Laptop:w-full  w-full  flex flex-col font-sans overflow-hidden"
       style={{
         marginTop: `${topMargin}px`,
       }}
     >
       <div className="  flex gap-4 mt-4 justify-around h-full w-full  mb-4">
         <div className="w-[40%] h-full mb-3">
-          <div className="flex flex-col ml-16  cursor-pointer">
-            <div className="bg-gray-200 border rounded-lg w-68 h-[350px] flex justify-center items-center">
-              {img === videoSample ? (
-                <video className="object-contain h-72 " controls>
-                  <source src={videoSample} type="video/mp4" className="" />
-                </video>
-              ) : (
-                <img src={img} className="object-contain h-72" alt="Product" />
-              )}
-            </div>
-            <div className="flex mt-4 overflow-y-scroll">
+          <div className="flex ml-10  cursor-pointer">
+          <div className="flex flex-col mr-4 items-center overflow-y-scroll">
               <img
-                onMouseEnter={() => setimg(Img2)}
-                src={Img2}
-                className="w-16 mx-2 bg-gray-200 border rounded-lg hover:border-sky-500 hover:border-2 h-24"
+                onMouseEnter={() => setimg(prod?.imageUrl)}
+                src={prod?.imageUrl}
+                className="w-16 my-2 bg-gray-200 border rounded-lg object-fit hover:border-sky-500 hover:border-2 h-20"
               />
               <img
-                onMouseEnter={() => setimg(nature)}
+                onMouseEnter={() => setimg(prod?.imageUrl)}
                 src={nature}
-                className="w-16 bg-gray-200 border rounded-lg hover:border-sky-500 hover:border-2 h-24"
+                className="w-16 bg-gray-200 border rounded-lg object-fit hover:border-sky-500 hover:border-2 h-20"
               />
               <img
                 onMouseEnter={() => setimg(Img2)}
                 src={Img2}
-                className="w-16 mx-2 bg-gray-200 border rounded-lg hover:border-sky-500 hover:border-2 h-24"
+                className="w-16 my-2 bg-gray-200 border rounded-lg hover:border-sky-500 hover:border-2 h-20"
               />
               <div
-                className={`border rounded-lg w-20 h-28 ${
+                className={` w-16 h-20 ${
                   isHovered ? "bg-gray-200" : ""
                 }`}
                 onMouseEnter={() => {
@@ -877,10 +876,20 @@ function Items({
                 <iframe
                   src={videoSample}
                   type="video/mp4"
-                  className="w-full h-full"
+                  className="w-full h-full rounded-lg border"
                 />
               </div>
             </div>
+            <div className="bg-gray-200 border rounded-lg w-68 h-[400px] flex justify-center items-center">
+              {img === videoSample ? (
+                <video className="object-contain h-72 " controls>
+                  <source src={videoSample} type="video/mp4" className="" />
+                </video>
+              ) : (
+                <img src={prod?.imageUrl} className="object-contain h-72" alt="Product" />
+              )}
+            </div>
+         
           </div>
         </div>
 
@@ -888,7 +897,8 @@ function Items({
           <div className="w-[50%] ">
             <div className="  border-b-2">
               <h1 className="text-2xl font-semibold text-box">
-                Vitamin C(1000IU) Cap X
+                {/* Vitamin C(1000IU) Cap X */}
+                {prod?.productName}
               </h1>
               <h3 className="text-orange-400 font-light text-sm">
                 UPN Member Price{" "}
@@ -1053,6 +1063,22 @@ function Items({
                     solutions for dullness, uneven tone, and textural
                     irregularities.
                   </li>
+                  <li>
+                    The Ordinary's Azelaic Acid 10% Suspension Brightening Cream
+                    is a multi-functional formula great for those looking for
+                    solutions for dullness, uneven tone, and textural
+                    irregularities.
+                  </li> <li>
+                    The Ordinary's Azelaic Acid 10% Suspension Brightening Cream
+                    is a multi-functional formula great for those looking for
+                    solutions for dullness, uneven tone, and textural
+                    irregularities.
+                  </li> <li>
+                    The Ordinary's Azelaic Acid 10% Suspension Brightening Cream
+                    is a multi-functional formula great for those looking for
+                    solutions for dullness, uneven tone, and textural
+                    irregularities.
+                  </li>
                 </p>
                 {/* <div className="border-t border-gray-200 pt-4 text-[15px] font-sans">
                   <div className="p-2 bg-gray-100 rounded-lg mr-4">
@@ -1077,11 +1103,11 @@ function Items({
                 </div> */}
               </div>
             </div>
-            <div>
+            {/* <div>
               <p className="text-teal-400 underline">
                 Report an issue with this product
               </p>
-            </div>
+            </div> */}
           </div>
 
           <div className="w-[50%] min-h-full mr-12  p-3 flex flex-col items-center  ">
@@ -1217,12 +1243,12 @@ function Items({
         </div>
       </div>
 
-      <div className="h-full w-full flex flex-col justify-center items-center">
+      <div className="h-full w-full flex flex-col  justify-center items-center">
         <ProductDetails />
 
        
 
-        <div className="w-[92%] flex flex-col md:flex-row justify-start gap-8 p-4">
+        <div className="w-[92%] flex flex-col md:flex-row border-t-2 shadow-inner justify-start gap-8 p-4">
           <div className="w-full md:w-1/3">
             <h2 className="text-xl font-bold text-black mb-4">
               RATINGS & REVIEWS
@@ -1261,10 +1287,18 @@ function Items({
             {/* Repeat above div for multiple reviews */}
           </div>
         </div>
-        <div className="w-[92%] ">
+        <div className="w-[92%] border-t-2 shadow-inner ">
           <ProductSlider
             addCart={addCart}
             Title={"Alterntives"}
+            data={newProducts}
+          />
+        </div>
+
+        <div className="w-[92%] border-t-2 shadow-inner ">
+          <ProductSlider
+            addCart={addCart}
+            Title={"More Products By Seller"}
             data={newProducts}
           />
         </div>

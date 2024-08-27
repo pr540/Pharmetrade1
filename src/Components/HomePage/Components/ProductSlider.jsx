@@ -52,23 +52,36 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
       behavior: "smooth",
     });
   };
+  // const handleCart = (index) => {
+  //   const currentQuantity = cartQuantities[index] || 0;
+  //   if (currentQuantity === 0) {
+  //     const prolist = {
+  //       id: index,
+  //       src: images[index],
+  //       price: "$50.99",
+  //       rate: "SKU 6545555",
+  //       rates: "UPN member price:",
+  //       ratesupn: "$45.00",
+  //     };
+  //     addCart(prolist);
+  //   }
+  //   setCartQuantities((prev) => ({
+  //     ...prev,
+  //     [index]: currentQuantity + 1,
+  //   }));
+  // };
+
   const handleCart = (index) => {
-    const currentQuantity = cartQuantities[index] || 0;
-    if (currentQuantity === 0) {
-      const prolist = {
-        id: index,
-        src: images[index],
-        price: "$50.99",
-        rate: "SKU 6545555",
-        rates: "UPN member price:",
-        ratesupn: "$45.00",
-      };
-      addCart(prolist);
-    }
-    setCartQuantities((prev) => ({
-      ...prev,
-      [index]: currentQuantity + 1,
-    }));
+    console.log("Adding to cart:", index);
+    const prolist = {
+      id: index,
+      src: images[index],
+      price: "$50.99",
+      rate: "SKU 6545555",
+      rates: "UPN member price:",
+      ratesupn: "$45.00",
+    };
+    addCart(prolist);
   };
 
   const handleQuantityChange = (index, delta) => {
@@ -115,8 +128,8 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
     </span>
   );
   return (
-    <div className="flex mt-6 flex-col justify-center pb-4 gap-6">
-      <div className="flex justify-between ml-4 font-semibold text-3xl">
+    <div className="flex mt-6 flex-col justify-center pb-4 gap-2">
+      <div className="flex justify-between ml-4 font-semibold text-[22px]">
         <p>{Title}</p>
 
         <div className="flex justify-end mr-14 gap-2">
@@ -168,7 +181,7 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                 /> */}
                 <img
                   src={item.imageUrl}
-                  onClick={() => handleProductDetails(item.id)} // Assuming item.id is the product ID
+                  onClick={() => handleProductDetails(item.productID)} // Assuming item.id is the product ID
                   alt={item.name}
                   className="h-48 w-48 object-contain rounded-lg hover:cursor-pointer"
                 />
@@ -194,7 +207,14 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                     />
                   ))}
                 </div>
-                {cartQuantities[index] ? (
+                <div
+                onClick={() => handleCart(index)}
+                className="bg-blue-900 flex gap-1 p-1 rounded-lg justify-center items-center  cursor-pointer"
+              >
+                <img src={addcart} className="h-7 p-1" />
+                <p className="text-white font-semibold">ADD</p>
+              </div>
+                {/* {cartQuantities[index] ? (
                   <div className="flex text-white justify-between items-center px-3 gap-2 mt-2">
                     <button
                       onClick={() => handleQuantityChange(index, -1)}
@@ -221,7 +241,7 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
                     <img src={addcart} className="h-7 p-1" />
                     <p className="text-white font-semibold">ADD</p>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           ))}

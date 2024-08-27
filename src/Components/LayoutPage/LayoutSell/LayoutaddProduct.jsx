@@ -214,12 +214,11 @@ function LayoutaddProduct() {
     }
   };
 
-  // Assuming getRootProps and getInputProps are defined by react-dropzone or similar
+
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
-      // Set the first accepted file as the imageUrl in formData
-
-      // Update images state for previews or other uses
+     
       setImages((prevImages) => [
         ...prevImages,
         ...acceptedFiles.map((file) => ({
@@ -483,9 +482,9 @@ function LayoutaddProduct() {
       case 0:
         return (
           // <div className="space-y-4 w-full flex">
-          <div className="  h-full flex font-sans font-medium ">
-            <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm">
-              <div className=" mx-4">
+          <div className="w-full  h-full   flex font-sans font-medium ">
+            <div className="flex flex-col w-[80%] Largest:w-[80%]  justify-between text-sm">
+              <div className=" mx-2">
                 <div className="flex gap-4 ">
                   <div>
                     <label className="font-semibold">
@@ -577,67 +576,43 @@ function LayoutaddProduct() {
                     />
                   </div>
                 </div>
-                {/* <div className="flex gap-4 my-4 font-semibold">
-                  <div>
-                    <label>
-                      Price ($):<span className="text-red-600">*</span>
+                <div className="flex gap-4 my-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">
+                      Manufacturer:
                     </label>
                     <input
-                      name="price"
-                      type="number"
+                      name="manufacturer"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
-                      value={formData.price === 0 ? "" : formData.price}
+                      value={formData.manufacturer}
                     />
                   </div>
-                  <div className="font-semibold">
-                    <label>
-                      Amount in Stock:<span className="text-red-600">*</span>
-                    </label>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">Strength:</label>
                     <input
-                      name="amountInStock"
-                      type="number"
+                      name="strength"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
-                      value={
-                        formData.amountInStock === 0
-                          ? ""
-                          : formData.amountInStock
-                      }
+                      value={formData.strength}
                     />
                   </div>
-
-                  <div>
-                    <label className="font-semibold">
-                      Taxable:<span className="text-red-600">*</span>
-                    </label>
-
-                    <select
-                      name="taxable"
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">Lot Number:</label>
+                    <input
+                      name="lotNumber"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
-                      value={formData.taxable}
-                    >
-                      <option value="">Select an option</option>
-                      <option value="0">No</option>
-                      <option value="1">Yes</option>
-                    </select>
+                      value={formData.lotNumber}
+                    />
                   </div>
-                </div> */}
-                <div>
-                  {/* <div className="my-2">
-                <span className="text-base font-semibold">
-                  States (Please select multiple states by clicking on Ctrl Button) :
-                </span>
-                <div>
-                  <select className="w-48 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                  >
-                    <option>All Selected</option>
-                  </select>
                 </div>
-              </div> */}
-                </div>
+
+             
+                
                 <div>
                   <div className="flex w-full justify-between">
                     <div className="mr-4 flex flex-col w-[50%] ">
@@ -662,13 +637,58 @@ function LayoutaddProduct() {
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div className="my-2">
+               
+              </div>
+            </div>
+
+            <div className="w-[20%]  ">
+              <div className=" ">
+                <p className="text-sm font-semibold">
+                  Product Image: ( JPEG, PNG)
+                </p>
+                <div className="flex flex-col items-center p-2 border rounded-lg shadow-md">
+                  <div
+                    {...getRootProps()}
+                    className="w-full p-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                  >
+                    <input {...getInputProps()} />
+                    <p
+                      className="text-gray-500 text-center"
+                      type="file"
+                      onChange={handleFileChange}
+                    >
+                      Click here or drag and drop images
+                    </p>
+                  </div>
+
+                  <div className="mt-4 ">
+                    {images.map((image, index) => (
+                      <div key={index} className="flex">
+                        <img
+                          src={image.preview}
+                          alt={`Preview ${index}`}
+                          className="w-20  object-contain "
+                        />
+                        <button
+                          onClick={() => removeImage(index)}
+                          className=" rounded-full p-1 hover:bg-gray-100 text-red-400"
+                        >
+                          <img src={deleteicon} className="w-5" />
+
+                          {/* <FaTrash className="w-4" />  */}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="w-full">
+                  <div className=" my-2">
                     <span className="text-base font-semibold">
-                      States (Please select multiple states by clicking on Ctrl
-                      Button) :
+                      States 
+                      (Please select multiple states by clicking on CtrlButton) :
                     </span>
-                    <div className="w-48 h-24 pl-3 pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
+                    <div className="w-40 h-24 pl-3 pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
                       <label className="flex items-center">
                         {/* <input
                        type="checkbox"
@@ -739,50 +759,6 @@ function LayoutaddProduct() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="w-[20%]">
-              <div className="my-3 ">
-                <p className="text-sm font-semibold">
-                  Product Image: ( JPEG, PNG)
-                </p>
-                <div className="flex flex-col items-center p-4 border rounded-lg shadow-md">
-                  <div
-                    {...getRootProps()}
-                    className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
-                  >
-                    <input {...getInputProps()} />
-                    <p
-                      className="text-gray-500 text-center"
-                      type="file"
-                      onChange={handleFileChange}
-                    >
-                      Click here or drag and drop images
-                    </p>
-                  </div>
-
-                  <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                    {images.map((image, index) => (
-                      <div key={index} className="">
-                        <img
-                          src={image.preview}
-                          alt={`Preview ${index}`}
-                          className="w-48 h-14 object-cover "
-                        />
-                        <button
-                          onClick={() => removeImage(index)}
-                          className=" rounded-full p-1 hover:bg-gray-100 text-red-400"
-                        >
-                          <img src={deleteicon} className="w-24" />
-
-                          {/* <FaTrash className="w-4" />  */}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           // </div>
@@ -805,41 +781,6 @@ function LayoutaddProduct() {
                       value={formData.price === 0 ? "" : formData.price}
                     />
                   </div>
-                  <div className="font-semibold flex flex-col">
-                    <label>
-                      Amount in Stock:<span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      name="amountInStock"
-                      type="number"
-                      className="w-56 h-8  border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={
-                        formData.amountInStock === 0
-                          ? ""
-                          : formData.amountInStock
-                      }
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label className="font-semibold">
-                      Taxable:<span className="text-red-600">*</span>
-                    </label>
-
-                    <select
-                      name="taxable"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.taxable}
-                    >
-                      <option value="">Select an option</option>
-                      <option value="0">No</option>
-                      <option value="1">Yes</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="flex items-center gap-8 ">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
                       UPN Member Price ($):
@@ -856,6 +797,24 @@ function LayoutaddProduct() {
                       }
                     />
                   </div>
+                  <div className="font-semibold flex flex-col">
+                    <label>
+                      Amount in Stock:<span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      name="amountInStock"
+                      type="number"
+                      className="w-56 h-8  border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={
+                        formData.amountInStock === 0
+                          ? ""
+                          : formData.amountInStock
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-8 ">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
                       Sale Price ($):
@@ -882,46 +841,40 @@ function LayoutaddProduct() {
                       value={formData.salePriceForm}
                     />
                   </div>
-                </div>
 
-                <div className="flex items-center gap-8 my-3">
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">
-                      Sale Price To($):
-                    </label>
-                    <input
-                      name="salePriceTo"
-                      type="Date"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.salePriceTo}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">
-                      Manufacturer:
-                    </label>
-                    <input
-                      name="manufacturer"
-                      type="text"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.manufacturer}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Strength:</label>
-                    <input
-                      name="strength"
-                      type="text"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.strength}
-                    />
+                  <div className="flex items-center gap-8 my-3">
+                    <div className="flex flex-col">
+                      <label className="text-sm font-semibold">
+                        Sale Price To($):
+                      </label>
+                      <input
+                        name="salePriceTo"
+                        type="Date"
+                        className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        onChange={handleInputChange}
+                        value={formData.salePriceTo}
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-8 ">
+                  <div className="flex flex-col">
+                    <label className="font-semibold">
+                      Taxable:<span className="text-red-600">*</span>
+                    </label>
+
+                    <select
+                      name="taxable"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.taxable}
+                    >
+                      <option value="">Select an option</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">Form:</label>
                     <input
@@ -932,16 +885,7 @@ function LayoutaddProduct() {
                       value={formData.form}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <label className="text-sm font-semibold">Lot Number:</label>
-                    <input
-                      name="lotNumber"
-                      type="text"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.lotNumber}
-                    />
-                  </div>
+
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
                       Expiration Date:
@@ -2039,37 +1983,73 @@ function LayoutaddProduct() {
             <p className="font-semibold">
               Product Image: (Accepted Formats: JPEG, PNG)
             </p>
-            <div className="flex flex-col  p-4 border rounded-lg shadow-md">
-              <h1 className="text-xl font-bold mb-4 text-justify">
-                Upload Images
-              </h1>
 
-              <div
-                {...getRootProps()}
-                className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
-              >
-                <input {...getInputProps()} />
-                <p className="text-gray-500 text-center">
-                  Click here or drag and drop images
-                </p>
+           
+
+            <div className="flex w-full gap-4 justify-between">
+              <div className="flex flex-col w-full  p-4 border rounded-lg shadow-md">
+                <h1 className="text-xl font-bold mb-4 text-justify">
+                  Upload Images
+                </h1>
+
+                <div
+                  {...getRootProps()}
+                  className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                >
+                  <input {...getInputProps()} />
+                  <p className="text-gray-500 text-center">
+                    Click here or drag and drop images
+                  </p>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  {images.map((image, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={image.preview}
+                        alt={`Preview ${index}`}
+                        className="w-full h-20 object-cover"
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="text-sm absolute top-0 right-0 m-1 text-red-500 bg-white rounded-full p-1 hover:bg-gray-100"
+                      >
+                        <img src={deleteicon} className="w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                {images.map((image, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={image.preview}
-                      alt={`Preview ${index}`}
-                      className="w-full h-40 object-cover"
-                    />
-                    <button
-                      onClick={() => removeImage(index)}
-                      className="text-sm absolute top-0 right-0 m-1 text-red-500 bg-white rounded-full p-1 hover:bg-gray-100"
-                    >
-                      <img src={deleteicon} className="w-4" />
-                      {/* <FaTrash /> */}
-                    </button>
-                  </div>
-                ))}
+              <div className="flex flex-col w-full  p-4 border rounded-lg shadow-md">
+                <h1 className="text-xl font-bold mb-4 text-justify">
+                  Upload Sub Images
+                </h1>
+
+                <div
+                  {...getRootProps()}
+                  className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                >
+                  <input {...getInputProps()} />
+                  <p className="text-gray-500 text-center">
+                    Click here or drag and drop images
+                  </p>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  {images.map((image, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={image.preview}
+                        alt={`Preview ${index}`}
+                        className="w-full h-40 object-cover"
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="text-sm absolute top-0 right-0 m-1 text-red-500 bg-white rounded-full p-1 hover:bg-gray-100"
+                      >
+                        <img src={deleteicon} className="w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

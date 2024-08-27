@@ -370,6 +370,7 @@ function LayoutSidebar() {
   const customerId = localData?.userId;
   const [userDetails, setUserDetails] = useState(null);
   const [navItems, setnavItems] = useState([]);
+  
   useEffect(() => {
     if (customerId) {
       if (customerId.length > 1) fetchUserDetails(customerId);
@@ -399,7 +400,7 @@ function LayoutSidebar() {
       //     console.error('Failed to fetch user details:', data.message);
       // }
 
-      console.log(userDetails);
+      console.log(userDetails,"user dyata");
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -500,7 +501,7 @@ function LayoutSidebar() {
                 className="flex items-center justify-between p-2 text-white  hover:bg-gray-400 cursor-pointer"
                 onClick={() => toggleDropdown(item.label)}
               >
-                <div className="flex font-normal text-[15px] items-center">
+                <div className="flex font-semibold text-[15px] items-center">
                   <img src={item.icon} className="w-6 h-6" alt={item.label} />
                   {!isCollapsed && <span className="ml-3">{item.label}</span>}
                 </div>
@@ -515,7 +516,7 @@ function LayoutSidebar() {
               <Link
                 to={item.to}
                 onClick={() => handleClick(item.to)}
-                className={`flex items-center font-normal text-[15px] p-2 ${
+                className={`flex items-center font-semibold text-[15px] p-2 ${
                   activeLink === item.to
                     ? "text-white bg-gray-400"
                     : "text-white"
@@ -535,7 +536,7 @@ function LayoutSidebar() {
                           className="flex items-center justify-between p-2 text-white hover:bg-gray-400 cursor-pointer"
                           onClick={() => toggleDropdown(child.label)}
                         >
-                          <div className="flex font-normal text-[15px] items-center">
+                          <div className="flex font-semibold text-[15px] items-center">
                             <img
                               src={child.icon}
                               className="w-4 h-4"
@@ -556,7 +557,7 @@ function LayoutSidebar() {
                                 <Link
                                   to={subChild.to}
                                   onClick={() => handleClick(subChild.to)}
-                                  className={`flex items-center font-semibold text-[15px] p-2 ${
+                                  className={`flex items-center font-normal text-[15px] p-2 ${
                                     activeLink === subChild.to
                                       ? "text-white bg-gray-400"
                                       : "text-white"
@@ -578,7 +579,7 @@ function LayoutSidebar() {
                       <Link
                         to={child.to}
                         onClick={() => handleClick(child.to)}
-                        className={`flex items-center font-semibold text-[15px] p-2 ${
+                        className={`flex items-center font-normal text-[15px] p-2 ${
                           activeLink === child.to
                             ? "text-white bg-gray-400"
                             : "text-white"

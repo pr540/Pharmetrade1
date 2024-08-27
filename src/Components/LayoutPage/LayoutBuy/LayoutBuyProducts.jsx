@@ -335,7 +335,7 @@
 
 
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -347,7 +347,9 @@ import emptyHeart from "../../../assets/Wishlist1_icon.png";
 import filledHeart from "../../../assets/wishlist2_icon.png";
 import Expicon from "../../../assets/Expicon.png";
 import search from "../../../assets/search1.png";
-import nature from "../../../assets/img1.png";
+import nature from "../../../assets/img1.png";  
+import { AppContext } from "../../../context";
+
 
 function LayoutBuy({ topMargin, addCart, wishList }) {
   const { pop, setPop } = useNavbarContext();
@@ -360,6 +362,8 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
   const [ProductsList, setProductsList] = useState([]);
   const [showMore, setShowMore] = useState({}); // State for "More" content visibility
   const [productData, setProductData] = useState([])
+  const { fetchCartData, fetchWishListData } = useContext(AppContext)
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -384,7 +388,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 
     fetchProducts();
   }, []);
-  console.log(ProductsList);
+  console.log("product-->", ProductsList);
 
   const localData = JSON.parse(localStorage.getItem("login"));
   const customerId = localData?.userId;
@@ -426,24 +430,74 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
       const responseData = await response.json();
       console.log("Product added to cart:", responseData);
       setProductData(response)
+      fetchCartData()
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
   };
 
-  const handleClick = (index) => {
+  // const handleClick = (index) => {
+  //   setFavoriteItems((prevState) => ({
+  //     ...prevState,
+  //     [index]: !prevState[index],
+  //   }));
+  //   const product = ProductsList[index];
+  //   const prolist = {
+  //     id: index,
+  //     src: product.imageUrl,
+  //     price: product.price,
+  //     rate: product.package,
+  //   };
+  //   wishList(prolist);
+  // };
+  const handleClick = async (index) => {
     setFavoriteItems((prevState) => ({
       ...prevState,
       [index]: !prevState[index],
     }));
-    const product = ProductsList[index];
-    const prolist = {
-      id: index,
-      src: product.imageUrl,
-      price: product.price,
-      rate: product.package,
-    };
-    wishList(prolist);
+    // const product = productsList[index];
+    // const prolist = {
+    //   id: index,
+    //   src: product.imageUrl,
+    //   price: product.price,
+    //   rate: product.package,
+    // };
+    // wishList(prolist);
+    const jsondata = {
+      wishListId: "0",
+      productID: ProductsList[index].productID,
+      customerId: customerId,
+      isActive: 1
+    }
+    // addCart(jsondata);
+
+
+    try {
+      const response = await fetch(
+        'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
+        {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsondata),
+        }
+      );
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        throw new Error(
+          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
+            errorDetails
+          )}`
+        );
+      }
+      const result = await response.json();
+      console.log("WISHLISTData===", result);
+      fetchWishListData()
+    } catch (error) {
+      // console.error("There was a problem with the fetch operation:", error);
+      throw error;
+    }
   };
 
   const handleQuantityChange = (index, newQuantity) => {
@@ -520,7 +574,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
     <div className="w-full mt-4 h-full overflow-y-scroll">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1>
-        <div className="flex">
+        <div className="flex ">
           <div className="flex gap-1">
             <select className="bg-white h-10 px-2 p-2 cursor-pointer text-black border rounded-md items-center justify-center">
               <option>Discounted Price Low to High</option>
@@ -552,7 +606,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
         </div>
       </div>
 
-      <div className="w-[95%] mt-5">
+      <div className="w-[95%] mt-5 ml-4">
         <div>
           <div className="flex flex-col">
             <div className="flex flex-col justify-between">
