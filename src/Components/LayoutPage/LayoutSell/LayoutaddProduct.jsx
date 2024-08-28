@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import filter from "../../../assets/Icons/filter_icon.png";
 import deleteicon from "../../../assets/trash.png";
+import { useStates } from "react-us-states";
+
 function LayoutaddProduct() {
   const products = [
     {
@@ -38,6 +40,13 @@ function LayoutaddProduct() {
       price: "$75.99",
     },
   ];
+
+  const [states, setStates] = useState([]);
+
+  useEffect(() => {
+    // Set the states data
+    setStates(useStates); // Adjust based on actual structure
+  }, []);
 
   const [activeTab, setActiveTab] = useState(0);
   const [images, setImages] = useState([]);
@@ -479,7 +488,7 @@ function LayoutaddProduct() {
       case 0:
         return (
           // <div className="space-y-4 w-full flex">
-          <div className="w-full  h-full   flex font-sans font-medium ">
+          <div className="w-full  h-full flex font-sans font-medium  ">
             <div className="flex flex-col w-[80%] Largest:w-[80%]  justify-between text-sm">
               <div className=" mx-2">
                 <div className="flex gap-4 ">
@@ -536,7 +545,7 @@ function LayoutaddProduct() {
                   </div>
                 </div>
                 <div className="flex gap-4 my-4">
-                <div className="font-semibold">
+                  <div className="font-semibold">
                     <label>
                       NDC / UDC:<span className="text-red-600">*</span>
                     </label>
@@ -560,7 +569,7 @@ function LayoutaddProduct() {
                       value={formData.productName}
                     />
                   </div>
-                  
+
                   <div className="font-semibold mx-1">
                     <label>
                       Brand Name:<span className="text-red-600">*</span>
@@ -677,80 +686,31 @@ function LayoutaddProduct() {
                   </div>
                 </div>
               </div>
+
               <div className="w-full">
-                <div className=" my-2">
+                <div className="my-2">
                   <span className="text-base font-semibold">
                     States :
                     {/* (Please select multiple states by clicking on CtrlButton) : */}
                   </span>
                   <div className="w-40 h-32 pl-3 pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
-                    <label className="flex items-center">
-                      {/* <input
-                       type="checkbox"
-                          value="all"
-                           name="states"
-
-                                onChange={handleInputChange}
-                          checked={formData.states.includes("all")}
-                            className="mr-2"
-                          /> */}
-                      All Selected
-                    </label>
-                    <label className="flex items-center mt-2">
-                      <input
-                        type="checkbox"
-                        value="CA"
-                        name="states"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("CA")}
-                        className="mr-2"
-                      />
-                      California
-                    </label>
-                    <label className="flex items-center mt-2">
-                      <input
-                        type="checkbox"
-                        name="states"
-                        value="TX"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("TX")}
-                        className="mr-2"
-                      />
-                      Texas
-                    </label>
-                    <label className="flex items-center mt-2">
-                      <input
-                        type="checkbox"
-                        value="NY"
-                        name="states"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("NY")}
-                        className="mr-2"
-                      />
-                      New York
-                    </label>
-                    <label className="flex items-center mt-2">
-                      <input
-                        type="checkbox"
-                        name="states"
-                        value="FL"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("FL")}
-                        className="mr-2"
-                      />
-                      Florida
-                    </label>
-                    <label className="flex items-center mt-2">
-                      <input
-                        type="checkbox"
-                        name="states"
-                        value="IL"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("IL")}
-                        className="mr-2"
-                      />
-                      Illinois
-                    </label>
+                    <label className="flex items-center">All Selected</label>
+                    {states.map((state) => (
+                      <label
+                        className="flex  mt-1"
+                        key={state.abbreviation}
+                      >
+                        <input
+                          type="checkbox"
+                          name="states"
+                          value={state.abbreviation}
+                          onChange={handleInputChange}
+                          checked={formData.states.includes(state.abbreviation)}
+                          className="mr-2"
+                        />
+                        {state.name}
+                      </label>
+                    ))}
                   </div>
                 </div>
               </div>
