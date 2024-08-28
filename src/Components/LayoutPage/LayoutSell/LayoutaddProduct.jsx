@@ -536,6 +536,18 @@ function LayoutaddProduct() {
                   </div>
                 </div>
                 <div className="flex gap-4 my-4">
+                <div className="font-semibold">
+                    <label>
+                      NDC / UDC:<span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      name="ndcUdc"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.ndcUdc}
+                    />
+                  </div>
                   <div className="font-semibold">
                     <label>
                       Product Name:<span className="text-red-600">*</span>
@@ -548,18 +560,7 @@ function LayoutaddProduct() {
                       value={formData.productName}
                     />
                   </div>
-                  <div className="font-semibold">
-                    <label>
-                      NDC / UDC:<span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      name="ndcUdc"
-                      type="text"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.ndcUdc}
-                    />
-                  </div>
+                  
                   <div className="font-semibold mx-1">
                     <label>
                       Brand Name:<span className="text-red-600">*</span>
