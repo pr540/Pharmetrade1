@@ -110,6 +110,8 @@ function App() {
   console.log(window.location.href.includes("/products"));
   const [topMargin, setTopMargin] = useState(0);
   const [wishItems, setWishItems] = useState([]);
+  const [quantities, setQuantities] = useState([]);
+  const [productsList, setProductsList] = useState([]);
   // Ref for the top fixed div
   const topDivRef = useRef(null);
   useEffect(() => {
@@ -134,6 +136,32 @@ function App() {
   const location = useLocation();
 
   const excludePatterns = /\/(seller|admin|user|login|signup|password|changepassword)/;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetAll"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
+
+        if (Array.isArray(data.result)) {
+          setProductsList(data.result);
+          setQuantities(data.result.map(() => 1)); // Set initial quantity to 1 for all products
+        } else {
+          setProductsList([]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <NavbarProvider>
@@ -199,7 +227,7 @@ function App() {
           />
           <Route
             path="/detailspage/:id"
-            element={<Items addCart={addCart} topMargin={topMargin} />}
+            element={<Items addCart={addCart} topMargin={topMargin} productList={productsList} />}
           />
           <Route
             path="/orderhistory"
@@ -283,7 +311,7 @@ function App() {
           <Route path='/layout/sellassignproducts' element={<LayoutRequestForQuote/>} />
           <Route path='/layout/saleshistory' element={<LayoutSalesHistory />} />
           <Route path='/layout/layoutsetting' element={<LayoutSetting />} />
-          <Route path='/layout/layoutbuy' element={<LayoutBuy addCart={addCart}/>} />
+          <Route path='/layout/layoutbuy' element={<LayoutBuy addCart={addCart} productList={productsList} quantities={quantities} setQuantities={setQuantities } />} />
           <Route path='/layout/layoutjoin' element={<Signup />} />
           <Route path='/layout/layoutbid' element={<LayoutBid />} />
           <Route path='/layout/layoutwishlist' element={<LayoutWishlist 

@@ -656,6 +656,7 @@ function Items({
   cartItems,
   setCartItems,
   whishlist,
+  productList
 }) {
   const [count, setCount] = useState(0);
   const [selectedDiv, setSelectedDiv] = useState("div1");
@@ -683,8 +684,8 @@ function Items({
     );
       const data = await response.json();
       const prod = await getbyid.json();
+      console.log("cacacac",data.result)
       setnewProducts(data.result);
-      console.log(data.result)
       console.log("getbyid",prod.result)
       setprod(prod.result[0])
       } catch (error) { 
@@ -1290,6 +1291,7 @@ function Items({
         </div>
         <div className="w-[92%] border-t-2 shadow-inner ">
           <ProductSlider
+            productList={productList}
             addCart={addCart}
             Title={"Alterntives"}
             data={newProducts}
@@ -1298,6 +1300,7 @@ function Items({
 
         <div className="w-[92%] border-t-2 shadow-inner ">
           <ProductSlider
+            productList = {productList}
             addCart={addCart}
             Title={"More Products By Same Seller(Manda)"}
             data={newProducts}

@@ -1,5 +1,5 @@
 // Slider.js
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import left from "../../../assets/arrowleft.png";
 import right from "../../../assets/arrowright.png";
 import addcart from "../../../assets/cartw_icon.png";
@@ -8,12 +8,17 @@ import filledHeart from "../../../assets/wishlist2_icon.png";
 import comp from "../../../assets/CompareNav2.png";
 import nature from "../../../assets/img1.png";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../../context";
 
-const ProductSlider = ({ data, Title, addCart, wishList }) => {
+const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
+  console.log("data", data)
   const [rating, setRating] = useState(0);
   const [favoriteItems, setFavoriteItems] = useState({});
   const [cartQuantities, setCartQuantities] = useState({});
   const [products, setProducts] = useState([]);
+  const [error, setError] = useState({})
+  const [loading, setLoading] = useState(true)
+  const {fetchCartData, fetchWishListData} = useContext(AppContext)
   useEffect(() => {
     fetch(
       "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetAll"
@@ -71,7 +76,10 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
   //   }));
   // };
 
-  const handleCart = (index) => {
+  const localData = JSON.parse(localStorage.getItem("login"));
+  const customerId = localData?.userId;
+
+  const handleCart = async(index) => {
     // console.log("Adding to cart:", index);
     // const prolist = {
     //   id: index,
@@ -82,6 +90,38 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
     //   ratesupn: "$45.00",
     // };
     // addCart(prolist);
+    console.log(cartQuantities);
+    const cartData = {
+      customerId: customerId, // Replace with actual customer ID
+      productId: data[index].productID,
+      quantity: cartQuantities[index],
+      isActive: 1,
+    };
+    console.log(cartData);
+    try {
+      const response = await fetch(
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cartData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add product to cart");
+      }
+
+      const responseData = await response.json();
+      console.log("Product added to cart:", responseData);
+      // setProductData(response)
+      fetchCartData()
+      window.location.reload()
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
   };
 
   const handleQuantityChange = (index, delta) => {
@@ -96,20 +136,55 @@ const ProductSlider = ({ data, Title, addCart, wishList }) => {
     });
   };
 
-  const handleClick = (index) => {
+  const handleClick = async (index) => {
     setFavoriteItems((prevState) => ({
       ...prevState,
       [index]: !prevState[index],
     }));
-    const prolist = {
-      id: index,
-      src: images[index],
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    wishList(prolist);
+    // const prolist = {
+    //   id: index,
+    //   src: images[index],
+    //   price: "$50.99",
+    //   rate: "SKU 6545555",
+    //   rates: "UPN member price:",
+    //   ratesupn: "$45.00",
+    // };
+    // wishList(prolist);
+    const jsondata = {
+      wishListId: "0",
+      productId: data[index].productID,
+      customerId: customerId,
+      isActive: 1
+    }
+    // addCart(jsondata);
+
+
+    try {
+      const response = await fetch(
+        'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
+        {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsondata),
+        }
+      );
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        throw new Error(
+          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
+            errorDetails
+          )}`
+        );
+      }
+      const result = await response.json();
+      console.log("WISHLISTData===", result);
+      fetchWishListData()
+    } catch (error) {
+      // console.error("There was a problem with the fetch operation:", error);
+      throw error;
+    }
   };
 
   // const handleproductdetiails = () => {

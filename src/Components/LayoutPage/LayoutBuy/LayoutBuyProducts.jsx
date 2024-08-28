@@ -351,46 +351,46 @@ import nature from "../../../assets/img1.png";
 import { AppContext } from "../../../context";
 
 
-function LayoutBuy({ topMargin, addCart, wishList }) {
+function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQuantities }) {
   const { pop, setPop } = useNavbarContext();
   const navigate = useNavigate();
   const images = Array(115).fill(nature);
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const [favoriteItems, setFavoriteItems] = useState({});
-  const [quantities, setQuantities] = useState([]);
-  const [ProductsList, setProductsList] = useState([]);
+  // const [quantities, setQuantities] = useState([]);
+  // const [ProductsList, setProductsList] = useState([]);
   const [showMore, setShowMore] = useState({}); // State for "More" content visibility
   const [productData, setProductData] = useState([])
   const { fetchCartData, fetchWishListData } = useContext(AppContext)
 
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(
-          "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetAll"
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetAll"
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       const data = await response.json();
 
 
-        if (Array.isArray(data.result)) {
-          setProductsList(data.result);
-          setQuantities(data.result.map(() => 1)); // Set initial quantity to 1 for all products
-        } else {
-          setProductsList([]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
+  //       if (Array.isArray(data.result)) {
+  //         setProductsList(data.result);
+  //         setQuantities(data.result.map(() => 1)); // Set initial quantity to 1 for all products
+  //       } else {
+  //         setProductsList([]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch products:", error);
+  //     }
+  //   };
 
-    fetchProducts();
-  }, []);
-  console.log("product-->", ProductsList);
+  //   fetchProducts();
+  // }, []);
+  // console.log("product-->", ProductsList);
 
   const localData = JSON.parse(localStorage.getItem("login"));
   const customerId = localData?.userId;
@@ -409,7 +409,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 
     const cartData = {
       customerId: customerId, // Replace with actual customer ID
-      productId: ProductsList[index].productID,
+      productId: productList[index].productID,
       quantity: quantities[index],
       isActive: 1,
     };
@@ -470,7 +470,7 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
     // wishList(prolist);
     const jsondata = {
       wishListId: "0",
-      productID: ProductsList[index].productID,
+      productID: productList[index].productID,
       customerId: customerId,
       isActive: 1
     }
@@ -513,9 +513,9 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = ProductsList.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(ProductsList.length / itemsPerPage);
+  const totalPages = Math.ceil(productList.length / itemsPerPage);
 
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
@@ -615,8 +615,8 @@ function LayoutBuy({ topMargin, addCart, wishList }) {
         <div>
           <div className="flex flex-col">
             <div className="flex flex-col justify-between">
-              {ProductsList.length > 0 ? (
-                ProductsList.map((product, index) => (
+              {productList.length > 0 ? (
+                productList.map((product, index) => (
                   <div
                     key={index}
                     className="flex p-4 border w-full justify-around shadow-lg rounded-md mb-4"

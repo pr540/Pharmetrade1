@@ -1,7 +1,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,7 +20,9 @@ import email from '../assets/envelope.png'
 import twitter from '../assets/twitter.png'
 import share from '../assets/upload1.png'
 import cross from '../assets/letter-x[1].png'
-function Wishlist({ topMargin, wishItems, setWishItems,addCart }) {
+import { AppContext } from "../context";
+function Wishlist({ topMargin, addCart }) {
+  const { wishItems, setWishItems} = useContext(AppContext)
   const [searchQuery, setSearchQuery] = useState('');
   const [quantities, setQuantities] = useState(wishItems.map(() => 1));
   const navigate = useNavigate();
@@ -39,15 +41,15 @@ function Wishlist({ topMargin, wishItems, setWishItems,addCart }) {
   }
 
   function handleCart(index) {
-    const prolist = {
-      id: index,
-      src: wishItems[index].src,
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    addCart(prolist);
+    // const prolist = {
+    //   id: index,
+    //   src: wishItems[index].src,
+    //   price: "$50.99",
+    //   rate: "SKU 6545555",
+    //   rates: "UPN member price:",
+    //   ratesupn: "$45.00",
+    // };
+    // addCart(prolist);
     navigate("/cart");
   }
 
@@ -114,6 +116,7 @@ function Wishlist({ topMargin, wishItems, setWishItems,addCart }) {
     },
   }));
 
+  console.log("wishListonly-->", wishItems)
   return (
     <div className="bg-gray-200 p-8" style={{ marginTop: `${topMargin}px `}}>
       <h1 className="text-2xl mb-2 text-blue-900 font-semibold">PharmEtrade {">"} Wishlist</h1>
@@ -139,12 +142,14 @@ function Wishlist({ topMargin, wishItems, setWishItems,addCart }) {
           <div className="flex flex-col gap-6">
             {wishItems.map((item, index) => (
               <div key={index} className="border rounded-lg flex justify-evenly h-56 p-4 max-w-6xl bg-white shadow-md">
-                <img className="h-48 w-40 rounded-lg" src={item.src} alt={item.id} />
+                <img className="h-48 w-40 rounded-lg" src={item.product.
+                  imageUrl} alt={item.product.productName} />
                 <div className="flex flex-col font-medium">
-                  <Link to={`/detailspage/${item.id}`} className="hover:text-red-600">
-                    <h3 className="text-xl font-semibold">Vitamin C(1000IU) Cap X Syrup 1000mg Nature Made</h3>
-                    <p className="text-xl">Cough Syrup 1000mg</p>
-                    <p className="text-xl">{item.price}</p>
+                  <Link to={`/detailspage/${item.product.productID}`} className="hover:text-red-600">
+                    {/* <h3 className="text-xl font-semibold">Vitamin C(1000IU) Cap X Syrup 1000mg Nature Made</h3> */}
+                    <h3 className="text-xl font-semibold">{ item.product.productName}</h3>
+                    {/* <p className="text-xl">Cough Syrup 1000mg</p> */}
+                    <p className="text-xl">${item.product.salePrice}</p>
                   </Link>
                   <p className="pt-2 text-xl">Mfr. PharmaEtrade Pvt.Ltd</p>
                   <p>Quantity: 1</p>
