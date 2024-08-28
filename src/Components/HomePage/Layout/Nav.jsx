@@ -1606,7 +1606,7 @@ function Nav({ topDivRef, userType, Form_Data }) {
                   )}
                 </div>
 
-                <li className="relative cursor-pointer ">
+                <li className="relative cursor-pointer " onClick={handleCart}>
                   <a>
                     {/* <img
                       src={Cart}
@@ -1616,7 +1616,7 @@ function Nav({ topDivRef, userType, Form_Data }) {
                     <img
                       src={cart}
                       className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9  text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"
-                      onClick={handleCart}
+                      // onClick={handleCart}
                     />
                   </a>
                   <div

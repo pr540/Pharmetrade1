@@ -488,7 +488,7 @@ function LayoutaddProduct() {
       case 0:
         return (
           // <div className="space-y-4 w-full flex">
-          <div className="w-full  h-full flex font-sans font-medium  ">
+          <div className="w-full  h-full flex font-sans font-medium ">
             <div className="flex flex-col w-[80%] Largest:w-[80%]  justify-between text-sm">
               <div className=" mx-2">
                 <div className="flex gap-4 ">
@@ -1934,7 +1934,7 @@ function LayoutaddProduct() {
         );
       case 4:
         return (
-          <div className="space-y-4 font-sans font-medium">
+          <div className="space-y-4 font-sans font-medium ">
             <p className="font-semibold">
               Product Image: (Accepted Formats: JPEG, PNG)
             </p>
@@ -2065,7 +2065,7 @@ function LayoutaddProduct() {
   };
 
   return (
-    <div className="w-full max-w-4xl h-full mx-auto pt-8  ml-10 overflow-scroll">
+    <div className="w-full max-w-4xl h-full mx-auto pt-8 ml-10 overflow-scroll">
       <div className="flex flex-col justify-center ">
         <div className="flex  justify-between ">
           <div>
