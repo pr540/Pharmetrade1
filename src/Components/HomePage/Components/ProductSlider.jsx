@@ -118,7 +118,7 @@ const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
       console.log("Product added to cart:", responseData);
       // setProductData(response)
       fetchCartData()
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }

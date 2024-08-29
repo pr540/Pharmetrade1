@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import background_image from "../assets/homepharma.png";
 import logo from "../assets/Icons/logo2.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,11 +9,13 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { InputAdornment, IconButton } from "@mui/material";
 import { loginCustomer, setAuthToken } from "../Api/Api";
 import Password from "./Password";
+// import { AppContext } from "../context";
 const OTPInput = ({ length, onChangeOTP }) => {
   const [otp, setOTP] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
 
   const handleChange = (element, index) => {
+    // const{cartItems} = useContext(AppContext)
     const value = element.value.replace(/[^0-9]/g, "");
     if (value) {
       const newOTP = [...otp];
@@ -152,7 +154,7 @@ const Signin = () => {
       const result = await response.json();
       console.log("Login successful:", result);
       localStorage.setItem("login", JSON.stringify(result));
-
+      
       // If you only want to store the first name
       localStorage.setItem("firstname", result.firstname);
       setToken(result);

@@ -1224,7 +1224,7 @@ import dropdown from "../../../assets/Down-arrow .png";
 import { AppContext } from "../../../context";
 
 function Nav({ topDivRef, userType, Form_Data }) {
-  const {cartItems} = useContext(AppContext)
+  const { cartItems, logOut, setCartItems } = useContext(AppContext)
   let navigate = useNavigate();
 
   const [selectedIndex, setSelectedIndex] = useState();
@@ -1295,6 +1295,7 @@ function Nav({ topDivRef, userType, Form_Data }) {
     localStorage.removeItem("firstname");
     setUserDetails(null);
     navigate("/login");
+    console.log(cartItems);
   };
 
   const MenuItems = [

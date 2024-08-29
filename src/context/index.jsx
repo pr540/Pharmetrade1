@@ -28,7 +28,6 @@ export const AppProvider = ({ children }) => {
   const logOut = useCallback(() => {
     setIsLoggedIn('');
     localStorage.removeItem('login');
- 
   }, []);
 
   // Function to fetch cart data from API, memoized with useCallback
@@ -62,6 +61,34 @@ export const AppProvider = ({ children }) => {
         throw error;
       }
   }, []);
+
+  // const fetchDeleteData = useCallback(async (index) => {
+  // try {
+  //   const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Delete?CartId=${cartItems[index].cartId}`, {
+  //     method: "POST",
+  //   }
+  //   )
+
+  //   // if (!response.ok) {
+  //   //   const errorDetails = await response.json();
+  //   //   throw new Error(
+  //   //     `Error: ${response.status} ${response.statusText
+  //   //     } - ${JSON.stringify(errorDetails)}`
+  //   //   );
+  //   // }
+
+  //   const result = await response.json();
+  //   console.log("deleteresult----", result);
+  //   // setCartItems(result?.result || []);
+  //   window.location.reload()
+
+
+
+  // } catch (error) {
+  //   // console.error("There was a problem with the fetch operation:", error);
+  //   throw error;
+  // }
+  // }, [])
 
 
 
@@ -107,12 +134,16 @@ export const AppProvider = ({ children }) => {
       setCartItems([])
       setWishItems([])
     }
-  },[])
+  }, [])
+  
+
+
+
   console.log("cartItemsContext--", cartItems)
   console.log("contextwishItems--", wishItems)
   return (
 
-    <AppContext.Provider value={{ isLoggedIn, logIn, logOut, cartItems, fetchCartData, wishItems, setWishItems,fetchWishListData}}>
+    <AppContext.Provider value={{ isLoggedIn, logIn, logOut, cartItems, setCartItems, fetchCartData, wishItems, setWishItems, fetchWishListData }}>
       {children}
     </AppContext.Provider>
   );

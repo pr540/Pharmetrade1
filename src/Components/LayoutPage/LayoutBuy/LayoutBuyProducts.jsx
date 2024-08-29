@@ -435,7 +435,8 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
       setProductData(response)
     
       fetchCartData()
-      window.location.reload()
+      // window.location.reload()
+      
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }

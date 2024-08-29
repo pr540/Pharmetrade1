@@ -265,19 +265,47 @@ import searchimg from '../assets/search1.png';
 import deleteicon from '../assets/trash.png';
 import { AppContext } from "../context";
 
-function Cart({ topMargin, setCartItems }) {
-  const { cartItems } = useContext(AppContext);
+function Cart({ topMargin }) {
+  const { cartItems, setCartItems } = useContext(AppContext);
+
   
   // Initialize quantities with default value of 1
   const [quantities, setQuantities] = useState(cartItems.map(() => 1));
   let navigate = useNavigate();
 
-  function handleremove(index) {
-    const filtered = cartItems.filter((_, i) => i !== index);
-    setCartItems(filtered);
+  const  handleremove =  async (index) => {
+    // const filtered = cartItems.filter((_, i) => i !== index);
+    // setCartItems(filtered);
 
-    const updatedQuantities = quantities.filter((_, i) => i !== index);
-    setQuantities(updatedQuantities);
+    // const updatedQuantities = quantities.filter((_, i) => i !== index);
+    // setQuantities(updatedQuantities); 
+ 
+
+    try {
+      const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Delete?CartId=${cartItems[index].cartId}`, {
+        method: "POST",
+      }
+    )
+   
+        if (!response.ok) {
+          const errorDetails = await response.json();
+          throw new Error(
+            `Error: ${response.status} ${response.statusText
+            } - ${JSON.stringify(errorDetails)}`
+          );
+        }
+
+      const result = await response.json();
+        console.log("deleteresult----", result);
+      // setCartItems(result?.result || []);
+      // window.location.reload()
+      const updatedWishItems = cartItems.filter((_, i) => i !== index);
+      setCartItems(updatedWishItems);
+
+      } catch (error) {
+        // console.error("There was a problem with the fetch operation:", error);
+        throw error;
+      }
   }
 
   const handleQuantityChange = (index, newQuantity) => {
