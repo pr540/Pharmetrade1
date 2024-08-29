@@ -316,7 +316,7 @@ function App() {
           <Route path='/layout/layoutbid' element={<LayoutBid />} />
           <Route path='/layout/layoutwishlist' element={<LayoutWishlist 
                 wishItems={wishItems}
-                setWishItems={setWishItems} />} />
+            setWishItems={setWishItems} quantities={quantities} setQuantities={setQuantities}/>} />
           <Route path='/layout/layoutorderlist' element={<LayoutOrderlist/>} />
           {/* <Route path='/layout/layoutreturn' element={<LayoutReturn />} /> */}
           <Route path="/layoutsidebar" element={<LayoutSidebar/>}/>

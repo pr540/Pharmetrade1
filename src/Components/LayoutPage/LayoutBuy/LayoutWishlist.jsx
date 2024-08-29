@@ -41,12 +41,37 @@ function LayoutWishlist({ addCart }) {
   const [rating, setRating] = useState(0);
   const totalStars = 5;
 
-  function handleremove(index) {
-    const filtered = wishItems.filter((_, i) => i !== index);
-    setWishItems(filtered);
+  const handleremove = async(index) => {
+    // const filtered = wishItems.filter((_, i) => i !== index);
+    // setWishItems(filtered);
 
-    const updatedQuantities = quantities.filter((_, i) => i !== index);
-    setQuantities(updatedQuantities);
+    // const updatedQuantities = quantities.filter((_, i) => i !== index);
+    // setQuantities(updatedQuantities);
+    try {
+      const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Remove?wishlistId=${wishItems[index].wishListId}`, {
+        method: "POST",
+      }
+      )
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        throw new Error(
+          `Error: ${response.status} ${response.statusText
+          } - ${JSON.stringify(errorDetails)}`
+        );
+      }
+
+      const result = await response.json();
+      console.log("deleteresult----", result);
+      // setCartItems(result?.result || []);
+      // window.location.reload()
+      const updatedWishItems = wishItems.filter((_, i) => i !== index);
+      setWishItems(updatedWishItems);
+
+    } catch (error) {
+      // console.error("There was a problem with the fetch operation:", error);
+      throw error;
+    }
   }
 
   function handleCart(index) {

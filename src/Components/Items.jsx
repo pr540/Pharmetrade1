@@ -607,7 +607,7 @@
 
 // export default Items;
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import nature from "../assets/nature.png";
 import logo from "../assets/pharmalogo.png";
@@ -648,6 +648,7 @@ import dropdown from "../assets/Down-arrow .png";
 
 import DropUpIcon from "../assets/Icons/dropDownb.png";
 import DropDownIcon from "../assets/Icons/dropUpB.png";
+import { AppContext } from "../context";
 
 function Items({
   onClose,
@@ -657,7 +658,9 @@ function Items({
   setCartItems,
   whishlist,
   productList,
+  quantities,
 }) {
+  const { fetchCartData } = useContext(AppContext)
   const [count, setCount] = useState(0);
   const [selectedDiv, setSelectedDiv] = useState("div1");
   const [img, setimg] = useState(nature);
@@ -711,17 +714,53 @@ function Items({
     setSelectedColor(null);
   };
 
-  function handleCart(index) {
-    const prolist = {
-      id: index,
-      src: images[index],
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    addCart(prolist);
+  const localData = JSON.parse(localStorage.getItem("login"));
+  const customerId = localData?.userId;
+
+  const handleCart = async(id) => {
+    // const prolist = {
+    //   id: index,
+    //   src: images[index],
+    //   price: "$50.99",
+    //   rate: "SKU 6545555",
+    //   rates: "UPN member price:",
+    //   ratesupn: "$45.00",
+    // };
+    // addCart(prolist);
     // navigate("/cart");
+    const cartData = {
+      customerId: customerId, // Replace with actual customer ID
+      productId: productList[id].productID,
+      quantity: quantities,
+      isActive: 1,
+    };
+
+    try {
+      const response = await fetch(
+        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cartData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add product to cart");
+      }
+
+      const responseData = await response.json();
+      console.log("Product added to cart:", responseData);
+      // setProductData(response)
+
+      fetchCartData()
+      // window.location.reload()
+
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
   }
 
   function handleClick(index) {
