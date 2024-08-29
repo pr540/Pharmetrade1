@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import filter from "../../../assets/Icons/filter_icon.png";
 import deleteicon from "../../../assets/trash.png";
+import { useStates } from "react-us-states";
+
 function LayoutaddProduct() {
   const products = [
     {
@@ -39,6 +42,13 @@ function LayoutaddProduct() {
     },
   ];
 
+  const [states, setStates] = useState([]);
+
+  useEffect(() => {
+    // Set the states data
+    setStates(useStates); // Adjust based on actual structure
+  }, []);
+
   const [activeTab, setActiveTab] = useState(0);
   const [images, setImages] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -53,7 +63,7 @@ function LayoutaddProduct() {
     productType: "",
     productCategory: "",
     productName: "",
-    ndcUdc: "",
+    ndcUpc: "",
     brandName: "",
     price: "",
     amountInStock: 0,
@@ -148,9 +158,9 @@ function LayoutaddProduct() {
     "Product Info",
     "Price Details",
     //  " Key Details",
-    "Related Products",
-    " Products",
-    " Images & Videos",
+    // "Related Products",
+    " Related Products",
+    " Additional Images & Videos",
   ];
 
   const onDrop = (acceptedFiles) => {
@@ -322,8 +332,8 @@ function LayoutaddProduct() {
           const isSelected = formData.states.includes(value);
           const updatedStates = isSelected
             ? formData.states.filter(
-                (state) => state !== value && state !== "all"
-              )
+              (state) => state !== value && state !== "all"
+            )
             : [...formData.states, value];
 
           setFormData({
@@ -404,7 +414,7 @@ function LayoutaddProduct() {
       productGalleryId: 0, // Adding missing field
       productSizeId: formData.productSizeId, // Correct field name
       productName: formData.productName, // Correct field name
-      ndCorUPC: formData.ndcUdc, // Correct field name
+      ndCorUPC: formData.ndcUpc, // Correct field name
       brandName: formData.brandName, // Correct field name
       priceName: formData.price.toString(), // Ensure this field is a string
       upnMemberPrice: formData.upnMemberPrice,
@@ -479,17 +489,17 @@ function LayoutaddProduct() {
       case 0:
         return (
           // <div className="space-y-4 w-full flex">
-          <div className="w-full  h-full   flex font-sans font-medium ">
-            <div className="flex flex-col w-[80%] Largest:w-[80%]  justify-between text-sm">
-              <div className=" mx-2">
-                <div className="flex gap-4 ">
+          <div className="w-[100%]   h-full flex font-sans font-medium overflow-hidden ">
+            <div className="flex  w-full Largest:w-[80%]  justify-between text-sm">
+              <div className=" ">
+                <div className="flex gap-4 my-4 ">
                   <div>
                     <label className="font-semibold">
                       Category Specification:
                       <span className="text-red-600">*</span>
                     </label>
                     <select
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      className="w-56 h-8  pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
                       value={formData.categorySpecification}
                       name="categorySpecification"
@@ -500,22 +510,20 @@ function LayoutaddProduct() {
                       <option value="3">General Merchandise</option>
                     </select>
                   </div>
-                  <div className="">
+                  <div className="-ml-11">
                     <label className="font-semibold">
                       Product Type:<span className="text-red-600">*</span>
                     </label>
-                    <select
-                      name="productType"
+                    <input
+                      name="ndcUpc"
+                      type="text"
                       className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       onChange={handleInputChange}
-                      value={formData.productType}
-                    >
-                      <option value="">Select a product type</option>
-                      <option value="1">General</option>
-                      <option value="2">Customizable</option>
-                    </select>
+                      value={formData.ndcUpc}
+                    />
+
                   </div>
-                  <div className="mx-1">
+                  <div className="">
                     <label className="font-semibold">
                       Product Category:
                       <span className="text-red-600">*</span>
@@ -535,7 +543,61 @@ function LayoutaddProduct() {
                     </select>
                   </div>
                 </div>
+
                 <div className="flex gap-4 my-4">
+                  <div className="font-semibold">
+                    <label>
+                      NDC / UPC:<span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      name="ndcUpc"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.ndcUpc}
+                    />
+                  </div>
+
+                  <div className="font-semibold -ml-3 ">
+                    <label>
+                      Product Name:<span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      name="productName"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.productName}
+                    />
+                  </div>
+                  <div className="font-semibold -ml-5">
+                    <label>
+                      Brand Name:<span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      name="brandName"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.brandName}
+                    />
+                  </div>
+
+                </div>
+
+                {/* <div className="flex gap-4 my-4">
+                  <div className="font-semibold">
+                    <label>
+                      NDC / UPC:<span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      name="ndcUpc"
+                      type="text"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.ndcUpc}
+                    />
+                  </div>
                   <div className="font-semibold">
                     <label>
                       Product Name:<span className="text-red-600">*</span>
@@ -548,18 +610,7 @@ function LayoutaddProduct() {
                       value={formData.productName}
                     />
                   </div>
-                  <div className="font-semibold">
-                    <label>
-                      NDC / UDC:<span className="text-red-600">*</span>
-                    </label>
-                    <input
-                      name="ndcUdc"
-                      type="text"
-                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                      onChange={handleInputChange}
-                      value={formData.ndcUdc}
-                    />
-                  </div>
+
                   <div className="font-semibold mx-1">
                     <label>
                       Brand Name:<span className="text-red-600">*</span>
@@ -572,7 +623,7 @@ function LayoutaddProduct() {
                       value={formData.brandName}
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="flex gap-4 my-4">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
@@ -596,7 +647,7 @@ function LayoutaddProduct() {
                       value={formData.strength}
                     />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col mx-2">
                     <label className="text-sm font-semibold">Lot Number:</label>
                     <input
                       name="lotNumber"
@@ -608,9 +659,36 @@ function LayoutaddProduct() {
                   </div>
                 </div>
 
+                <div className="flex gap-4 my-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">Form:</label>
+                    <input
+                      name="form"
+                      type="Date"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.form}
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="text-sm font-semibold">
+                      Expiration Date:
+                    </label>
+                    <input
+                      name="expirationDate"
+                      type="Date"
+                      className="w-56 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      onChange={handleInputChange}
+                      value={formData.expirationDate}
+                    />
+                  </div>
+
+                </div>
+
                 <div>
-                  <div className="flex w-full justify-between">
-                    <div className="mr-4 flex flex-col w-[50%] ">
+                  <div className="flex w-full ">
+                    <div className="mr-4 flex flex-col w-[47%] ">
                       <label className="font-semibold">Product Details:</label>
                       <textarea
                         name="productDetails"
@@ -619,7 +697,7 @@ function LayoutaddProduct() {
                         value={formData.productDetails}
                       />{" "}
                     </div>
-                    <div className="flex flex-col w-[50%]">
+                    <div className="flex flex-col w-[47%]">
                       <label className="font-semibold">
                         About the Product:
                       </label>
@@ -632,130 +710,304 @@ function LayoutaddProduct() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="w-[20%]  ">
-              <div className=" ">
-                <p className="text-sm font-semibold">
-                  Product Image: ( JPEG, PNG)
-                </p>
-                <div className="flex flex-col items-center p-2 border rounded-lg shadow-md">
-                  <div
-                    {...getRootProps()}
-                    className="w-full p-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
-                  >
-                    <input {...getInputProps()} />
-                    <p
-                      className="text-gray-500 text-center"
-                      type="file"
-                      onChange={handleFileChange}
-                    >
-                      Click here or drag and drop images
-                    </p>
-                  </div>
 
-                  <div className="mt-4 ">
-                    {images.map((image, index) => (
-                      <div key={index} className="flex">
-                        <img
-                          src={image.preview}
-                          alt={`Preview ${index}`}
-                          className="w-20  object-contain "
-                        />
-                        <button
-                          onClick={() => removeImage(index)}
-                          className=" rounded-full p-1 hover:bg-gray-100 text-red-400"
+                {/* section 2 */}
+                <div className="">
+                  <div className=" my-4 flex items-center">
+                    <span className="text-sm font-semibold">Pack Quantity : </span>
+
+                    <div className=" flex items-center">
+                      <div className="flex items-center">
+                        {" "}
+                        <input
+                          type="radio"
+                          id="full"
+                          name="option"
+                          value="full"
+                          checked={formData.packQuantity === "full"}
+                          onChange={handleInputChange}
+                          className="mx-1"
+                        />{" "}
+                        <label
+                          htmlFor="full"
+                          className="text-sm mx-1 font-semibold"
                         >
-                          <img src={deleteicon} className="w-5" />
-
-                          {/* <FaTrash className="w-4" />  */}
-                        </button>
+                          Full
+                        </label>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="w-full">
-                <div className=" my-2">
-                  <span className="text-base font-semibold">
-                    States :
-                    {/* (Please select multiple states by clicking on CtrlButton) : */}
-                  </span>
-                  <div className="w-40 h-32 pl-3 pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
-                    <label className="flex items-center">
-                      {/* <input
-                       type="checkbox"
-                          value="all"
-                           name="states"
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          id="partial"
+                          name="option"
+                          value="partial"
+                          checked={formData.packQuantity === "partial"}
+                          onChange={handleInputChange}
+                          className="ml-2 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                        />
+                        <label
+                          htmlFor="partial"
+                          className="text-sm mx-1 font-semibold"
+                        >
+                          Partial
+                        </label>
+                      </div>
+                    </div>
 
-                                onChange={handleInputChange}
-                          checked={formData.states.includes("all")}
-                            className="mr-2"
-                          /> */}
-                      All Selected
-                    </label>
-                    <label className="flex items-center mt-2">
+                    <input
+                      type="text"
+                      name="packQuantityAmount"
+                      value={formData.packQuantityAmount || ""}
+                      onChange={handleInputChange}
+                      className="w-[30%] Largest:w-[15%] mx-1 h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:shadow focus:shadow-blue-400"
+                    />
+                    <label className="text-sm mx-1 font-semibold">EA</label>
+                  </div>
+                </div>
+                {/* section 2 end */}
+
+                {/* section3 start */}
+                <div>
+                  <div>
+                    <div className=" my-4 flex items-center">
+                      <span className="text-sm font-semibold">Pack Type :</span>
+
+                      <div className="flex items-center">
+                        <div className="flex items-center">
+                          <input
+                            type="radio"
+                            id="original"
+                            name="product"
+                            value="original"
+                            checked={formData.packType === "original"}
+                            onChange={handleInputChange}
+                            className="ml-2"
+                          />
+                          <label
+                            htmlFor="original"
+                            className="text-sm mx-1 font-semibold"
+                          >
+                            {" "}
+                            ORIGINAL PACKAGE
+                          </label>
+                        </div>
+                        <div className="flex items-center">
+                          <input
+                            type="radio"
+                            id="non-original"
+                            name="product"
+                            value="non-original"
+                            checked={formData.packType === "non-original"}
+                            onChange={handleInputChange}
+                            className="ml-2"
+                          />
+                          <label
+                            htmlFor="non-original"
+                            className="text-sm mx-1 font-semibold"
+                          >
+                            ORIGINAL PACKAGE - NON SEALED
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* section 3 end */}
+
+                {/* section4 start */}
+                <div>
+                  <div className=" my-4">
+                    <div>
+                      <span className="text-sm font-semibold">
+                        Pack Condition :
+                      </span>
                       <input
                         type="checkbox"
-                        value="CA"
-                        name="states"
+                        id="tornLabel"
+                        name="tornLabel"
+                        checked={formData.packCondition.tornLabel}
                         onChange={handleInputChange}
-                        checked={formData.states.includes("CA")}
-                        className="mr-2"
-                      />
-                      California
-                    </label>
-                    <label className="flex items-center mt-2">
+                        className="ml-[2%]"
+                      />{" "}
+                      <label className="text-sm ml-1 font-semibold">
+                        TORN PACKAGE LABEL
+                      </label>
                       <input
                         type="checkbox"
-                        name="states"
-                        value="TX"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("TX")}
-                        className="mr-2"
+                        id="otherCondition"
+                        name="otherCondition"
+                        checked={
+                          formData.packCondition.otherConditionChecked || false
+                        }
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            packCondition: {
+                              ...formData.packCondition,
+                              otherConditionChecked: e.target.checked,
+                              otherCondition: e.target.checked
+                                ? formData.packCondition.otherCondition
+                                : "",
+                            },
+                          })
+                        }
+                        className="ml-[2%]"
                       />
-                      Texas
-                    </label>
-                    <label className="flex items-center mt-2">
+                      {" "}
+                      <label className="text-sm ml-1 font-semibold">OTHER</label>
                       <input
-                        type="checkbox"
-                        value="NY"
-                        name="states"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("NY")}
-                        className="mr-2"
+                        type="text"
+                        name="otherConditionText"
+                        value={formData.packCondition.otherCondition || ""}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            packCondition: {
+                              ...formData.packCondition,
+                              otherCondition: e.target.value,
+                            },
+                          })
+                        }
+                        disabled={!formData.packCondition.otherConditionChecked}
+                        className="mx-1 w-[30%] Largest:w-[15%] h-8 pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:shadow focus:shadow-blue-400"
                       />
-                      New York
-                    </label>
-                    <label className="flex items-center mt-2">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="my-3 font-semibold">
+                  <div className="flex flex-row w-[80%] gap-2">
+                    <div className="flex flex-col">
+                      <label className="text-sm">Height {""} in</label>
                       <input
-                        type="checkbox"
-                        name="states"
-                        value="FL"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("FL")}
-                        className="mr-2"
+                        type="text"
+                        name="Height"
+                        value={sizeData.Height}
+                        onChange={handleSizeChange}
+                        className="w-40 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       />
-                      Florida
-                    </label>
-                    <label className="flex items-center mt-2">
+                    </div>
+                    <div className="flex flex-col mx-4 ">
+                      <label className="text-sm">Width {""} in</label>
                       <input
-                        type="checkbox"
-                        name="states"
-                        value="IL"
-                        onChange={handleInputChange}
-                        checked={formData.states.includes("IL")}
-                        className="mr-2"
+                        type="text"
+                        name="Width"
+                        value={sizeData.Width}
+                        onChange={handleSizeChange}
+                        className="w-40 h-8
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
                       />
-                      Illinois
-                    </label>
+                    </div>
+                    <div className="flex flex-col  ">
+                      <label className="text-sm">Length {""} in</label>
+                      <input
+                        type="text"
+                        name="Length"
+                        value={sizeData.Length}
+                        onChange={handleSizeChange}
+                        className="w-40 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      />
+                    </div>
+                    <div className="flex flex-col mx-4 ">
+                      <label className="text-sm">Weight {""} in</label>
+                      <input
+                        type="text"
+                        name="Weight"
+                        value={sizeData.Weight}
+                        onChange={handleSizeChange}
+                        className="w-40 h-8 
+                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+                      />
+                    </div>
+
+
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+              {/* section start */}
+
+              <div className="w-[20%]   ">
+                <div className=" ">
+                  <p className="text-sm font-semibold">
+                    Main Product Image: ( JPEG, PNG)
+                  </p>
+                  <div className="flex flex-col items-center   p-2 border rounded-lg shadow-md">
+                    <div
+                      {...getRootProps()}
+                      className="w-full p-8 border-2 border-dashed  border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                    >
+                      <input {...getInputProps()} />
+                      <p
+                        className="text-gray-500  items-center flex justify-center"
+                        type="file"
+                        onChange={handleFileChange}
+                      >
+                        Click here or drag and drop images
+                      </p>
+                    </div>
+
+                    <div className="mt-4 ">
+                      {images.map((image, index) => (
+                        <div key={index} className="flex">
+                          <img
+                            src={image.preview}
+                            alt={`Preview ${index}`}
+                            className="w-20  object-contain "
+                          />
+                          <button
+                            onClick={() => removeImage(index)}
+                            className=" rounded-full p-1 hover:bg-gray-100 text-red-400"
+                          >
+                            <img src={deleteicon} className="w-5" />
+
+                            {/* <FaTrash className="w-4" />  */}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <div className="my-2">
+                    <span className="text-base font-semibold">
+                      States :
+                      {/* (Please select multiple states by clicking on CtrlButton) : */}
+                    </span>
+                    <div className="w-40 h-32 pl-3  pr-3 py-1 border border-slate-300 rounded-md overflow-auto">
+                      <label className="flex items-center">All Selected</label>
+                      {states.map((state) => (
+                        <label
+                          className="flex  mt-1"
+                          key={state.abbreviation}
+                        >
+                          <input
+                            type="checkbox"
+                            name="states"
+                            value={state.abbreviation}
+                            onChange={handleInputChange}
+                            checked={formData.states.includes(state.abbreviation)}
+                            className="mr-2 overflow-y-scroll"
+                          />
+                          {state.name}
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
-          // </div>
         );
       case 1:
         return (
@@ -808,7 +1060,7 @@ function LayoutaddProduct() {
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-8 my-2">
+                <div className="flex items-center gap-8">
                   <div className="flex flex-col">
                     <label className="text-sm font-semibold">
                       Sale Price ($):
@@ -836,7 +1088,7 @@ function LayoutaddProduct() {
                     />
                   </div>
 
-                  <div className="flex items-center gap-8 my-3">
+                  <div className="flex items-center gap-8 my-2">
                     <div className="flex flex-col">
                       <label className="text-sm font-semibold">
                         Sale Price To($):
@@ -869,7 +1121,7 @@ function LayoutaddProduct() {
                       <option value="1">Yes</option>
                     </select>
                   </div>
-                  <div className="flex flex-col">
+                  {/* <div className="flex flex-col">
                     <label className="text-sm font-semibold">Form:</label>
                     <input
                       name="form"
@@ -878,9 +1130,9 @@ function LayoutaddProduct() {
                       onChange={handleInputChange}
                       value={formData.form}
                     />
-                  </div>
+                  </div> */}
 
-                  <div className="flex flex-col">
+                  {/* <div className="flex flex-col">
                     <label className="text-sm font-semibold">
                       Expiration Date:
                     </label>
@@ -891,13 +1143,22 @@ function LayoutaddProduct() {
                       onChange={handleInputChange}
                       value={formData.expirationDate}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
+            <div className="my-4">
+              <div className="flex gap-2">
+              <label className="font-semibold">Shipping Price</label>
+
+                    <input
+                    type="radio"/>
+                   </div> 
+
+            </div>
 
             {/* section 2 */}
-            <div className="">
+            {/* <div className="">
               <div className=" my-2 flex items-center">
                 <span className="text-sm font-semibold">Pack Quantity : </span>
 
@@ -948,11 +1209,11 @@ function LayoutaddProduct() {
                 />
                 <label className="text-sm mx-1 font-semibold">EA</label>
               </div>
-            </div>
+            </div> */}
             {/* section 2 end */}
 
             {/* section3 start */}
-            <div>
+            {/* <div>
               <div>
                 <div className=" my-2 flex items-center">
                   <span className="text-sm font-semibold">Pack Type :</span>
@@ -996,11 +1257,11 @@ function LayoutaddProduct() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* section 3 end */}
 
             {/* section4 start */}
-            <div>
+            {/* <div>
               <div className=" my-2">
                 <div>
                   <span className="text-sm font-semibold">
@@ -1057,7 +1318,7 @@ function LayoutaddProduct() {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* section4 end */}
 
             {/* section5 start */}
@@ -1447,89 +1708,89 @@ function LayoutaddProduct() {
           /* // ); */
         }
 
-      case 2:
-        return (
-          <div className="font-medium font-sans">
-            <div className="w-full Largest:w-[80%] ">
-              <div className="flex justify-between my-6">
-                <div className="flex flex-col">
-                  <p>
-                    Customizable products allow customers to choose options (Ex:
-                    shirt color). You need to create a simple product for each
-                  </p>
-                  <p>customization (Ex: a product for each color).</p>
-                </div>
-                <div>
-                  <button className="border rounded-md flex items-center justify-center border-gray-600 bg-blue-900 text-white text-base p-2 font-semibold w-44 h-9">
-                    {" "}
-                    Create Customization
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* section start */}
-            <div className="my-3 font-semibold">
-              <div className="flex flex-row w-[80%] gap-4">
-                <div className="flex flex-col">
-                  <label className="text-sm">Height {""} in</label>
-                  <input
-                    type="text"
-                    name="Height"
-                    value={sizeData.Height}
-                    onChange={handleSizeChange}
-                    className="w-40 h-8
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                  />
-                </div>
-                <div className="flex flex-col mx-4 ">
-                  <label className="text-sm">Width {""} in</label>
-                  <input
-                    type="text"
-                    name="Width"
-                    value={sizeData.Width}
-                    onChange={handleSizeChange}
-                    className="w-40 h-8
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                  />
-                </div>
-                <div className="flex flex-col  ">
-                  <label className="text-sm">Length {""} in</label>
-                  <input
-                    type="text"
-                    name="Length"
-                    value={sizeData.Length}
-                    onChange={handleSizeChange}
-                    className="w-40 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                  />
-                </div>
-                <div className="flex flex-col mx-4 ">
-                  <label className="text-sm">Weight {""} in</label>
-                  <input
-                    type="text"
-                    name="Weight"
-                    value={sizeData.Weight}
-                    onChange={handleSizeChange}
-                    className="w-40 h-8 
-                   pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
-                  />
-                </div>
+      // case 2:
+      //   return (
+      //     <div className="font-medium font-sans">
+      //       <div className="w-full Largest:w-[80%] ">
+      //         <div className="flex justify-between my-6">
+      //           <div className="flex flex-col">
+      //             <p>
+      //               Customizable products allow customers to choose options (Ex:
+      //               shirt color). You need to create a simple product for each
+      //             </p>
+      //             <p>customization (Ex: a product for each color).</p>
+      //           </div>
+      //           <div>
+      //             <button className="border rounded-md flex items-center justify-center border-gray-600 bg-blue-900 text-white text-base p-2 font-semibold w-44 h-9">
+      //               {" "}
+      //               Create Customization
+      //             </button>
+      //           </div>
+      //         </div>
+      //       </div>
+      //       {/* section start */}
+      //       <div className="my-3 font-semibold">
+      //         <div className="flex flex-row w-[80%] gap-4">
+      //           <div className="flex flex-col">
+      //             <label className="text-sm">Height {""} in</label>
+      //             <input
+      //               type="text"
+      //               name="Height"
+      //               value={sizeData.Height}
+      //               onChange={handleSizeChange}
+      //               className="w-40 h-8
+      //              pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+      //             />
+      //           </div>
+      //           <div className="flex flex-col mx-4 ">
+      //             <label className="text-sm">Width {""} in</label>
+      //             <input
+      //               type="text"
+      //               name="Width"
+      //               value={sizeData.Width}
+      //               onChange={handleSizeChange}
+      //               className="w-40 h-8
+      //              pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+      //             />
+      //           </div>
+      //           <div className="flex flex-col  ">
+      //             <label className="text-sm">Length {""} in</label>
+      //             <input
+      //               type="text"
+      //               name="Length"
+      //               value={sizeData.Length}
+      //               onChange={handleSizeChange}
+      //               className="w-40 h-8 
+      //              pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+      //             />
+      //           </div>
+      //           <div className="flex flex-col mx-4 ">
+      //             <label className="text-sm">Weight {""} in</label>
+      //             <input
+      //               type="text"
+      //               name="Weight"
+      //               value={sizeData.Weight}
+      //               onChange={handleSizeChange}
+      //               className="w-40 h-8 
+      //              pl-3 pr-3 py-1 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400"
+      //             />
+      //           </div>
 
-                <div>
-                  <div className="flex my-5 justify-end mx-7 ml-10 ">
-                    <button
-                      onClick={() => handleSizeSubmit()}
-                      className="border rounded-lg border-gray-400  bg-blue-900 text-white text-base  font-semibold  w-20 h-8  "
-                    >
-                      SAVE
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 3:
+      //           <div>
+      //             <div className="flex my-5 justify-end mx-7 ml-10 ">
+      //               <button
+      //                 onClick={() => handleSizeSubmit()}
+      //                 className="border rounded-lg border-gray-400  bg-blue-900 text-white text-base  font-semibold  w-20 h-8  "
+      //               >
+      //                 SAVE
+      //               </button>
+      //             </div>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   );
+      case 2:
         return (
           <div className="font-sans font-medium">
             <h1 className="text-2xl font-semibold">Related Products </h1>
@@ -1539,11 +1800,10 @@ function LayoutaddProduct() {
                 the customer is looking at.{" "}
               </p>
               <button
-                className={`  text-base font-medium p-2 rounded-md  h-8 flex items-center  ${
-                  buttonClick
-                    ? "bg-white text-blue-900"
-                    : "bg-blue-900 text-white"
-                }`}
+                className={`  text-base font-medium p-2 rounded-md  h-8 flex items-center  ${buttonClick
+                  ? "bg-white text-blue-900"
+                  : "bg-blue-900 text-white"
+                  }`}
                 onClick={handleRelateclick}
               >
                 <img src={filter} className="w-6 h-3 px-1" />
@@ -1689,11 +1949,10 @@ function LayoutaddProduct() {
                 looking at.
               </p>
               <button
-                className={` text-base font-medium p-2 rounded-md  h-8 flex items-center ${
-                  ButtonUpClick
-                    ? "bg-white text-blue-900"
-                    : "bg-blue-900 text-white"
-                }`}
+                className={` text-base font-medium p-2 rounded-md  h-8 flex items-center ${ButtonUpClick
+                  ? "bg-white text-blue-900"
+                  : "bg-blue-900 text-white"
+                  }`}
                 onClick={click}
               >
                 {" "}
@@ -1833,11 +2092,10 @@ function LayoutaddProduct() {
                 cross-sells to the items already in the shopping cart.
               </p>
               <button
-                className={` text-base font-medium  p-2 rounded-md  h-8 flex items-center ${
-                  isButtonClicked
-                    ? "bg-white text-blue-900"
-                    : "bg-blue-900 text-white"
-                }`}
+                className={` text-base font-medium  p-2 rounded-md  h-8 flex items-center ${isButtonClicked
+                  ? "bg-white text-blue-900"
+                  : "bg-blue-900 text-white"
+                  }`}
                 onClick={handleCrossClick}
               >
                 <img src={filter} className="w-6 h-3 px-1" />
@@ -1971,9 +2229,9 @@ function LayoutaddProduct() {
             {/* section end */}
           </div>
         );
-      case 4:
+      case 3:
         return (
-          <div className="space-y-4 font-sans font-medium">
+          <div className="space-y-4 font-sans font-medium ">
             <p className="font-semibold">
               Product Image: (Accepted Formats: JPEG, PNG)
             </p>
@@ -2104,7 +2362,7 @@ function LayoutaddProduct() {
   };
 
   return (
-    <div className="w-full max-w-4xl h-full mx-auto pt-8  ml-10 overflow-scroll">
+    <div className="w-full max-w-4xl h-full mx-auto pt-8 ml-10 overflow-scroll">
       <div className="flex flex-col justify-center ">
         <div className="flex  justify-between ">
           <div>
@@ -2120,11 +2378,10 @@ function LayoutaddProduct() {
           {tabs.map((tab, index) => (
             <li key={index} className=" mr-2 gap-4 ">
               <button
-                className={`w-full  flex justify-center items-center px-2   p-3 py-1 mt-7   shadow-md  ${
-                  activeTab === index
-                    ? "text-white  bg-blue-900 rounded-t-xl font-semibold "
-                    : "text-blue-900  shadow-none rounded-t-xl bg-white "
-                }`}
+                className={`w-full  flex justify-center items-center px-2   p-3 py-1 mt-7   shadow-md  ${activeTab === index
+                  ? "text-white  bg-blue-900 rounded-t-xl font-semibold "
+                  : "text-blue-900  shadow-none rounded-t-xl bg-white "
+                  }`}
                 onClick={() => setActiveTab(index)}
               >
                 {tab}
@@ -2137,7 +2394,7 @@ function LayoutaddProduct() {
       <div className="flex justify-end">
         <button
           onClick={handleSubmit}
-          className="border bg-blue-900 text-white  h-8 w-16 rounded-md font-semibold  "
+          className="border bg-blue-900 text-white my-4  h-8 w-16 rounded-md font-semibold  "
         >
           Save
         </button>

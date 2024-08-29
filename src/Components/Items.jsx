@@ -658,7 +658,7 @@ function Items({
   setCartItems,
   whishlist,
   productList,
-  quantities
+  quantities,
 }) {
   const { fetchCartData } = useContext(AppContext)
   const [count, setCount] = useState(0);
@@ -673,31 +673,30 @@ function Items({
   const [selectedColor, setSelectedColor] = useState(null);
   // const [showViewCart, setShowViewCart] = useState(false);
   const [isItemAdded, setIsItemAdded] = useState(false);
-  const [newProducts,setnewProducts] = useState([]);
+  const [newProducts, setnewProducts] = useState([]);
   const [prod, setprod] = useState(null);
 
   useEffect(() => {
-    const NewProductsAPI =async ()=>{
+    const NewProductsAPI = async () => {
       try {
         const response = await fetch(
           `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetRecentSoldProducts?numberOfProducts=10`
-      );
-      const getbyid = await fetch(
-        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetById?productId=${id}`
-    );
-      const data = await response.json();
-      const prod = await getbyid.json();
-      console.log("cacacac",data.result)
-      setnewProducts(data.result);
-      console.log("getbyid",prod.result)
-      setprod(prod.result[0])
-      } catch (error) { 
+        );
+        const getbyid = await fetch(
+          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetById?productId=${id}`
+        );
+        const data = await response.json();
+        const prod = await getbyid.json();
+        console.log("cacacac", data.result);
+        setnewProducts(data.result);
+        console.log("getbyid", prod.result);
+        setprod(prod.result[0]);
+      } catch (error) {
         console.log(error);
       }
-    }
+    };
     NewProductsAPI();
-    
-  }, [])
+  }, []);
   const handleAddToCart = () => {
     // setShowViewCart(true);
     setIsItemAdded(true);
@@ -877,37 +876,35 @@ function Items({
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
-  console.log(prod)
+  console.log(prod);
   return (
     <div
-      className="Largest:w-[1550px] mt-2  Laptop:w-full  w-full  flex flex-col font-sans overflow-hidden"
+      className="Largest:w-[1550px] mt-2  Laptop:w-full  w-full  flex flex-col font-sans overflow-y-scroll"
       style={{
         marginTop: `${topMargin}px`,
       }}
     >
-      <div className="  flex gap-4 mt-4 justify-around h-full w-full  mb-4">
-        <div className="w-[40%] h-full mb-3">
+      <div className="  flex gap-4 mt-4 justify-around h-full w-full mb-4">
+        <div className="w-[40%] h-[500px]  mb-3">
           <div className="flex ml-10  cursor-pointer">
-          <div className="flex flex-col mr-4 items-center overflow-y-scroll">
+            <div className="flex flex-col mr-4 items-center overflow-y-scroll">
               <img
                 onMouseEnter={() => setimg(prod?.imageUrl)}
                 src={prod?.imageUrl}
                 className="w-16 object-cover my-2 bg-gray-200 border rounded-lg object-fit hover:border-sky-500 hover:border-2 h-20"
               />
               <img
-                onMouseEnter={() => setimg(prod?.imageUrl)}
-                src={nature}
+                onMouseEnter={() => setimg(prod?.productGallery?.thumbnail1)}
+                src={prod?.productGallery?.thumbnail1}
                 className="w-16 bg-gray-200 border rounded-lg object-fit hover:border-sky-500 hover:border-2 h-20"
               />
               <img
-                onMouseEnter={() => setimg(Img2)}
-                src={Img2}
+                onMouseEnter={() => setimg(prod?.productGallery?.thumbnail3)}
+                src={prod?.productGallery?.thumbnail3}
                 className="w-16 my-2 bg-gray-200 border rounded-lg hover:border-sky-500 hover:border-2 h-20"
               />
               <div
-                className={` w-16 h-20 ${
-                  isHovered ? "bg-gray-200" : ""
-                }`}
+                className={` w-16 h-20 ${isHovered ? "bg-gray-200" : ""}`}
                 onMouseEnter={() => {
                   setimg(videoSample);
                   setIsHovered(true);
@@ -927,10 +924,13 @@ function Items({
                   <source src={videoSample} type="video/mp4" className="" />
                 </video>
               ) : (
-                <img src={prod?.imageUrl} className="object-contain w-96 h-72" alt="Product" />
+                <img
+                  src={prod?.imageUrl}
+                  className="object-contain w-96 h-72"
+                  alt="Product"
+                />
               )}
             </div>
-         
           </div>
         </div>
 
@@ -942,17 +942,18 @@ function Items({
                 {prod?.productName}
               </h1>
               <h3 className="text-orange-400 font-light text-sm">
-                UPN Member Price{" "}
-                <span className="text-orange-400 font-semibold">$25.00</span>
+                UPN Member Price:
+                <span className="text-orange-400 font-semibold">
+                  {" "}
+                  ${prod?.upnMemberPrice}
+                </span>
               </h3>
 
               <div className="flex items-center">
                 <span className="text-sky-500 font-semibold text-[18px] ">
-                  $30.00
+                  {prod?.priceName}
                 </span>
-                <p 
-                   className="text-xs ml-1 line-through">$40{" "}
-                </p>
+                <p className="text-xs ml-1 line-through">${prod?.salePrice} </p>
               </div>
               <div className="text-[12px]">Inclusive of all taxes</div>
 
@@ -1109,12 +1110,8 @@ function Items({
                     is a multi-functional formula great for those looking for
                     solutions for dullness, uneven tone, and textural
                     irregularities.
-                  </li> <li>
-                    The Ordinary's Azelaic Acid 10% Suspension Brightening Cream
-                    is a multi-functional formula great for those looking for
-                    solutions for dullness, uneven tone, and textural
-                    irregularities.
-                  </li> <li>
+                  </li>{" "}
+                  <li>
                     The Ordinary's Azelaic Acid 10% Suspension Brightening Cream
                     is a multi-functional formula great for those looking for
                     solutions for dullness, uneven tone, and textural
@@ -1287,8 +1284,6 @@ function Items({
       <div className="h-full w-full flex flex-col  justify-center items-center">
         <ProductDetails />
 
-       
-
         <div className="w-[92%] flex flex-col md:flex-row border-t-2 shadow-inner justify-start gap-8 p-4">
           <div className="w-full md:w-1/3">
             <h2 className="text-xl font-bold text-black mb-4">
@@ -1339,7 +1334,7 @@ function Items({
 
         <div className="w-[92%] border-t-2 shadow-inner ">
           <ProductSlider
-            productList = {productList}
+            productList={productList}
             addCart={addCart}
             Title={"More Products By Same Seller(Manda)"}
             data={newProducts}
