@@ -575,6 +575,11 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
     }));
   };
 
+  const handleProductDetails = (productID, product) => {
+    navigate(`/detailspage/${productID}`);
+    console.log("product----->",product)
+  };
+
   return (
     <div className="w-full mt-4 h-full overflow-y-scroll">
       <div className="flex justify-between">
@@ -626,7 +631,9 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
                         src={product.imageUrl}
                         className="w-36 p-2 hover:cursor-pointer rounded-lg h-28 bg-slate-200"
                         alt="Product"
-                        onClick={() => navigate(`/detailspage/${index}`)}
+                         onClick={() => handleProductDetails(product.productID, product)}
+                        // onClick={() => navigate(`/detailspage/${index}`)}
+
                       />
                     </div>
 
