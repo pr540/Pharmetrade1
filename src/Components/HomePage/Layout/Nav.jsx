@@ -1609,11 +1609,6 @@ function Nav({ topDivRef, userType, Form_Data }) {
 
                 <li className="relative cursor-pointer " onClick={handleCart}>
                   <a>
-                    {/* <img
-                      src={Cart}
-                      className="w-6 md:w-8 lg:w-10 xl:w-12 pt-2 h-10 md:h-10 lg:h-10 xl:h-12"
-                      onClick={handleCart}
-                    /> */}
                     <img
                       src={cart}
                       className="w-1  md:w-3 lg:w-5 xl:w-7 pt-2 h-3 md:h-5 lg:h-7 xl:h-9  text-blue-900 hover:text-gray-400 hover:scale-110  duration-500"

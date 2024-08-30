@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import logoImage from "../assets/logo2.png";
@@ -30,7 +31,7 @@ import {
 import TermsAndConditions from "./TermsAndConditions";
 
 function getSteps() {
-  return ["User Info", "Account Type", "Address info", "Account Info"];
+  return ["Personal-Info", "User-Info", "Business-Info1", "Business-Info-2"];
 }
 
 const Signup = () => {
@@ -58,44 +59,42 @@ const Signup = () => {
     return Math.floor(10000 + Math.random() * 90000).toString();
   }
 
+  // const [showPassword, setShowPassword] = React.useState(false);
 
+  // const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
   const userTypes = [
     "Retail Pharmacy",
     "General Merchandise Seller",
     "Pharmacy Distributor",
     "Retail Customer",
   ];
-  
+
   const accountTypes = {
     default: ["Buyer", "Seller", "Buyer/Seller"],
     normalCustomer: ["Buyer"],
   };
-  
+
   const handleUserTypeChange = (e) => {
     setUserType(e.target.value);
     setAccountType("");
   };
-  
   useEffect(() => {
     if (userType === "Retail Customer") {
       setAccountType("Buyer");
     }
   }, [userType]);
-  
+
   const getAccountTypes = () => {
     return userType === "Retail Customer"
       ? accountTypes.normalCustomer
       : accountTypes.default;
   };
-
-
-
-
 
   const [isActive, setIsActive] = useState(true);
 
@@ -195,25 +194,14 @@ const Signup = () => {
       ...prevErrors,
       [name]: null,
     }));
-
     if (!files) {
       setFormData({
         ...formData,
         [name]: type === "checkbox" ? checked : value,
       });
-      // Clear error message when no file is provided
-      // setErrorMessage("");
     } else {
       const file = files[0];
       const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    
-      if (!allowedTypes.includes(file.type)) {
-            setErrorMessage("Only JPEG, JPG, and PNG files are allowed.");
-            return;
-          }
-      
-          // Clear error message if file type is valid
-          setErrorMessage("");
       if (name === "Pharmacy_License_Copy") {
         setfile2(null),
           setFormData((prev) => ({
@@ -237,121 +225,35 @@ const Signup = () => {
     if (activeStep === 1) {
       validateStep(activeStep);
     }
-  
-     else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value
-      }));
-    }
-   
-
-  
-
-  // Improved regular expression for email validation
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  setFormData((prevData) => ({
-    ...prevData,
-    [name]: value,
-  }));
-
-  if (name === "Business_Email") {
-    if (emailRegex.test(value)) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "", // Clear error if email is valid
-      }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "Please enter a valid email address.",
-      }));
-    }
-  }
-
-    // non numericals
-    let filteredValue = value;
-
-
-    if (["zip","captcha" ," Business_Fax", "NCPDP"," NPI"," Federal_Tax_ID"].includes(name)) {
-      // Remove any non-numeric characters
-      filteredValue = value.replace(/[^0-9]/g, "");
-    }
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: filteredValue,
-    }));
-
-
-    if (["First_Name","Last_Name",
-      "city", "shopName",
-      "legalBusinessName",
-      "dbaName","DEA"
-     ].includes(name)) {
-      // Remove any non-numeric characters
-      filteredValue = value.replace(/[^a-zA-Z]/g, "");
-    }
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: filteredValue,
-    }));
-
-
-
- // Validate that Last Name is not the same as First Name
- if (name === "Last_Name" && filteredValue === formData.First_Name) {
-  setErrors((prevErrors) => ({
-    ...prevErrors,
-    Last_Name: "Last Name cannot be the same as First Name.",
-  }));
-} else {
-  setErrors((prevErrors) => ({
-    ...prevErrors,
-    [name]: filteredValue.length === 0 ? `${name.replace("_", " ")} is required.` : "",
-    Last_Name: name === "First_Name" && filteredValue === formData.Last_Name
-      ? "Last Name cannot be the same as First Name."
-      : prevErrors.Last_Name,
-  }));
-}
-
-return formData;
-
-
-
-   
   };
-
-
-
 
   const validateDate = (date) => {
     const selectedDate = new Date(date);
     const currentDate = new Date();
-    
-    // Normalize the date to remove the time part
-    selectedDate.setHours(0, 0, 0, 0);
-    currentDate.setHours(0, 0, 0, 0);
-    
-    return selectedDate >= currentDate; // Allow today or any future date
+    return selectedDate > currentDate;
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  // const validateForm = () => {
+  //   const newErrors = {};
   const [PasswordErros, setPasswordErrors] = useState({});
   const validatePassword = (password) => {
     const newErrors = {};
     const minLength = password.length >= 8;
     const hasUppercase = /[A-Z]/.test(password);
     const hasSpecialChar = /[!@#$%^&*]/.test(password);
-    const isEnglishOnly = /^[A-Za-z0-9!@#$%^&*]+$/.test(password);
 
     if (!minLength) newErrors.passwordLength = "Min 8 characters";
-    if (!hasUppercase) newErrors.passwordUppercase = "One uppercase letter,lowercase";
+    if (!hasUppercase) newErrors.passwordUppercase = "One uppercase letter";
     if (!hasSpecialChar)
       newErrors.passwordSpecialChar = "One special character";
-    if (!isEnglishOnly) newErrors.passwordEnglishOnly = "Only English letters and numbers allowed";
-
     setisSubmit(true);
     setPasswordErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -364,22 +266,13 @@ return formData;
     const regphn = /^(?:\+1\s?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
 
     if (step === 0) {
-
+      const regex = /^[a-zA-Z\s']+$/;
       const passwordRegex =
         /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-
-      const regex = /^[a-zA-Z\s']+$/;
-
-
-      // if(regex.match(formData) || formData === "" )
-      if (!formData.First_Name.match(regex)) {
-        newErrors.First_Name = " First name is required.";
-      }
-      else {
-        delete newErrors.First_Name; // Clear the error if the input is valid
-      }
+      if (!formData.First_Name.match(regex))
+        newErrors.First_Name = "First name is required.";
       if (!formData.Last_Name.match(regex))
-        newErrors.Last_Name = " Last name is required.";
+        newErrors.Last_Name = "Last name is required.";
 
       if (!formData.Email_id.match(regexp))
         newErrors.Email_id = "Email_id is required";
@@ -388,18 +281,9 @@ return formData;
         console.log(formData.Phone_number.length, "hmmmm");
         if (formData.Phone_number.length === 0) {
           newErrors.Phone_number = "Phone Number is required";
-        }
-        else if (formData.Phone_number.length !== 12)
+        } else if (formData.Phone_number.length !== 12)
           newErrors.Phone_number = "Phone Number must be 10 digits";
-        else if (value.length > 12) {
-          newErrors.Phone_number = "Phone number cannot exceed 10 digits";
-        }
-        else {
-          delete newErrors.Phone_number; // Clear the error if the input is valid
-        }
       }
-
-
 
       if (!formData.confirmPassword.length)
         newErrors.confirmPassword = "Confirm password is required.";
@@ -438,7 +322,7 @@ return formData;
           } else {
             console.error("Server error:", response.statusText);
           }
-
+          
         } catch (error) {
           console.log(error);
         }
@@ -447,23 +331,21 @@ return formData;
 
         return Object.keys(newErrors).length === 0;
       }
-    } 
-   
-
-
-    if (step === 1) {
+    } else if (step === 1) {
       if (!userType) newErrors.userType = "User Type is required";
-      if (!accountType && userType === "Retail Pharmacy")
-        newErrors.accountType = "Account Type is required";
-    
+
+      if (!accountType) newErrors.accountType = "Account Type is required";
+
       if (
-        userType === "Retail Pharmacy" &&
+        (userType === "Retail Pharmacy" ||
+          userType === "Pharmacy Distributor" ||
+          userType === "Retail Customer" ||
+          userType !== "General Merchandise Seller") &&
         !selectedValue &&
         !formData.upnMember
       )
         newErrors.upnMember = "UPN Member selection is required";
-    }
-     else if (step === 2) {
+    } else if (step === 2) {
       if (
         !formData.shopName &&
         userType != "Pharmacy Distributor" &&
@@ -471,12 +353,6 @@ return formData;
         userType != "Retail Customer"
       )
         newErrors.shopName = "Shop name is required.";
-
-
-      
-
-
-      // const reglegalex = /^[A-Za-z\s]*$/;
       if (!formData.legalBusinessName && userType != "Retail Customer")
         newErrors.legalBusinessName = "Legal business name is required.";
 
@@ -488,6 +364,8 @@ return formData;
       )
         newErrors.dbaName = "DBA name is required.";
 
+      // if (!formData.BusinessPhone && userType != "Retail Customer")
+      //   newErrors.BusinessPhone = "businessphone is required";
 
       if (
         !formData.BusinessPhone.match(regphn) &&
@@ -498,13 +376,9 @@ return formData;
         } else if (formData.BusinessPhone.length !== 12)
           newErrors.BusinessPhone = "Business PhoneNumber must be 10 digits";
       }
-      const faxNumberRegex = /^(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/;
 
-      if (!formData.Business_Fax.match(faxNumberRegex) && userType != "Retail Customer")
-        newErrors.Business_Fax = "Business_Fax Number is required";
-
-
-
+      if (!formData.Business_Fax && userType != "Retail Customer")
+        newErrors.Business_Fax = "Business_Fax is required";
       if (!formData.Business_Email && userType != "Retail Customer")
         newErrors.Business_Email = " Business_Email is required";
       else if (
@@ -512,14 +386,10 @@ return formData;
         userType != "Retail Customer"
       )
         newErrors.Business_Email = " Business_Email is required";
-      const regZip = /^\d{5}(-\d{4})?$/;
-      if (!formData.zip.match(regZip)) newErrors.zip = "Zip is required";
+
+      if (!formData.zip) newErrors.zip = "Zip is required";
       if (!formData.Address1) newErrors.Address1 = "Address is required";
-      // if (!formData.city) newErrors.city = "City is required";
-      const cityNameRegex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-      if (!formData.city.match(cityNameRegex)) newErrors.city = "City is required";
-
-
+      if (!formData.city) newErrors.city = "City is required";
       if (!formData.State) newErrors.State = "State is required";
     } else if (step === 3) {
       if (
@@ -737,10 +607,10 @@ return formData;
         userType === "Retail Pharmacy"
           ? 1
           : userType === "General Merchandise Seller"
-            ? 2
-            : userType === "Pharmacy Distributor"
-              ? 3
-              : 4,
+          ? 2
+          : userType === "Pharmacy Distributor"
+          ? 3
+          : 4,
       accountTypeId:
         accountType === "Buyer" ? 1 : accountType === "Seller" ? 2 : 3,
       isUPNMember: formData.upnMember === "true" ? 1 : 0, // Convert to boolean if needed
@@ -787,7 +657,12 @@ return formData;
     setSelectedValue(e.target.value);
   };
 
-
+  // const handleSkip = () => {
+  //   if (!isStepSkipped(activeStep)) {
+  //     setSkippedSteps((prevSkippedSteps) => [...prevSkippedSteps, activeStep]);
+  //   }
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  // };
 
   const formatPhoneNumber = (phoneNumber) => {
     // Remove non-digit characters
@@ -827,7 +702,6 @@ return formData;
                   error={!!errors.First_Name}
                   size="small"
                   className="w-full"
-                  helperText={errors.First_Name}
                 />
               </div>
 
@@ -841,7 +715,6 @@ return formData;
                   error={!!errors.Last_Name}
                   size="small"
                   className="w-full"
-                  helperText={errors.Last_Name}
                 />
               </div>
             </div>
@@ -849,7 +722,7 @@ return formData;
             <div className="flex flex-row  w-full my-4 justify-evenly">
               <div className="w-[45%] ">
                 <TextField
-                  label="Email_ID"
+                  label="Email ID/User ID"
                   id="outlined-size-small"
                   name="Email_id"
                   value={formData.Email_id}
@@ -858,7 +731,7 @@ return formData;
                   size="small"
                   className="w-full"
                   helperText={
-                    errors?.Email_id !== null
+                    errors?.Email_id !== null 
                       ? errors.Email_id
                       : ""
                   }
@@ -874,18 +747,11 @@ return formData;
                   onChange={handleInputChange}
                   error={!!errors.Phone_number}
                   size="small"
-                  // helperText={
-                  //   errors?.Phone_number !== null && formData.Phone_number != 0 
-                  //     ? errors.Phone_number
-                  //     : ""
-                  // }
                   helperText={
-                    (errors?.Phone_number ? "": "") +
-                    (errors?.Phone_number && errors?.Phone_number ? " " : "") + // Space to separate messages
-                    (errors?.Phone_number ? errors.Phone_number : "")
+                    errors?.Phone_number !== null && formData.Phone_number != 0
+                      ? errors.Phone_number
+                      : ""
                   }
-                  inputProps={{ maxLength: 12 }}
-
                   className="w-full"
                 />
               </div>
@@ -897,28 +763,33 @@ return formData;
                   label="Password"
                   id="outlined-size-small"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
                   error={Object.keys(PasswordErros).length > 0}
-                  // helperText={
-                  //   formData.password.length > 0 &&
-                  //     Object.keys(PasswordErros).length > 0
-                  //     ? Object.values(PasswordErros).join(", ")
-                  //     : ""
-                  // }
                   helperText={
-                    (errors?.password ? "" : "") +
-                    (errors?.password && Object.keys(PasswordErros).length > 0 ? " " : "") + // Space to separate messages
-                    (Object.keys(PasswordErros).length > 0 ? Object.values(PasswordErros).join(", ") : "")
+                    formData.password.length > 0 &&
+                    Object.keys(PasswordErros).length > 0
+                      ? Object.values(PasswordErros).join(", ")
+                      : ""
                   }
-                
-
                   FormHelperTextProps={{
-                    style: { color: isSubmit ? "black" : "#C7253E" },
+                    style: { color: isSubmit ? "black" : "red" },
                   }}
                   size="small"
-                  inputProps={{maxLength: 8}}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   className="w-full"
                 />
               </div>
@@ -928,35 +799,50 @@ return formData;
                   label="Confirm Password"
                   id="outlined-size-small"
                   name="confirmPassword"
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   // disabled={!formData.password}
                   error={!!errors.confirmPassword}
                   size="small"
-                  // helperText={  
-                  //   !formData.confirmPassword
-                  //     ? ""
-                  //     : errors.confirmPassword
-                  //       ? errors.confirmPassword
-                  //       : ""
-                  // }
-
                   helperText={
-                    (!formData.confirmPassword && formData.password) ? "" : 
-                    (errors.confirmPassword ? errors.confirmPassword : "")
+                    !formData.confirmPassword
+                      ? ""
+                      : errors.confirmPassword
+                      ? errors.confirmPassword
+                      : ""
                   }
                   className="w-full"
-
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle confirm password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </div>
             </div>
 
-            <div className="flex #C7253E items-center justify-center flex-col">
+            <div className="flex text-red-500 items-center justify-center flex-col">
               {errors?.password?.length > 1 && (
                 <div className="w-[80%]">{errors.password}</div>
               )}
-
+              {/* {errors.confirmPassword && 
+              <div>
+                {errors.confirmPassword}
+              </div>
+              } */}
             </div>
 
             <div className="flex justify-center items-center">
@@ -981,243 +867,132 @@ return formData;
                 label="Enter Captcha"
                 variant="standard"
                 error={!!errors.captcha}
-                inputProps={{ maxLength: 5 }}
-                helperText={errors.captcha}
               />
             </div>
           </div>
         );
       case 1:
         return (
-          // <div>
-          //   <div className="p-4">
-          //     <div className="mb-4">
-          //       <label
-          //         className=" flex gap-2 text-gray-700 text-sm font-bold mb-2"
-          //         htmlFor="userType"
-          //       >
-          //         User Type
-          //         <div className="text-red-400">
-          //           {errors.userType && <div>{errors.userType}</div>}
-          //         </div>
-          //       </label>
-          //       <select
-          //         id="userType"
-          //         value={userType}
-          //         onChange={handleUserTypeChange}
-          //         className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          //       >
-          //         <option value="">Select User Type</option>
-          //         {userTypes.map((type, index) => (
-          //           <option key={type} value={type}>
-          //             {type}
-          //           </option>
-          //         ))}
-          //       </select>
-          //     </div>
-
-          //     <div className={` mb-4 ${userType === "Pharmacy Distributor" ||
-          //               userType === "Retail Customer" ||
-          //               userType === "General Merchandise Seller"
-          //               ? "hidden"
-          //               : ""
-          //               } w-full`}
-          //               >
-          //       <label className=" flex gap-2 text-gray-700 text-sm font-bold mb-2">
-          //         Account Type
-          //         <div className="text-red-400">
-          //           {errors.accountType && <div>{errors.accountType}</div>}
-          //         </div>
-          //       </label>
-          //       {getAccountTypes().map((type) => (
-          //         <div key={type} className=  { ` flex ml-4 items-center mb-2`}
-          //           //  { `${userType === "Pharmacy Distributor" ||
-          //           // userType === "Retail Customer" ||
-          //           // userType === "General Merchandise Seller"
-          //           // ? "hidden"
-          //           // : ""
-          //           // } w-full`}
-          //           >
-                   
-          //           <input
-          //             type="radio"
-          //             id={type}
-          //             name="accountType"
-          //             value={type}
-          //             checked={accountType === type}
-          //             onChange={(e) =>
-          //               setAccountType(e.target.value) &&
-          //               handleusertypechange(e.target.value)
-          //             }
-          //             className= { ` mr-2 leading-tight flex `}
-                     
-                        
-                        
-          //           />
-          //           <label htmlFor={type} className="text-gray-700">
-          //             {type}
-          //           </label>
-          //         </div>
-          //       ))}
-          //     </div>
-
-
-
-          //     <div
-          //       className={`${userType === "General Merchandise Seller" 
-                  
-          //         ? " hidden"
-          //         : ""
-          //         } flex items-center`}
-          //     >
-          //       <label className="text-gray-700">
-          //         <span className="text-red-500">*</span>Are you a UPN Member
-          //       </label>
-          //       <Box sx={{ display: "flex", gap: 2 }}>
-          //         <div>
-          //           <Radio
-          //             checked={selectedValue === "a"}
-          //             onChange={handleChange}
-          //             value="a"
-          //             name="radio-buttons"
-          //             size="small"
-          //             slotProps={{ input: { "aria-label": "A" } }}
-          //           />
-          //           <span>YES</span>
-          //         </div>
-          //         <div>
-          //           <Radio
-          //             checked={selectedValue === "b"}
-          //             onChange={handleChange}
-          //             value="b"
-          //             name="radio-buttons"
-          //             size="small"
-          //             slotProps={{ input: { "aria-label": "B" } }}
-          //           />
-          //           <span>NO</span>
-          //         </div>
-          //       </Box>
-          //     </div>
-          //     <span>
-          //       {errors.upnMember && (
-          //         <span
-          //           className={`${userType === "General Merchandise Seller" ? " hidden" : ""
-          //             } text-red-500`}
-          //         >
-          //           {errors.upnMember}
-          //         </span>
-          //       )}
-          //     </span>
-          //   </div>
-          // </div>
-
-
           <div>
-  <div className="p-4">
-    <div className="mb-4">
-      <label
-        className="flex gap-2 text-gray-700 text-sm font-bold mb-2"
-        htmlFor="userType"
-      >
-        User Type
-        <div className="text-red-400">
-          {errors.userType && <div>{errors.userType}</div>}
-        </div>
-      </label>
-      <select
-        id="userType"
-        value={userType}
-        onChange={handleUserTypeChange}
-        className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      >
-        <option value="">Select User Type</option>
-        {userTypes.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
-    </div>
+            <div className="p-4">
+              <div className="mb-4">
+                <label
+                  className=" flex gap-2 text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="userType"
+                >
+                  User Type
+                  <div className="text-red-400">
+                    {errors.userType && <div>{errors.userType}</div>}
+                  </div>
+                </label>
+                <select
+                  id="userType"
+                  value={userType}
+                  onChange={handleUserTypeChange}
+                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">Select User Type</option>
+                  {userTypes.map((type, index) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-    {userType === "Retail Pharmacy" && (
-      <>
-        <div className="mb-4 w-full">
-          <label className="flex gap-2 text-gray-700 text-sm font-bold mb-2">
-            Account Type
-            <div className="text-red-400">
-              {errors.accountType && <div>{errors.accountType}</div>}
-            </div>
-          </label>
-          {getAccountTypes().map((type) => (
-            <div key={type} className="flex ml-4 items-center mb-2">
-              <input
-                type="radio"
-                id={type}
-                name="accountType"
-                value={type}
-                checked={accountType === type}
-                onChange={(e) => setAccountType(e.target.value)}
-                className="mr-2 leading-tight flex"
-              />
-              <label htmlFor={type} className="text-gray-700">
-                {type}
-              </label>
-            </div>
-          ))}
-        </div>
+              <div className="mb-4  ">
+                <label className=" flex gap-2 text-gray-700 text-sm font-bold mb-2">
+                  Account Type
+                  <div className="text-red-400">
+                    {errors.accountType && <div>{errors.accountType}</div>}
+                  </div>
+                </label>
+                {getAccountTypes().map((type) => (
+                  <div key={type} className="flex ml-4 items-center mb-2">
+                    <input
+                      type="radio"
+                      id={type}
+                      name="accountType"
+                      value={type}
+                      checked={accountType === type}
+                      onChange={(e) =>
+                        setAccountType(e.target.value) &&
+                        handleusertypechange(e.target.value)
+                      }
+                      className="mr-2 leading-tight flex"
+                    />
+                    <label htmlFor={type} className="text-gray-700">
+                      {type}
+                    </label>
+                  </div>
+                ))}
+              </div>
 
-        <div className="flex items-center">
-          <label className="text-gray-700">
-            <span className="text-red-500">*</span>Are you a UPN Member
-          </label>
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <div>
-              <Radio
-                checked={selectedValue === "a"}
-                onChange={handleChange}
-                value="a"
-                name="radio-buttons"
-                size="small"
-                slotProps={{ input: { "aria-label": "A" } }}
-              />
-              <span>YES</span>
-            </div>
-            <div>
-              <Radio
-                checked={selectedValue === "b"}
-                onChange={handleChange}
-                value="b"
-                name="radio-buttons"
-                size="small"
-                slotProps={{ input: { "aria-label": "B" } }}
-              />
-              <span>NO</span>
-            </div>
-          </Box>
-        </div>
-        <span>
-          {errors.upnMember && (
-            <span className="text-red-500">
-              {errors.upnMember}
-            </span>
-          )}
-        </span>
-      </>
-    )}
-  </div>
-</div>
+              {/* <div className={${userType === "Pharmacy Distributor" ? "" :""}}>
+              <input type="checkbox" className="mr-2 leading-tight ml-4" />
+              <label className= "text-gray-700 "> Are you a UPN Member</label>
+            </div> */}
 
+              <div
+                className={`${
+                  userType === "General Merchandise Seller"
+                    ? " opacity-50 pointer-events-none"
+                    : ""
+                } flex items-center`}
+              >
+                <label className="text-gray-700">
+                  <span className="text-red-500">*</span>Are you a UPN Member
+                </label>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <div>
+                    <Radio
+                      checked={selectedValue === "a"}
+                      onChange={handleChange}
+                      value="a"
+                      name="radio-buttons"
+                      size="small"
+                      slotProps={{ input: { "aria-label": "A" } }}
+                    />
+                    <span>YES</span>
+                  </div>
+                  <div>
+                    <Radio
+                      checked={selectedValue === "b"}
+                      onChange={handleChange}
+                      value="b"
+                      name="radio-buttons"
+                      size="small"
+                      slotProps={{ input: { "aria-label": "B" } }}
+                    />
+                    <span>NO</span>
+                  </div>
+                </Box>
+              </div>
+              <span>
+                {errors.upnMember && (
+                  <span
+                    className={`${
+                      userType === "General Merchandise Seller" ? " hidden" : ""
+                    } text-red-500`}
+                  >
+                    {errors.upnMember}
+                  </span>
+                )}
+              </span>
+            </div>
+          </div>
         );
       case 2:
         return (
           <div className="grid grid-cols-2 gap-4 align-middle">
             <div
-              className={`${userType === "Pharmacy Distributor" ||
+              className={`${
+                userType === "Pharmacy Distributor" ||
                 userType === "Retail Customer" ||
                 userType === "General Merchandise Seller"
-                ? "hidden"
-                : ""
-                } w-full`}
+                  ? "hidden"
+                  : ""
+              } w-full`}
             >
               <TextField
                 label="Shop Name"
@@ -1228,8 +1003,6 @@ return formData;
                 error={!!errors.shopName}
                 size="small"
                 className="w-[92%]"
-                helperText={errors.shopName}
-
               />
             </div>
 
@@ -1246,17 +1019,17 @@ return formData;
                   error={!!errors.legalBusinessName}
                   size="small"
                   className="w-[92%]"
-                  helperText={errors.legalBusinessName}
                 />
               </div>
             </div>
             <div
-              className={`${userType === "Pharmacy Distributor" ||
+              className={`${
+                userType === "Pharmacy Distributor" ||
                 userType === "Retail Customer" ||
                 userType === "General Merchandise Seller"
-                ? "hidden"
-                : ""
-                } `}
+                  ? "hidden"
+                  : ""
+              } `}
             >
               <TextField
                 label="DBA"
@@ -1267,14 +1040,12 @@ return formData;
                 error={!!errors.dbaName}
                 size="small"
                 className="w-[92%]"
-                helperText={errors.dbaName}
-
               />
             </div>
 
             <div>
               <TextField
-                label="Address"
+                label="Address1"
                 id="outlined-size-small"
                 name="Address1"
                 value={formData.Address1}
@@ -1282,8 +1053,6 @@ return formData;
                 error={!!errors.Address1}
                 size="small"
                 className="w-[92%]"
-                helperText={errors.Address1}
-
               />
             </div>
             <div>
@@ -1296,8 +1065,6 @@ return formData;
                 error={!!errors.city}
                 size="small"
                 className="w-[92%]"
-                helperText={errors.city}
-
               />
             </div>
 
@@ -1321,8 +1088,6 @@ return formData;
                       },
                     },
                   }}
-                  helperText={errors.State}
-
                 >
                   <MenuItem value="">
                     <em>None</em>
@@ -1350,9 +1115,6 @@ return formData;
                 error={!!errors.zip}
                 size="small"
                 className="w-[92%]"
-                helperText={errors.zip}
-                inputProps={{ maxLength: 5 }}
-
               />
             </div>
 
@@ -1372,20 +1134,12 @@ return formData;
                   placeholder="Enter your business phone"
                   size="small"
                   className="w-[92%]"
-                  // helperText={
-                  //   errors?.BusinessPhone !== null &&
-                  //     formData.BusinessPhone != 0
-                  //     ? errors.BusinessPhone
-                  //     : ""
-                  // }
-
                   helperText={
-                    (formData.BusinessPhone === "" && errors?.BusinessPhone  ? "" : "") +
-                    (formData.BusinessPhone === "" && errors?.BusinessPhone  && errors.BusinessPhone ? " " : "") + // Space to separate messages
-                    (errors.BusinessPhone ? errors.BusinessPhone : "")
+                    errors?.BusinessPhone !== null &&
+                    formData.BusinessPhone != 0
+                      ? errors.BusinessPhone
+                      : ""
                   }
-                  inputProps={{ maxLength: 12 }}
-
                 />
               </div>
             </div>
@@ -1403,10 +1157,6 @@ return formData;
                   error={!!errors.Business_Fax}
                   size="small"
                   className="w-[92%]"
-                  inputProps={{ maxLength: 12 }}
-                  helperText={errors.Business_Fax}
-
-
                 />
               </div>
             </div>
@@ -1424,8 +1174,6 @@ return formData;
                   error={!!errors.Business_Email}
                   size="small"
                   className="w-[92%]"
-                  helperText={errors.Business_Email}
-
                 />
               </div>
             </div>
@@ -1446,8 +1194,6 @@ return formData;
                   size="small"
                   inputProps={{ tabIndex: "1" }}
                   className="w-full"
-                  helperText={errors.DEA}
-
                 />
               </div>
 
@@ -1463,15 +1209,13 @@ return formData;
                   inputProps={{ tabIndex: "4" }}
                   tabIndex={4}
                   className="w-full"
-                  helperText={errors.Pharmacy_License}
-
                 />
               </div>
             </div>
             <div className="flex flex-row w-full justify-between ">
               <div className="w-[45%] flex flex-col">
                 <span className="text-xs">DEA Expiration Date</span>
-                {/* <TextField
+                <TextField
                   label=""
                   type="date"
                   name="DEA_Expiration_Date"
@@ -1488,30 +1232,7 @@ return formData;
                       ? errors.DEA_Expiration_Date
                       : ""
                   }
-                /> */}
-
-
-<TextField
-  label=""
-  type="date"
-  name="DEA_Expiration_Date"
-  value={formData.DEA_Expiration_Date}
-  onChange={handleInputChange}
-  id="outlined-size-small"
-  error={!!errors.DEA_Expiration_Date}
-  size="small"
-  inputProps={{
-    tabIndex: "2",
-    min: new Date().toISOString().split("T")[0], // Sets the minimum selectable date to today
-  }}
-  tabIndex={2}
-  className="w-full"
-  helperText={
-    formData.DEA_Expiration_Date != null
-      ? errors.DEA_Expiration_Date
-      : ""
-  }
-/>
+                />
               </div>
 
               <div className="w-[45%] flex flex-col">
@@ -1525,11 +1246,7 @@ return formData;
                   error={!!errors.Pharmacy_Expiration_Date}
                   onChange={handleInputChange}
                   size="small"
-                  // inputProps={{ tabIndex: "5" }}
-                  inputProps={{
-                    tabIndex: "2",
-                    min: new Date().toISOString().split("T")[0], // Sets the minimum selectable date to today
-                  }}
+                  inputProps={{ tabIndex: "5" }}
                   tabIndex={5}
                   className="w-full"
                   helperText={
@@ -1599,11 +1316,9 @@ return formData;
                   onChange={handleInputChange}
                   error={!!errors.NPI}
                   size="small"
-                  inputProps={{ maxLength: 10 }}
+                  inputProps={{ tabIndex: "7" }}
                   tabIndex={7}
                   className="w-full"
-                  helperText={errors.NPI}
-
                 />
               </div>
 
@@ -1616,12 +1331,11 @@ return formData;
                   onChange={handleInputChange}
                   error={!!errors.NCPDP}
                   size="small"
-                  inputProps={{maxLength: 7}}
+                  inputProps={{ tabIndex: "8" }}
                   tabIndex={8}
                   className="w-full"
-                  helperText={errors.NCPDP}
 
-                // style={{ width: "101%" }}
+                  // style={{ width: "101%" }}
                 />
               </div>
             </div>
@@ -1639,7 +1353,6 @@ return formData;
                   inputProps={{ tabIndex: "9" }}
                   tabIndex={9}
                   className="w-full"
-                  helperText={errors.Federal_Tax_ID}
                 />
               </div>
             </div>
@@ -1674,7 +1387,21 @@ return formData;
                   </Link>
                 </label>
               </div>
+              {/* {Visible && (
+                <div>
+                  <div className="flex justify-center items-center ">
+                    {/* <h5 className="text-[18px] ml-1">Enter OTP</h5> 
+                    <TextField
+                      id="standard-basic"
+                      label="Enter Captcha"
+                      variant="standard"
+                      tabIndex={12}
+                    />
 
+                    {/* <OTPInput length={6}  /> 
+                  </div>
+                </div>
+              )} */}
             </div>
           </div>
         );
@@ -1684,9 +1411,7 @@ return formData;
             <div className="">
               Thank you for registering as
               <span className="font-bold text-green-500"> {userType} </span>,
-              You are Registration is under review .
-              <p>You will receive a confirmation email when the review is completed.</p>
-               <p>  Please allow up to 48 hours for the process. </p>
+              You are successfully registered.
               <p>
                 If you have any question please contact us.{" "}
                 <span className="hover:text-green-500 hover:font-semibold text-blue-900 underline">
@@ -1725,8 +1450,9 @@ return formData;
           <div className="h-[80%]  flex justify-center items-center">
             <div className="bg-white w-[600px] px-12 py-6 rounded-lg shadow-lg">
               <span
-                className={`text-blue-900 ${activeStep == 4 ? "hidden" : ""
-                  } text-[25px]  text-center font-bold     flex justify-center items-center  `}
+                className={`text-blue-900 ${
+                  activeStep == 4 ? "hidden" : ""
+                } text-[25px]  text-center font-bold     flex justify-center items-center  `}
               >
                 SignUp
               </span>
@@ -1753,8 +1479,9 @@ return formData;
               <div className="flex justify-around m-2">
                 <button
                   onClick={handleBack}
-                  className={`${activeStep === 0 ? "opacity-50 " : ""} ${activeStep === 4 ? "hidden" : ""
-                    } bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4 `}
+                  className={`${activeStep === 0 ? "opacity-50 " : ""} ${
+                    activeStep === 4 ? "hidden" : ""
+                  } bg-blue-900 w-24 p-2 flex justify-center text-white h-10 cursor-pointer font-semibold border rounded-lg my-4 `}
                 >
                   <img src={back} className="w-6" />
                 </button>
@@ -1782,3 +1509,4 @@ const activeCircleStyle = {
 };
 
 export default Signup;
+
