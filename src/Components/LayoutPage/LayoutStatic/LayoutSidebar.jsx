@@ -383,12 +383,16 @@ function LayoutSidebar() {
         `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Customer/GetByCustomerId?customerId=${customerId}`
       );
       const data = await response.json();
+      console.log("daaaaaaa----->",data)
+
       if (data) {
         setUserDetails(data.result[0]);
         const menuResponse = await fetch(
-          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?accountTypeId=${data.result[0].customerDetails.accountTypeId}`
+          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?CustomerTypeId=${userDetails.customerDetails?.customerTypeId
+          }`
         );
         const menuData = await menuResponse.json();
+        console.log("menu----->",menuData)
         if (menuData) {
           const navItems = buildNavItems(menuData.result);
           setnavItems(navItems);

@@ -1,27 +1,52 @@
-
-
 // import React, { useContext, useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
-// import { RiDeleteBinLine } from "react-icons/ri";
-
 // import { styled, alpha } from "@mui/material/styles";
 // import InputBase from "@mui/material/InputBase";
 // import searchimg from '../assets/search1.png';
-//  import deleteicon from '../assets/trash.png'
+// import deleteicon from '../assets/trash.png';
 // import { AppContext } from "../context";
-// function Cart({ topMargin, setCartItems }) {
-//   const {cartItems} = useContext(AppContext)
+
+// function Cart({ topMargin }) {
+//   const { cartItems, setCartItems } = useContext(AppContext);
+
+  
+//   // Initialize quantities with default value of 1
 //   const [quantities, setQuantities] = useState(cartItems.map(() => 1));
 //   let navigate = useNavigate();
 
-//   console.log("carItems--->", cartItems)
+//   const  handleremove =  async (index) => {
+//     // const filtered = cartItems.filter((_, i) => i !== index);
+//     // setCartItems(filtered);
 
-//   function handleremove(index) {
-//     const filtered = cartItems.filter((_, i) => i !== index);
-//     setCartItems(filtered);
+//     // const updatedQuantities = quantities.filter((_, i) => i !== index);
+//     // setQuantities(updatedQuantities); 
+ 
 
-//     const updatedQuantities = quantities.filter((_, i) => i !== index);
-//     setQuantities(updatedQuantities);
+//     try {
+//       const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Delete?CartId=${cartItems[index].cartId}`, {
+//         method: "POST",
+//       }
+//     )
+   
+//         if (!response.ok) {
+//           const errorDetails = await response.json();
+//           throw new Error(
+//             `Error: ${response.status} ${response.statusText
+//             } - ${JSON.stringify(errorDetails)}`
+//           );
+//         }
+
+//       const result = await response.json();
+//         console.log("deleteresult----", result);
+//       // setCartItems(result?.result || []);
+//       // window.location.reload()
+//       const updatedWishItems = cartItems.filter((_, i) => i !== index);
+//       setCartItems(updatedWishItems);
+
+//       } catch (error) {
+//         // console.error("There was a problem with the fetch operation:", error);
+//         throw error;
+//       }
 //   }
 
 //   const handleQuantityChange = (index, newQuantity) => {
@@ -31,9 +56,11 @@
 //   };
 
 //   const calculateSubtotal = (price, quantity) => price * quantity;
+  
+//   // Calculate total dynamically based on updated quantities
 //   const total = cartItems.reduce(
 //     (acc, item, index) =>
-//       acc + calculateSubtotal(item.price, quantities[index]),
+//       acc + calculateSubtotal(item.product.salePrice, quantities[index]),
 //     0
 //   );
 
@@ -41,9 +68,9 @@
 //     navigate("/checkout");
 //   };
 
-//   const handlemove =()=>{
-//     navigate("/detailspage/0")
-//   }
+//   const handlemove = () => {
+//     navigate("/detailspage/0");
+//   };
 
 //   const Search = styled("div")(({ theme }) => ({
 //     position: "relative",
@@ -68,23 +95,18 @@
 //     display: "flex",
 //     alignItems: "center",
 //     justifyContent: "center",
-//     // backgroundColor:'red',
-//     color:'black',
-//   zIndex:"1"
-   
+//     color: 'black',
+//     zIndex: "1"
 //   }));
 
 //   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//     // backgroundColor:'beige',
-//     border:'1px solid gray',
-//     // boxShadow:'1px 1px',
-//     borderRadius:'5px',
+//     border: '1px solid gray',
+//     borderRadius: '5px',
 //     color: "black",
 //     width: "100%",
 //     "& .MuiInputBase-input": {
 //       padding: theme.spacing(1, 1, 1, 0),
-//       // vertical padding + font size from searchIcon
-//       paddingLeft: ` calc(1em + ${theme.spacing(4)})`,
+//       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
 //       transition: theme.transitions.create("width"),
 //       [theme.breakpoints.up("sm")]: {
 //         width: "12ch",
@@ -96,54 +118,34 @@
 //   }));
 
 //   return (
-//     <div
-//       className=" flex flex-col justify-center font-sans bg-gray-200 p-8  "
-//       style={{ marginTop: `${topMargin}px` }}
-//     >
+//     <div className="flex flex-col justify-center font-sans bg-gray-200 p-8" style={{ marginTop: `${topMargin}px` }}>
 //       <p className="text-lg md:text-2xl mb-2 text-blue-900 flex font-semibold">
 //         PharmEtrade {`>`} Cart
 //       </p>
 //       <div className="w-full bg-white rounded-lg shadow-lg p-5">
-//       <div className="flex justify-between">
-//         <h2 className="text-xl md:text-2xl mb-4 font-semibold">Cart</h2>
-//         <div className='flex bg-white  m-5'>
-            
-//             <Search className="">
-//          <SearchIconWrapper>
-//            <img src={searchimg} className="w-6 absolute " />
-//            {/* <SearchIcon /> */}
-//          </SearchIconWrapper>
-//          <StyledInputBase
-//            placeholder="Search..."
-//            inputProps={{ "aria-label": "search" }}
-//          />
-//        </Search>
-//          </div>
-//          </div>
+//         <div className="flex justify-between">
+//           <h2 className="text-xl md:text-2xl mb-4 font-semibold">Cart</h2>
+//           <div className='flex bg-white m-5'>
+//             <Search>
+//               <SearchIconWrapper>
+//                 <img src={searchimg} className="w-6 absolute" alt="search-icon" />
+//               </SearchIconWrapper>
+//               <StyledInputBase placeholder="Search..." inputProps={{ "aria-label": "search" }} />
+//             </Search>
+//           </div>
+//         </div>
 //         {cartItems.length > 0 ? (
 //           <div className="flex flex-col lg:flex-row gap-2">
 //             <div className="w-full lg:w-2/3">
-//               <table className="min-w-full border shadow-lg  rounded-lg">
-//                 <thead className="" >
-//                   <tr className="border-b" >
-//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
-//                       Image
-//                     </th>
-//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
-//                       Product Name
-//                     </th>
-//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
-//                       Price
-//                     </th>
-//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
-//                       Quantity
-//                     </th>
-//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
-//                       Subtotal
-//                     </th>
-//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
-//                       Action
-//                     </th>
+//               <table className="min-w-full border shadow-lg rounded-lg">
+//                 <thead>
+//                   <tr className="border-b">
+//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Image</th>
+//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Product Name</th>
+//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Price</th>
+//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Quantity</th>
+//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Subtotal</th>
+//                     <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Action</th>
 //                   </tr>
 //                 </thead>
 //                 <tbody className="bg-white divide-y divide-gray-200">
@@ -154,38 +156,29 @@
 //                           className="h-16 w-16 rounded-lg"
 //                           onClick={handlemove}
 //                           src={item.product.imageUrl}
-//                           alt={item.product.productName}
+//                           alt={item.product.id}
 //                         />
 //                       </td>
-//                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
-//                         {item.product.productName}
-//                       </td>
-//                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
-//                         {item.product.salePrice}
-//                       </td>
+//                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">{item.product.productName}</td>
+//                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">${item.product.salePrice}</td>
 //                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
 //                         <input
 //                           type="number"
 //                           value={quantities[index]}
-//                           onChange={(e) =>
-//                             handleQuantityChange(index, Number(e.target.value))
-//                           }
+//                           onChange={(e) => handleQuantityChange(index, Number(e.target.value))}
 //                           className="text-xl border rounded-lg p-1 w-16"
 //                           min="1"
 //                         />
 //                       </td>
 //                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
-//                         <strong>
-//                           ${calculateSubtotal(item.product.salePrice, quantities[index])}
-//                         </strong>
+//                         <strong>${calculateSubtotal(item.product.salePrice, quantities[index])}</strong>
 //                       </td>
-//                       <td className="px-2 md:px-4 py-8 whitespace flex items-center justify-center">
+//                       <td className="px-2 md:px-4 py-8 whitespace-nowrap flex items-center justify-center">
 //                         <button
 //                           className="text-red-600 w-4 h-3"
 //                           onClick={() => handleremove(index)}
 //                         >
-//                           <img src={deleteicon} className="w-6 "/>
-//                           {/* <RiDeleteBinLine className="w-7 h-9" /> */}
+//                           <img src={deleteicon} className="w-6" alt="delete-icon"/>
 //                         </button>
 //                       </td>
 //                     </tr>
@@ -208,10 +201,8 @@
 //               </div>
 //             </div>
 //             <div className="w-full lg:w-1/3 mt-4 lg:mt-0">
-//               <div className="bg-white  border rounded-lg shadow-lg p-5">
-//                 <h2 className="text-xl md:text-2xl mb-4 text-center font-semibold">
-//                   Cart Totals
-//                 </h2>
+//               <div className="bg-white border rounded-lg shadow-lg p-5">
+//                 <h2 className="text-xl md:text-2xl mb-4 text-center font-semibold">Cart Totals</h2>
 //                 <table className="w-full">
 //                   <tbody>
 //                     <tr>
@@ -257,7 +248,7 @@
 // export default Cart;
 
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -267,46 +258,34 @@ import { AppContext } from "../context";
 
 function Cart({ topMargin }) {
   const { cartItems, setCartItems } = useContext(AppContext);
+  const [quantities, setQuantities] = useState([]);
+  const navigate = useNavigate();
 
-  
-  // Initialize quantities with default value of 1
-  const [quantities, setQuantities] = useState(cartItems.map(() => 1));
-  let navigate = useNavigate();
+  useEffect(() => {
+    // Initialize quantities based on the length of cartItems
+    setQuantities(cartItems.map(() => 1));
+  }, [cartItems]);
 
-  const  handleremove =  async (index) => {
-    // const filtered = cartItems.filter((_, i) => i !== index);
-    // setCartItems(filtered);
-
-    // const updatedQuantities = quantities.filter((_, i) => i !== index);
-    // setQuantities(updatedQuantities); 
- 
-
+  const handleremove = async (index) => {
     try {
       const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Delete?CartId=${cartItems[index].cartId}`, {
         method: "POST",
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        throw new Error(`Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorDetails)}`);
       }
-    )
-   
-        if (!response.ok) {
-          const errorDetails = await response.json();
-          throw new Error(
-            `Error: ${response.status} ${response.statusText
-            } - ${JSON.stringify(errorDetails)}`
-          );
-        }
 
       const result = await response.json();
-        console.log("deleteresult----", result);
-      // setCartItems(result?.result || []);
-      // window.location.reload()
-      const updatedWishItems = cartItems.filter((_, i) => i !== index);
-      setCartItems(updatedWishItems);
-
-      } catch (error) {
-        // console.error("There was a problem with the fetch operation:", error);
-        throw error;
-      }
-  }
+      console.log("deleteresult----", result);
+      
+      const updatedCartItems = cartItems.filter((_, i) => i !== index);
+      setCartItems(updatedCartItems);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
 
   const handleQuantityChange = (index, newQuantity) => {
     const updatedQuantities = [...quantities];
