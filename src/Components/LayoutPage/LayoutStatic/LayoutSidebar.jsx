@@ -368,7 +368,7 @@ function LayoutSidebar() {
   const [dropdownStates, setDropdownStates] = useState({});
   const localData = JSON.parse(localStorage.getItem("login"));
   const customerId = localData?.userId;
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState([]);
   const [navItems, setnavItems] = useState([]);
   
   useEffect(() => {
@@ -384,11 +384,14 @@ function LayoutSidebar() {
       );
       const data = await response.json();
       console.log("daaaaaaa----->",data)
+      setUserDetails(data)
+
 
       if (data) {
         setUserDetails(data.result[0]);
         const menuResponse = await fetch(
-          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?CustomerTypeId=${userDetails.customerDetails?.customerTypeId
+          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Menu/GetByAccountType?CustomerTypeId=${userDetails.
+            customerDetails?.customerTypeId
           }`
         );
         const menuData = await menuResponse.json();
@@ -409,6 +412,8 @@ function LayoutSidebar() {
       console.error("Error fetching user details:", error);
     }
   };
+
+  console.log("userDe--->", userDetails)
 
   const handleClick = (path) => {
     setActiveLink(path);
