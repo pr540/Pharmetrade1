@@ -46,7 +46,7 @@ function Footers({ topMargin}) {
             built by pharmacists with you in mind.
           </p>
           <p className="text-md mt-4 font-thin">
-            With pharmEtrade, take control of your inventory and put profits
+            With pharmEtrade, takes control of your inventory and put profits
             back into your
             pharmacy.
           </p>
