@@ -5,11 +5,15 @@ import deleteicon from "../../../assets/trash.png";
 import { useStates } from "react-us-states";
 import { Box, Radio } from "@mui/material";
 import { fetchNdcUpcListApi } from "../../../Api/MasterDataApi";
-import { AddProductApi, AddProductSizeApi, uploadImageApi } from "../../../Api/ProductApi";
+import {
+  AddProductApi,
+  AddProductSizeApi,
+  uploadImageApi,
+} from "../../../Api/ProductApi";
 import { useSelector } from "react-redux";
 
 function LayoutaddProduct() {
-  const user = useSelector((state)=>state.user.user);
+  const user = useSelector((state) => state.user.user);
   const products = [
     {
       serial: "",
@@ -175,7 +179,6 @@ function LayoutaddProduct() {
     " Additional Images & Videos",
   ];
 
-
   const removeImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
@@ -197,7 +200,10 @@ function LayoutaddProduct() {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       const isDuplicate = thumbnails.some(
-        (file) => file.name === acceptedFiles[0].name && file.size === thumbnails[0].size && file.lastModified === thumbnails[0].lastModified
+        (file) =>
+          file.name === acceptedFiles[0].name &&
+          file.size === thumbnails[0].size &&
+          file.lastModified === thumbnails[0].lastModified
       );
 
       if (isDuplicate) {
@@ -217,9 +223,7 @@ function LayoutaddProduct() {
         setFormData({ ...formData, thumbnail5: acceptedFiles[0] });
       } else if (formData.thumbnail6 == null) {
         setFormData({ ...formData, thumbnail6: acceptedFiles[0] });
-      }
-      else
-      {
+      } else {
         console.log("cannot upload more than 6 thumnails");
       }
     },
@@ -324,8 +328,6 @@ function LayoutaddProduct() {
     setSelectedValue(e.target.value);
   };
 
-
-
   const handleRemoveImage = () => {
     setSelectedImage(null);
   };
@@ -354,15 +356,35 @@ function LayoutaddProduct() {
   };
   console.log(user);
   const handleSubmit = async () => {
-  
-      const imageUrl = formData.imageUrl==null? "null": await uploadImageApi(user.customerId,formData.imageUrl);
-      const thumbnail1 =formData.thumbnail1==null? "null":await uploadImageApi(user.customerId,formData.thumbnail1);
-      const thumbnail2 =formData.thumbail2==null? "null": await uploadImageApi(user.customerId,formData.thumbnail2);
-      const thumbnail3 =formData.thumbnail3==null? "null":await uploadImageApi(user.customerId,formData.thumbnail3);
-      const thumbnail4 =formData.thumbnail4==null? "null":await uploadImageApi(user.customerId,formData.thumbnail4);
-      const thumbnail5 =formData.thumbnail5==null? "null":await uploadImageApi(user.customerId,formData.thumbnail5);
-      const thumbnail6 =formData.thumbnail6==null? "null":await uploadImageApi(user.customerId,formData.thumbnail6);
-    
+    const imageUrl =
+      formData.imageUrl == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.imageUrl);
+    const thumbnail1 =
+      formData.thumbnail1 == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.thumbnail1);
+    const thumbnail2 =
+      formData.thumbail2 == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.thumbnail2);
+    const thumbnail3 =
+      formData.thumbnail3 == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.thumbnail3);
+    const thumbnail4 =
+      formData.thumbnail4 == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.thumbnail4);
+    const thumbnail5 =
+      formData.thumbnail5 == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.thumbnail5);
+    const thumbnail6 =
+      formData.thumbnail6 == null
+        ? "null"
+        : await uploadImageApi(user.customerId, formData.thumbnail6);
+
     const data = {
       productID: "0",
       productCategoryId: formData.productCategory, // Correct field name
@@ -412,7 +434,7 @@ function LayoutaddProduct() {
     };
     try {
       console.log(data);
-      const response = await AddProductApi(data,user.customerId);
+      const response = await AddProductApi(data, user.customerId);
       console.log("Product Data", response);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -442,8 +464,8 @@ function LayoutaddProduct() {
       case 0:
         return (
           // <div className="space-y-4 w-full flex">
-          <div className="w-[100%]  h-full flex font-sans font-medium overflow-hidden ">
-            <div className="flex  w-full Largest:w-[100%] text-sm">
+          <div className="w-[100%] h-full flex font-sans font-medium overflow-hidden ">
+            <div className="flex   w-full Largest:w-[100%] text-sm">
               <div className=" ">
                 <div className="font-semibold flex flex-col mb-4">
                   <label>
@@ -1046,7 +1068,7 @@ function LayoutaddProduct() {
                 <div className="w-full">
                   <div className="">
                     <span className="text-base font-semibold">States :</span>
-                    <div className="w-56 h-24 pl-2   py-1 border border-slate-300 rounded-md overflow-y-scroll">
+                    <div className="w-56 h-44 pl-2   py-1 border border-slate-300 rounded-md overflow-y-scroll">
                       <label className="flex items-center">All Selected</label>
                       {states.map((state) => (
                         <label className="flex  mt-1" key={state.abbreviation}>
@@ -1226,7 +1248,7 @@ function LayoutaddProduct() {
                         },
                       }}
                     />
-                    <span>YES</span>
+                    <span>Yes</span>
                   </div>
                   <div>
                     <Radio
@@ -1242,7 +1264,7 @@ function LayoutaddProduct() {
                         },
                       }}
                     />
-                    <span>NO</span>
+                    <span>No</span>
                   </div>
                 </Box>
               </div>
@@ -1413,11 +1435,11 @@ function LayoutaddProduct() {
             {/* section4 end */}
 
             {/* section5 start */}
-            <div className="flex flex-col w-full Largest:w-[80%]  justify-between text-sm ">
+            <div className="flex flex-col w-full Largest:w-[60%]  justify-between text-sm ">
               <div className="flex flex-col  ">
                 <label className="text-base">Tier Price:</label>
-                <div className="border rounded-md  bg-white ">
-                  <table className="w-full Largest:w-[80%] ">
+                <div className="border rounded-md  ">
+                  <table className="w-full Largest:w-[60%] ">
                     <thead className="p-10">
                       <tr className="text-xl border-b bg-blue-900 text-white">
                         <th className=" font-normal text-center text-base h-10">
@@ -1447,7 +1469,7 @@ function LayoutaddProduct() {
                     </thead>
                     {isPopupVisible && (
                       // <div>
-                      <tbody className="w-full Largest:w-[80%]">
+                      <tbody className="w-full Largest:w-[60%]">
                         <tr>
                           <td className="border bg-slate-200">
                             <select className=" py-1 text-left text-base h-9  w-40 m-2 border border-slate-300 rounded-md focus:outline-none focus:border-slate-300 focus:shadow focus:shadow-blue-400">
@@ -1885,7 +1907,7 @@ function LayoutaddProduct() {
         return (
           <div className="font-sans font-medium">
             <h1 className="text-2xl font-semibold">Related Products </h1>
-            <div className="flex  justify-between w-full Largest:w-[80%]">
+            <div className="flex  justify-between w-full Largest:w-[60%]">
               <p>
                 Related products are shown to customers in addition to the item
                 the customer is looking at.{" "}
@@ -1903,7 +1925,7 @@ function LayoutaddProduct() {
               </button>
             </div>
             {isvisible && (
-              <div className=" bg-white p-2 px-4   w-full Largest:w-[80%] ">
+              <div className=" bg-white p-2 px-4   w-full Largest:w-[60%] ">
                 <div className="flex justify-between">
                   <div className="flex flex-col w-36">
                     <label>Id From</label>
@@ -1985,7 +2007,7 @@ function LayoutaddProduct() {
 
             {/* section start */}
             <div>
-              <div className="my-6 border w-full Largest:w-[80%] rounded-md bg-white ">
+              <div className="my-6 border w-full Largest:w-[60%] rounded-md bg-white ">
                 <table className="w-full">
                   <thead className="bg-blue-900 text-white">
                     <tr className="border-b font-semibold">
@@ -2028,16 +2050,14 @@ function LayoutaddProduct() {
                 </table>
               </div>
             </div>
-
+<div className="font-sans font-medium">
             <h1 className="text-2xl font-semibold">Up-Sell Products </h1>
-            <div className="flex  justify-between w-full Largest:w-[80%]">
+            <div className="flex  justify-between w-full Largest:w-[60%]">
               <p>
                 An up-sell item is offered to the customer as a pricier or
                 higher-quality alternative to the product the customer is
                 looking at.
               </p>
-            </div>
-            <div className="flex justify-end">
               <button
                 className={`  text-base font-medium p-2 rounded-md  h-8 flex  items-center justify-end ${
                   ButtonUpClick
@@ -2052,7 +2072,7 @@ function LayoutaddProduct() {
               </button>
             </div>
             {isVisible && (
-              <div className=" bg-white p-2 px-5   w-full Largest:w-[80%]">
+              <div className=" bg-white p-2 px-5   w-full Largest:w-[60%]">
                 <div className="flex justify-between">
                   <div className="flex flex-col w-36">
                     <label>Id From</label>
@@ -2131,7 +2151,7 @@ function LayoutaddProduct() {
                 </div>
               </div>
             )}
-            <div className="my-6 border rounded-md bg-white w-full Largest:w-[80%] ">
+            <div className="my-6 border rounded-md bg-white w-full Largest:w-[60%] ">
               <table className="w-full">
                 <thead className="bg-blue-900 text-white  ">
                   <tr className="border-b font-semibold">
@@ -2171,9 +2191,10 @@ function LayoutaddProduct() {
                 </tbody>
               </table>
             </div>
+            </div>
             {/* section start */}
             <h1 className="text-2xl font-semibold">Cross-Sell Products </h1>
-            <div className="flex justify-between w-full Largest:w-[80%]">
+            <div className="flex justify-between w-full Largest:w-[60%]">
               <p>
                 These "impulse-buy" products appear next to the shopping cart as
                 cross-sells to the items already in the shopping cart.
@@ -2191,7 +2212,7 @@ function LayoutaddProduct() {
               </button>
             </div>
             {visible && (
-              <div className=" bg-white p-2 px-5  w-full Largest:w-[80%] ">
+              <div className=" bg-white p-2 px-5  w-full Largest:w-[60%] ">
                 <div className="flex justify-between">
                   <div className="flex flex-col w-36">
                     <label>Id From</label>
@@ -2269,7 +2290,7 @@ function LayoutaddProduct() {
                 </div>
               </div>
             )}
-            <div className="my-6 border rounded-md bg-white w-full Largest:w-[80%]">
+            <div className="my-6 border rounded-md bg-white w-full Largest:w-[60%]">
               <table className="w-full">
                 <thead className="bg-blue-900 text-white  ">
                   <tr className="border-b font-semibold">
@@ -2314,7 +2335,7 @@ function LayoutaddProduct() {
         );
       case 3:
         return (
-          <div className="space-y-4 font-sans font-medium ">
+          <div className="space-y-4 Largest:w-[60%] font-sans font-medium ">
             <p className="font-semibold">
               Main Product Image: (Accepted Formats: JPEG, PNG)
             </p>
@@ -2458,7 +2479,7 @@ function LayoutaddProduct() {
 
   return (
     <div className="w-[95%]  h-full mx-auto pt-8 ml-10 overflow-scroll">
-      <div className="flex flex-col justify-center ">
+      <div className="flex flex-col  justify-center ">
         <div className="flex  justify-between ">
           <div>
             <h1 className="text-2xl font-bold text-blue-900 -mt-5">
@@ -2486,8 +2507,10 @@ function LayoutaddProduct() {
           ))}
         </ul>
       </div>
-      <div>{renderTabContent()}</div>
-      <div className="flex justify-end">
+      <div className="">{renderTabContent()}
+      
+      </div>
+      <div className="flex 2xl:w-[60%] xl:w-full justify-end">
         <button
           onClick={handleSubmit}
           className="border bg-blue-900 text-white my-4  h-8 w-16 rounded-md font-semibold  "
@@ -2495,6 +2518,7 @@ function LayoutaddProduct() {
           Save
         </button>
       </div>
+      
     </div>
   );
 }
