@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PLefts from "../../PLefts";
 import OfferSlider from "../Components/OfferSlider";
@@ -21,51 +21,35 @@ import offer1 from "../../../assets/IMG_1.jpg";
 import offer2 from "../../../assets/IMG_2.jpg";
 import offer3 from "../../../assets/IMG_3.jpg";
 import offer4 from "../../../assets/IMG_4.jpg";
+import { useSelector } from "react-redux";
 // import offer5 from "../../../assets/IMG_5.jpg";
 // import offer6 from "../../../assets/IMG_6.jpg";
 // import offer7 from "../../../assets/IMG_7.jpg";
 // import offer8 from "../../../assets/IMG_8.jpg";
 
-function Landing2({wishList,addCart}) {
+function Landing2({ wishList, addCart }) {
   const navigate = useNavigate();
   const slides = [slider1, slider4, slider2, slider3];
-  const [newProducts,setnewProducts] = useState([]);
-  useEffect(() => {
-    const NewProductsAPI =async ()=>{
-      try {
-        const response = await fetch(
-          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetRecentSoldProducts?numberOfProducts=10`
-      );
-      const data = await response.json();
-      setnewProducts(data.result);
-      console.log(data.result)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    NewProductsAPI();
-    
-  }, [])
-  
+  const newProducts = useSelector((state) => state.product.recentSoldProducts);
 
   const handleClick = (index) => {
     switch (index) {
       case 0:
-        navigate('/products');
+        navigate("/products");
         break;
       case 1:
-        navigate('/login');
+        navigate("/login");
         break;
       case 2:
-        navigate('/layout/addproduct');
+        navigate("/layout/addproduct");
         break;
       case 3:
-        navigate('/bid');
+        navigate("/bid");
         break;
       default:
         break;
     }
-  }
+  };
   const texts = [
     "Boost sales by promoting new and special products.",
     "Receive payments more quickly.",
@@ -76,7 +60,7 @@ function Landing2({wishList,addCart}) {
     "Cashbacks and rewards.",
     "Multi-order merge shipment.",
   ];
-  
+
   // const newProducts = [
   //   { id: 1, img: img1, name: "Nature Mask", price: "$99.00" },
   //   { id: 2, img: img2, name: "Eco-Friendly Mask", price: "$89.00" },
@@ -91,8 +75,14 @@ function Landing2({wishList,addCart}) {
   // ];
 
   const screens = [
-    offer1, offer2, offer3, offer4,
-    offer2, offer3, offer4, offer1,
+    offer1,
+    offer2,
+    offer3,
+    offer4,
+    offer2,
+    offer3,
+    offer4,
+    offer1,
   ];
 
   return (
@@ -115,30 +105,36 @@ function Landing2({wishList,addCart}) {
         </div>
       </div> */}
 
-<div className="w-full">
-      <div className="flex justify-around gap-6">
-        {slides.map((item, key) => (
-          <div
-            key={key}
-            className="hover:scale-110 w-fit h-fit  rounded-xl transition duration-300 ease-in-out max-w-sm p-1"
-            onClick={() => handleClick(key)}
-          >
-            <img
-              src={item}
-              alt={`Slide ${key}`}
-              className="h-full w-full rounded-xl hover:cursor-pointer"
-            />
-          </div>
-        ))}
+      <div className="w-full">
+        <div className="flex justify-around gap-6">
+          {slides.map((item, key) => (
+            <div
+              key={key}
+              className="hover:scale-110 w-fit h-fit  rounded-xl transition duration-300 ease-in-out max-w-sm p-1"
+              onClick={() => handleClick(key)}
+            >
+              <img
+                src={item}
+                alt={`Slide ${key}`}
+                className="h-full w-full rounded-xl hover:cursor-pointer"
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-
 
       <div className="mt-6">
         <OfferSlider images={screens} Title={"Special Offers"} />
       </div>
       <div>
-        <ProductSlider addCart={addCart} wishList={wishList} Title={"Recent Sold Products"} data={newProducts} />
+        {newProducts && (
+          <ProductSlider
+            addCart={addCart}
+            wishList={wishList}
+            Title={"Recent Sold Products"}
+            data={newProducts}
+          />
+        )}
       </div>
 
       <div className="flex flex-col items-center ">
@@ -158,7 +154,8 @@ function Landing2({wishList,addCart}) {
       <div className="flex items-center -mb-8 justify-evenly">
         <div
           className="bg-yellow-50 p-4 rounded-2xl transition duration-300"
-          style={{ height: "fit-content" }}>
+          style={{ height: "fit-content" }}
+        >
           <ul className="space-y-2 lg:w-100% font-sans  xl:w-auto xl:pr-10 md:pb-6 md:text-lg xl:text-2xl xl:mt-6 font-medium pl-4">
             {texts.map((items, key) => (
               <li
@@ -176,7 +173,6 @@ function Landing2({wishList,addCart}) {
         </div>
       </div>
 
-     
       <div className="flex justify-center">
         <img
           src={allproduct}

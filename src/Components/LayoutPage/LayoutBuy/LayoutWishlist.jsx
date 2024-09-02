@@ -29,10 +29,13 @@ import email from "../../../assets/envelope.png";
 import twitter from "../../../assets/twitter.png";
 import share from "../../../assets/upload1.png";
 import cross from "../../../assets/letter-x[1].png";
-import { AppContext } from "../../../context";
+import { useSelector } from "react-redux";
+import { addCartApi } from "../../../Api/CartApi";
+import { removeFromWishlistApi } from "../../../Api/WishList";
 function LayoutWishlist({ addCart }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { wishItems, setWishItems } = useContext(AppContext)
+  const user = useSelector((state)=>state.user.user);
+  const wishItems = useSelector((state)=>state.wishlist.wishlist);
   const [quantities, setQuantities] = useState(wishItems.map(() => 1));
   const navigate = useNavigate();
 
@@ -40,53 +43,34 @@ function LayoutWishlist({ addCart }) {
   const [isShowPopup, setIsShowPopup] = useState(false);
   const [rating, setRating] = useState(0);
   const totalStars = 5;
-
-  const handleremove = async(index) => {
-    // const filtered = wishItems.filter((_, i) => i !== index);
-    // setWishItems(filtered);
-
-    // const updatedQuantities = quantities.filter((_, i) => i !== index);
-    // setQuantities(updatedQuantities);
+  const handleremove = async(wishListId) => {
     try {
-      const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Remove?wishlistId=${wishItems[index].wishListId}`, {
-        method: "POST",
-      }
-      )
-
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        throw new Error(
-          `Error: ${response.status} ${response.statusText
-          } - ${JSON.stringify(errorDetails)}`
-        );
-      }
-
-      const result = await response.json();
-      console.log("deleteresult----", result);
-      // setCartItems(result?.result || []);
-      // window.location.reload()
-      const updatedWishItems = wishItems.filter((_, i) => i !== index);
-      setWishItems(updatedWishItems);
-
+      await removeFromWishlistApi(wishListId);
     } catch (error) {
-      // console.error("There was a problem with the fetch operation:", error);
       throw error;
     }
   }
+  
 
-  function handleCart(index) {
-    // const prolist = {
-    //   id: index,
-    //   src: wishItems[index].src,
-    //   price: "$50.99",
-    //   rate: "SKU 6545555",
-    //   rates: "UPN member price:",
-    //   ratesupn: "$45.00",
-    // };
-    // addCart(prolist);
-    navigate("/cart");
-  }
+  const handleCart = async(productID) => {
+    if(user==null)
+    {
+      console.log("login to add");
+      return;
+    }
+    const cartData = {
+      customerId: user.customerId, 
+      productId: productID,
+      quantity: 1,
+      isActive: 1,
+    };
+    try {
+      await addCartApi(cartData);
 
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  };
   const Star = ({ filled, onClick }) => (
     <span
       onClick={onClick}
@@ -156,7 +140,7 @@ function LayoutWishlist({ addCart }) {
       },
     },
   }));
-
+  console.log(wishItems);
   return (
     <div
       className="bg-gray-200  p-8 overflow-scroll"
@@ -216,7 +200,7 @@ function LayoutWishlist({ addCart }) {
                 <div className="flex flex-col items-center justify-center">
                   <button
                     className="text-lg font-semibold text-white bg-blue-900 w-56 p-1 rounded-full"
-                    onClick={() => handleCart(index)}
+                    onClick={() => handleCart(item.product.productID)}
                   >
                     Add to cart
                   </button>
@@ -261,7 +245,7 @@ function LayoutWishlist({ addCart }) {
                     )}
                     <img
                       src={deleteicon}
-                      onClick={() => handleremove(index)}
+                      onClick={() => handleremove(item.wishListId)}
                       className=" w-5 "
                     />
                     {/* <MdDeleteOutline className="border rounded-md text-2xl hover:bg-sky-200" /> */}

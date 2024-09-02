@@ -9,7 +9,6 @@
 // function Cart({ topMargin }) {
 //   const { cartItems, setCartItems } = useContext(AppContext);
 
-  
 //   // Initialize quantities with default value of 1
 //   const [quantities, setQuantities] = useState(cartItems.map(() => 1));
 //   let navigate = useNavigate();
@@ -19,15 +18,14 @@
 //     // setCartItems(filtered);
 
 //     // const updatedQuantities = quantities.filter((_, i) => i !== index);
-//     // setQuantities(updatedQuantities); 
- 
+//     // setQuantities(updatedQuantities);
 
 //     try {
 //       const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Delete?CartId=${cartItems[index].cartId}`, {
 //         method: "POST",
 //       }
 //     )
-   
+
 //         if (!response.ok) {
 //           const errorDetails = await response.json();
 //           throw new Error(
@@ -56,7 +54,7 @@
 //   };
 
 //   const calculateSubtotal = (price, quantity) => price * quantity;
-  
+
 //   // Calculate total dynamically based on updated quantities
 //   const total = cartItems.reduce(
 //     (acc, item, index) =>
@@ -247,58 +245,74 @@
 
 // export default Cart;
 
-
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import searchimg from '../assets/search1.png';
-import deleteicon from '../assets/trash.png';
-import { AppContext } from "../context";
+import searchimg from "../assets/search1.png";
+import deleteicon from "../assets/trash.png";
+import { useSelector } from "react-redux";
+import { addCartApi, removeItemFromCartApi } from "../Api/CartApi";
 
-function Cart({ topMargin }) {
-  const { cartItems, setCartItems } = useContext(AppContext);
+function Cart() {
+  const user = useSelector((state)=>state.user.user);
+  const cartList = useSelector((state) => state.cart.cart);
+  const [cartItems, setcartItems] = useState(cartList);
+  // const { cartItems, setCartItems } = useContext(AppContext);
   const [quantities, setQuantities] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Initialize quantities based on the length of cartItems
-    setQuantities(cartItems.map(() => 1));
-  }, [cartItems]);
+    if (cartList) setcartItems(cartList);
+  }, [cartList]);
 
   const handleremove = async (index) => {
     try {
-      const response = await fetch(`http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Delete?CartId=${cartItems[index].cartId}`, {
-        method: "POST",
-      });
-
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        throw new Error(`Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorDetails)}`);
-      }
-
-      const result = await response.json();
-      console.log("deleteresult----", result);
-      
-      const updatedCartItems = cartItems.filter((_, i) => i !== index);
-      setCartItems(updatedCartItems);
+      const cartId = cartItems[index].cartId;
+      await removeItemFromCartApi(cartId);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
     }
   };
+  const handleCart = async (productID,Quantity) => {
+    const cartData = {
+      customerId: user.customerId,
+      productId: productID,
+      quantity: Quantity,
+      isActive: 1,
+    };
 
-  const handleQuantityChange = (index, newQuantity) => {
-    const updatedQuantities = [...quantities];
-    updatedQuantities[index] = newQuantity;
-    setQuantities(updatedQuantities);
+    try {
+      await addCartApi(cartData);
+
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
   };
+  const handleQuantityChange = (index, newQuantity) => {
+    if (newQuantity) {
+      setcartItems((prev) => {
+        const updatedList = [...prev];
+        updatedList[index] = {
+          ...updatedList[index],
+          updateQuantity: newQuantity,
+        };
+        return updatedList;
+      });
+    }
+  };
+  // const handleQuantityChange = (index, newQuantity) => {
+  //   const updatedQuantities = [...quantities];
+  //   updatedQuantities[index] = newQuantity;
+  //   setQuantities(updatedQuantities);
+  // };
 
   const calculateSubtotal = (price, quantity) => price * quantity;
-  
+
   // Calculate total dynamically based on updated quantities
   const total = cartItems.reduce(
     (acc, item, index) =>
-      acc + calculateSubtotal(item.product.salePrice, quantities[index]),
+      acc + calculateSubtotal(item.product.salePrice, item.quantity),
     0
   );
 
@@ -333,13 +347,13 @@ function Cart({ topMargin }) {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: 'black',
-    zIndex: "1"
+    color: "black",
+    zIndex: "1",
   }));
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    border: '1px solid gray',
-    borderRadius: '5px',
+    border: "1px solid gray",
+    borderRadius: "5px",
     color: "black",
     width: "100%",
     "& .MuiInputBase-input": {
@@ -356,19 +370,26 @@ function Cart({ topMargin }) {
   }));
 
   return (
-    <div className="flex flex-col justify-center font-sans bg-gray-200 p-8" style={{ marginTop: `${topMargin}px` }}>
+    <div className="flex flex-col justify-center font-sans bg-gray-200 p-8">
       <p className="text-lg md:text-2xl mb-2 text-blue-900 flex font-semibold">
         PharmEtrade {`>`} Cart
       </p>
       <div className="w-full bg-white rounded-lg shadow-lg p-5">
         <div className="flex justify-between">
           <h2 className="text-xl md:text-2xl mb-4 font-semibold">Cart</h2>
-          <div className='flex bg-white m-5'>
+          <div className="flex bg-white m-5">
             <Search>
               <SearchIconWrapper>
-                <img src={searchimg} className="w-6 absolute" alt="search-icon" />
+                <img
+                  src={searchimg}
+                  className="w-6 absolute"
+                  alt="search-icon"
+                />
               </SearchIconWrapper>
-              <StyledInputBase placeholder="Search..." inputProps={{ "aria-label": "search" }} />
+              <StyledInputBase
+                placeholder="Search..."
+                inputProps={{ "aria-label": "search" }}
+              />
             </Search>
           </div>
         </div>
@@ -378,12 +399,24 @@ function Cart({ topMargin }) {
               <table className="min-w-full border shadow-lg rounded-lg">
                 <thead>
                   <tr className="border-b">
-                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Image</th>
-                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Product Name</th>
-                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Price</th>
-                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Quantity</th>
-                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Subtotal</th>
-                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">Action</th>
+                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
+                      Image
+                    </th>
+                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
+                      Product Name
+                    </th>
+                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
+                      Price
+                    </th>
+                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
+                      Quantity
+                    </th>
+                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
+                      Subtotal
+                    </th>
+                    <th className="px-2 md:px-5 py-2 md:py-3 text-left font-semibold text-blue-950 tracking-wider">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -397,26 +430,47 @@ function Cart({ topMargin }) {
                           alt={item.product.id}
                         />
                       </td>
-                      <td className="px-2 md:px-4 py-3 whitespace-nowrap">{item.product.productName}</td>
-                      <td className="px-2 md:px-4 py-3 whitespace-nowrap">${item.product.salePrice}</td>
                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
+                        {item.product.productName}
+                      </td>
+                      <td className="px-2 md:px-4 py-3 whitespace-nowrap">
+                        ${item.product.salePrice}
+                      </td>
+                      <td className="px-2 flex gap-2 md:px-4 py-3 whitespace-nowrap">
                         <input
                           type="number"
-                          value={quantities[index]}
-                          onChange={(e) => handleQuantityChange(index, Number(e.target.value))}
+                          value={item.updateQuantity}
+                          onChange={(e) =>
+                            handleQuantityChange(index, Number(e.target.value))
+                          }
                           className="text-xl border rounded-lg p-1 w-16"
                           min="1"
                         />
+                        {item.updateQuantity != item.quantity && (
+                          <button onClick={()=>handleCart(item.product.productID,item.updateQuantity-item.quantity)} className="text-white px-2 bg-blue-900">
+                            Update
+                          </button>
+                        )}
                       </td>
                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
-                        <strong>${calculateSubtotal(item.product.salePrice, quantities[index])}</strong>
+                        <strong>
+                          $
+                          {calculateSubtotal(
+                            item.product.salePrice,
+                            item.quantity
+                          )}
+                        </strong>
                       </td>
                       <td className="px-2 md:px-4 py-8 whitespace-nowrap flex items-center justify-center">
                         <button
                           className="text-red-600 w-4 h-3"
                           onClick={() => handleremove(index)}
                         >
-                          <img src={deleteicon} className="w-6" alt="delete-icon"/>
+                          <img
+                            src={deleteicon}
+                            className="w-6"
+                            alt="delete-icon"
+                          />
                         </button>
                       </td>
                     </tr>
@@ -440,7 +494,9 @@ function Cart({ topMargin }) {
             </div>
             <div className="w-full lg:w-1/3 mt-4 lg:mt-0">
               <div className="bg-white border rounded-lg shadow-lg p-5">
-                <h2 className="text-xl md:text-2xl mb-4 text-center font-semibold">Cart Totals</h2>
+                <h2 className="text-xl md:text-2xl mb-4 text-center font-semibold">
+                  Cart Totals
+                </h2>
                 <table className="w-full">
                   <tbody>
                     <tr>

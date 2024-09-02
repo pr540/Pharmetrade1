@@ -736,7 +736,7 @@
 // export default LayoutBuy;
 
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -750,58 +750,44 @@ import filledHeart from "../../../assets/wishlist2_icon.png";
 import Expicon from "../../../assets/Expicon.png";
 import search from "../../../assets/search1.png";
 import nature from "../../../assets/img1.png";  
-import { AppContext } from "../../../context";
+import { useSelector } from "react-redux";
+import { addCartApi } from "../../../Api/CartApi";
+import { addToWishlistApi, removeFromWishlistApi } from "../../../Api/WishList";
 
-function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQuantities }) {
-  const { pop, setPop } = useNavbarContext();
+function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) {
   const navigate = useNavigate();
-  const images = Array(115).fill(nature);
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
-  const [favoriteItems, setFavoriteItems] = useState({});
   const [showMore, setShowMore] = useState({});
-  const [productData, setProductData] = useState([]);
-  const [cartStatus, setCartStatus] = useState({});
   const [notification, setNotification] = useState({ show: false, message: '' });
-  const { fetchCartData, fetchWishListData } = useContext(AppContext);
-
-  const localData = JSON.parse(localStorage.getItem("login"));
-  const customerId = localData?.userId;
-
-  const handleCart = async (index) => {
+  const user = useSelector((state)=>state.user.user);
+  const cart = useSelector((state)=>state.cart.cart);
+  const wishlist = useSelector((state)=>state.wishlist.wishlist);
+  const [wishlistProductIDs,setwishlistProductIDs] = useState(wishlist.map((wishItem) => wishItem.product.productID));
+  const getWishlistIdByProductID = (productID) => {
+    const wishlistItem = wishlist.find((item) => item.product.productID === productID);
+    return wishlistItem ? wishlistItem.wishListId : null; 
+  };
+  const products = useSelector((state)=>state.product.Products);
+  const [productList,setproductList] = useState(products);
+  useEffect(() => {
+    if(products)
+    {
+      setproductList(products)
+    }
+  }, [products])
+  
+  const handleCart = async (productID,Quantity) => {
     const cartData = {
-      customerId: customerId,
-      productId: productList[index].productID,
-      quantity: quantities[index],
+      customerId: user.customerId,
+      productId: productID,
+      quantity: Quantity,
       isActive: 1,
     };
 
     try {
-      const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cartData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart");
-      }
-
-      const responseData = await response.json();
-      console.log("Product added to cart:", responseData);
-      setProductData(response);
-      fetchCartData();
-      setCartStatus(prev => ({
-        ...prev,
-        [index]: true
-      }));
+      await addCartApi(cartData);
       setNotification({ show: true, message: 'Item added to cart!' });
-
       setTimeout(() => setNotification({ show: false, message: '' }), 3000);
 
     } catch (error) {
@@ -809,51 +795,76 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
       setNotification({ show: true, message: 'Failed to add item to cart!' });
     }
   };
-
-  const handleClick = async (index) => {
-    setFavoriteItems(prevState => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
-
-    const jsondata = {
-      wishListId: "0",
-      productID: productList[index].productID,
-      customerId: customerId,
-      isActive: 1
-    };
-
-    try {
-      const response = await fetch(
-        'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsondata),
-        }
-      );
-
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        throw new Error(
-          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorDetails)}`
-        );
+  const handleClick = async (productID) => {
+    if(wishlistProductIDs.includes(productID))
+    {
+      setwishlistProductIDs(wishlistProductIDs.filter(id => id !== productID));
+      await removeFromWishlistApi(getWishlistIdByProductID(productID))
+    }
+    else{
+      setwishlistProductIDs([...wishlistProductIDs, productID]);
+      const wishListData = {
+        wishListId: "0",
+        productId: productID,
+        customerId: user.customerId,
+        isActive: 1
       }
-
-      const result = await response.json();
-      console.log("WISHLISTData===", result);
-      fetchWishListData();
-    } catch (error) {
-      throw error;
+      await addToWishlistApi(wishListData);
     }
   };
+  // const handleClick = async (index) => {
+  //   setFavoriteItems(prevState => ({
+  //     ...prevState,
+  //     [index]: !prevState[index],
+  //   }));
+
+  //   const jsondata = {
+  //     wishListId: "0",
+  //     productID: productList[index].productID,
+  //     customerId: customerId,
+  //     isActive: 1
+  //   };
+
+  //   try {
+  //     const response = await fetch(
+  //       'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(jsondata),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       const errorDetails = await response.json();
+  //       throw new Error(
+  //         `Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorDetails)}`
+  //       );
+  //     }
+
+  //     const result = await response.json();
+  //     fetchWishListData();
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // };
 
   const handleQuantityChange = (index, newQuantity) => {
-    const updatedQuantities = [...quantities];
-    updatedQuantities[index] = newQuantity;
-    setQuantities(updatedQuantities);
+    if(newQuantity)
+    {
+      setproductList((prev) => {
+        const updatedList = [...prev];
+        updatedList[index] = {
+          ...updatedList[index],
+          CartQuantity: newQuantity,
+        };
+        return updatedList;
+      });
+
+    }
+    
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -921,9 +932,7 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
 
   const handleProductDetails = (productID, product) => {
     navigate(`/detailspage/${productID}`);
-    console.log("product----->", product);
   };
-
   return (
     <div className="w-full mt-4 h-full overflow-y-scroll">
       <Notification show={notification.show} message={notification.message} />
@@ -1035,8 +1044,12 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
                       <div className="mt-2 flex">
                         <input
                           type="number"
-                          value={quantities[index]}
-                          onChange={(e) =>
+                          disabled={cart.some((item)=>item.product.productID==product.productID)==1} 
+                          value={
+                            cart.some((item) => item.product.productID === product.productID)
+                              ? cart.find((item) => item.product.productID === product.productID).quantity
+                              : product.CartQuantity
+                          }                          onChange={(e) =>
                             handleQuantityChange(
                               index,
                               parseInt(e.target.value)
@@ -1052,27 +1065,44 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
                     <div className="flex flex-col items-center justify-between">
                       <div className="mt-2">
                         <img
-                          src={favoriteItems[index] ? filledHeart : emptyHeart}
+                          src={wishlistProductIDs.includes(product.productID) ? filledHeart : emptyHeart}
                           className="w-6 h-6 cursor-pointer"
-                          onClick={() => handleClick(index)}
+                          onClick={() => handleClick(product.productID)}
                           alt="Wishlist Icon"
                         />
                       </div>
 
                       {/* Add to Cart */}
-                      <div className="flex text-white h-[40px] px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
+                      {cart.some((item)=>item.product.productID==product.productID)==0? (
+                        <div onClick={() => handleCart(product.productID,product.CartQuantity)}
+                        className="flex text-white h-[40px] px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
                         <div className="mr-1">
                           <img
                             src={addcart}
                             className="w-6 h-6 cursor-pointer"
-                            onClick={() => handleCart(index)}
                             alt="Add to Cart Icon"
                           />
                         </div>
                         <p className="font-semibold">
-                          {cartStatus[index] ? 'Added' : 'Add'}
+                          {'Add to Cart'}
                         </p>
                       </div>
+                      ):(
+                        <div className="flex text-white h-[40px] px-2 rounded-lg bg-sky-600 mx-3 justify-center items-center">
+                        <div className="mr-1">
+                          <img
+                            src={addcart}
+                            className="w-6 h-6 cursor-pointer"
+                            alt="Add to Cart Icon"
+                          />
+                        </div>
+                        <p className="font-semibold">
+                          {'View Cart'}
+                        </p>
+                      </div>
+                      )}
+                      
+                      
                     </div>
                   </div>
                 ))

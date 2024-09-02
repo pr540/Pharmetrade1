@@ -4,6 +4,8 @@ import "./App.css";
 import Cart from "./Components/Cart";
 import Landing from "./Components/HomePage/LandingPage/Landing";
 // import Login from "./Components/Login";
+import Logo from "./assets/logo2.png";
+
 import Nav from "./Components/HomePage/Layout/Nav";
 import { NavbarProvider } from "./Components/NavbarContext";
 import Product from "./Components/Product";
@@ -99,31 +101,59 @@ import LayoutAllQuotesProducts from "./Components/LayoutPage/LayoutSell/LayoutAl
 import LayoutAllrequestedQuote from "./Components/LayoutPage/LayoutSell/LayoutAllrequestedQuote";
 import LayoutSetting from "./Components/LayoutPage/LayoutSetting/LayoutSetting";
 import LayoutPaymentHistory from "./Components/LayoutPage/LayoutSell/LayoutPaymentHistory";
+import { useSelector } from "react-redux";
+import { getUserByCustomerIdApi, UserMenuItemsApi } from "./Api/UserApi";
+import { getCartItemsApi } from "./Api/CartApi";
+import { fetchWishlistItemsApi } from "./Api/WishList";
+import { LoadingApi, TopMarginApi } from "./Api/HomeStaticApi";
+import { fetchAllBannersApi } from "./Api/BannerApi";
+import { fetchAllProductsApi, fetchOtcProductsApi, fetchRecentSoldProductsApi, fetchRxProductsApi } from "./Api/ProductApi";
 
 function App() {
-  const [count, setCount] = useState(0);
   const location1 = useLocation();
+  const user = useSelector((state) => state.user);
+  const loading = useSelector((state) => state.home.loading);
+  const userId = localStorage.getItem("userId");
+
+  const topMargin = useSelector((state)=>state.home.TopMargin);
+  const topDivRef = useRef(null);
+ 
+  useEffect(() => {
+    const LoadAll = async (userId) => {
+      LoadingApi(true);
+      if (userId) {
+        const userDetails = await getUserByCustomerIdApi(userId);
+        await UserMenuItemsApi(userDetails.customerDetails.customerTypeId);
+        await getCartItemsApi(userId);
+        await fetchWishlistItemsApi(userId);
+      }
+      await fetchAllBannersApi();
+      await fetchRecentSoldProductsApi(10);
+      await fetchOtcProductsApi();
+      await fetchRxProductsApi();
+      await fetchAllProductsApi();
+      TopMarginApi(topDivRef?.current?.offsetHeight)
+      LoadingApi(false);
+    };
+
+    const token = localStorage.getItem("token");
+    LoadAll(userId);
+  }, [userId]);
   useEffect(() => {
     // console.log("Scrolling at top");
     window.scrollTo(0, 0);
   }, [location1.pathname]);
-  console.log(window.location.href.includes("/products"));
-  const [topMargin, setTopMargin] = useState(0);
   const [wishItems, setWishItems] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [productsList, setProductsList] = useState([]);
   // Ref for the top fixed div
-  const topDivRef = useRef(null);
-  useEffect(() => {
-    if (topDivRef.current) {
-      setTopMargin(topDivRef.current.offsetHeight);
-    }
-  }, []);
+  
+  console.log("topantarra babu",topMargin)
   const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
     console.log(cartItems);
-  }, [cartItems])
-  
+  }, [cartItems]);
+
   function addCart(prolist) {
     setCartItems([...cartItems, prolist]);
   }
@@ -132,10 +162,6 @@ function App() {
   function wishList(prolist) {
     setWishItems([...wishItems, prolist]);
   }
-  console.log(wishItems);
-  const location = useLocation();
-
-  const excludePatterns = /\/(seller|admin|user|login|signup|password|changepassword)/;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -147,7 +173,6 @@ function App() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-
 
         if (Array.isArray(data.result)) {
           setProductsList(data.result);
@@ -168,6 +193,15 @@ function App() {
       {/* {!excludePatterns.test(location.pathname) && (
         <Nav topDivRef={topDivRef} cartItems={cartItems} />
       )} */}
+      <div
+        className={`w-screen ${
+          loading == false ? "hidden" : "flex"
+        } flex flex-col justify-center items-center z-[100] bg-slate-200 absolute h-screen`}
+      >
+        <div className="animate-pulse flex justify-center items-center flex-col">
+          <img src={Logo} alt="" />
+        </div>
+      </div>
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/termsandconditions" element={<TermsAndConditions />} />
@@ -177,91 +211,53 @@ function App() {
         <Route path="/changepassword" element={<Changepassword />} />
 
         <Route
-          element={<HomeLayout topDivRef={topDivRef} cartItems={cartItems} />}
+          element={
+            <HomeLayout
+              topMargin={topMargin}
+              topDivRef={topDivRef}
+              cartItems={cartItems}
+            />
+          }
         >
           <Route
             path="/cart"
-            element={
-              <Cart
-                topMargin={topMargin}
-                cartItems={cartItems}
-                setCartItems={setCartItems}
-              />
-            }
+            element={<Cart cartItems={cartItems} setCartItems={setCartItems} />}
           />
           <Route
             path="/products"
-            element={
-              <Products
-                addCart={addCart}
-                wishList={wishList}
-                topMargin={topMargin}
-              />
-            }
+            element={<Products addCart={addCart} wishList={wishList} />}
           />
-          <Route
-            path="/checkout"
-            element={<Checkout topMargin={topMargin} />}
-          />
-          <Route path="/order" element={<Order topMargin={topMargin} />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order" element={<Order />} />
           <Route path="/pops" element={<Product />} />
           <Route
             path="/app"
-            element={
-              <Landing
-                addCart={addCart}
-                wishList={wishList}
-                topMargin={topMargin}
-              />
-            }
+            element={<Landing addCart={addCart} wishList={wishList} />}
           />
           <Route
             path="/"
-            element={
-              <Landing
-                addCart={addCart}
-                wishList={wishList}
-                topMargin={topMargin}
-              />
-            }
+            element={<Landing addCart={addCart} wishList={wishList} />}
           />
           <Route
             path="/detailspage/:id"
-            element={<Items addCart={addCart} topMargin={topMargin} productList={productsList} />}
+            element={<Items addCart={addCart} productList={productsList} />}
           />
+          <Route path="/orderhistory" element={<OrderHistory />} />
+          <Route path="/bid" element={<Bid />} />
+          <Route path="/buy" element={<Buy />} />
+          <Route path="/whypharmetrade" element={<WhyPharma />} />
+          <Route path="/aboutus" element={<AboutUs />} />{" "}
+          <Route path="/contactus" element={<Contactus />} />
+          <Route path="/requestdemo" element={<RequestDemo />} />
           <Route
-            path="/orderhistory"
-            element={<OrderHistory topMargin={topMargin} />}
+            path="/offers"
+            element={<Offers addCart={addCart} wishList={wishList} />}
           />
-          <Route path="/bid" element={<Bid topMargin={topMargin} />} />
-          <Route path="/buy" element={<Buy topMargin={topMargin} />} />
-          <Route
-            path="/whypharmetrade"
-            element={<WhyPharma topMargin={topMargin} />}
-          />
-          <Route path="/aboutus" element={<AboutUs topMargin={topMargin} />} />{" "}
-          <Route
-            path="/contactus"
-            element={<Contactus topMargin={topMargin} />}
-          />
-           <Route
-            path="/requestdemo"
-            element={<RequestDemo topMargin={topMargin} />}
-          />
-          
-          <Route path="/offers" element={<Offers topMargin={topMargin} addCart={addCart} wishList={wishList} />} />
-          <Route
-            path="/faqs"
-            element={<Faqs topMargin={topMargin} />}
-          />
+          <Route path="/faqs" element={<Faqs />} />
           <Route
             path="/wishlist"
             element={
-              <Wishlist
-                topMargin={topMargin}
-                wishItems={wishItems}
-                setWishItems={setWishItems}
-              />
+              <Wishlist wishItems={wishItems} setWishItems={setWishItems} />
             }
           />
         </Route>
@@ -271,7 +267,10 @@ function App() {
           <Route path="orders" element={<Orders />} />
           <Route path="market-product-list" element={<AddProducts />} />
           <Route path="add-single-product" element={<ProductFields />} />
-          <Route path="edit-single-product/:addproductID" element={<EditFields />} />
+          <Route
+            path="edit-single-product/:addproductID"
+            element={<EditFields />}
+          />
           <Route path="add-xl-sheet" element={<AddXlSheet />} />
           <Route path="customers" element={<Customers />} />
           <Route path="payouts" element={<Payouts />} />
@@ -289,42 +288,87 @@ function App() {
           <Route path="manage-shipping" element={<ManageShipping />} />
         </Route>
 
-        
-
-        <Route path='/layout' element={<LayoutPanel cartItems={cartItems}/>}>
-          <Route path='/layout' element={<LayoutDashboard addCart={addCart} wishList={wishList} />} />
-          <Route path='/layoutsell' element={<LayoutSell />} />
-          <Route path='/layout/addproduct' element={<LayoutaddProduct />} />
-          <Route path='/layout/addbulkproduct' element={<LayoutAddBulkProduct />} />
-          <Route path='/layout/postingproducts' element={<LayoutPostingProducts/>}/>
-          <Route path="/layout/layout-edit-single-product/:productID" element={<LayoutEditProduct />} />
-          <Route path='/layout/sellorders' element={<LayoutSellOrders />} />
-          <Route path='/layout/sellcustomers' element={<LayoutCustomers />} />
-          <Route path='/layout/ups-shipping' element={<LayoutUpsShipping/>} />
-          <Route path='/layout/fedex-shipping' element={<LayoutFedexshipping />} />
-          <Route path='/layout/requestedquote' element={<LayoutAllrequestedQuote/>} />
-          <Route path='/layout/quotedproducts' element={<LayoutAllQuotesProducts />} />
-          <Route path='/layout/sellpaymenthistory' element={<LayoutPaymentHistory/>} />
-          <Route path='/layout/sellearnings' element={<LayoutEarnings />} />
-          <Route path='/layout/sellreview' element={<LayoutShippingDetails/>} />
-          <Route path='/layout/sellreturn' element={<LayoutSellReturn />} />
-          <Route path='/layout/sellassignproducts' element={<LayoutRequestForQuote/>} />
-          <Route path='/layout/saleshistory' element={<LayoutSalesHistory />} />
-          <Route path='/layout/layoutsetting' element={<LayoutSetting />} />
-          <Route path='/layout/layoutbuy' element={<LayoutBuy addCart={addCart} productList={productsList} quantities={quantities} setQuantities={setQuantities } />} />
-          <Route path='/layout/layoutjoin' element={<Signup />} />
-          <Route path='/layout/layoutbid' element={<LayoutBid />} />
-          <Route path='/layout/layoutwishlist' element={<LayoutWishlist 
+        <Route path="/layout" element={<LayoutPanel cartItems={cartItems} />}>
+          <Route
+            path="/layout"
+            element={<LayoutDashboard addCart={addCart} wishList={wishList} />}
+          />
+          <Route path="/layoutsell" element={<LayoutSell />} />
+          <Route path="/layout/addproduct" element={<LayoutaddProduct />} />
+          <Route
+            path="/layout/addbulkproduct"
+            element={<LayoutAddBulkProduct />}
+          />
+          <Route
+            path="/layout/postingproducts"
+            element={<LayoutPostingProducts />}
+          />
+          <Route
+            path="/layout/layout-edit-single-product/:productID"
+            element={<LayoutEditProduct />}
+          />
+          <Route path="/layout/sellorders" element={<LayoutSellOrders />} />
+          <Route path="/layout/sellcustomers" element={<LayoutCustomers />} />
+          <Route path="/layout/ups-shipping" element={<LayoutUpsShipping />} />
+          <Route
+            path="/layout/fedex-shipping"
+            element={<LayoutFedexshipping />}
+          />
+          <Route
+            path="/layout/requestedquote"
+            element={<LayoutAllrequestedQuote />}
+          />
+          <Route
+            path="/layout/quotedproducts"
+            element={<LayoutAllQuotesProducts />}
+          />
+          <Route
+            path="/layout/sellpaymenthistory"
+            element={<LayoutPaymentHistory />}
+          />
+          <Route path="/layout/sellearnings" element={<LayoutEarnings />} />
+          <Route
+            path="/layout/sellreview"
+            element={<LayoutShippingDetails />}
+          />
+          <Route path="/layout/sellreturn" element={<LayoutSellReturn />} />
+          <Route
+            path="/layout/sellassignproducts"
+            element={<LayoutRequestForQuote />}
+          />
+          <Route path="/layout/saleshistory" element={<LayoutSalesHistory />} />
+          <Route path="/layout/layoutsetting" element={<LayoutSetting />} />
+          <Route
+            path="/layout/layoutbuy"
+            element={
+              <LayoutBuy
+                addCart={addCart}
+                productList={productsList}
+                quantities={quantities}
+                setQuantities={setQuantities}
+              />
+            }
+          />
+          <Route path="/layout/layoutjoin" element={<Signup />} />
+          <Route path="/layout/layoutbid" element={<LayoutBid />} />
+          <Route
+            path="/layout/layoutwishlist"
+            element={
+              <LayoutWishlist
                 wishItems={wishItems}
-            setWishItems={setWishItems} quantities={quantities} setQuantities={setQuantities}/>} />
-          <Route path='/layout/layoutorderlist' element={<LayoutOrderlist/>} />
+                setWishItems={setWishItems}
+                quantities={quantities}
+                setQuantities={setQuantities}
+              />
+            }
+          />
+          <Route path="/layout/layoutorderlist" element={<LayoutOrderlist />} />
           {/* <Route path='/layout/layoutreturn' element={<LayoutReturn />} /> */}
-          <Route path="/layoutsidebar" element={<LayoutSidebar/>}/>
+          <Route path="/layoutsidebar" element={<LayoutSidebar />} />
         </Route>
 
         <Route path="/admin" element={<AdminPanel />}>
           <Route path="" element={<AdminDasboard />} />
-          
         </Route>
 
         <Route element={<AccountPanel topMargin={topMargin} />}>
