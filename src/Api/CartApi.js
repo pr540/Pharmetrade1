@@ -7,7 +7,11 @@ export const getCartItemsApi = async (customerId) => {
     try {
       const response = await axios.get(`/api/Cart/GetCartItems?customerId=${customerId}`);
       if (response.status === 200) {
-        store.dispatch({ type: 'cart/setCart', payload: response.data.result });
+        const cartItems = response.data.result.map(item => ({
+          ...item,
+          updateQuantity: item.quantity 
+        }));
+        store.dispatch({ type: 'cart/setCart', payload: cartItems });
       } else {
         console.error('Failed to fetch cart items:', response.data.message);
         return null;
@@ -22,7 +26,11 @@ export const addCartApi = async (cartItem) => {
     try {
       const response = await axios.post('/api/Cart/Add', cartItem);
       if (response.status === 200) {
-        store.dispatch({ type: 'cart/setCart', payload: response.data.result });
+        const cartItems = response.data.result.map(item => ({
+          ...item,
+          updateQuantity: item.quantity 
+        }));
+        store.dispatch({ type: 'cart/setCart', payload: cartItems });
       } else {
         console.error('Failed to add item to cart:', response.data.message);
       }
@@ -43,6 +51,7 @@ export const removeItemFromCartApi = async (cartId) => {
       console.error('Error removing item from cart:', error);
     }
   };
+
   
   
   

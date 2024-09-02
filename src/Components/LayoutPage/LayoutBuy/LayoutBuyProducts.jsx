@@ -736,7 +736,7 @@
 // export default LayoutBuy;
 
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -759,26 +759,29 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const [showMore, setShowMore] = useState({});
-  const [cartStatus, setCartStatus] = useState({});
   const [notification, setNotification] = useState({ show: false, message: '' });
   const user = useSelector((state)=>state.user.user);
+  const cart = useSelector((state)=>state.cart.cart);
   const wishlist = useSelector((state)=>state.wishlist.wishlist);
   const [wishlistProductIDs,setwishlistProductIDs] = useState(wishlist.map((wishItem) => wishItem.product.productID));
   const getWishlistIdByProductID = (productID) => {
     const wishlistItem = wishlist.find((item) => item.product.productID === productID);
     return wishlistItem ? wishlistItem.wishListId : null; 
   };
-  const [productList,setproductList] = useState(useSelector((state) => 
-    state.product.Products.map(product => ({
-      ...product,
-      quantity: 0 
-    }))
-  ));
-  const handleCart = async (productID,quantity) => {
+  const products = useSelector((state)=>state.product.Products);
+  const [productList,setproductList] = useState(products);
+  useEffect(() => {
+    if(products)
+    {
+      setproductList(products)
+    }
+  }, [products])
+  
+  const handleCart = async (productID,Quantity) => {
     const cartData = {
       customerId: user.customerId,
       productId: productID,
-      quantity: quantity,
+      quantity: Quantity,
       isActive: 1,
     };
 
@@ -849,16 +852,25 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
   // };
 
   const handleQuantityChange = (index, newQuantity) => {
-    // Create a new array with the updated quantity
-    const updatedProducts = productList.map((product, i) =>
-      i === index ? { ...product, quantity: Number(newQuantity) } : product
-    );
+    if(newQuantity)
+    {
+      setproductList((prev) => {
+        const updatedList = [...prev];
+        updatedList[index] = {
+          ...updatedList[index],
+          CartQuantity: newQuantity,
+        };
+        return updatedList;
+      });
 
-    // Update the local state with the new product list
-    setproductList(updatedProducts);
+    }
+    
   };
 
-  const totalPages = Math.ceil(productList.length / 20);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(productList.length / itemsPerPage);
 
   const handleNextPage = () => {
     setCurrentPage(prev => Math.min(prev + 1, totalPages));
@@ -921,7 +933,6 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
   const handleProductDetails = (productID, product) => {
     navigate(`/detailspage/${productID}`);
   };
-
   return (
     <div className="w-full mt-4 h-full overflow-y-scroll">
       <Notification show={notification.show} message={notification.message} />
@@ -1033,10 +1044,19 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
                       <div className="mt-2 flex">
                         <input
                           type="number"
-                          value={product.quantity}
-                          onChange={(e) => handleQuantityChange(index, e.target.value)}
-
+                          disabled={cart.some((item)=>item.product.productID==product.productID)==1} 
+                          value={
+                            cart.some((item) => item.product.productID === product.productID)
+                              ? cart.find((item) => item.product.productID === product.productID).quantity
+                              : product.CartQuantity
+                          }                          onChange={(e) =>
+                            handleQuantityChange(
+                              index,
+                              parseInt(e.target.value)
+                            )
+                          }
                           className="w-16 border rounded-md text-center"
+                          min="1"
                         />
                       </div>
                     </div>
@@ -1053,19 +1073,36 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
                       </div>
 
                       {/* Add to Cart */}
-                      <div className="flex text-white h-[40px] px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
+                      {cart.some((item)=>item.product.productID==product.productID)==0? (
+                        <div onClick={() => handleCart(product.productID,product.CartQuantity)}
+                        className="flex text-white h-[40px] px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
                         <div className="mr-1">
                           <img
                             src={addcart}
                             className="w-6 h-6 cursor-pointer"
-                            onClick={() => handleCart(product.productID,product.quantity)}
                             alt="Add to Cart Icon"
                           />
                         </div>
                         <p className="font-semibold">
-                          {cartStatus[index] ? 'Added' : 'Add'}
+                          {'Add to Cart'}
                         </p>
                       </div>
+                      ):(
+                        <div className="flex text-white h-[40px] px-2 rounded-lg bg-sky-600 mx-3 justify-center items-center">
+                        <div className="mr-1">
+                          <img
+                            src={addcart}
+                            className="w-6 h-6 cursor-pointer"
+                            alt="Add to Cart Icon"
+                          />
+                        </div>
+                        <p className="font-semibold">
+                          {'View Cart'}
+                        </p>
+                      </div>
+                      )}
+                      
+                      
                     </div>
                   </div>
                 ))

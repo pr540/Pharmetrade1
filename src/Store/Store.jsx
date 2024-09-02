@@ -2,14 +2,10 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const homeSlice = createSlice({
   name: "home",
-  initialState: { loading: false,TopMargin : 122 },
+  initialState: { loading: false },
   reducers: {
     setLoading(state, action) {
       state.loading = action.payload;
-    },
-    setTopMargin(state,action)
-    {
-      state.TopMargin=action.payload;
     },
   },
 });
@@ -19,6 +15,10 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       state.cart.push(action.payload);
+      const product = state.cart.find((item) => item.cartId === cartId);
+      if (product) {
+        product.CartQuantity = action.payload.quantity;a
+      }
     },
     removeFromCart(state, action) {
       state.cart = state.cart.filter(
@@ -102,7 +102,8 @@ const productsSlice = createSlice({
       state.productsBySeller[sellerId] = products;
     },
     setProductById(state, action) {
-      state.productById = action.payload;
+      const { productId, product } = action.payload;
+      state.productById[productId] = product;
     },
     addProduct(state, action) {
       state.Products.push(action.payload);

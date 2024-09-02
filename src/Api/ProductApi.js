@@ -14,7 +14,13 @@ export const fetchAllProductsApi = async () => {
     try {
       const response = await axios.get('/api/Product/GetAll');
       if (response.status === 200) {
-        store.dispatch({ type: SET_PRODUCTS, payload: response.data.result });
+        const cartItems = store.getState().cart.cart;
+        const cartItemsMap = new Map(cartItems.map(item=>[item.product.productID,item.quantity]));
+        const products = response.data.result.map(product=>({
+          ...product,
+          CartQuantity:cartItemsMap.get(product.productID)||0
+        }))
+        store.dispatch({ type: SET_PRODUCTS, payload: products });
       } else {
         console.error('Failed to fetch all products:', response.data.message);
       }
@@ -28,7 +34,6 @@ export const fetchAllProductsApi = async () => {
       const response = await axios.get(`/api/Product/GetById?productId=${productId}`);
       if (response.status === 200) {
         store.dispatch({ type: SET_PRODUCT_BY_ID, payload: { productId, product: response.data.result } });
-        return response.data.result[0];
       } else {
         console.error('Failed to fetch product by ID:', response.data.message);
       }
