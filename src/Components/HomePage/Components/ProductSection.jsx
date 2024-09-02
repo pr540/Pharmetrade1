@@ -88,7 +88,7 @@ const ProductSection = ({ products, heading, path, addCart, wishList }) => {
               <img
                 src={item.imageUrl} // Assuming item.img contains image URL
                 className="h-40 cursor-pointer w-40 object-contain rounded-lg"
-                onClick={() => navigate(`/detailspage/${index}`)}
+                onClick={() => navigate(`/detailspage/${item.productID}`)}
                 alt={item.productName}
               />
               <img

@@ -33,7 +33,7 @@ export const fetchAllProductsApi = async () => {
     try {
       const response = await axios.get(`/api/Product/GetById?productId=${productId}`);
       if (response.status === 200) {
-        store.dispatch({ type: SET_PRODUCT_BY_ID, payload: { productId, product: response.data.result } });
+        return response.data.result[0];
       } else {
         console.error('Failed to fetch product by ID:', response.data.message);
       }
