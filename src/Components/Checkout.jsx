@@ -1,3 +1,4 @@
+
 // import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 
@@ -5,6 +6,28 @@
 //   const [isActive, setIsActive] = useState(true);
 //   const [ischeck, setIsCheck] = useState(false);
 //   const [isChecked, setIsChecked] = useState(false);
+//   const [formData, setFormData] = useState({
+//     firstName: "",
+//     lastName: "",
+//     streetAddress: "",
+//     townCity: "",
+//     stateCountry: "",
+//     postalCode: "",
+//     email: "",
+//     phone: "",
+//   });
+
+//   const details = {
+//     name: "Ram",
+//     lastname: 'Manda',
+//     Address: "Dollars",
+//     City: "Dollars",
+//     State: "US",
+//     Country: 'US',
+//     Pin: '78906',
+//     email: "ram@gmail.com",
+//     phone: 7894561230
+//   };
 
 //   const handleClick = () => {
 //     setIsActive(true);
@@ -20,6 +43,20 @@
 //     setIsChecked(!isChecked);
 //   };
 
+//   const handleUseAddress = () => {
+//     setFormData({
+//       ...formData,
+//       firstName: details.name,
+//       lastName: details.lastname,
+//       streetAddress: details.Address,
+//       townCity: details.City,
+//       stateCountry: details.State,
+//       postalCode: details.Pin,
+//       email: details.email, // You might want to update this based on your requirements
+//       phone: details.phone  // You might want to update this based on your requirements
+//     });
+//   };
+
 //   return (
 //     <div
 //       style={{ marginTop: `${topMargin}px` }}
@@ -27,31 +64,63 @@
 //     >
 //       <h1 className="text-2xl mb-2 text-black">PharmEtrade {`>`} Checkout</h1>
 //       <div className="bg-white rounded-lg p-4 w-full h-full">
-//         <h1 className="text-2xl font-semibold text-black mb-2">Checkout</h1>
-//         <div className="flex justify-center items-center mb-4">
-//           <h1>
-//             Have a coupon?
-//             <a href="#" className="text-cart underline">
-//               {" "}
-//               CLICK HERE TO ENTER YOUR CODE
-//             </a>
-//           </h1>
+//         <div className="flex justify-between">
+//           <div className="flex flex-col">
+//             <h1 className="text-2xl font-semibold text-black mb-2">Checkout</h1>
+//             <div className="flex mb-4">
+//               <h1>
+//                 Have a coupon?
+//                 <a href="#" className="text-cart underline">
+//                   {" "}
+//                   CLICK HERE TO ENTER YOUR CODE
+//                 </a>
+//               </h1>
+//             </div>
+//             <h1 className="mb-4 text-xl font-semibold">
+//               Billing Details
+//             </h1>
+//           </div>
+//           <div className="border shadow-md rounded-md w-[60%]">
+//             <div className="p-2 mx-4">
+//               <h1 className="border-b-2">Your Address</h1>
+//               <div className="border rounded-md flex  my-2 p-3 bg-pink-50 border-orange-200">
+//                 <input type="radio" checked className="mr-2" /> {" "}
+
+//                 <div className="flex items-center justify-center">
+//                   <h1 className="font-semibold">{details.name},</h1>
+//                   <h1 className="text-base mx-1">{details.lastname},</h1>
+//                   <p className="text-base">{details.Address},</p>
+//                   <p className="text-base mx-1">{details.City},</p>
+//                   <p className="text-base">{details.State},</p>
+//                   <p className="text-base mx-1">{details.Country},</p>
+//                   <p className="text-base">{details.Pin},</p>
+//                   <p className="text-base mx-1">{details.email},</p>
+//                   <p className="text-base" >{details.phone}</p>
+//                 </div>
+//               </div>
+
+//               <button
+//                 className="border rounded-full  h-8 text-sm w-32 bg-blue-900 text-white"
+//                 onClick={handleUseAddress}
+//               >
+//                 Use this address
+//               </button>
+//             </div>
+//           </div>
 //         </div>
 //         <div className="flex flex-row w-full gap-10">
-//           {/* right div  */}
 //           <div className="w-[65%]">
 //             <form>
-//               <h1 className="mb-4 text-xl font-semibold text-black">
-//                 Billing Details
-//               </h1>
 //               <div className="flex flex-row w-full gap-2">
 //                 <div className="flex gap-2 mb-2 w-full flex-col">
 //                   <label>First name</label>
 //                   <input
 //                     required
 //                     type="text"
-//                     className="border-check border-2 rounded-md p-1  h-fit"
+//                     className="border-check border-2 rounded-md p-1 h-fit"
 //                     placeholder="Enter FirstName"
+//                     value={formData.firstName}
+//                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
 //                   />
 //                 </div>
 //                 <div className="flex gap-2 mb-2 w-full flex-col">
@@ -61,24 +130,11 @@
 //                     type="text"
 //                     className="border-check border-2 rounded-md p-1 h-fit"
 //                     placeholder="Enter LastName"
+//                     value={formData.lastName}
+//                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
 //                   />
 //                 </div>
 //               </div>
-//               {/* <div className="flex mb-2 gap-2 flex-col">
-//                 <label>Company name (Optional)</label>
-//                 <input
-//                   type="text"
-//                   className="border-check border-2 rounded-md p-1 w-full h-fit"
-//                 />
-//               </div>
-//               <div className="flex mb-2 gap-2 flex-col">
-//                 <label>Country / Region</label>
-//                 <input
-//                   required
-//                   type="text"
-//                   className="border-check border-2 rounded-md p-1 w-full h-fit"
-//                 />
-//               </div> */}
 //               <div className="flex flex-row w-full gap-2">
 //                 <div className="flex mb-2 gap-2 w-full flex-col">
 //                   <label>Street Address</label>
@@ -86,6 +142,8 @@
 //                     required
 //                     type="text"
 //                     className="border-check border-2 rounded-md p-1 w-full h-fit"
+//                     value={formData.streetAddress}
+//                     onChange={(e) => setFormData({ ...formData, streetAddress: e.target.value })}
 //                   />
 //                 </div>
 //                 <div className="flex mb-2 gap-2 w-full flex-col">
@@ -94,6 +152,8 @@
 //                     required
 //                     type="text"
 //                     className="border-check border-2 rounded-md p-1 w-full h-fit"
+//                     value={formData.townCity}
+//                     onChange={(e) => setFormData({ ...formData, townCity: e.target.value })}
 //                   />
 //                 </div>
 //               </div>
@@ -104,6 +164,8 @@
 //                     required
 //                     type="text"
 //                     className="border-check border-2 rounded-md p-1 w-full h-fit"
+//                     value={formData.stateCountry}
+//                     onChange={(e) => setFormData({ ...formData, stateCountry: e.target.value })}
 //                   />
 //                 </div>
 //                 <div className="flex mb-2 gap-2 w-full flex-col">
@@ -112,26 +174,32 @@
 //                     required
 //                     type="text"
 //                     className="border-check border-2 rounded-md p-1 w-full h-fit"
+//                     value={formData.postalCode}
+//                     onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
 //                   />
 //                 </div>
 //               </div>
 //               <div className="flex flex-row w-full gap-2">
-//               <div className="flex mb-2 gap-2 w-full flex-col">
-//                 <label>Email</label>
-//                 <input
-//                   required
-//                   type="email"
-//                   className="border-check border-2 rounded-md p-1 w-full h-fit"
-//                 />
-//               </div>
-//               <div className="flex mb-2 gap-2 w-full flex-col">
-//                 <label>Phone</label>
-//                 <input
-//                   required
-//                   type="number"
-//                   className="border-check border-2 rounded-md p-1 w-full h-fit"
-//                 />
-//               </div>
+//                 <div className="flex mb-2 gap-2 w-full flex-col">
+//                   <label>Email</label>
+//                   <input
+//                     required
+//                     type="email"
+//                     className="border-check border-2 rounded-md p-1 w-full h-fit"
+//                     value={formData.email}
+//                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+//                   />
+//                 </div>
+//                 <div className="flex mb-2 gap-2 w-full flex-col">
+//                   <label>Phone</label>
+//                   <input
+//                     required
+//                     type="Phone_number"
+//                     className="border-check border-2 rounded-md p-1 w-full h-fit"
+//                     value={formData.phone}
+//                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+//                   />
+//                 </div>
 //               </div>
 //               <div className="flex mb-2 gap-2 flex-col">
 //                 <label>Subscribe for SMS updates</label>
@@ -168,7 +236,6 @@
 //                   </label>
 //                 </div>
 //               </div>
-
 //               <div className="flex mb-2 gap-2 flex-col">
 //                 <label>Additional Info</label>
 //                 <input
@@ -179,9 +246,8 @@
 //               </div>
 //             </form>
 //           </div>
-//           {/* left div  */}
-//           <div className="bg-gray-100 w-[35%] p-4 h-fit">
-//             <h1 className="text-2xl font-semibold text-black mb-2">
+//           <div className="bg-gray-100 w-[35%] p-4 h-fit mt-5 ">
+//             <h1 className="text-xl font-semibold text-black mb-2">
 //               Your Order
 //             </h1>
 //             <div>
@@ -218,7 +284,6 @@
 //                 </div>
 //               </div>
 //             </div>
-
 //             <div className="mb-4 w-full text-black">
 //               <h2 className="border-b pb-2 border-gray-300 font-bold">
 //                 SHIPPING METHODS
@@ -294,10 +359,7 @@
 //     </div>
 //   );
 // }
-
 // export default Checkout;
-
-
 
 
 
@@ -308,6 +370,7 @@ function Checkout({ topMargin }) {
   const [isActive, setIsActive] = useState(true);
   const [ischeck, setIsCheck] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -319,17 +382,41 @@ function Checkout({ topMargin }) {
     phone: "",
   });
 
-  const details = {
-    name: "Ram",
-    lastname: 'Manda',
-    Address: "Dollars",
-    City: "Dollars",
-    State: "US",
-    Country: 'US',
-    Pin: '78906',
-    email: "ram@gmail.com",
-    phone: 7894561230
-  };
+  const addresses = [
+    {
+      name: "Ram",
+      lastname: "Manda",
+      Address: "Dollars",
+      City: "Dollars",
+      State: "US",
+      Country: "US",
+      Pin: "78906",
+      email: "ram@gmail.com",
+      phone: "7894561230",
+    },
+    {
+      name: "John",
+      lastname: "Doe",
+      Address: "Main Street",
+      City: "Cityville",
+      State: "CA",
+      Country: "US",
+      Pin: "12345",
+      email: "john@example.com",
+      phone: "1234567890",
+    },
+    {
+      name: "Jane",
+      lastname: "Smith",
+      Address: "Park Avenue",
+      City: "Metropolis",
+      State: "NY",
+      Country: "US",
+      Pin: "67890",
+      email: "jane@example.com",
+      phone: "0987654321",
+    },
+  ];
 
   const handleClick = () => {
     setIsActive(true);
@@ -344,18 +431,31 @@ function Checkout({ topMargin }) {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
-
-  const handleUseAddress = () => {
+  const handleRadioChange = (index) => {
+    setSelectedAddress(index);
     setFormData({
-      ...formData,
-      firstName: details.name,
-      lastName: details.lastname,
-      streetAddress: details.Address,
-      townCity: details.City,
-      stateCountry: details.State,
-      postalCode: details.Pin,
-      email: details.email, // You might want to update this based on your requirements
-      phone: details.phone  // You might want to update this based on your requirements
+      firstName: addresses[index].name,
+      lastName: addresses[index].lastname,
+      streetAddress: addresses[index].Address,
+      townCity: addresses[index].City,
+      stateCountry: addresses[index].State,
+      postalCode: addresses[index].Pin,
+      email: addresses[index].email,
+      phone: addresses[index].phone,
+    });
+  };
+
+  const handleNewAddress = () => {
+    setSelectedAddress(null);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      streetAddress: "",
+      townCity: "",
+      stateCountry: "",
+      postalCode: "",
+      email: "",
+      phone: "",
     });
   };
 
@@ -369,44 +469,68 @@ function Checkout({ topMargin }) {
         <div className="flex justify-between">
           <div className="flex flex-col">
             <h1 className="text-2xl font-semibold text-black mb-2">Checkout</h1>
-            <div className="flex mb-4">
+            <div className="flex mb-4 flex-col">
               <h1>
                 Have a coupon?
+                </h1>
+                <h1>
                 <a href="#" className="text-cart underline">
                   {" "}
                   CLICK HERE TO ENTER YOUR CODE
                 </a>
-              </h1>
+                </h1>
+              
             </div>
-            <h1 className="mb-4 text-xl font-semibold">
-              Billing Details
-            </h1>
+            <h1 className="mb-4 text-xl font-semibold">Billing Details</h1>
           </div>
           <div className="border shadow-md rounded-md w-[60%]">
             <div className="p-2 mx-4">
-              <h1 className="border-b-2">Your Address</h1>
-              <div className="border rounded-md flex  my-2 p-3 bg-pink-50 border-orange-200">
-                <input type="radio" checked className="mr-2" /> {" "}
-
-                <div className="flex items-center justify-center">
-                  <h1 className="font-semibold">{details.name},</h1>
-                  <h1 className="text-base mx-1">{details.lastname},</h1>
-                  <p className="text-base">{details.Address},</p>
-                  <p className="text-base mx-1">{details.City},</p>
-                  <p className="text-base">{details.State},</p>
-                  <p className="text-base mx-1">{details.Country},</p>
-                  <p className="text-base">{details.Pin},</p>
-                  <p className="text-base mx-1">{details.email},</p>
-                  <p className="text-base" >{details.phone}</p>
-                </div>
-              </div>
-
+              <h1 className="border-b-2 text-base">Your Address</h1>
+             <div  onClick={handleNewAddress} className="ml-1">
+              <input
+                    type="radio"
+                    // checked={selectedAddress === index}
+                    className="mr-2"
+                    // onChange={() => handleRadioChange(index)}
+                  />
               <button
-                className="border rounded-full  h-8 text-sm w-32 bg-blue-900 text-white"
-                onClick={handleUseAddress}
+                className="text-base underline"
+                onClick={handleNewAddress}
               >
-                Use this address
+                New Address
               </button>
+              </div>
+              {addresses.map((address, index) => (
+                <div
+                  key={index}
+                  className="border rounded-md flex my-2 p-1 bg-pink-50 border-orange-200"
+                >
+                  <input
+                    type="radio"
+                    checked={selectedAddress === index}
+                    className="mr-2"
+                    onChange={() => handleRadioChange(index)}
+                  />{" "}
+                  <div className="flex items-center justify-center text-xs">
+                    <h1 className="font-semibold">{address.name},</h1>
+                    <h1 className=" mx-1">{address.lastname},</h1>
+                    <p className="">{address.Address},</p>
+                    <p className=" mx-1">{address.City},</p>
+                    <p className="">{address.State},</p>
+                    <p className=" mx-1">{address.Country},</p>
+                    <p className="">{address.Pin},</p>
+                    <p className=" mx-1">{address.email},</p>
+                    <p className="">{address.phone}</p>
+                  </div>
+                </div>
+              ))}
+
+              {/* <button
+                className="text-base underline"
+                onClick={handleNewAddress}
+              >
+                New Address
+              </button> */}
             </div>
           </div>
         </div>
@@ -422,7 +546,9 @@ function Checkout({ topMargin }) {
                     className="border-check border-2 rounded-md p-1 h-fit"
                     placeholder="Enter FirstName"
                     value={formData.firstName}
-                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, firstName: e.target.value })
+                    }
                   />
                 </div>
                 <div className="flex gap-2 mb-2 w-full flex-col">
@@ -433,7 +559,9 @@ function Checkout({ topMargin }) {
                     className="border-check border-2 rounded-md p-1 h-fit"
                     placeholder="Enter LastName"
                     value={formData.lastName}
-                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, lastName: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -445,7 +573,12 @@ function Checkout({ topMargin }) {
                     type="text"
                     className="border-check border-2 rounded-md p-1 w-full h-fit"
                     value={formData.streetAddress}
-                    onChange={(e) => setFormData({ ...formData, streetAddress: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        streetAddress: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="flex mb-2 gap-2 w-full flex-col">
@@ -455,7 +588,9 @@ function Checkout({ topMargin }) {
                     type="text"
                     className="border-check border-2 rounded-md p-1 w-full h-fit"
                     value={formData.townCity}
-                    onChange={(e) => setFormData({ ...formData, townCity: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, townCity: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -467,7 +602,12 @@ function Checkout({ topMargin }) {
                     type="text"
                     className="border-check border-2 rounded-md p-1 w-full h-fit"
                     value={formData.stateCountry}
-                    onChange={(e) => setFormData({ ...formData, stateCountry: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        stateCountry: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="flex mb-2 gap-2 w-full flex-col">
@@ -477,7 +617,9 @@ function Checkout({ topMargin }) {
                     type="text"
                     className="border-check border-2 rounded-md p-1 w-full h-fit"
                     value={formData.postalCode}
-                    onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, postalCode: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -489,20 +631,25 @@ function Checkout({ topMargin }) {
                     type="email"
                     className="border-check border-2 rounded-md p-1 w-full h-fit"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                   />
                 </div>
                 <div className="flex mb-2 gap-2 w-full flex-col">
                   <label>Phone</label>
                   <input
                     required
-                    type="Phone_number"
+                    type="tel"
                     className="border-check border-2 rounded-md p-1 w-full h-fit"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
                   />
                 </div>
               </div>
+
               <div className="flex mb-2 gap-2 flex-col">
                 <label>Subscribe for SMS updates</label>
                 <div className="flex">
@@ -548,6 +695,7 @@ function Checkout({ topMargin }) {
               </div>
             </form>
           </div>
+
           <div className="bg-gray-100 w-[35%] p-4 h-fit mt-5 ">
             <h1 className="text-xl font-semibold text-black mb-2">
               Your Order
@@ -661,4 +809,5 @@ function Checkout({ topMargin }) {
     </div>
   );
 }
+
 export default Checkout;
