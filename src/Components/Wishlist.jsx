@@ -18,11 +18,14 @@ import Facebook from '../assets/facebook1.png'
 import Pintrist from '../assets/pinterest.png'
 import email from '../assets/envelope.png'
 import twitter from '../assets/twitter.png'
-import share from '../assets/upload1.png'
+import share from '../assets/share.png'
+import cart from '../assets/cartw_icon.png'
 import cross from '../assets/letter-x[1].png'
 import { useSelector } from "react-redux";
 import { removeFromWishlistApi } from "../Api/WishList";
 import { addCartApi } from "../Api/CartApi";
+import { Tooltip } from "@mui/material";
+// import { Tooltip } from "chart.js";
 function Wishlist({ topMargin, addCart }) {
   const wishItems = useSelector((state)=>state.wishlist.wishlist);
   const user = useSelector((state)=>state.user.user);
@@ -169,11 +172,15 @@ function Wishlist({ topMargin, addCart }) {
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                  <button className="text-lg font-semibold text-white bg-blue-900 w-56 p-1 rounded-full" onClick={() => handleCart(item.product.productID)}>
-                    Add to cart
+                  <button className="text-lg font-semibold text-white bg-blue-900 w-36 h-9  justify-center flex items-center  rounded-full" onClick={() => handleCart(item.product.productID)}>
+                   <img src={cart} className="w-5 h-5 mx-1"/>
+                    ADD
                   </button>
                   <div className="flex items-center justify-between my-4">
+                     <Tooltip title = "Share" placement="top">
+
                     <img src={share} className="w-6 mx-3 " onClick={handleSharePopupToggle}/>
+                     </Tooltip>
                     {/* <RiShare2Fill className="border rounded-md text-2xl w-8 hover:bg-sky-200"  /> */}
                     {isShowPopup && (
                       <div className="flex flex-col justify-center items-center h-full absolute inset-0 bg-transparent z-auto">
