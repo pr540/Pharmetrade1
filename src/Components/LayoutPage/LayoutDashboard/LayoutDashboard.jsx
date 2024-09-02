@@ -1039,7 +1039,7 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
     navigate(`/detailspage/${productID}`);
   };
   return (
-    <div className="w-full mt-4 h-full overflow-y-scroll">
+    <div className="w-[95%] mt-4 ml-4 h-full overflow-y-scroll">
       <Notification show={notification.show} message={notification.message} />
 
       <div className="flex justify-between">
@@ -1076,7 +1076,7 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
         </div>
       </div>
 
-      <div className="w-[95%] mt-5 ml-4">
+      <div className="w-full mt-5 ">
         <div>
           <div className="flex flex-col">
             <div className="flex flex-col justify-between">
@@ -1202,7 +1202,7 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
                           />
                         </div>
                         <p className="font-semibold">
-                          {'View Cart'}
+                          {'Added Cart'}
                         </p>
                       </div>
                       )}
