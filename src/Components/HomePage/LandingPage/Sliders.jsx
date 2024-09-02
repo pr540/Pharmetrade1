@@ -1,71 +1,18 @@
 import React from "react";
-import img1 from "../../../assets/img1.png";
-import img2 from "../../../assets/img2.png";
-import img3 from "../../../assets/img3.png";
-import img4 from "../../../assets/img4.png";
-import img5 from "../../../assets/img5.png";
-import right from "../../../assets/arrowright.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import left from "../../../assets/arrowleft.png";
-// import mobile from "../../../assets/mobile.png";
-import mobile from "../../../assets/Mobile app.png";
 import { useNavbarContext } from "../../NavbarContext";
-import screen1 from "../../../assets/Icons/Screen dummy-1.png";
-import screen2 from "../../../assets/Icons/Screen dummy-2.png";
-import screen3 from "../../../assets/Icons/Screen dummy-3.png";
-import screen4 from "../../../assets/Icons/Screen dummy-4.png";
-import other from "../../../assets/compare1_Icon.png";
-import addcart from "../../../assets/cart1_icon.png";
-import fav from "../../../assets/Wishlist1_icon.png";
-import mask from "../../../assets/mask.png";
-import covid from "../../../assets/covid.png";
-import covid1 from "../../../assets/covid1.jpg";
-import mask1 from "../../../assets/mask1.jpg";
-import BuyImg from "../../../assets/Buy_icon.png";
-import JoinImg from "../../../assets/Join-icon.png";
-import SellImg from "../../../assets/Sell-icon.png";
-import BidImg from "../../../assets/Bid-icon.png";
 import { useState, useRef, useEffect } from "react";
-import { Carousel } from "react-responsive-carousel";
-import Content from "../../Content";
-// import { IoIosArrowUp } from "react-icons/io";
-import OfferSlider from "../Components/OfferSlider";
-import ProductSlider from "../Components/ProductSlider";
-import RxOtcProducts from "../Components/ProductSection";
 import ProductSection from "../Components/ProductSection";
-import { IoSearchOutline, IoLockClosedOutline } from "react-icons/io5";
-import { LuClipboardList } from "react-icons/lu";
-import AnimatedText from "../Components/AnimatedText";
 import MobileView from "../Components/MobileView";
-import offersbanner from "../../../assets/Offersbanner.webp"
 import OffersSlider from "../Components/OfferBannerSlider";
+import { useSelector } from "react-redux";
 
 function Sliders({wishList,addCart}) {
   const searchBarRef = useRef(null);
-  const [OTCProducts,setOTCProducts] = useState([]);
-  const [RXProducts,setRXProducts] = useState([]);
 
-  useEffect(() => {
-    const API =async ()=>{
-      try {
-        const OTCresponse = await fetch(
-          `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetOTCProducts`
-      );
-      const RXresponse = await fetch(
-        `http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetRxProducts`
-    );
-      const data1 = await OTCresponse.json();
-      const data2 = await RXresponse.json();
+  const OTCProducts = useSelector((state) => state.product.otcProducts);
+  const RXProducts = useSelector((state) => state.product.rxProducts);
 
-      setOTCProducts(data1.result);
-      setRXProducts(data2.result);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    API();
-    
-  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -91,50 +38,9 @@ function Sliders({wishList,addCart}) {
       }
     };
   }, []);
-  const images = [img1, img2, img3, img4];
-  // const newProducts = [
-  //   { id: 1, img: img1, name: "Nature Made", price: "$99.00" },
-  //   { id: 2, img: img2, name: "Aspirin Syrup", price: "$89.00" },
-  //   { id: 3, img: img3, name: "Allegra Allergy", price: "$79.00" },
-  //   { id: 4, img: img4, name: "Zinc Tablets", price: "$69.00" },
-  //   { id: 5, img: img5, name: "NyQuil Tablets", price: "$59.00" },
-  //   { id: 6, img: img1, name: "Nature Made", price: "$49.00" },
-  //   { id: 7, img: img2, name: "Stylish Mask", price: "$39.00" },
-  //   { id: 8, img: img3, name: "Daily Mask", price: "$29.00" },
-  //   { id: 9, img: img4, name: "Night Mask", price: "$19.00" },
-  //   { id: 10, img: img5, name: "Morning Mask", price: "$9.00" },
-  // ];
 
-  const mobiles = [mobile, mobile, mobile, mobile, mobile];
-  const screens = [mask, covid, covid1, mask1];
+
   const { pop } = useNavbarContext();
-
-  const steps = [
-    {
-      // title: "Step 01",
-      img: BuyImg,
-      heading: "Buy ",
-      content: "Discover Quality Health Products: Shop Now",
-    },
-    {
-      // title: "Step 02",
-      img: JoinImg,
-      heading: "Join",
-      content: "Join Our Community: Become a Member",
-    },
-    {
-      // title: "Step 03",
-      img: SellImg,
-      heading: "Sell",
-      content: "Sell Your Products: Partner with Us",
-    },
-    {
-      // title: "Step 02",
-      img: BidImg,
-      heading: "Bid",
-      content: "Unlock Great Deals through Bidding: Start Now",
-    },
-  ];
 
   return (
     <>

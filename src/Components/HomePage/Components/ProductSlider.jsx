@@ -8,39 +8,22 @@ import filledHeart from "../../../assets/wishlist2_icon.png";
 import comp from "../../../assets/CompareNav2.png";
 import nature from "../../../assets/img1.png";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context";
+import { useSelector } from "react-redux";
+import { addCartApi } from "../../../Api/CartApi";
+import { addToWishlistApi, removeFromWishlistApi } from "../../../Api/WishList";
 
 const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
-  console.log("data", data)
-  const [rating, setRating] = useState(0);
-  const [favoriteItems, setFavoriteItems] = useState({});
-  const [cartQuantities, setCartQuantities] = useState({});
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState({})
-  const [loading, setLoading] = useState(true)
-  const {fetchCartData, fetchWishListData} = useContext(AppContext)
-  useEffect(() => {
-    fetch(
-      "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Product/GetAll"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setProducts(data.result);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
+  const user = useSelector((state)=>state.user.user);
+  const wishlist = useSelector((state)=>state.wishlist.wishlist);
+  const [wishlistProductIDs,setwishlistProductIDs] = useState(wishlist.map((wishItem) => wishItem.product.productID));
+  const getWishlistIdByProductID = (productID) => {
+    const wishlistItem = wishlist.find((item) => item.product.productID === productID);
+    return wishlistItem ? wishlistItem.wishListId : null; 
+  };
 
+  const [rating, setRating] = useState(0);
+  const [cartQuantities, setCartQuantities] = useState({});
   const totalStars = 5;
-  const images = Array(115).fill(nature);
 
   const carouselContainer = useRef(null);
   const naviagte = useNavigate();
@@ -57,68 +40,23 @@ const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
       behavior: "smooth",
     });
   };
-  // const handleCart = (index) => {
-  //   const currentQuantity = cartQuantities[index] || 0;
-  //   if (currentQuantity === 0) {
-  //     const prolist = {
-  //       id: index,
-  //       src: images[index],
-  //       price: "$50.99",
-  //       rate: "SKU 6545555",
-  //       rates: "UPN member price:",
-  //       ratesupn: "$45.00",
-  //     };
-  //     addCart(prolist);
-  //   }
-  //   setCartQuantities((prev) => ({
-  //     ...prev,
-  //     [index]: currentQuantity + 1,
-  //   }));
-  // };
 
-  const localData = JSON.parse(localStorage.getItem("login"));
-  const customerId = localData?.userId;
 
   const handleCart = async(index) => {
-    // console.log("Adding to cart:", index);
-    // const prolist = {
-    //   id: index,
-    //   src: images[index],
-    //   price: "$50.99",
-    //   rate: "SKU 6545555",
-    //   rates: "UPN member price:",
-    //   ratesupn: "$45.00",
-    // };
-    // addCart(prolist);
-    console.log(cartQuantities);
+    if(user==null)
+    {
+      console.log("login to add");
+      return;
+    }
     const cartData = {
-      customerId: customerId, // Replace with actual customer ID
+      customerId: user.customerId, 
       productId: data[index].productID,
-      quantity: cartQuantities[index],
+      quantity: 1,
       isActive: 1,
     };
-    console.log(cartData);
     try {
-      const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cartData),
-        }
-      );
+      await addCartApi(cartData);
 
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart");
-      }
-
-      const responseData = await response.json();
-      console.log("Product added to cart:", responseData);
-      // setProductData(response)
-      fetchCartData()
-      // window.location.reload()
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
@@ -136,54 +74,21 @@ const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
     });
   };
 
-  const handleClick = async (index) => {
-    setFavoriteItems((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
-    // const prolist = {
-    //   id: index,
-    //   src: images[index],
-    //   price: "$50.99",
-    //   rate: "SKU 6545555",
-    //   rates: "UPN member price:",
-    //   ratesupn: "$45.00",
-    // };
-    // wishList(prolist);
-    const jsondata = {
-      wishListId: "0",
-      productId: data[index].productID,
-      customerId: customerId,
-      isActive: 1
+  const handleClick = async (productID) => {
+    if(wishlistProductIDs.includes(productID))
+    {
+      setwishlistProductIDs(wishlistProductIDs.filter(id => id !== productID));
+      await removeFromWishlistApi(getWishlistIdByProductID(productID))
     }
-    // addCart(jsondata);
-
-
-    try {
-      const response = await fetch(
-        'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsondata),
-        }
-      );
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        throw new Error(
-          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(
-            errorDetails
-          )}`
-        );
-      }
-      const result = await response.json();
-      console.log("WISHLISTData===", result);
-      fetchWishListData()
-    } catch (error) {
-      // console.error("There was a problem with the fetch operation:", error);
-      throw error;
+    else{
+      setwishlistProductIDs([...wishlistProductIDs, productID]);
+      const wishListData = {
+        wishListId: "0",
+        productId: productID,
+        customerId: user.customerId,
+        isActive: 1
+      } 
+      await addToWishlistApi(wishListData);
     }
   };
 
@@ -200,7 +105,7 @@ const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
       style={{ cursor: "pointer", fontSize: "25px", color: "orange" }}
     >
       {filled ? "★" : "☆"}
-    </span>
+    </span> 
   );
   return (
     <div className="flex mt-6 flex-col justify-center pb-4 gap-2">
@@ -236,9 +141,9 @@ const ProductSlider = ({ data, Title, addCart, wishList, productList }) => {
                 <img
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent event from bubbling to parent
-                    handleClick(index);
+                    handleClick(item.productID);
                   }}
-                  src={favoriteItems[index] ? filledHeart : emptyHeart}
+                  src={ wishlistProductIDs.includes(item.productID) ? filledHeart : emptyHeart}
                   className="absolute h-7 w-7 right-1 p-1 cursor-pointer"
                   alt="Favorite Icon"
                 />

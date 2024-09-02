@@ -750,58 +750,41 @@ import filledHeart from "../../../assets/wishlist2_icon.png";
 import Expicon from "../../../assets/Expicon.png";
 import search from "../../../assets/search1.png";
 import nature from "../../../assets/img1.png";  
-import { AppContext } from "../../../context";
+import { useSelector } from "react-redux";
+import { addCartApi } from "../../../Api/CartApi";
+import { addToWishlistApi, removeFromWishlistApi } from "../../../Api/WishList";
 
-function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQuantities }) {
-  const { pop, setPop } = useNavbarContext();
+function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) {
   const navigate = useNavigate();
-  const images = Array(115).fill(nature);
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
-  const [favoriteItems, setFavoriteItems] = useState({});
   const [showMore, setShowMore] = useState({});
-  const [productData, setProductData] = useState([]);
   const [cartStatus, setCartStatus] = useState({});
   const [notification, setNotification] = useState({ show: false, message: '' });
-  const { fetchCartData, fetchWishListData } = useContext(AppContext);
-
-  const localData = JSON.parse(localStorage.getItem("login"));
-  const customerId = localData?.userId;
-
-  const handleCart = async (index) => {
+  const user = useSelector((state)=>state.user.user);
+  const wishlist = useSelector((state)=>state.wishlist.wishlist);
+  const [wishlistProductIDs,setwishlistProductIDs] = useState(wishlist.map((wishItem) => wishItem.product.productID));
+  const getWishlistIdByProductID = (productID) => {
+    const wishlistItem = wishlist.find((item) => item.product.productID === productID);
+    return wishlistItem ? wishlistItem.wishListId : null; 
+  };
+  const [productList,setproductList] = useState(useSelector((state) => 
+    state.product.Products.map(product => ({
+      ...product,
+      quantity: 0 
+    }))
+  ));
+  const handleCart = async (productID,quantity) => {
     const cartData = {
-      customerId: customerId,
-      productId: productList[index].productID,
-      quantity: quantities[index],
+      customerId: user.customerId,
+      productId: productID,
+      quantity: quantity,
       isActive: 1,
     };
 
     try {
-      const response = await fetch(
-        "http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/Cart/Add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cartData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart");
-      }
-
-      const responseData = await response.json();
-      console.log("Product added to cart:", responseData);
-      setProductData(response);
-      fetchCartData();
-      setCartStatus(prev => ({
-        ...prev,
-        [index]: true
-      }));
+      await addCartApi(cartData);
       setNotification({ show: true, message: 'Item added to cart!' });
-
       setTimeout(() => setNotification({ show: false, message: '' }), 3000);
 
     } catch (error) {
@@ -809,57 +792,73 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
       setNotification({ show: true, message: 'Failed to add item to cart!' });
     }
   };
-
-  const handleClick = async (index) => {
-    setFavoriteItems(prevState => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
-
-    const jsondata = {
-      wishListId: "0",
-      productID: productList[index].productID,
-      customerId: customerId,
-      isActive: 1
-    };
-
-    try {
-      const response = await fetch(
-        'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsondata),
-        }
-      );
-
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        throw new Error(
-          `Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorDetails)}`
-        );
+  const handleClick = async (productID) => {
+    if(wishlistProductIDs.includes(productID))
+    {
+      setwishlistProductIDs(wishlistProductIDs.filter(id => id !== productID));
+      await removeFromWishlistApi(getWishlistIdByProductID(productID))
+    }
+    else{
+      setwishlistProductIDs([...wishlistProductIDs, productID]);
+      const wishListData = {
+        wishListId: "0",
+        productId: productID,
+        customerId: user.customerId,
+        isActive: 1
       }
-
-      const result = await response.json();
-      console.log("WISHLISTData===", result);
-      fetchWishListData();
-    } catch (error) {
-      throw error;
+      await addToWishlistApi(wishListData);
     }
   };
+  // const handleClick = async (index) => {
+  //   setFavoriteItems(prevState => ({
+  //     ...prevState,
+  //     [index]: !prevState[index],
+  //   }));
+
+  //   const jsondata = {
+  //     wishListId: "0",
+  //     productID: productList[index].productID,
+  //     customerId: customerId,
+  //     isActive: 1
+  //   };
+
+  //   try {
+  //     const response = await fetch(
+  //       'http://ec2-100-29-38-82.compute-1.amazonaws.com:5000/api/WishList/Add',
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(jsondata),
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       const errorDetails = await response.json();
+  //       throw new Error(
+  //         `Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorDetails)}`
+  //       );
+  //     }
+
+  //     const result = await response.json();
+  //     fetchWishListData();
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // };
 
   const handleQuantityChange = (index, newQuantity) => {
-    const updatedQuantities = [...quantities];
-    updatedQuantities[index] = newQuantity;
-    setQuantities(updatedQuantities);
+    // Create a new array with the updated quantity
+    const updatedProducts = productList.map((product, i) =>
+      i === index ? { ...product, quantity: Number(newQuantity) } : product
+    );
+
+    // Update the local state with the new product list
+    setproductList(updatedProducts);
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(productList.length / itemsPerPage);
+  const totalPages = Math.ceil(productList.length / 20);
 
   const handleNextPage = () => {
     setCurrentPage(prev => Math.min(prev + 1, totalPages));
@@ -921,7 +920,6 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
 
   const handleProductDetails = (productID, product) => {
     navigate(`/detailspage/${productID}`);
-    console.log("product----->", product);
   };
 
   return (
@@ -1035,15 +1033,10 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
                       <div className="mt-2 flex">
                         <input
                           type="number"
-                          value={quantities[index]}
-                          onChange={(e) =>
-                            handleQuantityChange(
-                              index,
-                              parseInt(e.target.value)
-                            )
-                          }
+                          value={product.quantity}
+                          onChange={(e) => handleQuantityChange(index, e.target.value)}
+
                           className="w-16 border rounded-md text-center"
-                          min="1"
                         />
                       </div>
                     </div>
@@ -1052,9 +1045,9 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
                     <div className="flex flex-col items-center justify-between">
                       <div className="mt-2">
                         <img
-                          src={favoriteItems[index] ? filledHeart : emptyHeart}
+                          src={wishlistProductIDs.includes(product.productID) ? filledHeart : emptyHeart}
                           className="w-6 h-6 cursor-pointer"
-                          onClick={() => handleClick(index)}
+                          onClick={() => handleClick(product.productID)}
                           alt="Wishlist Icon"
                         />
                       </div>
@@ -1065,7 +1058,7 @@ function LayoutBuy({ topMargin, addCart, wishList, productList, quantities, setQ
                           <img
                             src={addcart}
                             className="w-6 h-6 cursor-pointer"
-                            onClick={() => handleCart(index)}
+                            onClick={() => handleCart(product.productID,product.quantity)}
                             alt="Add to Cart Icon"
                           />
                         </div>

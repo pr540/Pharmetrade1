@@ -20,10 +20,21 @@ import { useNavigate } from "react-router-dom";
 import emptyHeart from "../assets/Wishlist1_icon.png";
 import filledHeart from "../assets/wishlist2_icon.png";
 import other from "../assets/CompareNav2.png";
+import { useSelector } from "react-redux";
+import { addCartApi } from "../Api/CartApi";
+import { addToWishlistApi, removeFromWishlistApi } from "../Api/WishList";
 
-function PRight({Title, topMargin, addCart, wishList }) {
+function PRight({ Title, topMargin, addCart, wishList }) {
   const { pop, setPop } = useNavbarContext();
   const navigate = useNavigate();
+  const products = useSelector((state) => state.product.Products);
+  const user = useSelector((state)=>state.user.user);
+  const wishlist = useSelector((state)=>state.wishlist.wishlist);
+  const [wishlistProductIDs,setwishlistProductIDs] = useState(wishlist.map((wishItem) => wishItem.product.productID));
+  const getWishlistIdByProductID = (productID) => {
+    const wishlistItem = wishlist.find((item) => item.product.productID === productID);
+    return wishlistItem ? wishlistItem.wishListId : null; 
+  };
   const images = Array(115).fill(nature);
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,34 +48,41 @@ function PRight({Title, topMargin, addCart, wishList }) {
     setPop(false);
   };
 
-  function handleCart(index) {
-    const prolist = {
-      id: index,
-      src: images[index],
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
+  const handleCart = async (productID) => {
+    if (user == null) {
+      console.log("login to add");
+      return;
+    }
+    const cartData = {
+      customerId: user.customerId,
+      productId: productID,
+      quantity: 1,
+      isActive: 1,
     };
-    addCart(prolist);
-  }
+    try {
+      await addCartApi(cartData);
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  };
 
-  function handleClick(index) {
-    setFavoriteItems((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
-    // alert("Add 1 item into wishlist");
-    const prolist = {
-      id: index,
-      src: images[index],
-      price: "$50.99",
-      rate: "SKU 6545555",
-      rates: "UPN member price:",
-      ratesupn: "$45.00",
-    };
-    wishList(prolist);
-  }
+  const handleClick = async (productID) => {
+    if(wishlistProductIDs.includes(productID))
+    {
+      setwishlistProductIDs(wishlistProductIDs.filter(id => id !== productID));
+      await removeFromWishlistApi(getWishlistIdByProductID(productID))
+    }
+    else{
+      setwishlistProductIDs([...wishlistProductIDs, productID]);
+      const wishListData = {
+        wishListId: "0",
+        productId: productID,
+        customerId: user.customerId,
+        isActive: 1
+      }
+      await addToWishlistApi(wishListData);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -134,7 +152,9 @@ function PRight({Title, topMargin, addCart, wishList }) {
   return (
     <div className="w-full mt-4 h-full overflow-y-scroll">
       <div className=" flex justify-between bg-blue-900 p-1 rounded-lg">
-        <div className="text-2xl text-white">{Title?Title:"All Products"}</div>
+        <div className="text-2xl text-white">
+          {Title ? Title : "All Products"}
+        </div>
 
         <Search>
           <SearchIconWrapper>
@@ -150,16 +170,16 @@ function PRight({Title, topMargin, addCart, wishList }) {
 
       <div className="w-[95%]">
         <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-8">
-          {currentItems.map((img, index) => (
+          {products.map((item, index) => (
             <div
-              key={index + indexOfFirstItem}
+              key={item.productID}
               className="w-full max-w-md border p-2  shadow-md"
             >
               {/* <Link to={`/detailspage/${index + indexOfFirstItem}`}> */}
               <div className="flex justify-center bg-slate-200 relative">
                 <img
-                  onClick={() => handleClick(index + indexOfFirstItem)}
-                  src={favoriteItems[index] ? filledHeart : emptyHeart}
+                  onClick={() => handleClick(item.productID)}
+                  src={wishlistProductIDs.includes(item.productID)? filledHeart : emptyHeart}
                   className="h-8 p-[6px]  absolute right-0 "
                   alt="Favorite Icon"
                 />
@@ -169,9 +189,9 @@ function PRight({Title, topMargin, addCart, wishList }) {
                   alt="Other Icon"
                 />
 
-                <Link to={`/detailspage/${index + indexOfFirstItem}`}>
+                <Link to={`/detailspage/${item.productID}`}>
                   <img
-                    src={img}
+                    src={item.imageUrl}
                     alt={`nature-${index + indexOfFirstItem}`}
                     className="h-40 w-28 rounded-lg"
                   />
@@ -179,8 +199,8 @@ function PRight({Title, topMargin, addCart, wishList }) {
               </div>
               {/* </Link> */}
               <div className="w-full py-1">
-                <h2 className="text-fonts">SKU 6545555</h2>
-                <h1 className="text-fonts font-semibold">$50.99</h1>
+                <h2 className="text-fonts">{item.productName}</h2>
+                <h1 className="text-fonts font-semibold">${item.priceName}</h1>
               </div>
               <div>
                 {Array.from({ length: totalStars }, (v, i) => (
@@ -193,11 +213,11 @@ function PRight({Title, topMargin, addCart, wishList }) {
               </div>
               <div className="flex flex-row items-center justify-between w-full px-1">
                 <div className="text-foot text-xs">UPN Member Price:</div>
-                <div className="text-base font-semibold">$45.00</div>
+                <div className="text-base font-semibold">${item.salePrice}</div>
               </div>
               <div
                 className="flex bg-blue-900 p-1 rounded-md justify-center"
-                onClick={() => handleCart(index + indexOfFirstItem)}
+                onClick={() => handleCart(item.productID)}
               >
                 <img src={addcart} alt="Add to cart" className="h-8 p-[6px]" />
                 <button className="text-white font-semibold">ADD</button>
@@ -254,7 +274,6 @@ function PRight({Title, topMargin, addCart, wishList }) {
 }
 
 export default PRight;
-
 
 // import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -540,7 +559,7 @@ export default PRight;
 //                           />
 //                         </div>
 //                          <p className="font-semibold ">Add </p>
-                        
+
 //                       </div>
 //                     </div>
 //                   </div>
