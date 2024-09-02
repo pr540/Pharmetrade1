@@ -1075,7 +1075,7 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
                       {/* Add to Cart */}
                       {cart.some((item)=>item.product.productID==product.productID)==0? (
                         <div onClick={() => handleCart(product.productID,product.CartQuantity)}
-                        className="flex text-white h-[40px] px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
+                        className="flex text-white h-[40px] cursor-pointer px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
                         <div className="mr-1">
                           <img
                             src={addcart}
@@ -1088,11 +1088,11 @@ function LayoutBuy({ topMargin, addCart, wishList, quantities, setQuantities }) 
                         </p>
                       </div>
                       ):(
-                        <div className="flex text-white h-[40px] px-2 rounded-lg bg-sky-600 mx-3 justify-center items-center">
+                        <div className="flex text-white cursor-pointer h-[40px] px-2 rounded-lg bg-sky-600 mx-3 justify-center items-center">
                         <div className="mr-1">
                           <img
                             src={addcart}
-                            className="w-6 h-6 cursor-pointer"
+                            className="w-6 h-6 "
                             alt="Add to Cart Icon"
                           />
                         </div>

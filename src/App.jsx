@@ -148,7 +148,7 @@ function App() {
   const [productsList, setProductsList] = useState([]);
   // Ref for the top fixed div
   
-  console.log("topantarra babu",topMargin)
+  console.log("top margin",topMargin)
   const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
     console.log(cartItems);

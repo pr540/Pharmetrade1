@@ -27,11 +27,13 @@ import Facebook from "../../../assets/facebook1.png";
 import Pintrist from "../../../assets/pinterest.png";
 import email from "../../../assets/envelope.png";
 import twitter from "../../../assets/twitter.png";
-import share from "../../../assets/upload1.png";
+import cart from '../../../assets/cartw_icon.png'
+import share from "../../../assets/share.png";
 import cross from "../../../assets/letter-x[1].png";
 import { useSelector } from "react-redux";
 import { addCartApi } from "../../../Api/CartApi";
 import { removeFromWishlistApi } from "../../../Api/WishList";
+import { Tooltip } from "@mui/material";
 function LayoutWishlist({ addCart }) {
   const [searchQuery, setSearchQuery] = useState("");
   const user = useSelector((state)=>state.user.user);
@@ -199,20 +201,25 @@ function LayoutWishlist({ addCart }) {
                 </div>
                 <div className="flex flex-col items-center justify-center">
                   <button
-                    className="text-lg font-semibold text-white bg-blue-900 w-56 p-1 rounded-full"
+                    className="text-lg font-semibold text-white bg-blue-900  items-center justify-center flex h-9 w-36 rounded-full"
                     onClick={() => handleCart(item.product.productID)}
                   >
-                    Add to cart
+                    <img src={cart} className="w-5 h-5 mx-1"/>
+                    ADD 
                   </button>
-                  <div className="flex items-center justify-between my-4">
+                  <div className="flex items-center justify-between my-4 cursor-pointer">
+                    <Tooltip title = "Share" placement="top">
+
                     <img
                       src={share}
                       className="w-6 mx-3 "
                       onClick={handleSharePopupToggle}
+
                     />
+                    </Tooltip>
                     {/* <RiShare2Fill className="border rounded-md text-2xl w-8 hover:bg-sky-200"  /> */}
                     {isShowPopup && (
-                      <div className="flex flex-col justify-center items-center h-full absolute inset-0 bg-transparent z-auto">
+                      <div className="flex flex-col justify-start  h-full absolute inset-0 bg-transparent z-auto">
                         <div className="border w-[13%] rounded-lg bg-gray-100">
                           <div className="flex border-b justify-between p-2">
                             <div className="flex items-center">
