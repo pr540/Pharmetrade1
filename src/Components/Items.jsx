@@ -65,7 +65,7 @@ function Items({
   const [img, setimg] = useState(null);
   const { id } = useParams();
   const images = Array(8).fill(nature);
-
+console.log(id)
   const [selectedMl, setSelectedMl] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   // const [showViewCart, setShowViewCart] = useState(false);
