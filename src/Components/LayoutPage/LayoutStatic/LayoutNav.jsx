@@ -224,15 +224,14 @@ import cartNav from "../../../assets/cartNav2.png";
 import { useNavigate } from "react-router-dom";
 import OTCProd from "../../../assets/OtcProduct.png";
 import notification from "../../../assets/Notification.png";
-import { AppContext } from "../../../context";
+import { useSelector } from "react-redux";
 
 const LayoutNav = ({  }) => {
   const [isContainerFocused, setIsContainerFocused] = useState(false);
   const [isButtonFocused, setIsButtonFocused] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [activePopUp, setActivePopUp] = useState(null); // State for active popup
-  const {cartItems} = useContext(AppContext)
-
+  const cartItems = useSelector((state)=>state.cart.cart);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
