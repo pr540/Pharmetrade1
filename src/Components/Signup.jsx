@@ -32,7 +32,7 @@ function getSteps() {
   return [
     { label: "User", para: "Information" },
     { label: "Account Type" },
-    { label: "Address", para: "Informatiom" },
+    { label: "Address", para: "Information" },
     {label: "Account", para: "Information"}
   ];
 }

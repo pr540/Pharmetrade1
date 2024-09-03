@@ -841,12 +841,16 @@
 // // export default LayoutDashboard;
 
 
+
+
+
+
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useNavbarContext } from "../../NavbarContext";
-import Notification from "../../../Components/Notification" // Import Notification component
+import Notification from "../../../Components/Notification"; // Import Notification component
 
 import other from "../../../assets/compare1_Icon.png";
 import addcart from "../../../assets/cartw_icon.png";
@@ -854,35 +858,53 @@ import emptyHeart from "../../../assets/Wishlist1_icon.png";
 import filledHeart from "../../../assets/wishlist2_icon.png";
 import Expicon from "../../../assets/Expicon.png";
 import search from "../../../assets/search1.png";
-import nature from "../../../assets/img1.png";  
+import nature from "../../../assets/img1.png";
 import { useSelector } from "react-redux";
 import { addCartApi } from "../../../Api/CartApi";
 import { addToWishlistApi, removeFromWishlistApi } from "../../../Api/WishList";
 
-function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantities }) {
+function LayoutDashboard({
+  topMargin,
+  addCart,
+  wishList,
+  quantities,
+  setQuantities,
+}) {
   const navigate = useNavigate();
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const [showMore, setShowMore] = useState({});
-  const [notification, setNotification] = useState({ show: false, message: '' });
-  const user = useSelector((state)=>state.user.user);
-  const cart = useSelector((state)=>state.cart.cart);
-  const wishlist = useSelector((state)=>state.wishlist.wishlist);
-  const [wishlistProductIDs,setwishlistProductIDs] = useState(wishlist.map((wishItem) => wishItem.product.productID));
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+  });
+  const user = useSelector((state) => state.user.user);
+  const cart = useSelector((state) => state.cart.cart);
+  const wishlist = useSelector((state) => state.wishlist.wishlist);
+
+  console.log("cart--->",cart)
+  const [wishlistProductIDs, setwishlistProductIDs] = useState(
+    wishlist.map((wishItem) => wishItem.product.productID)
+  );
   const getWishlistIdByProductID = (productID) => {
-    const wishlistItem = wishlist.find((item) => item.product.productID === productID);
-    return wishlistItem ? wishlistItem.wishListId : null; 
+    const wishlistItem = wishlist.find(
+      (item) => item.product.productID === productID
+    );
+    return wishlistItem ? wishlistItem.wishListId : null;
   };
-  const products = useSelector((state)=>state.product.Products);
-  const [productList,setproductList] = useState(products);
+  const products = useSelector((state) => state.product.Products);
+  const [productList, setproductList] = useState(products);
   useEffect(() => {
-    if(products)
-    {
-      setproductList(products)
+    if (products) {
+      const updatedProducts = products.map((product) => ({
+        ...product,
+        CartQuantity: 1, // Set initial quantity to 1 for all products
+      }));
+      setproductList(updatedProducts);
     }
-  }, [products])
-  
-  const handleCart = async (productID,Quantity) => {
+  }, [products]);
+
+  const handleCart = async (productID, Quantity) => {
     const cartData = {
       customerId: user.customerId,
       productId: productID,
@@ -892,28 +914,26 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
 
     try {
       await addCartApi(cartData);
-      setNotification({ show: true, message: 'Item added to cart!' });
-      setTimeout(() => setNotification({ show: false, message: '' }), 3000);
-
+      
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      setNotification({ show: true, message: 'Failed to add item to cart!' });
+      
     }
   };
   const handleClick = async (productID) => {
-    if(wishlistProductIDs.includes(productID))
-    {
-      setwishlistProductIDs(wishlistProductIDs.filter(id => id !== productID));
-      await removeFromWishlistApi(getWishlistIdByProductID(productID))
-    }
-    else{
+    if (wishlistProductIDs.includes(productID)) {
+      setwishlistProductIDs(
+        wishlistProductIDs.filter((id) => id !== productID)
+      );
+      await removeFromWishlistApi(getWishlistIdByProductID(productID));
+    } else {
       setwishlistProductIDs([...wishlistProductIDs, productID]);
       const wishListData = {
         wishListId: "0",
         productId: productID,
         customerId: user.customerId,
-        isActive: 1
-      }
+        isActive: 1,
+      };
       await addToWishlistApi(wishListData);
     }
   };
@@ -957,19 +977,17 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
   // };
 
   const handleQuantityChange = (index, newQuantity) => {
-    if(newQuantity)
-    {
+    // if (newQuantity) {
+      const quantity = Math.max(1, newQuantity);
       setproductList((prev) => {
         const updatedList = [...prev];
         updatedList[index] = {
           ...updatedList[index],
-          CartQuantity: newQuantity,
+          CartQuantity: quantity,
         };
         return updatedList;
       });
-
-    }
-    
+    // }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -978,11 +996,11 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
   const totalPages = Math.ceil(productList.length / itemsPerPage);
 
   const handleNextPage = () => {
-    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
   const handlePreviousPage = () => {
-    setCurrentPage(prev => Math.max(prev - 1, 1));
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
   const Search = styled("div")(({ theme }) => ({
@@ -1029,7 +1047,7 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
   }));
 
   const toggleShowMore = (index) => {
-    setShowMore(prevState => ({
+    setShowMore((prevState) => ({
       ...prevState,
       [index]: !prevState[index],
     }));
@@ -1040,7 +1058,7 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
   };
   return (
     <div className="w-[95%] mt-4 ml-4 h-full overflow-y-scroll">
-      <Notification show={notification.show} message={notification.message} />
+      {notification.show && <Notification show={notification.show} message={notification.message} />}
 
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold text-blue-900">Buy Products</h1>
@@ -1076,7 +1094,7 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
         </div>
       </div>
 
-      <div className="w-full mt-5 ">
+      <div className="w-full mt-5">
         <div>
           <div className="flex flex-col">
             <div className="flex flex-col justify-between">
@@ -1091,7 +1109,9 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
                         src={product.imageUrl}
                         className="w-36 p-2 hover:cursor-pointer rounded-lg h-28 bg-slate-200"
                         alt="Product"
-                        onClick={() => handleProductDetails(product.productID, product)}
+                        onClick={() =>
+                          handleProductDetails(product.productID, product)
+                        }
                       />
                     </div>
 
@@ -1149,12 +1169,24 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
                       <div className="mt-2 flex">
                         <input
                           type="number"
-                          disabled={cart.some((item)=>item.product.productID==product.productID)==1} 
-                          value={
-                            cart.some((item) => item.product.productID === product.productID)
-                              ? cart.find((item) => item.product.productID === product.productID).quantity
-                              : product.CartQuantity
-                          }                          onChange={(e) =>
+                          disabled={
+                            cart.some(
+                              (item) =>
+                                item.product.productID == product.productID
+                            ) === 1
+                          }
+                          value={product.CartQuantity
+                            // cart.some(
+                            //     (item) =>
+                            //         item.product.productID === product.productID
+                            //   )
+                            //     ? cart.find(
+                            //         (item) =>
+                            //             item.product.productID === product.productID
+                            //       ).quantity
+                            //       : product.CartQuantity
+                              }
+                          onChange={(e) =>
                             handleQuantityChange(
                               index,
                               parseInt(e.target.value)
@@ -1170,7 +1202,11 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
                     <div className="flex flex-col items-center justify-between">
                       <div className="mt-2">
                         <img
-                          src={wishlistProductIDs.includes(product.productID) ? filledHeart : emptyHeart}
+                          src={
+                            wishlistProductIDs.includes(product.productID)
+                              ? filledHeart
+                              : emptyHeart
+                          }
                           className="w-6 h-6 cursor-pointer"
                           onClick={() => handleClick(product.productID)}
                           alt="Wishlist Icon"
@@ -1178,36 +1214,36 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
                       </div>
 
                       {/* Add to Cart */}
-                      {cart.some((item)=>item.product.productID==product.productID)==0? (
-                        <div onClick={() => handleCart(product.productID,product.CartQuantity)}
-                        className="flex text-white h-[40px] cursor-pointer px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center">
-                        <div className="mr-1">
-                          <img
-                            src={addcart}
-                            className="w-6 h-6 cursor-pointer"
-                            alt="Add to Cart Icon"
-                          />
+                      {/* {cart.some(
+                        (item) => item.product.productID == product.productID
+                      ) == 0 ? ( */}
+                        <div
+                          onClick={() =>
+                            handleCart(product.productID, product.CartQuantity)
+                          }
+                          className="flex text-white h-[40px] cursor-pointer px-2 rounded-lg bg-blue-900 mx-3 justify-center items-center"
+                        >
+                          <div className="mr-1">
+                            <img
+                              src={addcart}
+                              className="w-6 h-6 cursor-pointer"
+                              alt="Add to Cart Icon"
+                            />
+                          </div>
+                          <p className="font-semibold">{"Add to Cart"}</p>
                         </div>
-                        <p className="font-semibold">
-                          {'Add to Cart'}
-                        </p>
-                      </div>
-                      ):(
-                        <div className="flex text-white cursor-pointer h-[40px] px-2 rounded-lg bg-sky-600 mx-3 justify-center items-center">
-                        <div className="mr-1">
-                          <img
-                            src={addcart}
-                            className="w-6 h-6 "
-                            alt="Add to Cart Icon"
-                          />
-                        </div>
-                        <p className="font-semibold">
-                          {'Added Cart'}
-                        </p>
-                      </div>
-                      )}
-                      
-                      
+                      {/* ) : ( */}
+                        {/* <div className="flex text-white cursor-pointer h-[40px] px-2 rounded-lg bg-sky-600 mx-3 justify-center items-center">
+                          <div className="mr-1">
+                            <img
+                              src={addcart}
+                              className="w-6 h-6 "
+                              alt="Add to Cart Icon"
+                            />
+                          </div>
+                          <p className="font-semibold">{"Added Cart"}</p>
+                        </div> */}
+                      {/* )} */}
                     </div>
                   </div>
                 ))
@@ -1240,4 +1276,3 @@ function LayoutDashboard({ topMargin, addCart, wishList, quantities, setQuantiti
 }
 
 export default LayoutDashboard;
-
