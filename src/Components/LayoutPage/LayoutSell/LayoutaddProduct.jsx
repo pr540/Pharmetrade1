@@ -5,6 +5,7 @@ import deleteicon from "../../../assets/trash.png";
 import { useStates } from "react-us-states";
 import { Box, Radio } from "@mui/material";
 import { fetchNdcUpcListApi } from "../../../Api/MasterDataApi";
+import Notification from "../../../Components/Notification";
 import {
   AddProductApi,
   AddProductSizeApi,
@@ -60,6 +61,10 @@ function LayoutaddProduct() {
   const [activeTab, setActiveTab] = useState(0);
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+  });
 
   const [showPopup, setShowPopup] = useState(false);
   const [sizeData, setsizeData] = useState({
@@ -436,6 +441,8 @@ function LayoutaddProduct() {
       console.log(data);
       const response = await AddProductApi(data, user.customerId);
       console.log("Product Data", response);
+      setNotification({ show: true, message: "Item added to cart!" });
+      setTimeout(() => setNotification({ show: false, message: "" }), 3000);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       throw error;
@@ -1232,7 +1239,9 @@ function LayoutaddProduct() {
             </div>
             <div className="my-4">
               <div className="flex gap-2 items-center">
-                <label className="font-semibold">Shipping Cost</label>
+                <label className="font-semibold">
+                  Price includes the shipping cost
+                </label>
                 <Box sx={{ display: "flex", gap: 2 }}>
                   <div>
                     <Radio
@@ -1437,7 +1446,7 @@ function LayoutaddProduct() {
             {/* section5 start */}
             <div className="flex flex-col w-full Largest:w-[60%]  justify-between text-sm ">
               <div className="flex flex-col  ">
-                <label className="text-base">Tier Price:</label>
+                <label className="text-base font-semibold">Tier Price:</label>
                 <div className="border rounded-md  ">
                   <table className="w-full Largest:w-[60%] ">
                     <thead className="p-10">
@@ -2050,147 +2059,149 @@ function LayoutaddProduct() {
                 </table>
               </div>
             </div>
-<div className="font-sans font-medium">
-            <h1 className="text-2xl font-semibold">Up-Sell Products </h1>
-            <div className="flex  justify-between w-full Largest:w-[60%]">
-              <p>
-                An up-sell item is offered to the customer as a pricier or
-                higher-quality alternative to the product the customer is
-                looking at.
-              </p>
-              <button
-                className={`  text-base font-medium p-2 rounded-md  h-8 flex  items-center justify-end ${
-                  ButtonUpClick
-                    ? "bg-white text-blue-900"
-                    : "bg-blue-900 text-white"
-                }`}
-                onClick={click}
-              >
-                {" "}
-                <img src={filter} className="w-6 h-3 px-1" />
-                Filter
-              </button>
-            </div>
-            {isVisible && (
-              <div className=" bg-white p-2 px-5   w-full Largest:w-[60%]">
-                <div className="flex justify-between">
-                  <div className="flex flex-col w-36">
-                    <label>Id From</label>
-                    <input className="border rounded-sm" />
-                  </div>
-                  <div className="flex flex-col w-36">
-                    <label>to</label>
-                    <input className="border rounded-sm" />
-                  </div>
-                  <div className="flex flex-col w-36">
-                    <label>Price From</label>
-                    <input className="border rounded-sm" />
-                  </div>
-                  <div className="flex flex-col w-36">
-                    <label>to</label>
-                    <input className="border rounded-sm" />
-                  </div>
-
-                  <div className="flex flex-col w-36">
-                    <label>Name</label>
-                    <input className="border rounded-sm" />
-                  </div>
-                </div>
-
-                <div className="flex justify-between">
-                  <div className="flex flex-col w-36">
-                    <label>Status</label>
-                    <select className="border rounded-sm">
-                      <option></option>
-                      <option>Enable</option>
-                      <option>Disable</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col w-36">
-                    <label> Attribute Set</label>
-                    <select className="border rounded-sm">
-                      <option></option>
-                      <option>Merchandise</option>
-                      <option>OTC Product</option>
-                      <option>Rx Product</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col w-36">
-                    <label>Type</label>
-                    <select className="border rounded-sm w-">
-                      <option></option>
-                      <option>Simple Product</option>
-                      <option>Virtual Product</option>
-                      <option>Configurable Product</option>
-                      <option>Downloadable Product</option>
-                      <option>Grouped Product</option>
-                      <option>Bundle Product</option>
-                      <option>Quote </option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col w-36">
-                    <label>SKU</label>
-                    <input className="border rounded-sm" />
-                  </div>
-
-                  <div className="my-4 flex justify-end">
-                    <button
-                      onClick={Click}
-                      className="bg-blue-900 p-2 mx-2 text-white border rounded-md"
-                    >
-                      {" "}
-                      Cancel
-                    </button>
-                    <button className="bg-blue-900 text-white p-2 mx-1 border rounded-md">
-                      Apply
-                    </button>
-                  </div>
-                </div>
+            <div className="font-sans font-medium">
+              <h1 className="text-2xl font-semibold">Up-Sell Products </h1>
+              <div className="flex  justify-between w-full Largest:w-[60%]">
+                <p>
+                  An up-sell item is offered to the customer as a pricier or
+                  higher-quality alternative to the product the customer is
+                  looking at.
+                </p>
+                <button
+                  className={`  text-base font-medium p-2 rounded-md  h-8 flex  items-center justify-end ${
+                    ButtonUpClick
+                      ? "bg-white text-blue-900"
+                      : "bg-blue-900 text-white"
+                  }`}
+                  onClick={click}
+                >
+                  {" "}
+                  <img src={filter} className="w-6 h-3 px-1" />
+                  Filter
+                </button>
               </div>
-            )}
-            <div className="my-6 border rounded-md bg-white w-full Largest:w-[60%] ">
-              <table className="w-full">
-                <thead className="bg-blue-900 text-white  ">
-                  <tr className="border-b font-semibold">
-                    <th className=" p-4  text-left text-sm  w-32">
-                      <select className="text-black">
-                        <option>-</option>
+              {isVisible && (
+                <div className=" bg-white p-2 px-5   w-full Largest:w-[60%]">
+                  <div className="flex justify-between">
+                    <div className="flex flex-col w-36">
+                      <label>Id From</label>
+                      <input className="border rounded-sm" />
+                    </div>
+                    <div className="flex flex-col w-36">
+                      <label>to</label>
+                      <input className="border rounded-sm" />
+                    </div>
+                    <div className="flex flex-col w-36">
+                      <label>Price From</label>
+                      <input className="border rounded-sm" />
+                    </div>
+                    <div className="flex flex-col w-36">
+                      <label>to</label>
+                      <input className="border rounded-sm" />
+                    </div>
+
+                    <div className="flex flex-col w-36">
+                      <label>Name</label>
+                      <input className="border rounded-sm" />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <div className="flex flex-col w-36">
+                      <label>Status</label>
+                      <select className="border rounded-sm">
+                        <option></option>
+                        <option>Enable</option>
+                        <option>Disable</option>
                       </select>
-                    </th>
-                    <th className=" p-2  text-left text-sm w-32">ID</th>
-                    <th className=" p-2  text-left text-sm w-40">Thumbnail</th>
-                    <th className=" p-2  text-left text-sm  w-80">Name</th>
-                    <th className=" p-2  text-left text-sm w-48">
-                      Attribute Set
-                    </th>
-                    <th className=" p-2  text-left text-sm w-32">Status</th>
-                    <th className=" p-2 text-left text-sm bw-44">Type</th>
-                    <th className=" p-2  text-left text-sm  w-44">SKU</th>
-                    <th className=" p-2  text-left text-sm  w-44">Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product, index) => (
-                    <tr key={index} className="border-b">
-                      <td className=" p-2">
-                        <input className=" h-6 w-4" type="checkbox" />
-                      </td>
-                      <td className="text-sm p-2"> {product.id}</td>
-                      <td className="text-sm p-2">{product.thumbnail}</td>
-                      <td className="text-sm p-2">{product.name}</td>
-                      <td className="text-sm p-2">{product.attribute}</td>
-                      <td className="text-sm p-2">{product.status}</td>
-                      <td className="text-sm p-2">{product.type}</td>
-                      <td className="text-sm p-2">{product.sku}</td>
-                      <td className="text-sm p-2">{product.price}</td>
+                    </div>
+
+                    <div className="flex flex-col w-36">
+                      <label> Attribute Set</label>
+                      <select className="border rounded-sm">
+                        <option></option>
+                        <option>Merchandise</option>
+                        <option>OTC Product</option>
+                        <option>Rx Product</option>
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col w-36">
+                      <label>Type</label>
+                      <select className="border rounded-sm w-">
+                        <option></option>
+                        <option>Simple Product</option>
+                        <option>Virtual Product</option>
+                        <option>Configurable Product</option>
+                        <option>Downloadable Product</option>
+                        <option>Grouped Product</option>
+                        <option>Bundle Product</option>
+                        <option>Quote </option>
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col w-36">
+                      <label>SKU</label>
+                      <input className="border rounded-sm" />
+                    </div>
+
+                    <div className="my-4 flex justify-end">
+                      <button
+                        onClick={Click}
+                        className="bg-blue-900 p-2 mx-2 text-white border rounded-md"
+                      >
+                        {" "}
+                        Cancel
+                      </button>
+                      <button className="bg-blue-900 text-white p-2 mx-1 border rounded-md">
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="my-6 border rounded-md bg-white w-full Largest:w-[60%] ">
+                <table className="w-full">
+                  <thead className="bg-blue-900 text-white  ">
+                    <tr className="border-b font-semibold">
+                      <th className=" p-4  text-left text-sm  w-32">
+                        <select className="text-black">
+                          <option>-</option>
+                        </select>
+                      </th>
+                      <th className=" p-2  text-left text-sm w-32">ID</th>
+                      <th className=" p-2  text-left text-sm w-40">
+                        Thumbnail
+                      </th>
+                      <th className=" p-2  text-left text-sm  w-80">Name</th>
+                      <th className=" p-2  text-left text-sm w-48">
+                        Attribute Set
+                      </th>
+                      <th className=" p-2  text-left text-sm w-32">Status</th>
+                      <th className=" p-2 text-left text-sm bw-44">Type</th>
+                      <th className=" p-2  text-left text-sm  w-44">SKU</th>
+                      <th className=" p-2  text-left text-sm  w-44">Price</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {products.map((product, index) => (
+                      <tr key={index} className="border-b">
+                        <td className=" p-2">
+                          <input className=" h-6 w-4" type="checkbox" />
+                        </td>
+                        <td className="text-sm p-2"> {product.id}</td>
+                        <td className="text-sm p-2">{product.thumbnail}</td>
+                        <td className="text-sm p-2">{product.name}</td>
+                        <td className="text-sm p-2">{product.attribute}</td>
+                        <td className="text-sm p-2">{product.status}</td>
+                        <td className="text-sm p-2">{product.type}</td>
+                        <td className="text-sm p-2">{product.sku}</td>
+                        <td className="text-sm p-2">{product.price}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
             {/* section start */}
             <h1 className="text-2xl font-semibold">Cross-Sell Products </h1>
@@ -2479,6 +2490,7 @@ function LayoutaddProduct() {
 
   return (
     <div className="w-[95%]  h-full mx-auto pt-8 ml-10 overflow-scroll">
+      <Notification show={notification.show} message={notification.message} />
       <div className="flex flex-col  justify-center ">
         <div className="flex  justify-between ">
           <div>
@@ -2507,7 +2519,7 @@ function LayoutaddProduct() {
           ))}
         </ul>
       </div>
-      <div className="">{renderTabContent()}
+      {/* <div className="">{renderTabContent()}
       
       </div>
       <div className="flex 2xl:w-[60%] xl:w-full justify-end">
@@ -2517,8 +2529,20 @@ function LayoutaddProduct() {
         >
           Save
         </button>
+      </div> */}
+
+      <div className="">{renderTabContent()}</div>
+      <div className="flex 2xl:w-[60%] xl:w-full justify-end">
+        <button
+          onClick={handleSubmit}
+          className={`border bg-blue-900 text-white my-4 h-8 w-16 rounded-md font-semibold ${
+            activeTab === 3 ? "" : "opacity-50 cursor-not-allowed"
+          }`}
+          disabled={activeTab !== 3}
+        >
+          Save
+        </button>
       </div>
-      
     </div>
   );
 }
