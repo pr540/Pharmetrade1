@@ -108,6 +108,7 @@ import { fetchWishlistItemsApi } from "./Api/WishList";
 import { LoadingApi, TopMarginApi } from "./Api/HomeStaticApi";
 import { fetchAllBannersApi } from "./Api/BannerApi";
 import { fetchAllProductsApi, fetchOtcProductsApi, fetchRecentSoldProductsApi, fetchRxProductsApi } from "./Api/ProductApi";
+import { customerOrderGetApi } from "./Api/CustomerOrderList";
 
 function App() {
   const location1 = useLocation();
@@ -227,7 +228,7 @@ function App() {
             path="/products"
             element={<Products addCart={addCart} wishList={wishList} />}
           />
-          <Route path="/checkout" element={<Checkout />} />
+          {/* <Route path="/checkout" element={<Checkout />} /> */}
           <Route path="/order" element={<Order />} />
           <Route path="/pops" element={<Product />} />
           <Route
@@ -261,6 +262,8 @@ function App() {
             }
           />
         </Route>
+
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/seller" element={<SellerPanel />}>
           <Route path="" element={<Dashboard />} />
