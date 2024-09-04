@@ -441,7 +441,7 @@ function LayoutaddProduct() {
       console.log(data);
       const response = await AddProductApi(data, user.customerId);
       console.log("Product Data", response);
-      setNotification({ show: true, message: "Item added to cart!" });
+      setNotification({ show: true, message: "Product added succefully!" });
       setTimeout(() => setNotification({ show: false, message: "" }), 3000);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
