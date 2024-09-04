@@ -317,7 +317,7 @@ function Cart() {
   );
 
   const handleProceed = () => {
-    navigate("/checkout");
+    navigate(`/checkout?total=${total}`);
   };
 
   const handlemove = () => {
@@ -423,12 +423,15 @@ function Cart() {
                   {cartItems.map((item, index) => (
                     <tr key={index}>
                       <td className="px-2 md:px-3 py-2 whitespace-nowrap">
+                        <Link to={`/detailspage/${item.product.productID}`}>
                         <img
                           className="h-16 w-16 rounded-lg"
                           onClick={handlemove}
                           src={item.product.imageUrl}
                           alt={item.product.id}
                         />
+                        </Link>
+                        
                       </td>
                       <td className="px-2 md:px-4 py-3 whitespace-nowrap">
                         {item.product.productName}
