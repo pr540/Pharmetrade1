@@ -43,6 +43,7 @@ import { useSelector } from "react-redux";
 import { fetchProductByIdApi } from "../Api/ProductApi";
 import { addCartApi } from "../Api/CartApi";
 import { addToWishlistApi, removeFromWishlistApi } from "../Api/WishList";
+import { customerOrderApi, customerOrderGetApi } from "../Api/CustomerOrderList";
 
 function Items({
   onClose,
@@ -72,7 +73,8 @@ console.log(id)
   const [isItemAdded, setIsItemAdded] = useState(false);
   const [prod, setprod] = useState(null);
   const [thumnailList, setthumnailList] = useState([]);
-  const newProducts = useSelector((state)=>state.product.recentSoldProducts);
+  const newProducts = useSelector((state) => state.product.recentSoldProducts);
+  
   useEffect(() => {
     const NewProductsAPI = async () => {
       try {
@@ -253,6 +255,49 @@ console.log(id)
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
+  console.log("productDataItem-->",prod)
+  const userId = localStorage.getItem("userId");
+  const handleOrder = async () => {
+    // const payLoad = {
+    //   orderId: "0",
+    //   customerId: userId,
+    //   totalAmount: quantity * prod.salePrice,
+    //   orderDate: "2024-09-04T06:53:09.596Z",
+    //   shippingMethodId: 1,
+    //   orderStatusId: 1,
+    //   trackingNumber: "",
+    //   productId: prod.productID,
+    //   quantity: quantity,
+    //   pricePerProduct: prod.salePrice,
+    //   vendorId: prod.sellerId
+    // }
+    // navigate(`/checkout?total=${prod.priceName}`)
+    navigate(`/checkout?total=${quantity*prod.salePrice}`)
+
+    const currentDate = new Date();
+    const payLoad = {
+      orderId: "0",
+      customerId: userId,
+      totalAmount: quantity * prod.salePrice,
+      orderDate: currentDate.toISOString(),
+      // orderDateString: currentDate.toDateString(),
+      // orderTimeString: currentDate.toLocaleTimeString(),
+      shippingMethodId: 1,
+      orderStatusId: 1,
+      trackingNumber: "",
+      productId: prod.productID,
+      quantity: quantity,
+      pricePerProduct: prod.salePrice,
+      vendorId: prod.sellerId
+    }
+    
+    try {
+      await customerOrderApi(payLoad);
+      await customerOrderGetApi(userId)
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  }
   return (
     <div
       className="Largest:w-[1550px] mt-2  Laptop:w-full  w-full  flex flex-col font-sans overflow-y-scroll"
@@ -524,7 +569,7 @@ console.log(id)
           <div className="w-[50%] min-h-full mr-12  p-3 flex flex-col items-center  ">
             <div className="border rounded-lg shadow-lg  pb-4 w-full h-full">
               <div className="p-4">
-                <p className="text-black text-[22px]">$30.00</p>
+                <p className="text-black text-[22px]">${prod?.priceName}</p>
 
                 <p className="text-gray-600 text-[14px]">
                   Delivery by{" "}
@@ -542,7 +587,7 @@ console.log(id)
                   </div>
                   <div className="flex">
                     <p className="text-sky-500 font-normal">NDC/UPC: </p>
-                    <span>6545555</span>
+                    <span>{prod?.ndCorUPC}</span>
                   </div>
                 </div>
                 <div className="flex flex-col">
@@ -554,7 +599,8 @@ console.log(id)
                     <p className="text-sky-500 font-normal ">
                       Expiration Date:
                     </p>
-                    <span>20/06/2025</span>
+                    <span>{prod?.
+                      availableFromDate}</span>
                   </div>
                 </div>
               </div>
@@ -616,6 +662,7 @@ console.log(id)
 
                 <button
                   className={`w-40 text-white font-semibold text-lg border rounded-lg  items-center  bg-orange-400 flex justify-center`}
+                  onClick={handleOrder}
                 >
                   {/* <FiShoppingCart className="text-[20px] mt-1 mx-1" /> */}
                   Buy Now
