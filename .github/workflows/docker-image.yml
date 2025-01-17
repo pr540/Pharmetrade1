@@ -34,9 +34,19 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # Log in to AWS ECR
+    # Configure AWS credentials (adds AWS region)
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  # Ensure the correct AWS region
+
+    # Log in to AWS ECR (with the region specified)
     - name: Log in to AWS ECR
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+        region: us-east-1  # Ensure region is included
 
     # Tag Docker image for Docker Hub
     - name: Tag Docker image for Docker Hub
@@ -51,9 +61,9 @@ jobs:
     # Tag Docker image for AWS ECR
     - name: Tag Docker image for AWS ECR
       run: |
-        docker tag 968721aed6bf 311141530448.dkr.ecr.us-east-1.amazonaws.com/pharmetrade:latest
+        docker tag 968721aed6bf public.ecr.aws/v6p7h8p4/pharmatrade:latest
 
     # Push Docker image to AWS ECR
     - name: Push Docker image to AWS ECR
       run: |
-        docker push 311141530448.dkr.ecr.us-east-1.amazonaws.com/pharmetrade:latest
+        docker push public.ecr.aws/v6p7h8p4/pharmatrade:latest
