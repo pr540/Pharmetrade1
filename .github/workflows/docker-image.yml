@@ -39,3 +39,16 @@ jobs:
         run: |
           IMAGE_NAME=$(echo "${{ secrets.DOCKERHUB_IMAGE }}" | cut -d':' -f1 | cut -d'/' -f2)
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:$IMAGE_NAME-latest
+
+  notify:
+    needs: push_to_ecr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Email using Mailgun API
+        run: |
+          curl -s --user "api:${{ secrets.MAILGUN_API_KEY }}" \
+          https://api.mailgun.net/v3/${{ secrets.MAILGUN_DOMAIN }}/messages \
+          -F from="GitHub Actions <notifications@${{ secrets.MAILGUN_DOMAIN }}>" \
+          -F to="sainath.mandala@gmail.com" \
+          -F subject="GitHub Actions: Docker Image Pushed to AWS ECR" \
+          -F text="The Docker image has been successfully pushed to AWS ECR."
