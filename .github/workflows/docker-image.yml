@@ -44,11 +44,14 @@ jobs:
     needs: push_to_ecr
     runs-on: ubuntu-latest
     steps:
-      - name: Send Email using Mailgun API
-        run: |
-          curl -s --user "api:${{ secrets.MAILGUN_API_KEY }}" \
-          https://api.mailgun.net/v3/${{ secrets.MAILGUN_DOMAIN }}/messages \
-          -F from="GitHub Actions <notifications@${{ secrets.MAILGUN_DOMAIN }}>" \
-          -F to="sainath.mandala@gmail.com" \
-          -F subject="GitHub Actions: Docker Image Pushed to AWS ECR" \
-          -F text="The Docker image has been successfully pushed to AWS ECR."
+      - name: Send Email using Gmail SMTP
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "GitHub Actions: Docker Image Pushed to AWS ECR"
+          body: "The Docker image has been successfully pushed to AWS ECR."
+          to: "sainath.mandala@gmail.com"
+          from: ${{ secrets.GMAIL_USERNAME }}
