@@ -54,4 +54,5 @@ jobs:
           subject: "GitHub Actions: Docker Image Pushed to AWS ECR"
           body: "The Docker image has been successfully pushed to AWS ECR."
           to: "sai.mandala1990@gmail.com"
+          to: "sainath.mandala@mail.com"
           from: ${{ secrets.GMAIL_USERNAME }}
