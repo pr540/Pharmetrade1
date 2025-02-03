@@ -1,45 +1,37 @@
-# Stage 1: Build the application
-FROM node:18 as build
+on:
+  push:
+    branches:
+      - master  # Change this to the branch you want to trigger the action
 
-# Set the working directory
-WORKDIR /app
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
 
-# Set proxy if required
-ARG HTTP_PROXY
-ARG HTTPS_PROXY
-ENV HTTP_PROXY=${HTTP_PROXY}
-ENV HTTPS_PROXY=${HTTPS_PROXY}
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-# Copy package.json and package-lock.json to install dependencies
-COPY package*.json ./
+      # Step 2: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}  # Secret for Docker Hub username
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Secret for Docker Hub password
 
-# Configure npm proxy if necessary
-RUN npm config set proxy ${HTTP_PROXY} && \
-    npm config set https-proxy ${HTTPS_PROXY}
+      # Step 3: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-# Install dependencies
-RUN npm install
-
-# Copy all project files to the working directory
-COPY . .
-
-# Build the application for production
-RUN npm run build
-
-# Stage 2: Serve the production build
-FROM node:18 as production
-
-# Set the working directory
-WORKDIR /app
-
-# Install a lightweight HTTP server to serve the static files
-RUN npm install -g serve
-
-# Copy only the built files from the build stage
-COPY --from=build /app/dist ./dist
-
-# Expose the port
-EXPOSE 5173
-
-# Command to serve the files
-CMD ["serve", "-s", "dist", "-l", "5173"]
+      # Step 4: Build and push the Docker image using Docker Buildx
+      - name: Build and push Docker image
+        run: |
+          docker buildx create --use
+          docker buildx build \
+            --platform linux/amd64 \
+            -t ${{ secrets.DOCKER_USERNAME }}/pharmetrade_apigateway-server:latest \
+            -f Dockerfile . --push
+      # Step 5: Verify pushed image
+      - name: Verify pushed image
+        run: docker buildx imagetools inspect ${{ secrets.DOCKER_USERNAME }}/pharmetrade_apigateway-server:latest
+Create docker-image.yml · sainathmandala/PharmEtrade_ApiGateway-1@65874c
