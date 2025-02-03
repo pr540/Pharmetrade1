@@ -1,32 +1,45 @@
-# Use the official .NET SDK image for building
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+# Stage 1: Build the application
+FROM node:18 as build
 
 # Set the working directory
-WORKDIR /src
-
-# Copy the project files
-COPY ["PharmEtrade_ApiGateway/PharmEtrade_ApiGateway.csproj", "PharmEtrade_ApiGateway/"]
-
-# Restore dependencies
-RUN dotnet restore "PharmEtrade_ApiGateway/PharmEtrade_ApiGateway.csproj"
-
-# Copy the entire project
-COPY . .
-
-# Build and publish the application
-RUN dotnet publish "PharmEtrade_ApiGateway/PharmEtrade_ApiGateway.csproj" -c Release -o /app
-
-# Use the official ASP.NET Core runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
-
-# Set the working directory for the runtime
 WORKDIR /app
 
-# Copy the published output from the build stage
-COPY --from=build /app .
+# Set proxy if required
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV HTTP_PROXY=${HTTP_PROXY}
+ENV HTTPS_PROXY=${HTTPS_PROXY}
 
-# Expose port 5000
-EXPOSE 5000
+# Copy package.json and package-lock.json to install dependencies
+COPY package*.json ./
 
-# Set the entry point for the application
-ENTRYPOINT ["dotnet", "PharmEtrade_ApiGateway.dll", "--urls", "http://0.0.0.0:5000"]
+# Configure npm proxy if necessary
+RUN npm config set proxy ${HTTP_PROXY} && \
+    npm config set https-proxy ${HTTPS_PROXY}
+
+# Install dependencies
+RUN npm install
+
+# Copy all project files to the working directory
+COPY . .
+
+# Build the application for production
+RUN npm run build
+
+# Stage 2: Serve the production build
+FROM node:18 as production
+
+# Set the working directory
+WORKDIR /app
+
+# Install a lightweight HTTP server to serve the static files
+RUN npm install -g serve
+
+# Copy only the built files from the build stage
+COPY --from=build /app/dist ./dist
+
+# Expose the port
+EXPOSE 5173
+
+# Command to serve the files
+CMD ["serve", "-s", "dist", "-l", "5173"]
