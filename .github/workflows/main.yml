@@ -24,8 +24,14 @@ jobs:
       # Step 3: Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+        with:
+          driver: docker-container
 
       # Step 4: Build and push Docker image
       - name: Build and Push Docker Image
         run: |
-          docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/pharmetrade_apigateway:latest .
+          docker buildx build \
+            --platform linux/amd64 \
+            --file Dockerfile \  # Ensure correct Dockerfile path
+            --tag ${{ secrets.DOCKER_USERNAME }}/pharmetrade_apigateway:latest \
+            --push .
