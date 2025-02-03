@@ -1,37 +1,32 @@
-on:
-  push:
-    branches:
-      - master  # Change this to the branch you want to trigger the action
+# Use the official .NET SDK image for building
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
+# Set the working directory
+WORKDIR /src
 
-    steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v3
+# Copy the project files
+COPY ["PharmEtrade_ApiGateway/PharmEtrade_ApiGateway.csproj", "PharmEtrade_ApiGateway/"]
 
-      # Step 2: Log in to Docker Hub
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Secret for Docker Hub username
-          password: ${{ secrets.DOCKER_PASSWORD }}  # Secret for Docker Hub password
+# Restore dependencies
+RUN dotnet restore "PharmEtrade_ApiGateway/PharmEtrade_ApiGateway.csproj"
 
-      # Step 3: Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+# Copy the entire project
+COPY . .
 
-      # Step 4: Build and push the Docker image using Docker Buildx
-      - name: Build and push Docker image
-        run: |
-          docker buildx create --use
-          docker buildx build \
-            --platform linux/amd64 \
-            -t ${{ secrets.DOCKER_USERNAME }}/pharmetrade_apigateway-server:latest \
-            -f Dockerfile . --push
-      # Step 5: Verify pushed image
-      - name: Verify pushed image
-        run: docker buildx imagetools inspect ${{ secrets.DOCKER_USERNAME }}/pharmetrade_apigateway-server:latest
-Create docker-image.yml · sainathmandala/PharmEtrade_ApiGateway-1@65874c
+# Build and publish the application
+RUN dotnet publish "PharmEtrade_ApiGateway/PharmEtrade_ApiGateway.csproj" -c Release -o /app
+
+# Use the official ASP.NET Core runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+
+# Set the working directory for the runtime
+WORKDIR /app
+
+# Copy the published output from the build stage
+COPY --from=build /app .
+
+# Expose port 5000
+EXPOSE 5000
+
+# Set the entry point for the application
+ENTRYPOINT ["dotnet", "PharmEtrade_ApiGateway.dll", "--urls", "http://0.0.0.0:5000"]
